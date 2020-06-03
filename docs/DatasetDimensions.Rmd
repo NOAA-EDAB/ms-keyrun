@@ -1,0 +1,19 @@
+---
+title: "MS Keyrun Dataset Dimensions"
+author: "Sarah Gaichas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## To be filled in meeting week of June 15 2020
+
+### Years (start-end)
+
+### Seasons (fall/spring surveys? fishery seasons?)
+
+### Spatial footprint (Georges Bank defined how)
+

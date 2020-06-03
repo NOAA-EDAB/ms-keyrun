@@ -1,8 +1,25 @@
 ---
-title: "Keyrun project"
+title: "NEFSC multispecies model keyrun project"
 output: html_document
 ---
 
  <!-- ADD LINKS BELOW, note, using the RMD link syntax will open the presentation in the same tab, which is annoying. Use the html with the "_blank" to fix that behavior -->
 
-These pages document decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Methods documentation and eventually draft manuscripts will be found here too.
+These pages document decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Methods documentation and eventually draft manuscripts will be found here too. The target date for model keyrun reviews is October 2021, with all modeling results and documentation submitted by 1 September 2021.
+
+Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html). 
+
+## Dataset dimensions
+
+<a href="https://https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> Decisions with meeting minutes - 15 June 2020 </a>
+
+## Dataset source and methods documentation
+
+## Dataset descriptions and links
+
+## Model documentation
+
+## Model results
+
+## Overall keyrun results
+
