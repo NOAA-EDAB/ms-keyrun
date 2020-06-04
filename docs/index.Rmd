@@ -9,6 +9,10 @@ These pages document decisions made regarding datasets and modeling for multispe
 
 Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html). 
 
+# Data needs
+
+<a href="https://noaa-edab.github.io/ms-keyrun/DataNeeds.html" target="_blank"> Decisions with meeting notes - 3 June 2020 </a>
+
 ## Dataset dimensions
 
 <a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> Decisions with meeting minutes - 15 June 2020 </a>
@@ -17,9 +21,15 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 ## Dataset descriptions and links
 
+# Models
+
 ## Model documentation
 
 ## Model results
+
+# Results
+
+## Individual model keyrun results
 
 ## Overall keyrun results
 
