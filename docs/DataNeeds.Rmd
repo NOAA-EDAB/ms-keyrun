@@ -76,7 +76,7 @@ Identify done criteria, meet them, then run by key stock assessment folks.
 Stories have been added to the board as of `r format(Sys.time(), '%d %B, %Y')`:
 
 ```{r, echo=FALSE}
-htmltools::includeHTML("NMFS JIRA 2020-06-04T10_45_07-0400.html")
+htmltools::includeHTML("NMFS JIRA 2020-06-15T10_11_28-0400.html")
 ```
 
  
