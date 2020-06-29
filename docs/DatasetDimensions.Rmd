@@ -24,13 +24,13 @@ p_load(magrittr, gsubfn, stringr, tidyverse)
 
 All surveyed agreed to end with the complete year of data 2019 to be as up to date as possible. Start year is the earliest survey year where both spring and fall are available.
 
-### Seasons: 
+### Seasons: Annual fisheries, Seasonal surveys
 
 Pull annual data for fisheries, pull annual survey maintaining seasons as "spring", "fall" etc. for each year. Many models use annual catch so further resolution is unnecessary; modelers can choose to fit seasonal survey indices separately or combine to a single annual value from seasonal (documenting methods).
 
-### Spatial:
+### Spatial: Fishery stat areas define Georges Bank
 
-Define using fishery statistical areas and match survey data as much as possible to these. Easier to map survey strata to larger fishery areas than the other way around. 
+Define using fishery statistical areas (521-522, 525-526, 551-552, 561-562) and match survey data as much as possible to these. Easier to map survey strata to larger fishery areas than the other way around. 
 
 ## Full survey results
 
@@ -59,15 +59,18 @@ Responses:
 ```{r}
 startend <- data.frame(Start = responses$StartYear,
                        End = responses$EndYear)
-knitr::kable(startend)
+knitr::kable(startend, booktabs=TRUE)
 ```
 
-**Start year rationale:**
-`r knitr::kable(responses$Rationale.for.start.time, col.names = NULL)`
+
+```{r} 
+knitr::kable(responses$Rationale.for.start.time, col.names = "Start year rationale", booktabs=TRUE)
+```
 
 
-**End year rationale:**
-`r knitr::kable(responses$Rationale.for.end.time, col.names = NULL)`
+```{r}
+knitr::kable(responses$Rationale.for.end.time, col.names = "End year rationale", booktabs=TRUE)
+```
 
 ### Seasons (fall/spring surveys? fishery seasons?)
 
@@ -86,12 +89,15 @@ ggplot(seasons, aes(Season, fill=SurvFish)) +
   
 ```
 
-**Survey season rationale:**
-`r knitr::kable(responses$Rationale.for.survey.temporal.resolution, col.names = NULL)`
+
+```{r} 
+knitr::kable(responses$Rationale.for.survey.temporal.resolution, col.names = "Survey season rationale", booktabs=TRUE)
+```
 
 
-**Fishery season rationale:**
-`r knitr::kable(responses$Rationale.for.fishery.temporal.resolution, col.names = NULL)`
+```{r} 
+knitr::kable(responses$Rationale.for.fishery.temporal.resolution, col.names = "Fishery season rationale", booktabs=TRUE)
+```
 
 
 ### Spatial footprint (Georges Bank defined how)
@@ -106,6 +112,8 @@ ggplot(responses, aes(SpatialGB)) +
 
 ```
 
-**Spatial rationale:**
-`r knitr::kable(responses$Rationale.for.spatial.definition, col.names = NULL)`
+
+```{r} 
+knitr::kable(responses$Rationale.for.spatial.definition, col.names = "Spatial Rationale", booktabs=TRUE)
+```
 

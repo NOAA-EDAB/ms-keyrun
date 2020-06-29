@@ -15,7 +15,7 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 ## Dataset dimensions
 
-<a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> Decisions with meeting minutes - 15 June 2020 </a>
+<a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> Preliminary decisions - 29 June 2020 </a>
 
 ## Dataset source and methods documentation
 
