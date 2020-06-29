@@ -36,7 +36,12 @@ Define using fishery statistical areas (521-522, 525-526, 551-552, 561-562) and 
 
 ### Survey conducted week of June 15 2020
 
+[This is the survey form.](https://forms.gle/Pq78yqwa5ueFi8Kq8)
+
 ```{r getsurvey}
+
+#survey link https://forms.gle/Pq78yqwa5ueFi8Kq8
+#results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses
 
 resultfile <- drive_find(pattern = "MS-Keyrun", type = "spreadsheet")
 
