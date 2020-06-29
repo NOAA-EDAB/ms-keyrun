@@ -2,18 +2,110 @@
 title: "MS Keyrun Dataset Dimensions"
 author: "Sarah Gaichas"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: html_document
+output:
+  html_document:
+    code_fold: hide
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE)
+
+library(googledrive)
+library(pacman)
+p_load(magrittr, gsubfn, stringr, tidyverse)
+
 ```
 
-## To be filled in meeting week of June 15 2020
+## Proposed Dimensions
+
+### Years: 1967-2019
+
+All surveyed agreed to end with the complete year of data 2019 to be as up to date as possible. Start year is the earliest survey year where both spring and fall are available.
+
+### Seasons: 
+
+Pull annual data for fisheries, pull annual survey maintaining seasons as "spring", "fall" etc. for each year. Many models use annual catch so further resolution is unnecessary; modelers can choose to fit seasonal survey indices separately or combine to a single annual value from seasonal (documenting methods).
+
+### Spatial:
+
+Define using fishery statistical areas and match survey data as much as possible to these. Easier to map survey strata to larger fishery areas than the other way around. 
+
+## Full survey results
+
+### Survey conducted week of June 15 2020
+
+```{r getsurvey}
+
+resultfile <- drive_find(pattern = "MS-Keyrun", type = "spreadsheet")
+
+responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
+  {read.csv(.$local_path)} 
+
+names(responses)[3] <- "StartYear"
+names(responses)[5] <- "EndYear"
+names(responses)[7] <- "SurvSeason"
+names(responses)[9] <- "FishSeason"
+names(responses)[11] <- "SpatialGB"
+
+```
+
+We had `r nrow(responses)` responses.
 
 ### Years (start-end)
 
+Responses:
+```{r}
+startend <- data.frame(Start = responses$StartYear,
+                       End = responses$EndYear)
+knitr::kable(startend)
+```
+
+**Start year rationale:**
+`r knitr::kable(responses$Rationale.for.start.time, col.names = NULL)`
+
+
+**End year rationale:**
+`r knitr::kable(responses$Rationale.for.end.time, col.names = NULL)`
+
 ### Seasons (fall/spring surveys? fishery seasons?)
 
+Responses:
+```{r seasons}
+
+seasons <- responses %>%
+  select(SurvSeason, FishSeason) %>%
+  gather(key = SurvFish, value = "Season") %>%
+  arrange(Season)
+
+ggplot(seasons, aes(Season, fill=SurvFish)) + 
+  geom_bar() +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 15))#+ 
+  #theme(axis.text.x = element_text(angle = 90))
+  
+```
+
+**Survey season rationale:**
+`r knitr::kable(responses$Rationale.for.survey.temporal.resolution, col.names = NULL)`
+
+
+**Fishery season rationale:**
+`r knitr::kable(responses$Rationale.for.fishery.temporal.resolution, col.names = NULL)`
+
+
 ### Spatial footprint (Georges Bank defined how)
+
+Responses:
+```{r space}
+
+ggplot(responses, aes(SpatialGB)) + 
+  geom_bar() +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 35))#+ 
+
+
+```
+
+**Spatial rationale:**
+`r knitr::kable(responses$Rationale.for.spatial.definition, col.names = NULL)`
 
