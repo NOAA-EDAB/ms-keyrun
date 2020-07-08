@@ -435,24 +435,33 @@ summary {
 
 <h1 class="title toc-ignore">MS Keyrun Dataset Dimensions</h1>
 <h4 class="author">Sarah Gaichas</h4>
-<h4 class="date">06 July, 2020</h4>
+<h4 class="date">08 July, 2020</h4>
 
 </div>
 
 
 <div id="proposed-dimensions" class="section level2">
 <h2>Proposed Dimensions</h2>
-<div id="years-1967-2019" class="section level3">
-<h3>Years: 1967-2019</h3>
+<div id="years-1968-2019" class="section level3">
+<h3>Years: 1968-2019</h3>
 <p>All surveyed agreed to end with the complete year of data 2019 to be as up to date as possible. Start year is the earliest survey year where both spring and fall are available.</p>
 </div>
 <div id="seasons-annual-fisheries-seasonal-surveys" class="section level3">
 <h3>Seasons: Annual fisheries, Seasonal surveys</h3>
 <p>Pull annual data for fisheries, pull annual survey maintaining seasons as “spring”, “fall” etc. for each year. Many models use annual catch so further resolution is unnecessary; modelers can choose to fit seasonal survey indices separately or combine to a single annual value from seasonal (documenting methods).</p>
 </div>
-<div id="spatial-fishery-stat-areas-define-georges-bank" class="section level3">
-<h3>Spatial: Fishery stat areas define Georges Bank</h3>
-<p>Define using fishery statistical areas (521-522, 525-526, 551-552, 561-562) and match survey data as much as possible to these. Easier to map survey strata to larger fishery areas than the other way around.</p>
+<div id="spatial-2-approaches-for-georges-bank" class="section level3">
+<h3>Spatial: 2 Approaches for Georges Bank</h3>
+<p>Ideal: Define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using ratios in spatially explicit VTR subset of catch data. Work towards this ideal, comparing coverage of VTR data by species and different methods for scaling as part of data documentation. Consult with ADIOS team and assessment experts to see if results look reasonable.</p>
+<p>The ideal is time-consuming and cannot be started until mid-late September 2020 at the earliest.</p>
+<p>Interim: Define using fishery statistical areas (521-522, 525-526, 551-552, 561-562) and match survey data as much as possible to these. It is easier to map survey strata to larger fishery areas than the other way around; Sean can share code which may be modified by Gavin’s student to achieve this.</p>
+<p>The interim represents the upper bound of what catch would be by species for comparison to the ideal approach and can be implemented fairly quickly.</p>
+</div>
+<div id="other-notes" class="section level3">
+<h3>Other notes</h3>
+<p>By either spatial definition, inshore survey strata should not be relevant to Georges Bank, so the beginning and end years remain as above, and there should not be a need to combine inshore and offshore surveys using Conn method or VAST for Bigelow years.</p>
+<p>The group decided that the base dataset would pull survey data separately for the Albatross and Bigelow years without applying any conversion factors. These separate series can be used as indices in the structured models (MSCAA and Hydra).</p>
+<p>Methods for making a single survey time series from the two vessel survey time series (and for making annual indices from the seasonal surveys) would need to be discussed for the other models, and methods clearly documented. For example, the Georges Bank Rpath was calibrated to Bigelow data from 2013-2015; therefore if a single survey time series is needed, it makes sense to convert Albatross survey catches to Bigelow units using established conversion factors. We are putting off this discussion for now.</p>
 </div>
 </div>
 <div id="full-survey-results" class="section level2">
@@ -659,6 +668,10 @@ ggplot(seasons, aes(Season, fill=SurvFish)) +
 </tbody>
 </table>
 </div>
+</div>
+<div id="meeting-minutes" class="section level2">
+<h2>Meeting minutes</h2>
+<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq">Click here!</a></p>
 </div>
 
 
