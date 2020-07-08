@@ -1,0 +1,98 @@
+---
+title: "MS Keyrun Species, Environment, Data Formats"
+author: "Sarah Gaichas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    code_fold: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE)
+
+library(googledrive)
+library(pacman)
+p_load(repmis, RCurl, DT, magrittr, gsubfn, stringr, tidyverse)
+
+```
+
+## Species lists
+
+### Multispecies models (focal species)
+
+Multispecies models focus on a subset of interacting species. They will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species.
+
+### Food web model (focal + rest of system)
+
+The food web model is intended to examine wider ecosystem responses to management measures applied to a subset of interacting species. It will estimate predator-prey interaction and other parameters based on fits to biomass, catch, and diet information. This model should track general trends (if not interannual variability) for focal species and produce reasonable reactions by their predators and prey.
+
+Current species groups in the GB Rpath model:
+```{r rpathspp, message=FALSE}
+
+# Sean's file from https://github.com/NOAA-EDAB/GBRpath/blob/master/data/SOE_species_list.RData
+# loads the RData as object "species"
+
+source_data("https://github.com/NOAA-EDAB/GBRpath/blob/master/data/SOE_species_list.RData?raw=True")
+
+# used to get a list to paste into google form
+#write.table(file = "spplist.txt", sort(unique(species$RPATH)))
+
+rpathspp <- species %>%
+  select(RPATH, COMNAME, SCINAME, SVSPP) %>%
+  filter(RPATH != "") %>%
+  distinct() 
+
+aggs <- rpathspp %>%
+  count(RPATH, sort = TRUE, name = "Nspp") %>%
+  filter(Nspp > 1)
+
+singlespp <- anti_join(rpathspp, aggs) %>%
+  mutate(Nspp = 1)
+
+rpathlist <- full_join(singlespp, aggs)
+  
+datatable(rpathlist, rownames = FALSE, 
+          options = list(pageLength = 25, 
+                         order = list(list(0, 'asc'))
+          ))
+
+```
+
+
+## Envrionmental data
+
+### Multispecies models
+
+### Food web model
+
+## Programming frameworks and data formats
+
+## Full survey results
+
+### Survey conducted July 13-24 2020
+
+[This is the survey form.](https://forms.gle/gfA3tKFKRBxf3Mu38)
+
+```{r getsurvey, eval=FALSE}
+
+#survey link https://forms.gle/gfA3tKFKRBxf3Mu38
+#results 
+
+resultfile <- drive_find(pattern = "MS-Keyrun Species", type = "spreadsheet")
+
+responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
+  {read.csv(.$local_path)} 
+
+names(responses)[3] <- "StartYear"
+names(responses)[5] <- "EndYear"
+names(responses)[7] <- "SurvSeason"
+names(responses)[9] <- "FishSeason"
+names(responses)[11] <- "SpatialGB"
+
+```
+
+## Meeting minutes (old link)
+
+[Click here!](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq)
