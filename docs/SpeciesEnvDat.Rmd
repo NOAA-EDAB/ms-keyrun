@@ -63,11 +63,26 @@ datatable(rpathlist, rownames = FALSE,
 
 ## Envrionmental data
 
-### Multispecies models
+The `ecodata` R package has up to date information at the Georges Bank EPU scale as listed here: https://noaa-edab.github.io/ecodata/landing_page. 
 
-### Food web model
+Current time series in ecodata:
+```{r ecodata}
+
+#remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)
+library(ecodata)
+
+ecodsets <- data(package = "ecodata")$result[, c("Item", "Title")]
+
+datatable(ecodsets, rownames = FALSE, 
+          options = list(pageLength = 25)
+)
+
+```
+
 
 ## Programming frameworks and data formats
+
+How many models are implemented in R? See [discussion](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq) of pros and cons of using R data package for standardizing input datasets and making them available.
 
 ## Full survey results
 
@@ -75,21 +90,68 @@ datatable(rpathlist, rownames = FALSE,
 
 [This is the survey form.](https://forms.gle/gfA3tKFKRBxf3Mu38)
 
-```{r getsurvey, eval=FALSE}
+```{r getsurvey}
 
 #survey link https://forms.gle/gfA3tKFKRBxf3Mu38
-#results 
+#results link https://docs.google.com/spreadsheets/d/1sckY46jdyBa1Fhydw2syBawkjGPcHX4YwQmDCDBXcGU/edit#gid=284425233
 
 resultfile <- drive_find(pattern = "MS-Keyrun Species", type = "spreadsheet")
 
 responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
   {read.csv(.$local_path)} 
 
-names(responses)[3] <- "StartYear"
-names(responses)[5] <- "EndYear"
-names(responses)[7] <- "SurvSeason"
-names(responses)[9] <- "FishSeason"
-names(responses)[11] <- "SpatialGB"
+names(responses)[3] <- "Species"
+names(responses)[5] <- "Environment"
+names(responses)[7] <- "ModelInR"
+names(responses)[8] <- "ModelUseR"
+names(responses)[9] <- "RData"
+
+```
+
+We had `r nrow(responses)` responses.
+
+### Species
+
+Responses:
+```{r}
+# each row is a response with a comma delimited list of species
+# string split each row to species
+# tally by species
+# histogram
+
+#msspecies <- responses$Species
+
+```
+
+```{r} 
+knitr::kable(responses$Rationale.for.species.included, col.names = "Species rationale", booktabs=TRUE)
+```
+
+### Environment
+
+Responses:
+```{r}
+# each row is a response with a comma delimited list of environmental data
+# string split each row to dataset name
+# tally by dataset
+# histogram
+
+#msspecies <- responses$Environment
+
+```
+
+```{r} 
+knitr::kable(responses$Rationale.for.environmental.time.series.included, col.names = "Environment rationale", booktabs=TRUE)
+```
+
+### Model programming frameworks
+
+Responses:
+```{r}
+# these are multiple choice yes/no so just plot
+
+#useR <- data.frame(ModelinR = responses$ModelinR,
+
 
 ```
 
