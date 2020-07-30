@@ -113,13 +113,22 @@ We had `r nrow(responses)` responses.
 ### Species
 
 Responses:
-```{r}
+```{r, fig.height=6}
 # each row is a response with a comma delimited list of species
 # string split each row to species
 # tally by species
 # histogram
 
-#msspecies <- responses$Species
+msspecies <- data.frame(Species = responses$Species,
+                        Model = c("MS", "MS", "NA", "MS", "Rpath", "MS")) %>%
+  filter(Model != "NA") %>%
+  separate_rows(Species, sep = ",") %>%
+  mutate(Species = str_trim(Species, side = "both"))
+
+ggplot(msspecies, aes(Species)) + 
+  geom_bar() +
+  facet_wrap(~Model, nrow = 2, scales="free") +
+  theme(axis.text.x = element_text(angle = 90))
 
 ```
 
@@ -130,13 +139,22 @@ knitr::kable(responses$Rationale.for.species.included, col.names = "Species rati
 ### Environment
 
 Responses:
-```{r}
+```{r, fig.height=10}
 # each row is a response with a comma delimited list of environmental data
 # string split each row to dataset name
 # tally by dataset
 # histogram
 
-#msspecies <- responses$Environment
+msenv <- data.frame(Environment = responses$Environment,
+                        Model = c("MS", "MS", "NA", "MS", "Rpath", "MS")) %>%
+  filter(Model != "NA") %>%
+  separate_rows(Environment, sep = ",") %>%
+  mutate(Environment = str_trim(Environment, side = "both"))
+
+ggplot(msenv, aes(Environment)) + 
+  geom_bar() +
+  facet_wrap(~Model, nrow = 2, scales="free") +
+  theme(axis.text.x = element_text(angle = 90))
 
 ```
 
@@ -146,15 +164,31 @@ knitr::kable(responses$Rationale.for.environmental.time.series.included, col.nam
 
 ### Model programming frameworks
 
+Many but not all models interface with R and can use R datasets. Even for those that do not, all agreed on using an R data package for standardizing input datasets and making them available.  
+
 Responses:
 ```{r}
 # these are multiple choice yes/no so just plot
 
-#useR <- data.frame(ModelinR = responses$ModelinR,
+useR <- data.frame(ModelInR = responses$ModelInR,
+                   ModelUseR = responses$ModelUseR,
+                   RData = responses$RData) %>%
+  gather(question, answer, ModelInR:RData) %>%
+  mutate(shortans = ifelse(is.na(word(answer, 1, 2)), 
+                           answer, 
+                           word(answer, 1, 2)))
 
+ggplot(useR, aes(question)) +
+  geom_bar(aes(fill=shortans)) +
+  labs(x = "Question", 
+       fill = "Short Answer") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 35))
 
 ```
+Short answer key:
+"No but" = `r unique(useR$answer)[2]`  
+"Probably, we" = `r unique(useR$answer)[4]`
 
-## Meeting minutes (old link)
+## Meeting minutes, 5 August 2020
 
-[Click here!](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq)
+[Click here!](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.m573izndd2nh)
