@@ -68,15 +68,25 @@ dietdat <- data.frame(ModType = responses$ModType,
 
 ```
 
-
-
 ## Age and length composition data needed
 
+Structured models need both survey numbers at length and age. The length structured model Hydra is currently set up with separate fishing fleets and would require fishery catch and discard data by fleet, while MSCAA is not set up by fleet. WHAM requires fleet specific catch and discards at age, so it makes sense to pull catch and landings numbers at length and age data by fleet to the extent possible, as well as for total catch. 
 
+Therefore, fleet definitions are necessary to pull the fleet specific data.
+
+This data will also be needed for Rpath for age structured groups (TBD). Pulling data by individual age and 1cm length bins should allow us to aggregate to the appropriate age and length classes for Rpath and Hydra.
+
+Some decisions on how to deal with predators with poor or no age data (e.g. goosefish) will be needed for age strutured models.
 
 ## Diet composition data needed
 
+All multispecies models require some form of diet composition matrix (in the form of % of each other modeled species observed in the diet). The diet composition has already been pulled for Rpath [code](https://github.com/NOAA-EDAB/GBRpath/blob/master/GBRpath_diet_pull.R), and is highly abstracted based on diet data for Hydra (matrix of 0 and 1 to indicate whether predation can happen). Biomass dynamic model interaction matrices are currently input parameters, so should be compared with diet data pulls for Rpath diet compositions for consistency. Methods used to estimate the biomass dynamics interaction parameters, whether within the model framework or outside the model, are needed for documentation. 
 
+Structured models require annual predator mean total stomach weight and gastric evaluatin rates. Pulling the diet data by predator size class will be needed for strucured models and Rpath. Prey size information is also needed to estimate prey size ratios for predators (whether estimated within the model framework or outside the model). 
+
+Predator size classes will need to align Rpath age structure groupings as well as Hydra size class groups, and map to ages for age structured models.
+
+Estimates of consumption rates are critical for the performance of these models. It may be useful to have time series of biomass consumed, which can be estimated from diet data combined with predator biomass estimates.
 
 
 ## Full survey results
@@ -87,15 +97,19 @@ dietdat <- data.frame(ModType = responses$ModType,
 
 We had `r nrow(responses)` responses.
 
-### Species
+### Age and Length data
 
 Responses:
-```{r plotspp, fig.height=6}
+```{r plotagelen, fig.height=6}
 
-ggplot(msspecies, aes(Species)) + 
-  geom_bar() +
-  facet_wrap(~Model, nrow = 2, scales="free") +
-  theme(axis.text.x = element_text(angle = 90))
+ggplot(compdat, aes(AgeLength)) + 
+  geom_bar(aes(fill=ModType)) +
+  coord_flip() +
+  labs(x = "Data Needs", 
+       fill = "Model Type") +
+  #facet_wrap(~ModType, nrow = 2, scales="free") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 45))
+  #theme(axis.text.x = element_text(angle = 90))
 
 ```
 
@@ -107,41 +121,33 @@ knitr::kable(responses$AgeNeeds, col.names = "Age information needs", booktabs=T
 knitr::kable(responses$LengthNeeds, col.names = "Length information needs", booktabs=TRUE)
 ```
 
-### Environment
+### Diet data
 
 Responses:
 ```{r plotenv, fig.height=10}
 
-ggplot(msenv, aes(Environment)) + 
-  geom_bar() +
-  facet_wrap(~Model, nrow = 2, scales="free") +
-  theme(axis.text.x = element_text(angle = 90))
+ggplot(dietdat, aes(Diet)) + 
+  geom_bar(aes(fill=ModType)) +
+  coord_flip() +
+  labs(x = "Data Needs", 
+       fill = "Model Type") +
+  #facet_wrap(~ModType, nrow = 2, scales="free") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 45))
+  #theme(axis.text.x = element_text(angle = 90))
 
 ```
 
 ```{r} 
-knitr::kable(responses$Rationale.for.environmental.time.series.included, col.names = "Environment rationale", booktabs=TRUE)
+knitr::kable(responses$DietNeeds, col.names = "Diet information needs", booktabs=TRUE)
 ```
 
-### Model programming frameworks
+### Other comments
 
-Many but not all models interface with R and can use R datasets. Even for those that do not, all agreed on using an R data package for standardizing input datasets and making them available.  
-
-Responses:
-```{r plotdat}
-
-ggplot(useR, aes(question)) +
-  geom_bar(aes(fill=shortans)) +
-  labs(x = "Question", 
-       fill = "Short Answer") +
-  scale_x_discrete(labels = function(x) str_wrap(x, width = 35))
-
+```{r} 
+knitr::kable(responses$Comments, col.names = "Other comments", booktabs=TRUE)
 ```
 
-Short answer key:
-"No but" = `r unique(useR$answer)[2]`  
-"Probably, we" = `r unique(useR$answer)[4]`
 
-## Meeting minutes, 5 August 2020
+## Meeting minutes, 2 September 2020
 
-[Click here!](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.m573izndd2nh)
+[Click here!](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.7xrj7zm307ft)
