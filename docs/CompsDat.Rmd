@@ -1,0 +1,147 @@
+---
+title: "MS Keyrun Age, Length, and Diet Composition Data Needs"
+author: "Sarah Gaichas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    code_fold: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE)
+
+library(googledrive)
+library(pacman)
+p_load(repmis, RCurl, DT, magrittr, gsubfn, stringr, tidyverse)
+
+```
+
+(We first load the survey results.)
+
+```{r getsurvey, message=FALSE}
+
+#survey link https://forms.gle/5PkpTiCvXEgda2it6
+#results link https://docs.google.com/spreadsheets/d/1BZFqpIfmPdUW0XG3nyZbRrCBW-N-jV_r26mG7oKVdlQ/edit#gid=1759185696
+
+resultfile <- drive_find(pattern = "MS-Keyrun Compositional", type = "spreadsheet")
+
+responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
+  {read.csv(.$local_path)} 
+
+names(responses)[3] <- "ModType"
+names(responses)[4] <- "ModName"
+names(responses)[5] <- "AgeLength"
+names(responses)[6] <- "AgeNeeds"
+names(responses)[7] <- "LengthNeeds"
+names(responses)[8] <- "Diet"
+names(responses)[9] <- "DietNeeds"
+names(responses)[10] <- "Comments"
+
+```
+
+
+## Model types
+
+Multispecies models will focus on 10 species: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate. 
+
+Models will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species. Data needs by model type are summarized below.
+
+```{r modtypedat}
+
+compdat <- data.frame(ModType = responses$ModType,
+                      ModName = responses$ModName,
+                      AgeLength = responses$AgeLength) %>%
+  filter(ModType != "NA") %>%
+  separate_rows(AgeLength, sep = ",")
+
+dietdat <- data.frame(ModType = responses$ModType,
+                      ModName = responses$ModName,
+                      Diet = responses$Diet) %>%
+  filter(ModType != "NA") %>%
+  separate_rows(Diet, sep = ",")
+
+# rename AgeLength and Diet columns to CompDat and merge
+
+
+
+```
+
+
+
+## Age and length composition data needed
+
+
+
+## Diet composition data needed
+
+
+
+
+## Full survey results
+
+### Survey conducted August 27-September 2 2020
+
+[This is the survey form.](https://forms.gle/5PkpTiCvXEgda2it6)
+
+We had `r nrow(responses)` responses.
+
+### Species
+
+Responses:
+```{r plotspp, fig.height=6}
+
+ggplot(msspecies, aes(Species)) + 
+  geom_bar() +
+  facet_wrap(~Model, nrow = 2, scales="free") +
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
+```{r} 
+knitr::kable(responses$AgeNeeds, col.names = "Age information needs", booktabs=TRUE)
+```
+
+```{r} 
+knitr::kable(responses$LengthNeeds, col.names = "Length information needs", booktabs=TRUE)
+```
+
+### Environment
+
+Responses:
+```{r plotenv, fig.height=10}
+
+ggplot(msenv, aes(Environment)) + 
+  geom_bar() +
+  facet_wrap(~Model, nrow = 2, scales="free") +
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
+```{r} 
+knitr::kable(responses$Rationale.for.environmental.time.series.included, col.names = "Environment rationale", booktabs=TRUE)
+```
+
+### Model programming frameworks
+
+Many but not all models interface with R and can use R datasets. Even for those that do not, all agreed on using an R data package for standardizing input datasets and making them available.  
+
+Responses:
+```{r plotdat}
+
+ggplot(useR, aes(question)) +
+  geom_bar(aes(fill=shortans)) +
+  labs(x = "Question", 
+       fill = "Short Answer") +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 35))
+
+```
+
+Short answer key:
+"No but" = `r unique(useR$answer)[2]`  
+"Probably, we" = `r unique(useR$answer)[4]`
+
+## Meeting minutes, 5 August 2020
+
+[Click here!](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.m573izndd2nh)

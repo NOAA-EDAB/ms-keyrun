@@ -17,7 +17,9 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 <a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> Year, season, area decisions - 8 July 2020 </a>
 
-<a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html" target="_blank"> Species, environment, data package decisions - 31 July 2020 </a>
+<a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html" target="_blank"> Species, environment, data package decisions - 5 August 2020 </a>
+
+<a href="https://noaa-edab.github.io/ms-keyrun/CompsDat.html" target="_blank"> Age, length, and diet composition decisions - 3 September 2020 </a>
 
 
 ## Dataset source and methods documentation

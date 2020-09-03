@@ -72,6 +72,8 @@ names(responses)[9] <- "RData"
 
 Multispecies models focus on a subset of interacting species. They will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species.
 
+Decision: Use the top ranked 10 species in the table below: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate. Rationale: These species occupy Georges Bank while pollock is found more in the neighboring Gulf of Maine.
+
 These species received >1 vote for inclusion in MS-Keyrun multispecies models:
 
 ```{r msmodspp}
@@ -148,7 +150,7 @@ knitr::kable(includedenv)
 
 ```
 
-We can include GB temperature and primary production time series as part of the MS-Keyrun dataset. Modelers may retrieve additional data from `ecodata`.
+Decision: We will include GB temperature and primary production time series as part of the MS-Keyrun dataset. Modelers may retrieve additional data from `ecodata`.
 
 The `ecodata` R package has up to date information at the Georges Bank EPU scale as listed here: https://noaa-edab.github.io/ecodata/landing_page. 
 
@@ -190,7 +192,7 @@ knitr::kable(yesR)
 ```
 
 
-All surveyed agreed that we should maintain datasets within an R data package for the MS-Keyrun project. 
+Decision: All surveyed agreed that we should maintain datasets within an R data package for the MS-Keyrun project. 
 
 See [discussion](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq) of pros and cons of using R data package for standardizing input datasets and making them available.
 
