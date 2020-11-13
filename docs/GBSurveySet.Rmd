@@ -25,7 +25,7 @@ During the June/July survey <a href="https://noaa-edab.github.io/ms-keyrun/Datas
 While work is ongoing towards segregating the fisheries dependent data, there is a decision to make about how to use the fisheries independent survey.  The current definition of the EPU is based on ten-minute squares which does not fit with the survey design.  This leaves several options of how to use the survey data.  The first set of options is to use the survey design and assign survey strata to Georges Bank.  The second set of options is to ignore the survey design and either post-stratify or take a simple average within the EPU.  
 
 ### Option 1 - use survey design
-The NEFSC bottom trawl survey uses a stratified random design.  The rationale behind a stratified random design is to minimize variance. Figure \@ref(fig:Survey_map) shows the full range of strata with the Georges Bank EPU overlaid in red. As you will notice, some of the survey strata extend beyond the EPU boundary.  There are several ways that this can be accounted for.  The simplest option is to include all strata that are partially within the EPU boundary.
+The NEFSC bottom trawl survey uses a stratified random design.  The rationale behind a stratified random design is to minimize variance. The figure below shows the full range of strata with the Georges Bank EPU overlaid in red. As you will notice, some of the survey strata extend beyond the EPU boundary.  There are several ways that this can be accounted for.  The simplest option is to include all strata that are partially within the EPU boundary.
 
 ```{r shapefile load}
 coast <- readOGR(here('gis'), 'NES_LME_coast', verbose = F)
@@ -69,7 +69,7 @@ legend('bottomright', legend = c('Survey Strata', 'Georges Bank EPU'),
 
 ```
 
-Another option is to include only those strata that are at least 50% within the EPU boundary by area.  This was the preferred method of the Northeast IEA program for their State of the Ecosystem report.  The map below shows the strata that were included (Figure \@ref{fig:SOE}).  The medium blue color represents Georges Bank.
+Another option is to include only those strata that are at least 50% within the EPU boundary by area.  This was the preferred method of the Northeast IEA program for their State of the Ecosystem report.  The map below shows the strata that were included.  The medium blue color represents Georges Bank.
 
 ```{r SOE}
 opar <- par(mar = c(3, 3.5, 2, 2))
@@ -125,3 +125,96 @@ plot(GB.strata, add = T, border = '#D65f00', lwd = 2)
 
 plot(coast, col = 'grey', add = T)
 ```
+
+
+## Testing the options
+To see if there was an noticeable difference between the three options outlined above (All - Any strata that is at least partially within the GB EPU boundary, SOE - strata set used by the State of the Ecosystem report, and EPU - post-stratified EPU) biomass indices were calculated for the top 11 species that will be included in the MS Keyrun project.  
+
+```{r test}
+library(data.table); library(here); library(rgdal); library(Survdat);
+library(ggplot2)
+
+#source(here('Survdat.r'))
+load(here('data_raw/survdat.RData'))
+
+#Top 10(11) species
+top10 <- c(15, 23, 32, 72, 73, 74, 75, 105, 106, 121, 197)
+
+#fix numbers as character
+survdat <- survdat[, STRATUM := as.numeric(STRATUM)]
+survdat <- survdat[, SVSPP   := as.numeric(SVSPP)]
+
+#First with survey strata
+strata <- readOGR(here('gis'), 'strata', verbose = F)
+
+#Generate area table
+strat.area <- getarea(strata, 'STRATA')
+setnames(strat.area, 'STRATA', 'STRATUM')
+
+#Run 1 - All strata for GB ()
+GB.soe   <- c(1090, 1130:1210, 1230, 1250, 3460, 3480, 3490, 3520:3550)
+GB.extra <- 1100:1120
+
+#Subset by season/ strata set
+fall.all <- survdat[SEASON == 'FALL' & STRATUM %in% c(GB.soe, GB.extra), ]
+
+#Run stratification prep
+all.prep <- stratprep(fall.all, strat.area, strat.col = 'STRATUM', area.col = 'Area')
+
+#Calculate stratified means
+all.mean <- stratmean(all.prep, groups = top10, group.col = 'SVSPP', 
+                       strat.col = 'STRATUM')
+all.mean <- all.mean[, list(YEAR, SVSPP, strat.biomass)]
+all.mean[, subset := 'All']
+
+#Run 2 - SOE strata for GB ()
+#Subset by season/ strata set
+fall.soe <- survdat[SEASON == 'FALL' & STRATUM %in% GB.soe, ]
+
+#Run stratification prep
+soe.prep <- stratprep(fall.soe, strat.area, strat.col = 'STRATUM', area.col = 'Area')
+
+#Calculate stratified means
+soe.mean <- stratmean(soe.prep, groups = top10, group.col = 'SVSPP', 
+                      strat.col = 'STRATUM')
+soe.mean <- soe.mean[, list(YEAR, SVSPP, strat.biomass)]
+soe.mean[, subset := 'SOE']
+
+#Run 3 - Use EPU strata
+#Grab strata
+epu <- readOGR(here('gis'), 'EPU_strata', verbose = F)
+
+#Generate area table
+epu.area <- getarea(epu, 'Strata')
+setnames(epu.area, 'Strata', 'EPU')
+
+#Post stratify data if necessary
+survdat.epu <- poststrat(survdat, epu, strata.col = 'Strata')
+setnames(survdat.epu, 'newstrata', 'EPU')
+
+#Subset by season/ strata set
+fall.epu <- survdat.epu[SEASON == 'FALL', ]
+
+#Run stratification prep
+epu.prep <- stratprep(fall.epu, epu.area, strat.col = 'EPU', area.col = 'Area')
+
+#Calculate stratified means
+epu.mean <- stratmean(epu.prep, groups = top10, group.col = 'SVSPP', 
+                      strat.col = 'EPU', poststrat = T)
+epu.mean <- epu.mean[, list(YEAR, SVSPP, strat.biomass)]
+epu.mean[, subset := 'EPU']
+
+#Combine data
+combo.data <- rbindlist(list(all.mean, soe.mean, epu.mean))
+
+survey.plot <- ggplot(combo.data,
+                      aes(x = YEAR, y = strat.biomass)) +
+    geom_point(aes(color = subset)) +
+    facet_wrap(~SVSPP, ncol = 2, nrow = 6, scales = 'free_y')
+
+plot(survey.plot)
+
+```
+
+As you can see, all three spatial footprints give similar trends with only minimal differences in the magnitudes.  Therefore it was decided at a working group meeting on 11/4/2020 to use the survey strata set from the State of the Ecosystem report.  This accomplishes two goals.  First it stays consistent with the survey design of the survey.  Second it is consistent with other ecosystem products coming out of the Center.
+
