@@ -25,3 +25,10 @@ EPU10 <- sf::st_read(here::here("gis","EPU_extended.shp"))
 ggplot2::ggplot(data=EPU10) +
   ggplot2::geom_sf(ggplot2::aes(fill=EPU))
 
+# NEW GB strata  min square definitions
+GB_strata <- sf::st_read(here::here("gis","GB_SOE_strata.shp"))
+
+ggplot2::ggplot(data=GB_strata) +
+  ggplot2::geom_sf(ggplot2::aes(fill=EPU))
+
+
