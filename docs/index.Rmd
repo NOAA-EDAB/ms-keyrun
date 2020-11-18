@@ -23,7 +23,7 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 
 ## Dataset source and methods documentation
-<a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySets.html" target="_blank"> Which Georges Bank survey footprint - 4 November 2020 </a>
+<a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html" target="_blank"> Which Georges Bank survey footprint - 4 November 2020 </a>
 
 ## Dataset descriptions and links
 
