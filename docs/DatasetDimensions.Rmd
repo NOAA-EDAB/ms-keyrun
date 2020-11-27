@@ -30,7 +30,7 @@ Pull annual data for fisheries, pull annual survey maintaining seasons as "sprin
 
 ### Spatial: 2 Approaches for Georges Bank
 
-Ideal: Define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using ratios in spatially explicit VTR subset of catch data. Work towards this ideal, comparing coverage of VTR data by species and different methods for scaling as part of data documentation. Consult with ADIOS team and assessment experts to see if results look reasonable. 
+Ideal: Define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using [ratios in spatially explicit VTR subset of catch data](allocateLandingsEPU.html). Work towards this ideal, comparing coverage of VTR data by species and different methods for scaling as part of data documentation. Consult with ADIOS team and assessment experts to see if results look reasonable. 
 
 The ideal is time-consuming and cannot be started until mid-late September 2020 at the earliest.
 
