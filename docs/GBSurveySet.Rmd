@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       warning = FALSE)
 
-library(data.table); library(here); library(rgdal); library(Survdat) 
+library(data.table); library(here); library(rgdal); library(survdat) 
 
 ```
 
@@ -131,11 +131,11 @@ plot(coast, col = 'grey', add = T)
 To see if there was an noticeable difference between the three options outlined above (All - Any strata that is at least partially within the GB EPU boundary, SOE - strata set used by the State of the Ecosystem report, and EPU - post-stratified EPU) biomass indices were calculated for the top 11 species that will be included in the MS Keyrun project.  
 
 ```{r test}
-library(data.table); library(here); library(rgdal); library(Survdat);
-library(ggplot2)
+library(data.table); library(here); library(rgdal)#; library(Survdat);
+library(ggplot2); library(survdat)
 
 #source(here('Survdat.r'))
-load(here('data_raw/survdat.RData'))
+load(here('data-raw/Survdat.RData'))
 
 #Top 10(11) species
 top10 <- c(15, 23, 32, 72, 73, 74, 75, 105, 106, 121, 197)
