@@ -57,7 +57,7 @@ Methods for making a single survey time series from the two vessel survey time s
 #survey link https://forms.gle/Pq78yqwa5ueFi8Kq8
 #results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses
 
-resultfile <- drive_find(pattern = "MS-Keyrun", type = "spreadsheet")
+resultfile <- drive_find(pattern = "MS-Keyrun Dataset Dimensions", type = "spreadsheet")
 
 responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
   {read.csv(.$local_path)} 
