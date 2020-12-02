@@ -27,3 +27,8 @@ vignettes/*.pdf
 # R Environment Variables
 .Renviron
 .DS_Store
+# specific files/sensitive data
+Landings_VTR_Geret_Data.rds
+comland
+
+

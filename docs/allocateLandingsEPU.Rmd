@@ -1,10 +1,18 @@
 ---
 title: "Allocate landings to Georges Bank EPU"
-output: html_document
+author: Andy Beet
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  html_document:
+    code_fold: hide
+csl: apa-annotated-bibliography.csl
+bibliography: references.bib
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE)
 library(magrittr)
 options(warn=-1)
 ```
@@ -13,7 +21,7 @@ options(warn=-1)
 
 The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is defined as the set of survey strata that are at 50% within the 10 min square definition of the EPU.
 
-```{r GBfoot, echo=F, eval=T}
+```{r GBfoot, eval=T}
 crs <- 4326
 # NEW GB EPU def based on survey strata
 coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
@@ -30,7 +38,7 @@ ggplot2::ggplot(data=coast) +
 
 Overlay the surrounding statistical areas:
 
-```{r GBfootstat,echo=F, eval=T}
+```{r GBfootstat, eval=T}
 crs <- 4326
 # read in coastline and GB shape file
 coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
@@ -64,31 +72,54 @@ ggplot2::ggplot(data=coast) +
 
 Fishing data are available by statistical area. The statistical areas surrounding Georges Bank EPU (`r statAreas`) contain catch from Georges Bank and its neighboring EPUs. This data needs to be partitioned and catch allocated to the Georges Bank EPU.
 
-## Method for partioning catch data
+## Method for partitioning catch data
 
-VTR data is used ... (DePiper, 20xx) and combined with DMIS data. (Need to expand on this). These methods are available within the [`offshoreWind`](https://github.com/dcorvi/offshoreWind) R package. It is necessary to run the package from the server (the `mars` server is recommended). 
+```{r vtrdmisdata, eval=T}
+data <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds"))
+yearRange <- data %>% dplyr::distinct(YEAR) %>% range
+```
+
+Methods found in [@depiper2014; & @benjamins2018] are implemented in the [`offshoreWind`](https://github.com/dcorvi/offshoreWind) R package. It is necessary to run the package from the server (the `mars` server is recommended).
+
+In summary:
+
+-   VTR data are joined with observer data and a model is specified ( @depiper2014) to assign ...
+
+-   Raster files are then created for each year
+
+-   expand ..
+
+-   The landings data span the period from `r paste0(yearRange,collapse="-")`.
+
+-   Landings are assigned to each of the statistical areas (`r statAreas`)
+
+-   The landings with each statistical area (for each year) are then allocated to each portion of a statistical area (within Georges Bank and outside Georges Bank)
+
+-   The proportion of landings attributed to Georges Bank are then calculated and displayed below
 
 The [top ranked species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are shown below. Each panel depicts the proportion of landings (for each species) in Georges Bank relative to the statistical area.
 
-```{r calc_props_sp, echo = F, eval=T, out.width="100%"}
+```{r calc_props_sp, eval=T, out.width="100%"}
 source(here::here("data-raw","plot_landings_proportions.r"))
 plot_landings_proportions(species="cols")
 
 ```
 
 The same data is represented in the plot below but the species are plotted as rows instead of columns
-```{r calc_props_st, echo = F, eval=T, out.width="100%"}
+
+```{r calc_props_st, eval=T, out.width="100%"}
 plot_landings_proportions(species="rows")
 
 ```
 
 The total landings of each species by stat area is shown below. This should ideally be compared to landings from [comlandr](https://github.com/NOAA-EDAB/comlandr). We should also determine how landings on the Canadian side of the Hague line should be handled
 
-```{r calc_lands, echo = F, eval=T, out.width="100%"}
+```{r calc_lands,  eval=T, out.width="100%"}
 source(here::here("data-raw","plot_landings.r"))
 plot_landings()
 
 ```
 
-The majority of landings (for a species) occurs in statistical areas where the proportion allocated to Georges Bank is fairly constant. 
+The majority of landings (for a species) occurs in statistical areas where the proportion allocated to Georges Bank is fairly constant.
 
+## References
