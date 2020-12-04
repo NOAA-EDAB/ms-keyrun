@@ -3,7 +3,7 @@ title: "Allocate landings to Georges Bank EPU"
 author: Andy Beet
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
-  html_document:
+  bookdown::html_document2:
     code_fold: hide
 csl: apa-annotated-bibliography.csl
 bibliography: references.bib
@@ -38,7 +38,7 @@ ggplot2::ggplot(data=coast) +
 
 Overlay the surrounding statistical areas:
 
-```{r GBfootstat, eval=T}
+```{r GBfootstat, eval=T, fig.cap="Statistical areas intersected by Georges Bank EPU",fig.align='center'}
 crs <- 4326
 # read in coastline and GB shape file
 coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
@@ -79,23 +79,15 @@ data <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds"))
 yearRange <- data %>% dplyr::distinct(YEAR) %>% range
 ```
 
-Methods found in [@depiper2014; & @benjamins2018] are implemented in the [`offshoreWind`](https://github.com/dcorvi/offshoreWind) R package. It is necessary to run the package from the server (the `mars` server is recommended).
+Methods found in [@depiper2014; & @benjamins2018] and the [`offshoreWind`](https://github.com/dcorvi/offshoreWind) package are briefly summarized below. It is necessary to run the package from the `mars` server.
 
-In summary:
+-   VTR data are joined with observer data (since observer data is considered reliable). A duration model is fitted to characterize a spatial footprint (rather than a single point location) associated with a trip ( @depiper2014). Gear type and trip length (which includes multiple hauls) influence the spatial precision.
 
--   VTR data are joined with observer data and a model is specified ( @depiper2014) to assign ...
+-   The duration model is then broadly applied to all VTR data. The result being a set of maps (or rasters). Each map/raster depicts the spatial probability of fishing for a trip.
 
--   Raster files are then created for each year
+-   The `offshoreWind` package then uses these rasters combined with commerical fishing data (DMIS) to determine the landings assigned to any spatial footprint supplied. This is achieved by calculating the overlap of the rasters with the user supplied spatial footprint.
 
--   expand ..
-
--   The landings data span the period from `r paste0(yearRange,collapse="-")`.
-
--   Landings are assigned to each of the statistical areas (`r statAreas`)
-
--   The landings with each statistical area (for each year) are then allocated to each portion of a statistical area (within Georges Bank and outside Georges Bank)
-
--   The proportion of landings attributed to Georges Bank are then calculated and displayed below
+The shape file shown in Figure \@ref(fig:GBfootstat) is supplied to the `offshoreWind` package and the landings with each statistical area (for each year) are then allocated to each portion of a statistical area (within Georges Bank and outside Georges Bank). The proportion of landings attributed to Georges Bank are then calculated and displayed below.
 
 The [top ranked species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are shown below. Each panel depicts the proportion of landings (for each species) in Georges Bank relative to the statistical area.
 
