@@ -5,6 +5,7 @@ date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
   bookdown::html_document2:
     code_fold: hide
+    number_sections: false
 csl: apa-annotated-bibliography.csl
 bibliography: references.bib
 ---

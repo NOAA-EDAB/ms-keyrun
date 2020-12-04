@@ -496,13 +496,13 @@ summary {
 
 <h1 class="title toc-ignore">Allocate landings to Georges Bank EPU</h1>
 <h4 class="author">Andy Beet</h4>
-<h4 class="date">03 December, 2020</h4>
+<h4 class="date">04 December, 2020</h4>
 
 </div>
 
 
-<div id="spatial-approaches-for-georges-bank-option-1" class="section level2" number="0.1">
-<h2><span class="header-section-number">0.1</span> Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option 1</a></h2>
+<div id="spatial-approaches-for-georges-bank-option-1" class="section level2">
+<h2>Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option 1</a></h2>
 <p>The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is defined as the set of survey strata that are at 50% within the 10 min square definition of the EPU.</p>
 <pre class="r"><code>crs &lt;- 4326
 # NEW GB EPU def based on survey strata
@@ -553,8 +553,8 @@ Figure 1: Statistical areas intersected by Georges Bank EPU
 </div>
 <p>Fishing data are available by statistical area. The statistical areas surrounding Georges Bank EPU (521, 522, 525, 526, 537, 538, 551, 552, 561, 562) contain catch from Georges Bank and its neighboring EPUs. This data needs to be partitioned and catch allocated to the Georges Bank EPU.</p>
 </div>
-<div id="method-for-partitioning-catch-data" class="section level2" number="0.2">
-<h2><span class="header-section-number">0.2</span> Method for partitioning catch data</h2>
+<div id="method-for-partitioning-catch-data" class="section level2">
+<h2>Method for partitioning catch data</h2>
 <pre class="r"><code>data &lt;- readRDS(here::here(&quot;data-raw&quot;,&quot;Landings_VTR_Geret_Data_summarized.rds&quot;))
 yearRange &lt;- data %&gt;% dplyr::distinct(YEAR) %&gt;% range</code></pre>
 <p>Methods found in <span class="citation">(DePiper, 2014; &amp; Benjamin, S et al., 2018)</span> and the <a href="https://github.com/dcorvi/offshoreWind"><code>offshoreWind</code></a> package are briefly summarized below. It is necessary to run the package from the <code>mars</code> server.</p>
