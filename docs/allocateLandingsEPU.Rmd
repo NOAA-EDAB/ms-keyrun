@@ -22,7 +22,7 @@ options(warn=-1)
 
 The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is defined as the set of survey strata that are at 50% within the 10 min square definition of the EPU.
 
-```{r GBfoot, eval=T}
+```{r GBfoot, eval=T, fig.cap="Georges Bank EPU", fig.align='center'}
 crs <- 4326
 # NEW GB EPU def based on survey strata
 coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
@@ -86,13 +86,13 @@ Methods found in [@depiper2014; & @benjamins2018] and the [`offshoreWind`](https
 
 -   The duration model is then broadly applied to all VTR data. The result being a set of maps (or rasters). Each map/raster depicts the spatial probability of fishing for a trip.
 
--   The `offshoreWind` package then uses these rasters combined with commerical fishing data (DMIS) to determine the landings assigned to any spatial footprint supplied. This is achieved by calculating the overlap of the rasters with the user supplied spatial footprint.
+-   The `offshoreWind` package then uses these rasters combined to determine the landings assigned to any spatial footprint supplied. This is achieved by calculating the overlap of the rasters with the user supplied spatial footprint.
 
 The shape file shown in Figure \@ref(fig:GBfootstat) is supplied to the `offshoreWind` package and the landings with each statistical area (for each year) are then allocated to each portion of a statistical area (within Georges Bank and outside Georges Bank). The proportion of landings attributed to Georges Bank are then calculated and displayed below.
 
 The [top ranked species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are shown below. Each panel depicts the proportion of landings (for each species) in Georges Bank relative to the statistical area.
 
-```{r calc_props_sp, eval=T, out.width="100%"}
+```{r calc_props_sp, eval=T, out.width="100%",fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area"}
 source(here::here("data-raw","plot_landings_proportions.r"))
 plot_landings_proportions(species="cols")
 
@@ -100,14 +100,14 @@ plot_landings_proportions(species="cols")
 
 The same data is represented in the plot below but the species are plotted as rows instead of columns
 
-```{r calc_props_st, eval=T, out.width="100%"}
+```{r calc_props_st, eval=T, out.width="100%",fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area"}
 plot_landings_proportions(species="rows")
 
 ```
 
 The total landings of each species by stat area is shown below. This should ideally be compared to landings from [comlandr](https://github.com/NOAA-EDAB/comlandr). We should also determine how landings on the Canadian side of the Hague line should be handled
 
-```{r calc_lands,  eval=T, out.width="100%"}
+```{r calc_lands,  eval=T, out.width="100%",fig.align='center',fig.cap="Total landings by statistical area"}
 source(here::here("data-raw","plot_landings.r"))
 plot_landings()
 
