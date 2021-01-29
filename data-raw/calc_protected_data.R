@@ -32,12 +32,14 @@ calc_protected_data <- function() {
     dplyr::mutate(NESPP3 = as.integer(NESPP3))
   
   # REVENUEFILE is a df where each record contains landings for a subtrip
+  #REVENUEFILEOLD <- readRDS(here::here("data-raw","Landings_DMIS_Geret_Data.rds")) # This stores a variable called REVENUEFILE
   REVENUEFILE <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data.rds")) # This stores a variable called REVENUEFILE
   
   # split the are column to define inside and out, sum landings by year, spp, area and 
   # select just 11 species that make up 90% of landings
   data <- REVENUEFILE %>%
     dplyr::select(Year,Area,NESPP3,InsideLANDED) %>% 
+    dplyr::filter(!Area == "Other") %>%
     dplyr::mutate(AREA=stringr::str_split_fixed(Area,"_",2)[,1]) %>%
     dplyr::mutate(InOut=stringr::str_split_fixed(Area,"_",2)[,2]) %>%
     dplyr::mutate(YEAR = as.numeric(Year)) %>% 
