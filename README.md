@@ -1,5 +1,8 @@
 # ms-keyrun
 
+![gitleaks](https://github.com/NOAA-EDAB/ms-keyrun/workflows/gitleaks/badge.svg)
+
+
 Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html).
 
 This repository documents decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Data, methods documentation, links to model code repositories and results, and eventually draft manuscripts will be found here too. 
