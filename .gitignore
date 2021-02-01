@@ -30,5 +30,5 @@ vignettes/*.pdf
 # specific files/sensitive data
 Landings_VTR_Geret_Data.rds
 comland
-
+simulated-data/atlantisoutput/
 
