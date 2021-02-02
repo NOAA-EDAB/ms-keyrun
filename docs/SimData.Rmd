@@ -1,0 +1,126 @@
+---
+title: "Generating Simulated Data"
+author: "Sarah Gaichas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    code_fold: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(here)
+library(tidyverse)  
+library(atlantisom)
+library(ggthemes)
+
+```
+
+## Simulating input data from an ecosystem model
+
+Here we use existing [Atlantis](https://github.com/Atlantis-Ecosystem-Model/Atlantis_example_and_instructions) ecosystem model output to generate input datasets for a variety of simpler population models, so that the performance of these models can be evaluated against known (simulated) ecosystem dynamics. Atlantis models simulate a wide range of physical and ecological processes, include a full food web, and can be run using different climate forcing, fishing, and other scenarios.  
+
+We extract simulated data using the R package [atlantisom](https://github.com/r4atlantis/atlantisom). The purpose of atlantisom is to use existing Atlantis model output to generate input datasets for a variety of models, so that the performance of these models can be evaluated against known (simulated) ecosystem dynamics. Atlantis models can be run using different climate forcing, fishing, and other scenarios. Users of atlantisom will be able to specify fishery independent and fishery dependent sampling in space and time, as well as species-specific catchability, selectivty, and other observation processes for any Atlantis scenario. Internally consistent multispecies and ecosystem datasets with known observation error characteristics will be the atlantisom outputs, for use in individual model performance testing, comparing performance of alternative models, and performance testing of model ensembles against "true" Atlantis outputs.
+
+## Species in the ms-keyrun dataset
+
+Our initial species selection includes 11 single species groups from the Atlantis NOBA model. 
+
+```{r spp-table}
+
+fgs <- load_fgs(here("simulated-data/atlantisoutput/NOBA_March_2020"), "nordic_groups_v04.csv")
+
+lname <- data.frame(Latin = c("*Hippoglossoides platessoides*",
+                              "*Reinhardtius hippoglossoides*",
+                              "*Scomber scombrus*",
+                              "*Melongrammus aeglefinus*",
+                              "*Pollachius virens*",
+                              "*Sebastes mentella*",
+                              "*Micromesistius poutassou*",
+                              "*Clupea harengus*",
+                              "*Gadus morhua*",
+                              "*Boreogadus saida*",
+                              "*Mallotus villosus*"),
+                    Code = c("LRD", "GRH", "MAC", "HAD", "SAI", "RED", 
+                             "BWH", "SSH", "NCO", "PCO", "CAP")
+)
+
+sppsubset <- merge(fgs, lname, all.y = TRUE)
+spptable <- sppsubset %>% 
+  arrange(Index) %>%
+  select(Name, Long.Name, Latin)
+
+knitr::kable(spptable, col.names = c("Model name", "Full name", "Latin name"))
+
+```
+
+Below we will double check survey census outputs against the true values, and then test some survey specifications that may be reasonable for multispecies model testing. Finally we will apply survey functions to the detailed diet data.
+
+## Generating a census dataset (February 2021)
+
+### Configuration files specified once
+
+`NOBA2config.R` specifies location and names of files needed for atlantisom to initialize:
+
+```{r, code = readLines("./simulated-data/config/NOBA2Config.R"), eval=F}
+```
+
+`omdimensions.R` standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):
+
+```{r, code = readLines("./simulated-data/config/omdimensions.R"), eval=F}
+```
+
+### Change these survey and fishery config files
+
+`mssurvey_spring.R` and `mssurvey_fall.R` configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):
+
+```{r, code = readLines("./simulated-data/config/mssurvey_spring.R"), eval=F}
+```
+
+```{r, code = readLines("./simulated-data/config/mssurvey_fall.R"), eval=F}
+```
+
+`msfishery.R` configures the fishery dependent data:
+
+```{r, code = readLines("./simulated-data/config/msfishery.R"), eval=F}
+```
+
+### Run atlantisom and save outputs
+
+This was run previously but true datasets are generated as follows, with outputs saved to the `atlantisoutput` folder (not kept on github due to size):
+
+```{r, eval=FALSE}
+
+NOBAom <- om_init(here("simulated-data/config/NOBA2config.R"))
+
+NOBAom_ms <- om_species(sppsubset$Name, NOBAom)
+
+NOBAom_ms_ind <- om_index(usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
+                                         here("simulated-data/config/mssurvey_fall.R")), 
+                           userfishery = here("simulated-data/config/msfishery.R"),
+                           omlist_ss = NOBAom_ms, 
+                           n_reps = 1, 
+                           save = TRUE)
+
+NOBAom_ms_comp <- om_comps(usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
+                                         here("simulated-data/config/mssurvey_fall.R")), 
+                           userfishery = here("simulated-data/config/msfishery.R"),
+                           omlist_ss = NOBAom_ms, 
+                           n_reps = 1, 
+                           save = TRUE)
+
+NOBAom_ms_diet <- om_diet(config = here("config", "NOBA2config.R"),
+                          dietfile = "NOBADetDiet.gz",
+                          usersurvey = c(here("config/mssurvey_spring.R"), 
+                                         here("config/mssurvey_fall.R")), 
+                          omlist_ss = NOBAom_ms, 
+                          n_reps = 1, 
+                          save = TRUE)
+
+
+```
+
+
+### Write to model input files
+
+## 
