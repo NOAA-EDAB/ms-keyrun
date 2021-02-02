@@ -1,0 +1,32 @@
+Package: ms-keyrun
+Title: All information for keyrun review
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Andy", family = "Beet", role = c("aut"), email = "andrew.beet@noaa.gov"),
+    person(given = "Sean", family = "Lucey", role = c("aut"), email = "sean.lucey@noaa.gov"),
+    person(given = "Sarah", family = "Gaichas", role = c("aut","cre"), email = "sarah.gaichase@noaa.gov"),
+    person(given = "Kiersten", family = "Kurti", role = c("aut"), email = "kiersten.kurti@noaa.gov"))
+Description: All information for keyrun review
+License: file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    bookdown,
+    dplyr,
+    DT,
+    ggplot2,
+    here,
+    htmltools,
+    kableExtra,
+    knitr,
+    remotes,
+    sf,
+    stringr,
+    tibble,
+    tidyr
+Remotes:
+    andybeet/cfdbs
+    andybeet/dbutils
+    NOAA-EDAB/mscatch
