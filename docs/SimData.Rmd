@@ -87,13 +87,21 @@ Below we will double check survey census outputs against the true values, and th
 
 ### Run atlantisom and save outputs
 
-This was run previously but true datasets are generated as follows, with outputs saved to the `atlantisoutput` folder (not kept on github due to size):
+True datasets are generated as follows, using `atlantisom` wrapper functions `om_init` to assemble initial true atlantis data, `om_species` to subset true data for desired species, `om_index` to generate survey biomass and total catch biomass indices, `om_comps` to generate age and length compositions and average weight at age from surveys and fisheries, and `om_diet` to generate diet from surveys. Outputs are saved to the `atlantisoutput` folder (not kept on github due to size):
 
 ```{r, eval=FALSE}
 
-NOBAom <- om_init(here("simulated-data/config/NOBA2config.R"))
+NOBAom <- om_init(here("simulated-data/config/NOBA2Config.R"))
 
 NOBAom_ms <- om_species(sppsubset$Name, NOBAom)
+
+#need to change internal call to source in atlantisom om_index om_comps and om_diet functions
+#expecting a config folder in same directory as rmd
+#this is a workaround
+
+dir.create(file.path(here("docs/config")))
+
+file.copy(here("simulated-data/config/omdimensions.R"), here("docs/config/omdimensions.R"))
 
 NOBAom_ms_ind <- om_index(usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
                                          here("simulated-data/config/mssurvey_fall.R")), 
@@ -109,18 +117,67 @@ NOBAom_ms_comp <- om_comps(usersurvey = c(here("simulated-data/config/mssurvey_s
                            n_reps = 1, 
                            save = TRUE)
 
-NOBAom_ms_diet <- om_diet(config = here("config", "NOBA2config.R"),
+NOBAom_ms_diet <- om_diet(config = here("simulated-data/config", "NOBA2config.R"),
                           dietfile = "NOBADetDiet.gz",
-                          usersurvey = c(here("config/mssurvey_spring.R"), 
-                                         here("config/mssurvey_fall.R")), 
+                          usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
+                                         here("simulated-data/config/mssurvey_fall.R")), 
                           omlist_ss = NOBAom_ms, 
                           n_reps = 1, 
                           save = TRUE)
 
-
+unlink(here("docs/config"), recursive = TRUE)
 ```
 
 
 ### Write to model input files
 
-## 
+Example input files are in the `model-input-files` directory. First we write the fairly simple biomass and catch inputs for the multispecies surplus production model MSSPM from our census survey outputs. 
+
+```{r write-msspm}
+
+o.name <- here("simulated-data/msinput/msspm/")
+
+#read in survey biomass data
+survObsBiom <- read_savedsurvs(d.name, 'survB') #reads in all surveys
+
+#multiple surveys named in list object, use as filename
+for(s in names(survObsBiom)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  svbio <- survObsBiom[[s]][[1]] %>%
+    calc_timestep2time(d.name, ., run.prm.file) %>%
+    dplyr::select(species, year, atoutput) %>%
+    tidyr::spread(species, atoutput) %>%
+    write_csv(paste0(o.name,s,".csv"))
+}
+
+#read in catch data
+read_savedfisheries <- function(dir, type){
+
+  datlook <- data.frame(dattype = c('Catch', 'catchAge', 'catchLen', 'catchWtage', 'catchAnnAge', 'catchAnnWtage'),
+                        pattern = c("*fishCatch.rds", "*fishObsAgeComp.rds", "*fishObsLenComp.rds", "*fishObsWtAtAge.rds",
+                                    "*fishObsFullAgeComp.rds", "*fishObsFullWtAtAge.rds"))
+
+  fisheries <- list.files(path=dir, pattern = as.character(datlook$pattern[datlook$dattype %in% type]), full.names = TRUE)
+
+  fishery.name <-  str_match(fisheries, paste0(scenario.name,"_\\s*(.*?)\\s",datlook$pattern[datlook$dattype==type]))[,2]
+
+  dat <- lapply(fisheries, readRDS)
+
+  names(dat) <- fishery.name
+
+  return(dat)
+}
+
+catchbio_ss <- read_savedfisheries(d.name, 'Catch')
+
+
+#arrange into wide format: Year, Species1, Species2 ...
+
+#write to csv
+
+#write readme for metadata
+
+```
+
+
+## Generating a survey dataset

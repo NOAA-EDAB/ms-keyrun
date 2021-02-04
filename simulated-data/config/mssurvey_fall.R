@@ -44,6 +44,9 @@ survselex <- data.frame(species=rep(names(annages), n_annages), #
                         agecl=unlist(sapply(n_annages,seq)),
                         selex=rep(1.0,sum(n_annages)))
 
+survselex.agecl <- survselex 
+
+
 # effective sample size needed for sample_fish
 # this effective N is high but not equal to total for numerous groups
 surveffN <- data.frame(species=survspp, effN=rep(100000, length(survspp)))
@@ -59,3 +62,6 @@ lenage_cv <- 0.1
 # max size bin for length estimation, function defaults to 150 cm if not supplied
 maxbin <- 200
 
+# diet sampling parameters
+alphamult <- 10000000
+unidprey <- 0

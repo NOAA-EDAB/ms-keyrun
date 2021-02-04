@@ -1,4 +1,6 @@
 # Default fishery configuration here is a census
+fishery.name="census"
+
 # Inherits species from input omlist_ss
 fishspp <- omlist_ss$species_ss 
 

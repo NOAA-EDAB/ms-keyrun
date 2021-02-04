@@ -1,4 +1,4 @@
-d.name <- here("atlantisoutput","NOBA_march_2020")
+d.name <- here("simulated-data/atlantisoutput","NOBA_march_2020")
 functional.groups.file <- "nordic_groups_v04.csv"
 biomass.pools.file <- "nordic_biol_v23.nc"
 biol.prm.file <- "nordic_biol_incl_harv_v_007_3.prm"
