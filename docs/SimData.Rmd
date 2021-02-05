@@ -62,27 +62,27 @@ Below we will double check survey census outputs against the true values, and th
 
 `NOBA2config.R` specifies location and names of files needed for atlantisom to initialize:
 
-```{r, code = readLines("./simulated-data/config/NOBA2Config.R"), eval=F}
+```{r, code = readLines(here("/simulated-data/config/NOBA2Config.R")), eval=F}
 ```
 
 `omdimensions.R` standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):
 
-```{r, code = readLines("./simulated-data/config/omdimensions.R"), eval=F}
+```{r, code = readLines(here("/simulated-data/config/omdimensions.R")), eval=F}
 ```
 
 ### Change these survey and fishery config files
 
 `mssurvey_spring.R` and `mssurvey_fall.R` configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):
 
-```{r, code = readLines("./simulated-data/config/mssurvey_spring.R"), eval=F}
+```{r, code = readLines(here("/simulated-data/config/mssurvey_spring.R")), eval=F}
 ```
 
-```{r, code = readLines("./simulated-data/config/mssurvey_fall.R"), eval=F}
+```{r, code = readLines(here("/simulated-data/config/mssurvey_fall.R")), eval=F}
 ```
 
 `msfishery.R` configures the fishery dependent data:
 
-```{r, code = readLines("./simulated-data/config/msfishery.R"), eval=F}
+```{r, code = readLines(here("/simulated-data/config/msfishery.R")), eval=F}
 ```
 
 ### Run atlantisom and save outputs
@@ -133,9 +133,11 @@ unlink(here("docs/config"), recursive = TRUE)
 
 Example input files are in the `model-input-files` directory. First we write the fairly simple biomass and catch inputs for the multispecies surplus production model MSSPM from our census survey outputs. 
 
-```{r write-msspm}
+```{r write-msspm, eval=FALSE}
 
 o.name <- here("simulated-data/msinput/msspm/")
+
+stepperyr <- if(NOBAom_ms$runpar$outputstepunit=="days") 365/NOBAom_ms$runpar$toutinc
 
 #read in survey biomass data
 survObsBiom <- read_savedsurvs(d.name, 'survB') #reads in all surveys
@@ -144,7 +146,8 @@ survObsBiom <- read_savedsurvs(d.name, 'survB') #reads in all surveys
 for(s in names(survObsBiom)){
   #arrange into wide format: year, Species1, Species2 ... and write csv
   svbio <- survObsBiom[[s]][[1]] %>%
-    calc_timestep2time(d.name, ., run.prm.file) %>%
+    #calc_timestep2time(d.name, ., run.prm.file) %>% #this gives an arbitrary start year of 1970
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
     dplyr::select(species, year, atoutput) %>%
     tidyr::spread(species, atoutput) %>%
     write_csv(paste0(o.name,s,".csv"))
@@ -170,12 +173,44 @@ read_savedfisheries <- function(dir, type){
 
 catchbio_ss <- read_savedfisheries(d.name, 'Catch')
 
-
-#arrange into wide format: Year, Species1, Species2 ...
-
-#write to csv
+for(c in names(catchbio_ss)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  catchbio <- catchbio_ss[[c]][[1]] %>%
+    dplyr::mutate(year = time/365) %>%
+    dplyr::select(species, year, atoutput) %>%
+    tidyr::spread(species, atoutput) %>%
+    write_csv(paste0(o.name,"fishery_",c,".csv"))
+}
 
 #write readme for metadata
+meta <- c("Simulated data from Norweigan-Barents Atlantis Model by Hansen et al. \n\n",
+          paste("Atlantis outputs stored in", d.name, '\n\n'),
+          paste("Biomass output for surveys", names(survObsBiom), '\n\n'),
+          paste("Fishery catch output for fisheries", names(catchbio_ss), '\n\n'),
+          "Biomass and catch output units are annual tons.\n\n",
+          "Survey specifications:\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_fall.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_spring.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_fall_01.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_spring_01.R")),
+          "\n\n",
+          "Fishery specifications:\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/msfishery.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/msfishery_01.R")),
+          "\n"
+          )
+
+cat(as.character(meta), file=paste0(here("simulated-data/msinput/msspm/"),"README.txt"))
 
 ```
 
