@@ -214,5 +214,24 @@ cat(as.character(meta), file=paste0(here("simulated-data/msinput/msspm/"),"READM
 
 ```
 
+The MSSPM needs diet compostion information as well. Here we supply two survey time series of diet data, one census and a trial survey dataset with more typical survey coverage issues. 
+
+```{r, write-msspm-diet}
+
+all_diets <- read_savedsurvs(d.name, 'survDiet')
+
+# aggregate over ages (survey diet is in proportion by age)
+
+trueB_age_allbox <- NOBAom_ms$truebio_ss %>%
+  #sum over polygons
+  aggregate(dat$atoutput,list(dat$species,dat$agecl,dat$time, dat$prey),sum)
+  
+  
+
+```
+
+
+
+
 
 ## Generating a survey dataset
