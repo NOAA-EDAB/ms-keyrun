@@ -17,15 +17,19 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 <a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> Year, season, area decisions - 8 July 2020 </a>
 
+*   <a href="https://noaa-edab.github.io/ms-keyrun/allocateLandingsEPU.html" target="_blank"> Allocate landings to EPU - 25 Nov 2020 </a>
+
 <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html" target="_blank"> Species, environment, data package decisions - 5 August 2020 </a>
 
 <a href="https://noaa-edab.github.io/ms-keyrun/CompsDat.html" target="_blank"> Age, length, and diet composition decisions - 3 September 2020 </a>
 
 
 ## Dataset source and methods documentation
-<a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySets.html" target="_blank"> Which Georges Bank survey footprint - 4 November 2020 </a>
+<a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html" target="_blank"> Which Georges Bank survey footprint - 4 November 2020 </a>
 
 ## Dataset descriptions and links
+
+<a href="https://noaa-edab.github.io/ms-keyrun/SimData.html" target="_blank"> Initial simulated data for testing - 2 February 2021 </a>
 
 # Models
 

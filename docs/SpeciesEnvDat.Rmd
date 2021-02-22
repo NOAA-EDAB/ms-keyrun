@@ -68,7 +68,7 @@ names(responses)[9] <- "RData"
 ```
 
 
-### Multispecies models (focal species)
+### Multispecies models (focal species) {#focalSpecies}
 
 Multispecies models focus on a subset of interacting species. They will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species.
 

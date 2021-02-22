@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       warning = FALSE)
 
-library(data.table); library(here); library(rgdal); library(Survdat) 
+library(data.table); library(here); library(rgdal); library(survdat) 
 
 ```
 
@@ -24,7 +24,7 @@ During the June/July survey <a href="https://noaa-edab.github.io/ms-keyrun/Datas
 
 While work is ongoing towards segregating the fisheries dependent data, there is a decision to make about how to use the fisheries independent survey.  The current definition of the EPU is based on ten-minute squares which does not fit with the survey design.  This leaves several options of how to use the survey data.  The first set of options is to use the survey design and assign survey strata to Georges Bank.  The second set of options is to ignore the survey design and either post-stratify or take a simple average within the EPU.  
 
-### Option 1 - use survey design
+### Option 1 - use survey design {#opt1}
 The NEFSC bottom trawl survey uses a stratified random design.  The rationale behind a stratified random design is to minimize variance. The figure below shows the full range of strata with the Georges Bank EPU overlaid in red. As you will notice, some of the survey strata extend beyond the EPU boundary.  There are several ways that this can be accounted for.  The simplest option is to include all strata that are partially within the EPU boundary.
 
 ```{r shapefile load}
@@ -131,11 +131,11 @@ plot(coast, col = 'grey', add = T)
 To see if there was an noticeable difference between the three options outlined above (All - Any strata that is at least partially within the GB EPU boundary, SOE - strata set used by the State of the Ecosystem report, and EPU - post-stratified EPU) biomass indices were calculated for the top 11 species that will be included in the MS Keyrun project.  
 
 ```{r test}
-library(data.table); library(here); library(rgdal); library(Survdat);
-library(ggplot2)
+library(data.table); library(here); library(rgdal)#; library(Survdat);
+library(ggplot2); library(survdat)
 
 #source(here('Survdat.r'))
-load(here('data_raw/survdat.RData'))
+load(here('data-raw/Survdat.RData'))
 
 #Top 10(11) species
 top10 <- c(15, 23, 32, 72, 73, 74, 75, 105, 106, 121, 197)

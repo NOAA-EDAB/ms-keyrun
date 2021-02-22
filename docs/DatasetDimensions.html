@@ -435,7 +435,7 @@ summary {
 
 <h1 class="title toc-ignore">MS Keyrun Dataset Dimensions</h1>
 <h4 class="author">Sarah Gaichas</h4>
-<h4 class="date">08 July, 2020</h4>
+<h4 class="date">30 November, 2020</h4>
 
 </div>
 
@@ -452,7 +452,7 @@ summary {
 </div>
 <div id="spatial-2-approaches-for-georges-bank" class="section level3">
 <h3>Spatial: 2 Approaches for Georges Bank</h3>
-<p>Ideal: Define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using ratios in spatially explicit VTR subset of catch data. Work towards this ideal, comparing coverage of VTR data by species and different methods for scaling as part of data documentation. Consult with ADIOS team and assessment experts to see if results look reasonable.</p>
+<p>Ideal: Define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using <a href="allocateLandingsEPU.html">ratios in spatially explicit VTR subset of catch data</a>. Work towards this ideal, comparing coverage of VTR data by species and different methods for scaling as part of data documentation. Consult with ADIOS team and assessment experts to see if results look reasonable.</p>
 <p>The ideal is time-consuming and cannot be started until mid-late September 2020 at the earliest.</p>
 <p>Interim: Define using fishery statistical areas (521-522, 525-526, 551-552, 561-562) and match survey data as much as possible to these. It is easier to map survey strata to larger fishery areas than the other way around; Sean can share code which may be modified by Gavin’s student to achieve this.</p>
 <p>The interim represents the upper bound of what catch would be by species for comparison to the ideal approach and can be implemented fairly quickly.</p>
@@ -472,7 +472,7 @@ summary {
 <pre class="r"><code>#survey link https://forms.gle/Pq78yqwa5ueFi8Kq8
 #results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses
 
-resultfile &lt;- drive_find(pattern = &quot;MS-Keyrun&quot;, type = &quot;spreadsheet&quot;)</code></pre>
+resultfile &lt;- drive_find(pattern = &quot;MS-Keyrun Dataset Dimensions&quot;, type = &quot;spreadsheet&quot;)</code></pre>
 <pre><code>## Using an auto-discovered, cached token.
 ## To suppress this message, modify your code or options to clearly consent to the use of a cached token.
 ## See gargle&#39;s &quot;Non-interactive auth&quot; vignette for more details:

@@ -1,0 +1,118 @@
+---
+title: "Allocate landings to Georges Bank EPU"
+author: Andy Beet
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: 
+  bookdown::html_document2:
+    code_fold: hide
+    number_sections: false
+csl: apa-annotated-bibliography.csl
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE)
+library(magrittr)
+options(warn=-1)
+```
+
+## Spatial: Approaches for Georges Bank [Option 1](https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1)
+
+The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is defined as the set of survey strata that are at 50% within the 10 min square definition of the EPU.
+
+```{r GBfoot, eval=T, fig.cap="Georges Bank EPU", fig.align='center'}
+crs <- 4326
+# NEW GB EPU def based on survey strata
+coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
+  sf::st_transform(.,crs=crs)
+GB_strata <- sf::st_read(here::here("gis","GB_SOE_strata.shp"),quiet=T) %>%
+    sf::st_transform(.,crs=crs)
+
+ggplot2::ggplot(data=coast) +
+  ggplot2::geom_sf() +
+  ggplot2::geom_sf(data=GB_strata,col="black",fill="grey") + 
+  ggplot2::coord_sf(xlim = c(-76,-65), ylim = c(38,44))
+
+```
+
+Overlay the surrounding statistical areas:
+
+```{r GBfootstat, eval=T, fig.cap="Statistical areas intersected by Georges Bank EPU",fig.align='center'}
+crs <- 4326
+# read in coastline and GB shape file
+coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
+  sf::st_transform(.,crs=crs)
+GB_strata <- sf::st_read(here::here("gis","GB_SOE_strata_stat.shp"),quiet=T) %>%
+    sf::st_transform(.,crs=crs)
+
+# separate polygons inside GB from those outside. Calculate centroid of polygon for label
+GB_in <- GB_strata %>%
+  dplyr::filter(grepl("in",Id) )
+GB_out <- GB_strata %>%
+  dplyr::filter(grepl("out",Id) ) %>% 
+  dplyr::mutate(Id=stringr::str_split_fixed(Id,"_",2)[,1])
+centroids <- sf::st_coordinates(sf::st_centroid(GB_out))
+GB_out <- cbind(GB_out,centroids)
+
+statAreas <- GB_out %>%
+  sf::st_drop_geometry() %>%
+  dplyr::distinct(Id) %>%
+  dplyr::pull()
+
+#plot map
+ggplot2::ggplot(data=coast) +
+  ggplot2::geom_sf() +
+  ggplot2::geom_sf(data=GB_out,fill="grey") + 
+  ggplot2::geom_text(data=GB_out,ggplot2::aes(x=X,y=Y,label=Id),size=2)    +
+  ggplot2::geom_sf(data=GB_in,col="black") + 
+  ggplot2::coord_sf(xlim = c(-76,-65), ylim = c(38,44))
+
+```
+
+Fishing data are available by statistical area. The statistical areas surrounding Georges Bank EPU (`r statAreas`) contain catch from Georges Bank and its neighboring EPUs. This data needs to be partitioned and catch allocated to the Georges Bank EPU.
+
+## Method for partitioning catch data
+
+```{r vtrdmisdata, eval=T}
+data <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds"))
+yearRange <- data %>% dplyr::distinct(YEAR) %>% range
+```
+
+Methods found in [@depiper2014; & @benjamins2018] and the [`offshoreWind`](https://github.com/dcorvi/offshoreWind) package are briefly summarized below. It is necessary to run the package from the `mars` server.
+
+-   VTR data are joined with observer data (since observer data is considered reliable). A duration model is fitted to characterize a spatial footprint (rather than a single point location) associated with a trip ( @depiper2014). Gear type and trip length (which includes multiple hauls) influence the spatial precision.
+
+-   The duration model is then broadly applied to all VTR data. The result being a set of maps (or rasters). Each map/raster depicts the spatial probability of fishing for a trip.
+
+-   The `offshoreWind` package then uses these rasters combined to determine the landings assigned to any spatial footprint supplied. This is achieved by calculating the overlap of the rasters with the user supplied spatial footprint.
+
+The shape file shown in Figure \@ref(fig:GBfootstat) is supplied to the `offshoreWind` package and the landings with each statistical area (for each year) are then allocated to each portion of a statistical area (within Georges Bank and outside Georges Bank). The proportion of landings attributed to Georges Bank are then calculated and displayed below.
+
+The [top ranked species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are shown below. Each panel depicts the proportion of landings (for each species) in Georges Bank relative to the statistical area.
+
+```{r calc_props_sp, eval=T, out.width="100%",fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area"}
+source(here::here("data-raw","plot_landings_proportions.r"))
+plot_landings_proportions(species="cols")
+
+```
+
+The same data is represented in the plot below but the species are plotted as rows instead of columns
+
+```{r calc_props_st, eval=T, out.width="100%",fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area"}
+plot_landings_proportions(species="rows")
+
+```
+
+The total landings of each species by stat area is shown below. This should ideally be compared to landings from [comlandr](https://github.com/NOAA-EDAB/comlandr). We should also determine how landings on the Canadian side of the Hague line should be handled
+
+```{r calc_lands,  eval=T, out.width="100%",fig.align='center',fig.cap="Total landings by statistical area"}
+source(here::here("data-raw","plot_landings.r"))
+plot_landings()
+
+```
+
+The majority of landings (for a species) occurs in statistical areas where the proportion allocated to Georges Bank is fairly constant.
+
+## References
