@@ -6,7 +6,7 @@ channel <- dbutils::connect_to_database(server="sole",uid="slucey")
 allfh.qry <- "select year, season, cruise6, station, stratum, tow, declat, declon,
              svspp, pdid, pdgutw, pdgutv,
              pynam, pyamtw, pyamtv, perpyw, perpyv
-             from FHDBS.ALLFH_FEAST_17"
+             from FHDBS.ALLFH_FEAST"
 
 allfh <- data.table::as.data.table(DBI::dbGetQuery(channel, allfh.qry))
 
