@@ -27,6 +27,7 @@ calc_protected_data <- function() {
     dplyr::mutate(NESPP3 = as.integer(NESPP3)) %>%
     dplyr::pull()
   
+  # grab Common name and nespp3. used in plot labels
   speciesNames <- mscatch::speciesLookupTable %>%
     dplyr::select(NESPP3,COMMON_NAME.y) %>%
     dplyr::mutate(NESPP3 = as.integer(NESPP3))
@@ -36,7 +37,7 @@ calc_protected_data <- function() {
   REVENUEFILE <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data.rds")) # This stores a variable called REVENUEFILE
   
   # split the are column to define inside and out, sum landings by year, spp, area and 
-  # select just 12 species that make up 90% of landings
+  # select species (nespp3codes) that make up ~90% of finfish landings
   data <- REVENUEFILE %>%
     dplyr::select(Year,Area,NESPP3,InsideLANDED) %>% 
     dplyr::filter(!Area == "Other") %>%
@@ -67,8 +68,19 @@ calc_protected_data <- function() {
   
   data <- rbind(data,otherFish)
   
-  #allOtherSpecies <- dbutils::create_species_lookup(channel,species = unique(otherFish$NESPP3)[-1],speciesType = "nespp3" )
-  
+  # otherSpecies <- REVENUEFILE %>%
+  #   dplyr::filter(!Area == "Other") %>%  
+  #   dplyr::filter(!NESPP3 %in% nespp3codes) %>% 
+  #   dplyr::select(NESPP3,InsideLANDED) %>% 
+  #   dplyr::group_by(NESPP3) %>%
+  #   dplyr::summarise(TOTALLANDINGS=sum(InsideLANDED)) %>%
+  #   dplyr::mutate(NESPP3=sprintf("%03d",NESPP3))
+  # 
+  # allOtherSpecies <- dbutils::create_species_lookup(channel,species = unique(otherFish$NESPP3)[-1],speciesType = "nespp3" )
+  # 
+  # a <- dplyr::left_join(allOtherSpecies$data,otherSpecies,by="NESPP3") %>%
+  #   dplyr::arrange(desc(TOTALLANDINGS))
+  # 
   saveRDS(data,file = here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds"))
   
 }
