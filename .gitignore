@@ -31,4 +31,6 @@ vignettes/*.pdf
 Landings_VTR_Geret_Data.rds
 comland
 simulated-data/atlantisoutput/
+# folders
+other
 
