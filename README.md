@@ -11,12 +11,9 @@ The target date for model keyrun reviews is October 2021, with all modeling resu
 
 ## Contributors (in alphabetical order)
 
-| [andybeet](https://github.com/andybeet)                                                   
-| [kcurti](https://github.com/kcurti)                                                       
-| [sgaichas](https://github.com/sgaichas)                                                    
-| [slucey](https://github.com/slucey)                                                       |
-|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| [![](https://avatars1.githubusercontent.com/u/22455149?s=100&v=4)](https://github.com/andybeet) | [![](https://avatars.githubusercontent.com/u/17127069?s=100&u=b5debf174eabe508d89fc425646d9b3ac6647aee&v=4)](https://github.com/kcurti) | [![](https://avatars.githubusercontent.com/u/8172302?s=100&u=2a0f1c0574e242d99dead3f709dff05001078721&v=4)](https://github.com/sgaichas) | [![](https://avatars.githubusercontent.com/u/5578254?s=100&u=cd59cd654cab73ea583c697145bfe062222355cd&v=4)](https://github.com/slucey) |
+| [andybeet](https://github.com/andybeet)| [kcurti](https://github.com/kcurti)| [sgaichas](https://github.com/sgaichas)| [slucey](https://github.com/slucey)|
+|---------------------------------------|-------------------------------------|----------------------------------------|-------------------------------------|
+| [![](https://avatars1.githubusercontent.com/u/22455149?s=100&v=4)](https://github.com/andybeet)| [![](https://avatars.githubusercontent.com/u/17127069?s=100&u=b5debf174eabe508d89fc425646d9b3ac6647aee&v=4)](https://github.com/kcurti)| [![](https://avatars.githubusercontent.com/u/8172302?s=100&u=2a0f1c0574e242d99dead3f709dff05001078721&v=4)](https://github.com/sgaichas)| [![](https://avatars.githubusercontent.com/u/5578254?s=100&u=cd59cd654cab73ea583c697145bfe062222355cd&v=4)](https://github.com/slucey) |
 
 #### Legal disclaimer
 
