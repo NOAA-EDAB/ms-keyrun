@@ -28,6 +28,8 @@ vignettes/*.pdf
 .Renviron
 .DS_Store
 # specific files/sensitive data
+data/gearLandingsBySpecies.rds
+data/timeSeriesSpeciesByGear.rds
 Landings_VTR_Geret_Data.rds
 comland
 simulated-data/atlantisoutput/
