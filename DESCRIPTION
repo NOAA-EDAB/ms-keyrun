@@ -25,7 +25,8 @@ Imports:
     sf,
     stringr,
     tibble,
-    tidyr
+    tidyr,
+    cluster
 Remotes:
     andybeet/cfdbs
     andybeet/dbutils
