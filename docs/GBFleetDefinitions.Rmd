@@ -69,7 +69,7 @@ plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 90% landing f
 ```{r dendro1,out.width="100%",fig.cap="The denrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gears used in the Georges Bank Ecological Production unit defined by statistical areas"}
 knitr::include_graphics("figures/dendrogram1.png")
 ```
-
+Note: Low values of the agglomerative coefficient indicate tight clustering of gears types. Larger values indicate less well formed clusters.
 
 
 ## References

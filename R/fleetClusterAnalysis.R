@@ -44,7 +44,7 @@ cluster_analysis_all_gears <- function(){
       gearCodesUpdate$GEARName[icode] <-substr(newCode,1,10) # shortens name to 10 characters for ease in plotting
     } else {
       gearCodesUpdate$NEGEAR2[icode] <- as.numeric(uniqueCodes[icode])
-      gearCodesUpdate$GEARName[icode] <- gearCodes$GEARNM2[icode]
+      gearCodesUpdate$GEARName[icode] <- gearCodes$GEARNM2[ind]
   
     }
   }
