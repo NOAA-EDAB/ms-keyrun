@@ -1,13 +1,14 @@
 #' Perform cluster analysis
 #' 
-#' Uses all gear Types and species contributing to x% of landings for each gear type.
-#' Reads in preprocessed data from get_landings_by_gear.r
+#' Uses a filtered set of gear Types. 
+#' gear types are chosen based on how many lbs in total is landed aggregated over time. 
+#' landings are ordered by gear type an the gears contributing to the top x% of landings are retained
 #' 
 #' @return object of class \code{agnes} representing the clustering. Use \code{plot} top display dendrogram
 #' 
 #' @example 
 #' \dontrun{
-#' clusterObj <- cluster_analysis_all_gears()
+#' clusterObj <- cluster_analysis_filtered_gears()
 #' # dendrogram plot
 #' plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 90% landing from each gear",xlab="")
 #' }
@@ -16,15 +17,13 @@
 
 library(magrittr)
 
-
-
-cluster_analysis_all_gears <- function(){
+cluster_analysis_filter_gears <- function(filterByLandings=.99){
 
   # read in landings data by gear/species aggregated over time
-  allGearData <- readRDS(here::here("data","gearLandingsBySpecies.rds"))
+  #allGearData <- readRDS(here::here("data","gearLandingsBySpecies.rds"))
+  allTimeGearData <- readRDS(here::here("data","timeSeriesSpeciesByGear.rds"))
   # read in all gear codes
   gearCodes <- readRDS(here::here("data","gearCodeTable.rds"))
-  
   # split long names by comma and select first name
   gearCodes <- gearCodes$data %>% 
     dplyr::select(NEGEAR2,GEARNM) %>%
@@ -49,12 +48,40 @@ cluster_analysis_all_gears <- function(){
     }
   }
   
+  # aggregate data over time
+  allTimeGearDataAgg <- allTimeGearData$data %>%
+    dplyr::select(-n) %>% 
+    dplyr::group_by(NESPP3,NEGEAR2) %>%
+    dplyr::summarise(totsplandlb = sum(totsplandlb))
+    
+
   # now joint unique code names to main gear data table
-  gearTable <- allGearData$data %>% dplyr::left_join(gearCodesUpdate,by="NEGEAR2") %>%
+  gearTable <- allTimeGearDataAgg %>% dplyr::left_join(gearCodesUpdate,by="NEGEAR2") %>%
     dplyr::mutate(GEARID=paste0(NEGEAR2,"-",GEARName)) %>%
-    dplyr::select(-NEGEAR2,-GEARName)
+    dplyr::select(-GEARName)
+  
+  print(gearTable)
   
   # Prep data for analysis --------------------------------------------------
+  # aggregate landings over time for each gear type
+  gd <- allTimeGearData$data %>%
+    dplyr::select(-NESPP3) %>%
+    dplyr::group_by(NEGEAR2) %>%
+    dplyr::summarise(totLandingslb=sum(totsplandlb)) %>%
+    dplyr::arrange(desc(totLandingslb)) %>%
+    dplyr::mutate(cumusum = cumsum(totLandingslb)) %>%
+    dplyr::mutate(proportion = cumusum/sum(totLandingslb))
+  # pick top species that meet minimum landings percentage criterion 
+  ind <- c(T,gd$proportion <= filterByLandings)
+  ind <- head(ind,-1)
+  gd <- gd[ind,]
+
+  print(gd)
+  
+  gearTable <- gearTable %>% 
+    dplyr::filter(NEGEAR2 %in% gd$NEGEAR2) %>%
+    dplyr::select(-NEGEAR2)
+
   
   # organize the data into wide data frame to calculate similarity matrix
   df <- gearTable %>%
