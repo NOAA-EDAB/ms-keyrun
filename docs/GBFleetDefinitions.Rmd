@@ -1,5 +1,5 @@
 ---
-title: "Fleet Definitions"
+title: "Fleet Definitions for Georges Bank"
 author: Andy Beet
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -14,8 +14,32 @@ link-citations: yes
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(magrittr)
+options(warn=-1)
 ```
 
+## Spatial Extent
+
+Statistical areas are used to define the Georges Bank footprint for pulling the landings data by gear
+```{r}
+crs <- 4326
+# read in coastline and GB shape file
+coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
+  sf::st_transform(.,crs=crs)
+GB_strata <- sf::st_read(here::here("gis","Statistical_Areas_2010.shp"),quiet=T) %>%
+    sf::st_transform(.,crs=crs) %>%
+  dplyr::filter(Id %in% c(521, 522, 523, 524, 525, 526, 538, 551, 552, 561, 562, 537) )
+centroids <- sf::st_coordinates(sf::st_centroid(GB_strata))
+GB_strata <- cbind(GB_strata,centroids)
+
+#plot map
+ggplot2::ggplot(data=coast) +
+  ggplot2::geom_sf() +
+  ggplot2::geom_sf(data=GB_strata,fill="grey") + 
+  ggplot2::geom_text(data=GB_strata,ggplot2::aes(x=X,y=Y,label=Id),size=2)    +
+  ggplot2::coord_sf(xlim = c(-76,-65), ylim = c(38,44))
+```
+
+## Gear Types
 
 ```{r getGears,  echo=F, eval=T}
 gears <- readRDS(here::here("data","gearCodeTable.rds"))
@@ -63,7 +87,7 @@ clusterObj <- cluster_analysis_all_gears()
 plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 90% landing from each gear",xlab="")
 
 ```
-```{r dendro1,out.width="100%",fig.cap="The denrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas",eval=T,echo=F}
+```{r dendro1,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas",eval=T,echo=F}
 knitr::include_graphics("figures/dendrogram1.png")
 ```
 Note: Low values of the agglomerative coefficient indicate tight clustering of gears types. Larger values indicate less well formed clusters.
@@ -73,8 +97,111 @@ Note: Low values of the agglomerative coefficient indicate tight clustering of g
 
 Details to follow:
 
-```{r dendro2,out.width="100%",fig.cap="The denrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings",eval=T,echo=F}
+```{r dendro2,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings",eval=T,echo=F}
 knitr::include_graphics("figures/dendrogram2.png")
+
+```
+
+
+
+### Species landings by gear {.tabset .tabset-pills}
+
+Time series of species caught by each gear type
+
+#### 01
+
+```{r gear01,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="01")
+knitr::include_graphics("figures/gear01.png")
+```
+
+#### 02
+```{r gear02,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="02")
+knitr::include_graphics("figures/gear02.png")
+```
+
+#### 05
+
+```{r gear05,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="05")
+knitr::include_graphics("figures/gear05.png")
+```
+
+#### 10
+
+```{r gear10,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="10")
+knitr::include_graphics("figures/gear10.png")
+```
+
+#### 12
+
+```{r gear12,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="12")
+knitr::include_graphics("figures/gear12.png")
+```
+
+#### 13
+
+```{r gear13,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="13")
+knitr::include_graphics("figures/gear13.png")
+```
+
+#### 14
+
+```{r gear14,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="14")
+knitr::include_graphics("figures/gear14.png")
+```
+
+#### 17
+```{r gear17,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="17")
+knitr::include_graphics("figures/gear17.png")
+```
+
+#### 18
+```{r gear18,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="18")
+knitr::include_graphics("figures/gear18.png")
+```
+
+#### 20
+```{r gear20,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="20")
+knitr::include_graphics("figures/gear20.png")
+```
+
+#### 21
+```{r gear21,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="21")
+knitr::include_graphics("figures/gear21.png")
+```
+
+#### 30
+```{r gear30,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="30")
+knitr::include_graphics("figures/gear30.png")
+```
+
+#### 37
+```{r gear37,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="37")
+knitr::include_graphics("figures/gear37.png")
+```
+
+#### 38
+```{r gear38,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="38")
+knitr::include_graphics("figures/gear38.png")
+```
+
+#### 40
+```{r gear40,  echo=F, eval =T}
+GBCodes %>% dplyr::filter(NEGEAR2=="40")
+knitr::include_graphics("figures/gear40.png")
 ```
 
 
