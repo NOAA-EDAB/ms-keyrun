@@ -4,18 +4,21 @@
 #' gear types are chosen based on how many lbs in total is landed aggregated over time. 
 #' landings are ordered by gear type an the gears contributing to the top x% of landings are retained
 #' 
+#' @param filterByLandings Numeric scalar. Proportion of landing to be captured by gears. (Default=.99)
+#' 
 #' @return object of class \code{agnes} representing the clustering. Use \code{plot} top display dendrogram
 #' 
 #' @example 
 #' \dontrun{
 #' clusterObj <- cluster_analysis_filtered_gears()
 #' # dendrogram plot
-#' plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 90% landing from each gear",xlab="")
+#' plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 99% landing from each gear",xlab="")
 #' }
 #' 
 #' 
 
 library(magrittr)
+source(here::here("R","cluster_gears.r"))
 
 cluster_analysis_filter_gears <- function(filterByLandings=.99){
 
@@ -59,9 +62,7 @@ cluster_analysis_filter_gears <- function(filterByLandings=.99){
   gearTable <- allTimeGearDataAgg %>% dplyr::left_join(gearCodesUpdate,by="NEGEAR2") %>%
     dplyr::mutate(GEARID=paste0(NEGEAR2,"-",GEARName)) %>%
     dplyr::select(-GEARName)
-  
-  print(gearTable)
-  
+ 
   # Prep data for analysis --------------------------------------------------
   # aggregate landings over time for each gear type
   gd <- allTimeGearData$data %>%
@@ -74,40 +75,33 @@ cluster_analysis_filter_gears <- function(filterByLandings=.99){
   # pick top species that meet minimum landings percentage criterion 
   ind <- c(T,gd$proportion <= filterByLandings)
   ind <- head(ind,-1)
-  gd <- gd[ind,]
+  topData <- gd[ind,]
 
-  print(gd)
+  topTable <- gearTable %>% 
+    dplyr::filter(NEGEAR2 %in% topData$NEGEAR2)
   
-  gearTable <- gearTable %>% 
-    dplyr::filter(NEGEAR2 %in% gd$NEGEAR2) %>%
+  topGears <- unique(topTable$NEGEAR2)
+  
+  topTable <- topTable %>%
     dplyr::select(-NEGEAR2)
 
+  ## cluster analysis on top x%
+  top <- cluster_gears(topTable)
   
-  # organize the data into wide data frame to calculate similarity matrix
-  df <- gearTable %>%
-    tidyr::pivot_wider(.,
-                       id_cols=c(GEARID,NESPP3),
-                       names_from = NESPP3,
-                       values_from = totsplandlb)
-  df[is.na(df)] <- 0
-  df <- tibble::column_to_rownames(df,var="GEARID")
+  ## cluster analysis on bottom 100-x%
+  bottomData <- gd[!ind,]
+  bottomTable <- gearTable %>% 
+    dplyr::filter(NEGEAR2 %in% bottomData$NEGEAR2)
   
-  # standardize columns
-  for (icol in 1:ncol(df)) {
-    mn <- mean(df[,icol])
-    sdev <- sd(df[,icol])
-    df[,icol] <- (df[,icol]-mn)/sdev
-  }
+  bottomGears <- unique(bottomTable$NEGEAR2)
+  
+  bottomTable <- bottomTable %>%
+    dplyr::select(-NEGEAR2)
   
   
-  # Cluster analysis --------------------------------------------------------
+  bottom <- cluster_gears(bottomTable)
   
-  # similarity matrix (disimilarity)
-  simMat <- cluster::daisy(df,metric="euclidean",stand = F)
-  # hierarchical cluster analysis
-  clusterObj <- cluster::agnes(simMat,diss=T)
-  
-  return(clusterObj)
+  return(list(top=top,topGears=topGears,bottom=bottom,bottomGears=bottomGears))
   
 }
 
