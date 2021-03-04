@@ -37,13 +37,20 @@ get_landings_by_gear <- function(channel,percentLanded=0.90,area=c(cfdbs::EPUs$d
       dplyr::ungroup()
     
     # select species that account for x% of landings
-    orderSpecies <- aggGear %>% 
+    orderedSpecies <- aggGear %>% 
       dplyr::group_by(NESPP3) %>% 
       dplyr::summarise(sumOverYears=sum(as.numeric(totsplandlb))) %>% # total by species agg over time
       dplyr::arrange(desc(sumOverYears)) %>% 
       dplyr::mutate(csum=cumsum(sumOverYears)) %>%
-      dplyr::mutate(prop = csum/sum(sumOverYears)) %>% 
+      dplyr::mutate(prop = csum/sum(sumOverYears))
+    
+    orderSpecies <- orderedSpecies %>% 
       dplyr::filter(prop <= percentLanded)
+    
+    if (dim(orderSpecies)[1]==0){
+      # dominated by one species > percentLanded
+      orderSpecies <- orderedSpecies[1,]
+    }
   
     # select these species from data pull to account for gear species interaction
     useData <- aggGear %>% 
