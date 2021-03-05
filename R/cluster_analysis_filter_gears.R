@@ -10,9 +10,9 @@
 #' 
 #' @example 
 #' \dontrun{
-#' clusterObj <- cluster_analysis_filtered_gears()
+#' clusterObj <- cluster_analysis_filter_gears()
 #' # dendrogram plot
-#' plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 99% landing from each gear",xlab="")
+#' plot(clusterObj$top,ask=T,which.plots=2,main="Complete gear list using 99% landing from each gear",xlab="")
 #' }
 #' 
 #' 
