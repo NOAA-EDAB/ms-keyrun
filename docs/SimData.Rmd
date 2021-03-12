@@ -218,13 +218,19 @@ The MSSPM needs diet compostion information as well. Here we supply two survey t
 
 ```{r, write-msspm-diet}
 
+source(here("simulated-data/config/NOBA2Config.R"))
+
 all_diets <- read_savedsurvs(d.name, 'survDiet')
 
 # aggregate over ages (survey diet is in proportion by age)
 
+NOBAom_ms <- readRDS(file.path(d.name, paste0(scenario.name, "omlist_ss.rds")))
+
 trueB_age_allbox <- NOBAom_ms$truebio_ss %>%
   #sum over polygons
-  aggregate(dat$atoutput,list(dat$species,dat$agecl,dat$time, dat$prey),sum)
+  #aggregate(dat$atoutput,list(dat$species,dat$agecl,dat$time, dat$prey),sum)
+  group_by(species,agecl,time) %>%
+  summarise(sum(atoutput))
   
   
 
