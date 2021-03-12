@@ -19,6 +19,8 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 *   <a href="https://noaa-edab.github.io/ms-keyrun/allocateLandingsEPU.html" target="_blank"> Allocate landings to EPU - 25 Nov 2020 </a>
 
+<a href="https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html" target="_blank"> Fleet Definitions - 26 Feb 2021 </a>
+
 <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html" target="_blank"> Species, environment, data package decisions - 5 August 2020 </a>
 
 <a href="https://noaa-edab.github.io/ms-keyrun/CompsDat.html" target="_blank"> Age, length, and diet composition decisions - 3 September 2020 </a>
