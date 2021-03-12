@@ -216,13 +216,16 @@ cat(as.character(meta), file=paste0(here("simulated-data/msinput/msspm/"),"READM
 
 The MSSPM needs diet compostion information as well. Here we supply two survey time series of diet data, one census and a trial survey dataset with more typical survey coverage issues. 
 
-```{r, write-msspm-diet}
+Diet composition is by predator age class for each time (unit=time.days) and is a proportion (sums to 1 for each time). We get species diet composition by aggregating over age classes (weight diet composition at age by true biomass at age). 
+
+```{r, write-msspm-diet, eval=FALSE}
 
 source(here("simulated-data/config/NOBA2Config.R"))
 
 all_diets <- read_savedsurvs(d.name, 'survDiet')
 
-# aggregate over ages (survey diet is in proportion by age)
+# divide time.days by runpar$toutinc to match time in biomass
+# aggregate over ages using true biomass at age (survey diet is in proportion by age)
 
 NOBAom_ms <- readRDS(file.path(d.name, paste0(scenario.name, "omlist_ss.rds")))
 
@@ -230,9 +233,30 @@ trueB_age_allbox <- NOBAom_ms$truebio_ss %>%
   #sum over polygons
   #aggregate(dat$atoutput,list(dat$species,dat$agecl,dat$time, dat$prey),sum)
   group_by(species,agecl,time) %>%
-  summarise(sum(atoutput))
+  summarise(trueBatage = sum(atoutput))
+
+trueB <- trueB_age_allbox %>%
+  group_by(species, time) %>%
+  summarise(trueB = sum(trueBatage))
   
-  
+trueBagecl <- merge(trueB_age_allbox, trueB)
+
+#multiple surveys named in list object, use as filename
+for(s in names(all_diets)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  svdiet <- all_diets[[s]][[1]] %>%
+    #calc_timestep2time(d.name, ., run.prm.file) %>% #this gives an arbitrary start year of 1970
+    dplyr::mutate(time = time.days/NOBAom_ms$runpar$toutinc) %>%
+    dplyr::left_join(., trueBagecl) %>%
+    dplyr::mutate(dietBwt = dietSamp*trueBatage) %>%
+    dplyr::group_by(species,time,prey,trueB) %>%
+    dplyr::summarise(totdietBwt = sum(dietBwt)) %>%
+    dplyr::mutate(totdietComp = totdietBwt/trueB) %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(year, species, prey, totdietComp) %>%
+    write_csv(paste0(o.name,"diet_",s,".csv"))
+}
 
 ```
 
