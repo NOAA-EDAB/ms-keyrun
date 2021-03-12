@@ -218,7 +218,7 @@ The MSSPM needs diet compostion information as well. Here we supply two survey t
 
 Diet composition is by predator age class for each time (unit=time.days) and is a proportion (sums to 1 for each time). We get species diet composition by aggregating over age classes (weight diet composition at age by true biomass at age). 
 
-```{r, write-msspm-diet, eval=FALSE}
+```{r write-msspm-diet, eval=FALSE}
 
 source(here("simulated-data/config/NOBA2Config.R"))
 
@@ -260,8 +260,34 @@ for(s in names(all_diets)){
 
 ```
 
+For the length-based model [hydra](https://github.com/thefaylab/hydra_sim), we can write .csv files to be used as input in the [hydradata](https://github.com/thefaylab/hydradata) package, which writes .dat and .pin files.
 
+Hydra needs survey biomass time series, catch time series, survey length composition, fishery length composition, and diet composition data. 
 
+Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file.
+
+```{r write-hydra}
+
+diettrue <- load_diet_comp(here("simulated-data/atlantisoutput/NOBA_march_2020"), 
+                           "nordic_runresults_01DietCheck.txt", fgs = fgs)
+
+ms_diet <- diettrue %>%
+  filter(species %in% sppsubset$Name) %>%
+  filter(atoutput>0)
+
+predOrPrey <- ms_diet %>%
+  filter(prey %in% unique(species)) %>%
+  select(species, agecl, time.days, prey, atoutput) %>%
+  group_by(species, prey) %>%
+  summarise(avgpreyprop = mean(atoutput))
+
+specieslist <- data.frame(species = unique(unique(survObsBiom[[2]][[1]]$species)),
+                          guild = rep("na"),
+                          guildmember = c(1:11),
+                          predOrPrey = rep(1)
+)
+
+```
 
 
 ## Generating a survey dataset
