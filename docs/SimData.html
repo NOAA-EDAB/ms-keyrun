@@ -421,7 +421,7 @@ pre code {
 
 <h1 class="title toc-ignore">Generating Simulated Data</h1>
 <h4 class="author">Sarah Gaichas</h4>
-<h4 class="date">12 March, 2021</h4>
+<h4 class="date">15 March, 2021</h4>
 
 </div>
 
@@ -913,6 +913,119 @@ for(s in names(all_diets)){
     dplyr::select(year, species, prey, totdietComp) %&gt;%
     write_csv(paste0(o.name,&quot;diet_&quot;,s,&quot;.csv&quot;))
 }</code></pre>
+<p>For the length-based model <a href="https://github.com/thefaylab/hydra_sim">hydra</a>, we can write .csv files to be used as input in the <a href="https://github.com/thefaylab/hydradata">hydradata</a> package, which writes .dat and .pin files.</p>
+<p>Hydra needs survey biomass time series, catch time series, survey length composition, fishery length composition, and diet composition data.</p>
+<p>Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file.</p>
+<pre class="r"><code>diettrue &lt;- load_diet_comp(here(&quot;simulated-data/atlantisoutput/NOBA_march_2020&quot;), 
+                           &quot;nordic_runresults_01DietCheck.txt&quot;, fgs = fgs)
+
+ms_diet &lt;- diettrue %&gt;%
+  filter(species %in% sppsubset$Name) %&gt;%
+  filter(atoutput&gt;0) %&gt;%
+  mutate(species = as.character(species),
+         prey = as.character(prey))
+
+predPrey &lt;- ms_diet %&gt;%
+  filter(prey %in% unique(species)) %&gt;%
+  select(species, agecl, time.days, prey, atoutput) %&gt;%
+  group_by(species, prey) %&gt;%
+  summarise(avgpreyprop = mean(atoutput))
+
+foodweb &lt;- left_join(sppsubset, predPrey, by=c(&quot;Name&quot; = &quot;species&quot;)) %&gt;%
+  select(species, prey, avgpreyprop) %&gt;%
+  mutate(avgpreyprop = ceiling(avgpreyprop)) %&gt;%
+  spread(species, avgpreyprop) %&gt;%
+  filter(!is.na(prey)) %&gt;%
+  replace(is.na(.), 0)
+  
+predOrPrey &lt;- ifelse(colSums(foodweb[-1])&gt;0, 1, 0)
+
+specieslist &lt;- data.frame(species = unique(unique(survObsBiom[[2]][[1]]$species)),
+                          guild = rep(&quot;na&quot;),
+                          guildmember = c(1:11),
+                          predOrPrey = predOrPrey
+)
+
+o.name &lt;- here(&quot;simulated-data/msinput/hydra/&quot;)
+write_csv(foodweb, paste0(o.name,&quot;foodweb_NOBA.csv&quot;))
+write_csv(specieslist, paste0(o.name,&quot;speciesList_NOBA.csv&quot;))</code></pre>
+<p>Survey and catch datasets for hydra from NOBA (same methods as MSSPM). Make this a function that takes output directory name and output names as arguments.</p>
+<pre class="r"><code>o.name &lt;- here(&quot;simulated-data/msinput/hydra/&quot;)
+
+stepperyr &lt;- if(NOBAom_ms$runpar$outputstepunit==&quot;days&quot;) 365/NOBAom_ms$runpar$toutinc
+
+#read in survey biomass data
+survObsBiom &lt;- read_savedsurvs(d.name, &#39;survB&#39;) #reads in all surveys
+
+#multiple surveys named in list object, use as filename
+for(s in names(survObsBiom)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  svbio &lt;- survObsBiom[[s]][[1]] %&gt;%
+    #calc_timestep2time(d.name, ., run.prm.file) %&gt;% #this gives an arbitrary start year of 1970
+    dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+    dplyr::select(species, year, atoutput) %&gt;%
+    tidyr::spread(species, atoutput) %&gt;%
+    write_csv(paste0(o.name,&quot;observation_biomass_NOBA_&quot;,s,&quot;.csv&quot;))
+}
+
+#read in catch data
+read_savedfisheries &lt;- function(dir, type){
+
+  datlook &lt;- data.frame(dattype = c(&#39;Catch&#39;, &#39;catchAge&#39;, &#39;catchLen&#39;, &#39;catchWtage&#39;, &#39;catchAnnAge&#39;, &#39;catchAnnWtage&#39;),
+                        pattern = c(&quot;*fishCatch.rds&quot;, &quot;*fishObsAgeComp.rds&quot;, &quot;*fishObsLenComp.rds&quot;, &quot;*fishObsWtAtAge.rds&quot;,
+                                    &quot;*fishObsFullAgeComp.rds&quot;, &quot;*fishObsFullWtAtAge.rds&quot;))
+
+  fisheries &lt;- list.files(path=dir, pattern = as.character(datlook$pattern[datlook$dattype %in% type]), full.names = TRUE)
+
+  fishery.name &lt;-  str_match(fisheries, paste0(scenario.name,&quot;_\\s*(.*?)\\s&quot;,datlook$pattern[datlook$dattype==type]))[,2]
+
+  dat &lt;- lapply(fisheries, readRDS)
+
+  names(dat) &lt;- fishery.name
+
+  return(dat)
+}
+
+catchbio_ss &lt;- read_savedfisheries(d.name, &#39;Catch&#39;)
+
+for(c in names(catchbio_ss)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  catchbio &lt;- catchbio_ss[[c]][[1]] %&gt;%
+    dplyr::mutate(year = time/365) %&gt;%
+    dplyr::select(species, year, atoutput) %&gt;%
+    tidyr::spread(species, atoutput) %&gt;%
+    write_csv(paste0(o.name,&quot;observation_catch_NOBA_&quot;,c,&quot;.csv&quot;))
+}
+
+#write readme for metadata
+meta &lt;- c(&quot;Simulated data from Norweigan-Barents Atlantis Model by Hansen et al. \n\n&quot;,
+          paste(&quot;Atlantis outputs stored in&quot;, d.name, &#39;\n\n&#39;),
+          paste(&quot;Biomass output for surveys&quot;, names(survObsBiom), &#39;\n\n&#39;),
+          paste(&quot;Fishery catch output for fisheries&quot;, names(catchbio_ss), &#39;\n\n&#39;),
+          &quot;Biomass and catch output units are annual tons.\n\n&quot;,
+          &quot;Survey specifications:\n&quot;,
+          &quot;----------------------\n&quot;,
+          read_file(here(&quot;/simulated-data/config/mssurvey_fall.R&quot;)),
+          &quot;\n&quot;,
+          &quot;----------------------\n&quot;,
+          read_file(here(&quot;/simulated-data/config/mssurvey_spring.R&quot;)),
+          &quot;\n&quot;,
+          &quot;----------------------\n&quot;,
+          read_file(here(&quot;/simulated-data/config/mssurvey_fall_01.R&quot;)),
+          &quot;\n&quot;,
+          &quot;----------------------\n&quot;,
+          read_file(here(&quot;/simulated-data/config/mssurvey_spring_01.R&quot;)),
+          &quot;\n\n&quot;,
+          &quot;Fishery specifications:\n&quot;,
+          &quot;----------------------\n&quot;,
+          read_file(here(&quot;/simulated-data/config/msfishery.R&quot;)),
+          &quot;\n&quot;,
+          &quot;----------------------\n&quot;,
+          read_file(here(&quot;/simulated-data/config/msfishery_01.R&quot;)),
+          &quot;\n&quot;
+          )
+
+cat(as.character(meta), file=paste0(here(&quot;simulated-data/msinput/hydra/&quot;),&quot;README.txt&quot;))</code></pre>
 </div>
 </div>
 <div id="generating-a-survey-dataset" class="section level2">

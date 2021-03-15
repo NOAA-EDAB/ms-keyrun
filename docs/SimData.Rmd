@@ -266,7 +266,7 @@ Hydra needs survey biomass time series, catch time series, survey length composi
 
 Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file.
 
-```{r write-hydra}
+```{r write-hydra, eval=FALSE}
 
 diettrue <- load_diet_comp(here("simulated-data/atlantisoutput/NOBA_march_2020"), 
                            "nordic_runresults_01DietCheck.txt", fgs = fgs)
@@ -304,5 +304,85 @@ write_csv(specieslist, paste0(o.name,"speciesList_NOBA.csv"))
 
 ```
 
+Survey and catch datasets for hydra from NOBA (same methods as MSSPM). Make this a function that takes output directory name and output names as arguments. 
+```{r, eval=FALSE}
+o.name <- here("simulated-data/msinput/hydra/")
+
+stepperyr <- if(NOBAom_ms$runpar$outputstepunit=="days") 365/NOBAom_ms$runpar$toutinc
+
+#read in survey biomass data
+survObsBiom <- read_savedsurvs(d.name, 'survB') #reads in all surveys
+
+#multiple surveys named in list object, use as filename
+for(s in names(survObsBiom)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  svbio <- survObsBiom[[s]][[1]] %>%
+    #calc_timestep2time(d.name, ., run.prm.file) %>% #this gives an arbitrary start year of 1970
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, year, atoutput) %>%
+    tidyr::spread(species, atoutput) %>%
+    write_csv(paste0(o.name,"observation_biomass_NOBA_",s,".csv"))
+}
+
+#read in catch data
+read_savedfisheries <- function(dir, type){
+
+  datlook <- data.frame(dattype = c('Catch', 'catchAge', 'catchLen', 'catchWtage', 'catchAnnAge', 'catchAnnWtage'),
+                        pattern = c("*fishCatch.rds", "*fishObsAgeComp.rds", "*fishObsLenComp.rds", "*fishObsWtAtAge.rds",
+                                    "*fishObsFullAgeComp.rds", "*fishObsFullWtAtAge.rds"))
+
+  fisheries <- list.files(path=dir, pattern = as.character(datlook$pattern[datlook$dattype %in% type]), full.names = TRUE)
+
+  fishery.name <-  str_match(fisheries, paste0(scenario.name,"_\\s*(.*?)\\s",datlook$pattern[datlook$dattype==type]))[,2]
+
+  dat <- lapply(fisheries, readRDS)
+
+  names(dat) <- fishery.name
+
+  return(dat)
+}
+
+catchbio_ss <- read_savedfisheries(d.name, 'Catch')
+
+for(c in names(catchbio_ss)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  catchbio <- catchbio_ss[[c]][[1]] %>%
+    dplyr::mutate(year = time/365) %>%
+    dplyr::select(species, year, atoutput) %>%
+    tidyr::spread(species, atoutput) %>%
+    write_csv(paste0(o.name,"observation_catch_NOBA_",c,".csv"))
+}
+
+#write readme for metadata
+meta <- c("Simulated data from Norweigan-Barents Atlantis Model by Hansen et al. \n\n",
+          paste("Atlantis outputs stored in", d.name, '\n\n'),
+          paste("Biomass output for surveys", names(survObsBiom), '\n\n'),
+          paste("Fishery catch output for fisheries", names(catchbio_ss), '\n\n'),
+          "Biomass and catch output units are annual tons.\n\n",
+          "Survey specifications:\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_fall.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_spring.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_fall_01.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/mssurvey_spring_01.R")),
+          "\n\n",
+          "Fishery specifications:\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/msfishery.R")),
+          "\n",
+          "----------------------\n",
+          read_file(here("/simulated-data/config/msfishery_01.R")),
+          "\n"
+          )
+
+cat(as.character(meta), file=paste0(here("simulated-data/msinput/hydra/"),"README.txt"))
+
+```
 
 ## Generating a survey dataset
