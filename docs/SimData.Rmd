@@ -273,19 +273,34 @@ diettrue <- load_diet_comp(here("simulated-data/atlantisoutput/NOBA_march_2020")
 
 ms_diet <- diettrue %>%
   filter(species %in% sppsubset$Name) %>%
-  filter(atoutput>0)
+  filter(atoutput>0) %>%
+  mutate(species = as.character(species),
+         prey = as.character(prey))
 
-predOrPrey <- ms_diet %>%
+predPrey <- ms_diet %>%
   filter(prey %in% unique(species)) %>%
   select(species, agecl, time.days, prey, atoutput) %>%
   group_by(species, prey) %>%
   summarise(avgpreyprop = mean(atoutput))
 
+foodweb <- left_join(sppsubset, predPrey, by=c("Name" = "species")) %>%
+  select(species, prey, avgpreyprop) %>%
+  mutate(avgpreyprop = ceiling(avgpreyprop)) %>%
+  spread(species, avgpreyprop) %>%
+  filter(!is.na(prey)) %>%
+  replace(is.na(.), 0)
+  
+predOrPrey <- ifelse(colSums(foodweb[-1])>0, 1, 0)
+
 specieslist <- data.frame(species = unique(unique(survObsBiom[[2]][[1]]$species)),
                           guild = rep("na"),
                           guildmember = c(1:11),
-                          predOrPrey = rep(1)
+                          predOrPrey = predOrPrey
 )
+
+o.name <- here("simulated-data/msinput/hydra/")
+write_csv(foodweb, paste0(o.name,"foodweb_NOBA.csv"))
+write_csv(specieslist, paste0(o.name,"speciesList_NOBA.csv"))
 
 ```
 
