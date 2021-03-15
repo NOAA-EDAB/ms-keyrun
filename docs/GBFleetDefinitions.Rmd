@@ -65,7 +65,7 @@ DT::datatable(GBCodes,rownames = FALSE,
 
 ## Aggregating Gear Types
 
-Each gear type is designed to target particular species. Some gear types may catch predominantly one species (eg. Lobsters traps) where others may catch multiple species (bottom trawls). We aim to aggregate the gear types into fleets using similarities in the catch among the gear types. To achieve this we will adopt an agglomerative hierarchical, nearest neighbor clustering method (@manly2017) using euclidean distance as the measure of distance between groups. In this approach all gear types begin in separate groups. Groups that are similar (similar catch, defined by a distance mesaure) are then merged until at some distance all gear types belong to a single group. The variables used to determine the grouping are the species caught, measured by landings (in lbs)
+Each gear type is designed to target particular species. Some gear types may catch predominantly one species (eg. Lobsters traps) where others may catch multiple species (bottom trawls). We aim to aggregate the gear types into fleets using similarities in the catch among the gear types. To achieve this we will adopt an agglomerative hierarchical, nearest neighbor clustering method (@manly2017) using euclidean distance as the measure of distance between groups. In this approach all gear types begin in separate groups. Groups that are similar (similar catch, defined by a distance measure) are then merged until at some distance all gear types belong to a single group. The variables used to determine the grouping are the species caught, measured by landings (in lbs)
 
 Landings data, by gear type, are pulled from the database. 
 ```{r pulldata, echo=T,eval=F}
@@ -73,29 +73,44 @@ channel <- dbutils::connect_to_database("server","id")
 get_landings_by_data(channel,percentLanded=0.90,area=c(cfdbs::EPUs$data[["GB"]],537),outDir=here::here("data"))
 ```
 
-The landings of each species are aggregated over time and then ordered from the most abundant to least abundant. To reduce the number of variables (species) in the analysis we only use species which comprise 90% of the total landings. The resulting data are then formatted as a data frame (or matrix) where each gear type is represented in a row and each species in a column. Each cell being the landings of the species by the gear type. Note: There will be many zeros in the data frame representing gear types that do not catch a particular species.
+The resulting data are then formatted as a data frame (or matrix) where each gear type is represented in a row and each species in a column. Each cell being the landings of the species by the gear type. Note: There will be many zeros in the data frame representing gear types that do not catch a particular species.
 
 The variables are often standardized so that all of the variables are equally important in determining distances. We standardize each variable to have zero mean and unit variance. At this point pairwise distances between all gear types are calculated using the Euclidean distance function
 
 $$d_{i,j} = \left( \sum_{k=1}^p(x_{i,k}-x_{j,k})^2 \right) ^{1/2} $$
 where $x_{i,k}$ is the landings of species $k$ by gear type $i$ and $x_{j,k}$ is the landings of species $k$ by gear type $j$. $d_{i,j}$ is the measure of distance between gear type $i$ and $j$
 
-A dendrogram (Figure \@ref(fig:dendro1)) is then formed using the agglomerative hierarchical process. This process is carried out using the statistical package `cluster`(@cluster211) in R. Initial inspection indicates further "cleaning" of the data is required. 
+A dendrogram is then formed using the agglomerative hierarchical process. This process is carried out using the statistical package [`cluster`]() (@cluster211) in R.
+
+### Approach: Use all gear types
+
+For each gear type the landings of each species are aggregated over time and then ordered from the most abundant to least abundant. To reduce the number of variables (species) in the analysis we only use species which comprise 90% of the total landings for each gear type.
+
+(Figure \@ref(fig:dendro1)) shows the result of this approach. Initial inspection indicates further "cleaning" of the data is required. 
 
 ```{r cluster1, echo=T,eval=F}
 clusterObj <- cluster_analysis_all_gears()
 plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 90% landing from each gear",xlab="")
 
 ```
+
 ```{r dendro1,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas",eval=T,echo=F}
 knitr::include_graphics("figures/dendrogram1.png")
 ```
 Note: Low values of the agglomerative coefficient indicate tight clustering of gears types. Larger values indicate less well formed clusters.
 
 
-### Alternative approach
+### Approach: Use gears responsible for most landings
 
-Details to follow:
+Total landings, aggregated over time, are ordered by gear type. The gear types that contribute to 99% of total landings are selected and used in the cluster analysis
+
+
+```{r cluster2, echo=T,eval=F}
+clusterObj <- cluster_analysis_filter_gears(filterByLandings=.99)
+plot(clusterObj$top,ask=T,which.plots=2,main="Gear types contributing to 99% of total landings",xlab="")
+
+```
+
 
 ```{r dendro2,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings",eval=T,echo=F}
 knitr::include_graphics("figures/dendrogram2.png")
@@ -106,7 +121,16 @@ knitr::include_graphics("figures/dendrogram2.png")
 
 ### Species landings by gear {.tabset .tabset-pills}
 
-Time series of species caught by each gear type
+Time series of species caught by each gear type. To reduce the number of panels in each figure, species caught < 30% of the time are not displayed. For example reporting of landings started in 1964 (56 years ago). So any species that have reported landings in fewer that 17 years are not displayed.
+
+
+```{r plotGearTop, echo=T,eval=F}
+for (gear in clusteObj$topGears) {
+  explore_landings_by_gear(channel,data=gearData$data,gearCode=gear,filterYrs=0.30,saveToFile=T)
+}
+
+```
+
 
 #### 01
 
@@ -204,13 +228,38 @@ GBCodes %>% dplyr::filter(NEGEAR2=="40")
 knitr::include_graphics("figures/gear40.png")
 ```
 
-### Species that make up < 1% landings
+### Gears that make up < 1% landings
+
+The remaining gears (not contributing to 99% of the landings) were used in a cluster analysis to determine how similar these gears are to each other, since 100% of landings should be accounted for.
+
+```{r cluster3, echo=T,eval=F}
+plot(clusterObj$bottom,ask=T,which.plots=2,main="Gear types contributing < 1% of total landings",xlab="")
+
+```
+
 
 ```{r dendro3,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on not contributing to top 99% of landings",eval=T,echo=F}
 knitr::include_graphics("figures/dendrogram3.png")
 
 ```
+### Approach: Select gear types that catch species of interest
 
+All gear types which catch any amount of the [Species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are used in the cluster analysis.
+```{r echo=T,eval=F}
+focalSpecies <- readRDS(here::here("data","focalspecies.rds"))
+clusterObj <- cluster_by_focal_species(focalSpecies)
+plot(clusterObj,ask=T,which.plots=2,main="All gear types that land species of interest",xlab="")
+```
+
+
+```{r dendro4,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. All gear types that landed species of interest were selected",eval=T,echo=F}
+knitr::include_graphics("figures/dendrogram4.png")
+
+```
+
+## Bottom trawls (small/large mesh)
+
+Over time (dates/references????) changes in regulations resulted in the requirement of fisherman to increase the mesh size in their nets. This allowed smaller fish to escape the nets. However there were, and still are, exemptions to this regulation allowing fishermen to fish with smaller meshed nets depending on the time of the year and the area they fish. However all of the associated landings are flagged as using the same gear type code. Since the change in regulations dictate a change in the composition of species caught over time, this gear type needs to be investigated separately.
 
 
 ## References
