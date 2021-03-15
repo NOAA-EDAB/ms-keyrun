@@ -915,10 +915,10 @@ for(s in names(all_diets)){
 }</code></pre>
 <p>For the length-based model <a href="https://github.com/thefaylab/hydra_sim">hydra</a>, we can write .csv files to be used as input in the <a href="https://github.com/thefaylab/hydradata">hydradata</a> package, which writes .dat and .pin files.</p>
 <p>Hydra needs survey biomass time series, catch time series, survey length composition, fishery length composition, and diet composition data.</p>
-<p>Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file.</p>
-<pre class="r"><code>diettrue &lt;- load_diet_comp(here(&quot;simulated-data/atlantisoutput/NOBA_march_2020&quot;), 
+<p>Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file and some of the other input data that can come straight from Atlantis.</p>
+<pre class="r"><code># foodweb and species file identify predators and prey; take from true atlantis diet comp
+diettrue &lt;- load_diet_comp(here(&quot;simulated-data/atlantisoutput/NOBA_march_2020&quot;), 
                            &quot;nordic_runresults_01DietCheck.txt&quot;, fgs = fgs)
-
 ms_diet &lt;- diettrue %&gt;%
   filter(species %in% sppsubset$Name) %&gt;%
   filter(atoutput&gt;0) %&gt;%
@@ -946,9 +946,38 @@ specieslist &lt;- data.frame(species = unique(unique(survObsBiom[[2]][[1]]$speci
                           predOrPrey = predOrPrey
 )
 
+# take lenwt parameters from true atlantis pars
+lenwtpar &lt;-  left_join(sppsubset, NOBAom_ms$biol$wl, by=c(&quot;Code&quot; = &quot;group&quot;)) %&gt;%
+  select(Name, a, b) %&gt;%
+  arrange(Name)
+
+# fixed parameters:
+# intake same for all teleosts
+intakespp  &lt;- rbind(species = sppsubset$Name,
+                    alpha = rep(0.004),
+                    beta = rep(0.11))
+colnames(intakespp) &lt;- intakespp[1,]
+intakespp &lt;- as.data.frame(intakespp[-1,])
+
+# predator size preference ratio same for all species
+sizepref &lt;- rbind(species = sppsubset$Name,
+                  mu = rep(0.5),
+                  sigma = rep(2))
+colnames(sizepref) &lt;- sizepref[1,]
+sizepref &lt;- as.data.frame(sizepref[-1,])
+
+
+# will need to fit von B and maturity curve functions to back out hydra input pars
+# maturity from maturity ogive input in biol file
+# growth functions from length at age in model...
+
+# write the csvs
 o.name &lt;- here(&quot;simulated-data/msinput/hydra/&quot;)
 write_csv(foodweb, paste0(o.name,&quot;foodweb_NOBA.csv&quot;))
-write_csv(specieslist, paste0(o.name,&quot;speciesList_NOBA.csv&quot;))</code></pre>
+write_csv(specieslist, paste0(o.name,&quot;speciesList_NOBA.csv&quot;))
+write_csv(lenwtpar, paste0(o.name,&quot;lengthweight_species_NOBA.csv&quot;))
+write.csv(intakespp, paste0(o.name,&quot;intake_species_NOBA.csv&quot;))
+write.csv(sizepref, paste0(o.name,&quot;mortality_M2sizePreference_NOBA.csv&quot;))</code></pre>
 <p>Survey and catch datasets for hydra from NOBA (same methods as MSSPM). Make this a function that takes output directory name and output names as arguments.</p>
 <pre class="r"><code>o.name &lt;- here(&quot;simulated-data/msinput/hydra/&quot;)
 

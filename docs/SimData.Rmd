@@ -264,13 +264,13 @@ For the length-based model [hydra](https://github.com/thefaylab/hydra_sim), we c
 
 Hydra needs survey biomass time series, catch time series, survey length composition, fishery length composition, and diet composition data. 
 
-Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file.
+Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file and some of the other input data that can come straight from Atlantis.
 
 ```{r write-hydra, eval=FALSE}
 
+# foodweb and species file identify predators and prey; take from true atlantis diet comp
 diettrue <- load_diet_comp(here("simulated-data/atlantisoutput/NOBA_march_2020"), 
                            "nordic_runresults_01DietCheck.txt", fgs = fgs)
-
 ms_diet <- diettrue %>%
   filter(species %in% sppsubset$Name) %>%
   filter(atoutput>0) %>%
@@ -298,9 +298,38 @@ specieslist <- data.frame(species = unique(unique(survObsBiom[[2]][[1]]$species)
                           predOrPrey = predOrPrey
 )
 
+# take lenwt parameters from true atlantis pars
+lenwtpar <-  left_join(sppsubset, NOBAom_ms$biol$wl, by=c("Code" = "group")) %>%
+  select(Name, a, b) %>%
+  arrange(Name)
+
+# fixed parameters:
+# intake same for all teleosts
+intakespp  <- rbind(species = sppsubset$Name,
+                    alpha = rep(0.004),
+                    beta = rep(0.11))
+colnames(intakespp) <- intakespp[1,]
+intakespp <- as.data.frame(intakespp[-1,])
+
+# predator size preference ratio same for all species
+sizepref <- rbind(species = sppsubset$Name,
+                  mu = rep(0.5),
+                  sigma = rep(2))
+colnames(sizepref) <- sizepref[1,]
+sizepref <- as.data.frame(sizepref[-1,])
+
+
+# will need to fit von B and maturity curve functions to back out hydra input pars
+# maturity from maturity ogive input in biol file
+# growth functions from length at age in model...
+
+# write the csvs
 o.name <- here("simulated-data/msinput/hydra/")
 write_csv(foodweb, paste0(o.name,"foodweb_NOBA.csv"))
 write_csv(specieslist, paste0(o.name,"speciesList_NOBA.csv"))
+write_csv(lenwtpar, paste0(o.name,"lengthweight_species_NOBA.csv"))
+write.csv(intakespp, paste0(o.name,"intake_species_NOBA.csv"))
+write.csv(sizepref, paste0(o.name,"mortality_M2sizePreference_NOBA.csv"))
 
 ```
 
