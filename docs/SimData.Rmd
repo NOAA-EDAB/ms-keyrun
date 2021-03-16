@@ -318,6 +318,38 @@ sizepref <- rbind(species = sppsubset$Name,
 colnames(sizepref) <- sizepref[1,]
 sizepref <- as.data.frame(sizepref[-1,])
 
+# dimensions for singletons file
+singletons <- data.frame(
+  debug=3,
+  Nyrs=NOBAom_ms$runpar$nyears, #may want to take from survey time series instead
+  Nspecies=length(sppsubset$Name),
+  Nsizebins=5,
+  Nareas=1,
+  Nfleets=5,
+  wtconv=1,
+  yr1Nphase=0,
+  recphase=0,
+  avg_rec_phase=0,
+  avg_F_phase=0,
+  dev_rec_phase=0,
+  dev_F_phase=0,
+  fqphase=0,
+  sqphase=0,
+  ssig_phase=0,
+  csig_phase=0,
+  phimax=1,
+  scaleInitialN=1,
+  otherFood=0000,
+  LFI_size=60,
+  bandwidth_metric=5,
+  assessmentPeriod=3,
+  flagMSE=0,
+  flagLinearRamp=1,
+  baseline_threshold=0.2
+)
+
+# M1 same for all species, depends on n length bins
+
 
 # will need to fit von B and maturity curve functions to back out hydra input pars
 # maturity from maturity ogive input in biol file
@@ -330,8 +362,20 @@ write_csv(specieslist, paste0(o.name,"speciesList_NOBA.csv"))
 write_csv(lenwtpar, paste0(o.name,"lengthweight_species_NOBA.csv"))
 write.csv(intakespp, paste0(o.name,"intake_species_NOBA.csv"))
 write.csv(sizepref, paste0(o.name,"mortality_M2sizePreference_NOBA.csv"))
+write.csv(t(singletons), paste0(o.name,"singletons_NOBA.csv"))
 
 ```
+
+Need to fit growth and maturity parameters from Atlantis output for input into hydra. Possibly also recruitment? Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
+
+```{r fitpars}
+
+# need growth, vonB K and Linf and simple growth function
+
+# need 2-par maturity curve based on length, atlantis maturity ogive based on age group
+
+```
+
 
 Survey and catch datasets for hydra from NOBA (same methods as MSSPM). Make this a function that takes output directory name and output names as arguments. 
 ```{r, eval=FALSE}
