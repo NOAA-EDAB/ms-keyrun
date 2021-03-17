@@ -305,14 +305,14 @@ lenwtpar <-  left_join(sppsubset, NOBAom_ms$biol$wl, by=c("Code" = "group")) %>%
 
 # fixed parameters:
 # intake same for all teleosts
-intakespp  <- rbind(species = sppsubset$Name,
+intakespp  <- rbind(species = sort.default(sppsubset$Name),
                     alpha = rep(0.004),
                     beta = rep(0.11))
 colnames(intakespp) <- intakespp[1,]
 intakespp <- as.data.frame(intakespp[-1,])
 
 # predator size preference ratio same for all species
-sizepref <- rbind(species = sppsubset$Name,
+sizepref <- rbind(species = sort.default(sppsubset$Name),
                   mu = rep(0.5),
                   sigma = rep(2))
 colnames(sizepref) <- sizepref[1,]
@@ -326,6 +326,7 @@ singletons <- data.frame(
   Nsizebins=5,
   Nareas=1,
   Nfleets=5,
+  Nsurveys=2,
   wtconv=1,
   yr1Nphase=0,
   recphase=0,
@@ -349,7 +350,9 @@ singletons <- data.frame(
 )
 
 # M1 same for all species, depends on n length bins
-
+M1mat <- matrix(0.02, singletons$Nspecies, singletons$Nsizebins, 
+                dimnames = list(c(sort.default(sppsubset$Name)),  c(paste0("sizeclass",seq(1:singletons$Nsizebins))))) 
+M1 <- as.data.frame(M1mat)
 
 # will need to fit von B and maturity curve functions to back out hydra input pars
 # maturity from maturity ogive input in biol file
@@ -362,15 +365,54 @@ write_csv(specieslist, paste0(o.name,"speciesList_NOBA.csv"))
 write_csv(lenwtpar, paste0(o.name,"lengthweight_species_NOBA.csv"))
 write.csv(intakespp, paste0(o.name,"intake_species_NOBA.csv"))
 write.csv(sizepref, paste0(o.name,"mortality_M2sizePreference_NOBA.csv"))
-write.csv(t(singletons), paste0(o.name,"singletons_NOBA.csv"))
+write.table(t(singletons), paste0(o.name,"singletons_NOBA.csv"), sep=",",  col.names=FALSE)
+write.csv(M1, paste0(o.name,"mortality_M1_NOBA.csv"))
 
 ```
+
+Decisions on size bins for hydra: keep 5 bins per species for now, build in flexibility to allocate size data to any number of bins with any definitions. 
+
+Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases. 
+
+Initially, we'll directly transfer bin widths for GB and NOBA common species:  
+* Aherring = Norwegian_ssh,
+* Acod = North_atl_cod, 
+* haddock = Haddock, 
+* Amackerel = Mackerel. 
+
+We will substitute bin widths from these GB species for NOBA:
+* silverhake ~ Blue_whiting
+* yellowtailfl ~ Long_rough_dab
+
+NOBA Redfish
+NOBA Saithe
+
+NOBA Polar_cod and Capelin are smaller than any GB modeled species
+
+NOBA Green_halibut are larger than any GB modeled species
+
+These decisions will carry through to other life history parameters, at least initially.
 
 Need to fit growth and maturity parameters from Atlantis output for input into hydra. Possibly also recruitment? Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
 
 ```{r fitpars}
 
-# need growth, vonB K and Linf and simple growth function
+# need growth, vonB t0, K, and Linf and simple growth function
+# would you really base this on 140 years of data? I used all survey years 
+
+len_comp_data <- read_savedsurvs(d.name, 'survLen')
+
+#multiple surveys named in list object, use as filename
+for(s in names(len_comp_data)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  svlen <- len_comp_data[[s]][[1]] %>%
+    #calc_timestep2time(d.name, ., run.prm.file) %>% #this gives an arbitrary start year of 1970
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, year, atoutput) %>%
+    tidyr::spread(species, atoutput) %>%
+    write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
+}
+
 
 # need 2-par maturity curve based on length, atlantis maturity ogive based on age group
 
