@@ -372,7 +372,24 @@ write.csv(M1, paste0(o.name,"mortality_M1_NOBA.csv"))
 
 Decisions on size bins for hydra: keep 5 bins per species for now, build in flexibility to allocate size data to any number of bins with any definitions. 
 
-Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases. *Consider a function to do this using species max size and the desired number of bins for more consistency and to easily change Nsizebins.*
+Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases. 
+
+*Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.*
+```{r lbinfunction, eval=FALSE}
+# see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
+# estimated optimal bin size for VBGF estimation is 0.23 x Lmax ^0.6
+
+binwidths <- function(Lmax, vonBk, Nsizebins){
+  #optimal bin size is lower end
+  binopt <- 0.23*Lmax^0.6
+  #vonBk tells you how many fine bins for fast growth
+  
+  #aggregate bins in multiples of optimal for bigger fish/slower growth to get Nsizebins
+  
+}
+
+```
+
 
 Initially, we'll directly transfer bin widths for GB and NOBA common species:  
 
@@ -447,9 +464,11 @@ len_comp_data <- read_savedsurvs(d.name, 'survLen')
 for(s in names(len_comp_data)){
   #arrange into wide format: year, Species1, Species2 ... and write csv
   svlen <- len_comp_data[[s]][[1]] %>%
-    #calc_timestep2time(d.name, ., run.prm.file) %>% #this gives an arbitrary start year of 1970
     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
-    dplyr::select(species, year, atoutput) %>%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
+    
+  
+  
     tidyr::spread(species, atoutput) %>%
     write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
 }
