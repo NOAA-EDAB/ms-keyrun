@@ -372,30 +372,71 @@ write.csv(M1, paste0(o.name,"mortality_M1_NOBA.csv"))
 
 Decisions on size bins for hydra: keep 5 bins per species for now, build in flexibility to allocate size data to any number of bins with any definitions. 
 
-Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases. 
+Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases. *Consider a function to do this using species max size and the desired number of bins for more consistency and to easily change Nsizebins.*
 
 Initially, we'll directly transfer bin widths for GB and NOBA common species:  
-* Aherring = Norwegian_ssh,
-* Acod = North_atl_cod, 
-* haddock = Haddock, 
-* Amackerel = Mackerel. 
 
-We will substitute bin widths from these GB species for NOBA:
-* silverhake ~ Blue_whiting
-* yellowtailfl ~ Long_rough_dab
+ *  Aherring = [Norwegian_ssh](https://www.hi.no/en/hi/temasider/species/herring) 
+ *  Acod = [North_atl_cod](https://www.hi.no/en/hi/temasider/species/cod--northeast-arctic) (*but max size could be bigger in simulated data, may need to increase last bin*)
+ *  haddock = [Haddock](https://www.hi.no/en/hi/temasider/species/haddock) (*but max size could be bigger in simulated data, may need to increase last bin*)
+ *  Amackerel = [Mackerel](https://www.hi.no/en/hi/temasider/species/mackerel). (*note, should mackerel have smaller bin widths for fast early growth?*)  
 
-NOBA Redfish
-NOBA Saithe
+We will substitute bin widths from these similar taxa/size GB species for NOBA:  
 
-NOBA Polar_cod and Capelin are smaller than any GB modeled species
+ *  silverhake ~ [Blue_whiting](https://www.hi.no/en/hi/temasider/species/blue-whiting)  
+ *  yellowtailfl ~ [Long_rough_dab](https://www.sciencedirect.com/science/article/abs/pii/S1385110196907972) a.k.a. American plaice 
 
-NOBA Green_halibut are larger than any GB modeled species
+We will modify or subsitute bin widths for the rest of the NOBA species based on size:
 
-These decisions will carry through to other life history parameters, at least initially.
+ *  NOBA [Redfish](https://www.hi.no/en/hi/temasider/species/redfish/beaked-redfish-in-the-barents-and-norwegian-seas) have a maximum size of 47 cm, use 5 x 10 cm bins  
+ *  NOBA [Saithe](https://www.hi.no/en/hi/temasider/species/northeast-arctic-saithe) have a maximum size of 130 cm; use goosefish bins
+ *  NOBA [Polar_cod](https://www.hi.no/en/hi/temasider/species/polar-cod) have a maximum size of 25 cm; use 5 x 5 cm bins  
+ *  NOBA [Capelin](https://www.hi.no/en/hi/temasider/species/capelin-in-the-barents-sea) are smaller than any GB modeled species, max size 21 cm; use 5 x 5 cm bins  
+ *  NOBA [Green_halibut](https://www.hi.no/en/hi/temasider/species/greenland-halibut) are large, max size 120 cm; use Acod bins 
+
+Code to make sizebins csv for input; hardcoded based on these decisions.
+
+```{r sizebins, eval=FALSE}
+# for reference, GB hydra_sim size bins
+# sizeclass1,sizeclass2,sizeclass3,sizeclass4,sizeclass5,commentField-notused
+# 20,20,20,20,30,spinydog
+# 20,20,20,20,40,winterskate
+# 5,5,5,5,20,Aherring
+# 20,20,20,40,50,Acod
+# 10,10,20,20,20,haddock
+# 10,10,10,10,20,yellowtailfl
+# 10,10,10,10,10,winterfl
+# 10,10,10,10,10,Amackerel
+# 10,10,10,10,30,silverhake
+# 20,20,20,30,40,goosefish
+
+sizebinmat <- matrix(0, singletons$Nspecies, singletons$Nsizebins, 
+                dimnames = list(c(sort.default(sppsubset$Name)),  c(paste0("sizeclass",seq(1:singletons$Nsizebins)))))
+
+sizebinmat["Blue_whiting",] <- c(10,10,10,10,30)
+sizebinmat["Capelin",] <- c(5,5,5,5,5)
+sizebinmat["Green_halibut",] <- c(20,20,20,40,50)
+sizebinmat["Haddock",] <- c(10,10,20,20,20)
+sizebinmat["Long_rough_dab",] <- c(10,10,10,10,20)
+sizebinmat["Mackerel",] <- c(10,10,10,10,10)
+sizebinmat["North_atl_cod",] <- c(20,20,20,40,50)
+sizebinmat["Norwegian_ssh",] <- c(5,5,5,5,20)
+sizebinmat["Polar_cod",] <- c(5,5,5,5,5)
+sizebinmat["Redfish",] <- c(10,10,10,10,10)
+sizebinmat["Saithe",] <- c(20,20,20,30,40)
+
+sizebins <- as.data.frame(sizebinmat) %>%
+  mutate('commentField-notused' = rownames(sizebinmat))
+                        
+write_csv(sizebins, paste0(o.name,"length_sizebins_NOBA.csv"))
+
+```
+
+These decisions on matching species can carry through to other life history parameters, at least initially.
 
 Need to fit growth and maturity parameters from Atlantis output for input into hydra. Possibly also recruitment? Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
 
-```{r fitpars}
+```{r fitpars, eval=FALSE}
 
 # need growth, vonB t0, K, and Linf and simple growth function
 # would you really base this on 140 years of data? I used all survey years 
