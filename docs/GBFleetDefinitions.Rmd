@@ -244,7 +244,8 @@ knitr::include_graphics("figures/dendrogram3.png")
 ```
 ### Approach: Select gear types that catch species of interest
 
-All gear types which catch any amount of the [Species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are used in the cluster analysis.
+All gear types which catch any amount of the [Species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are used in the cluster analysis. The hope was the set of gear types in which to begin the cluster analysis would be substantially less. The number of gears eliminated = 10. It is apparent that species of interest are caught across a broad class of gear types.
+
 ```{r echo=T,eval=F}
 focalSpecies <- readRDS(here::here("data","focalspecies.rds"))
 clusterObj <- cluster_by_focal_species(focalSpecies)
@@ -260,6 +261,11 @@ knitr::include_graphics("figures/dendrogram4.png")
 ## Bottom trawls (small/large mesh)
 
 Over time (dates/references????) changes in regulations resulted in the requirement of fisherman to increase the mesh size in their nets. This allowed smaller fish to escape the nets. However there were, and still are, exemptions to this regulation allowing fishermen to fish with smaller meshed nets depending on the time of the year and the area they fish. However all of the associated landings are flagged as using the same gear type code. Since the change in regulations dictate a change in the composition of species caught over time, this gear type needs to be investigated separately.
+
+## Decision
+
+This exploratory study resulted in the following designation of [Fleets](https://noaa-edab.github.io/ms-keyrun/GBFleetDecision.html)
+
 
 
 ## References

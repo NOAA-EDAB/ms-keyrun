@@ -5,8 +5,10 @@
 #' @param channel 
 #' @param data Data frame. landings data by YEAR, NESPP3, NEGEAR2 (long format)
 #' @param gearCode Numeric. NEGEAR2 code
-#' @param filterYrs Numeric. A proportion reflecting the proportion of years containing data for a particucar species (eg.)
+#' @param filterYrs Numeric. A proportion reflecting the proportion of years containing data for a particular species (eg.)
 #' A value of .15 retains only the species in which there were landings in more that 15% of the years sampled
+#' @param filterByProp Numeric. A proportion (related to cumulative landings) to determine how to filter species when plotting. (Default = .95). 
+#' A value of 1 will plot all species (following \code{filterByYrs}) regardless of their contribution to landings
 #' @param saveToFile Boolean. Save to doc/figures folder
 #' 
 #' @return 
@@ -22,7 +24,7 @@ library(ggplot2)
 
 gearData <- readRDS(file=paste0(here::here("data","timeSeriesSpeciesByGear.rds")))
 
-explore_landings_by_gear <- function(channel,data=gearData$data,gearCode=5,filterYrs=0.30,saveToFile=F){
+explore_landings_by_gear <- function(channel,data=gearData$data,gearCode=5,filterYrs=0.30,filterByProp=.95,saveToFile=F){
   
   # pull gear Specific data
   gd <- data %>%
@@ -39,7 +41,7 @@ explore_landings_by_gear <- function(channel,data=gearData$data,gearCode=5,filte
     dplyr::filter(n2 > filterYrs*diff(yrRange))
   
   speciesLeftOut <- sort(setdiff(unique(gd$NESPP3),filteredSpecies$NESPP3))
-
+print(speciesLeftOut)
   # filter out species from data set
   gd2 <- gd %>% 
     dplyr::filter(NESPP3 %in% filteredSpecies$NESPP3)
@@ -64,7 +66,7 @@ explore_landings_by_gear <- function(channel,data=gearData$data,gearCode=5,filte
     dplyr::mutate(cumusum = cumsum(totLandingslb)) %>%
     dplyr::mutate(proportion = cumusum/sum(totLandingslb))
   # pick top species that meet minimum landings percentage criterion 
-  ind <- c(T,gd3$proportion <= .95)
+  ind <- c(T,gd3$proportion <= filterByProp)
   ind <- head(ind,-1)
   topSpecies <- list(NESPP3=NULL)
   topSpecies$NESPP3 <- gd3[ind,]$NESPP3
@@ -80,6 +82,8 @@ explore_landings_by_gear <- function(channel,data=gearData$data,gearCode=5,filte
   ts <- topSpecies %>% 
     dplyr::left_join(.,speciesNames,by="NESPP3") %>%
     dplyr::mutate(NESPP3 = as.numeric(NESPP3))
+  
+  print(ts)
   ts$COMMON_NAME <- factor(ts$COMMON_NAME,levels=ts$COMMON_NAME)
 
   # filter topSpecies and join to data
@@ -103,5 +107,6 @@ explore_landings_by_gear <- function(channel,data=gearData$data,gearCode=5,filte
     plot(p)
   }
   
+  return(gd3)
   
 }

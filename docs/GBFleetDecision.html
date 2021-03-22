@@ -9,9 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Andy Beet" />
 
 
-<title>NEFSC multispecies model keyrun project</title>
+<title>Fleet Definitions for Georges Bank</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -201,6 +202,66 @@ window.buildTabsets = function(tocID) {
 };
 
 </script>
+<script>
+window.initializeCodeFolding = function(show) {
+
+  // handlers for show-all and hide all
+  $("#rmd-show-all-code").click(function() {
+    $('div.r-code-collapse').each(function() {
+      $(this).collapse('show');
+    });
+  });
+  $("#rmd-hide-all-code").click(function() {
+    $('div.r-code-collapse').each(function() {
+      $(this).collapse('hide');
+    });
+  });
+
+  // index for unique code element ids
+  var currentIndex = 1;
+
+  // select all R code blocks
+  var rCodeBlocks = $('pre.r, pre.python, pre.bash, pre.sql, pre.cpp, pre.stan, pre.julia, pre.foldable');
+  rCodeBlocks.each(function() {
+
+    // create a collapsable div to wrap the code in
+    var div = $('<div class="collapse r-code-collapse"></div>');
+    var showThis = (show || $(this).hasClass('fold-show')) && !$(this).hasClass('fold-hide');
+    if (showThis) div.addClass('in');
+    var id = 'rcode-643E0F36' + currentIndex++;
+    div.attr('id', id);
+    $(this).before(div);
+    $(this).detach().appendTo(div);
+
+    // add a show code button right above
+    var showCodeText = $('<span>' + (showThis ? 'Hide' : 'Code') + '</span>');
+    var showCodeButton = $('<button type="button" class="btn btn-default btn-xs code-folding-btn pull-right"></button>');
+    showCodeButton.append(showCodeText);
+    showCodeButton
+        .attr('data-toggle', 'collapse')
+        .attr('data-target', '#' + id)
+        .attr('aria-expanded', showThis)
+        .attr('aria-controls', id);
+
+    var buttonRow = $('<div class="row"></div>');
+    var buttonCol = $('<div class="col-md-12"></div>');
+
+    buttonCol.append(showCodeButton);
+    buttonRow.append(buttonCol);
+
+    div.before(buttonRow);
+
+    // update state of button on show/hide
+    div.on('hidden.bs.collapse', function () {
+      showCodeText.text('Code');
+    });
+    div.on('show.bs.collapse', function () {
+      showCodeText.text('Hide');
+    });
+  });
+
+}
+</script>
 <style type="text/css">.hljs-literal {
 color: #990073;
 }
@@ -366,6 +427,9 @@ summary {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -382,58 +446,99 @@ summary {
 
 <div class="fluid-row" id="header">
 
-
-
-<h1 class="title toc-ignore">NEFSC multispecies model keyrun project</h1>
-
-</div>
-
-
-<p><!-- ADD LINKS BELOW, note, using the RMD link syntax will open the presentation in the same tab, which is annoying. Use the html with the "_blank" to fix that behavior --></p>
-<p>These pages document decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Methods documentation and eventually draft manuscripts will be found here too. The target date for model keyrun reviews is October 2021, with all modeling results and documentation submitted by 1 September 2021.</p>
-<p>Model “keyruns” are defined as “standardized model runs updated with recent data, producing agreed output.” The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found <a href="https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html">here</a>.</p>
-<div id="data-needs" class="section level1">
-<h1>Data needs</h1>
-<p><a href="https://noaa-edab.github.io/ms-keyrun/DataNeeds.html" target="_blank"> Decisions with meeting notes - 3 June 2020 </a></p>
-<div id="dataset-dimensions" class="section level2">
-<h2>Dataset dimensions</h2>
-<p><a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> Year, season, area decisions - 8 July 2020 </a></p>
-<ul>
-<li><a href="https://noaa-edab.github.io/ms-keyrun/allocateLandingsEPU.html" target="_blank"> Allocate landings to EPU - 25 Nov 2020 </a></li>
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
 </ul>
-<p><a href="https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html" target="_blank"> Fleet Definitions - 26 Feb 2021 </a></p>
-<ul>
-<li><a href="https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html" target="_blank"> Fleet Decisions </a></li>
-</ul>
-<p><a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html" target="_blank"> Species, environment, data package decisions - 5 August 2020 </a></p>
-<p><a href="https://noaa-edab.github.io/ms-keyrun/CompsDat.html" target="_blank"> Age, length, and diet composition decisions - 3 September 2020 </a></p>
 </div>
-<div id="dataset-source-and-methods-documentation" class="section level2">
-<h2>Dataset source and methods documentation</h2>
-<p><a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html" target="_blank"> Which Georges Bank survey footprint - 4 November 2020 </a></p>
+
+
+
+<h1 class="title toc-ignore">Fleet Definitions for Georges Bank</h1>
+<h4 class="author">Andy Beet</h4>
+<h4 class="date">22 March, 2021</h4>
+
 </div>
-<div id="dataset-descriptions-and-links" class="section level2">
-<h2>Dataset descriptions and links</h2>
-<p><a href="https://noaa-edab.github.io/ms-keyrun/SimData.html" target="_blank"> Initial simulated data for testing - 17 March 2021 </a></p>
+
+
+<p>The fleets designations were made after an exploratory <a href="https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html">cluster analysis</a> study</p>
+<p>Note:</p>
+<p><sup>1</sup> indicates a gear code &lt; 1% of total landings</p>
+<p><sup>1,2</sup> indicates a gear code &lt; 0.1% of total landings</p>
+<p>All other gear codes make up the majority (99%) of the landings. For these gear codes each species contribution to the total landings (aggregated over time) are shown as percentages</p>
+<p>Species of interest are <strong>bolded</strong></p>
+<pre class="r"><code>gearData &lt;- readRDS(file=paste0(here::here(&quot;data&quot;,&quot;timeSeriesSpeciesByGear.rds&quot;)))
+gearData$data %&gt;% dplyr::filter(NEGEAR2==gearCode)</code></pre>
+<div id="demersal" class="section level2">
+<h2>Demersal</h2>
+<p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%), <strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%), <strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%), loligo (6%) + 33% other bottom) - Large and small mesh</p>
+<p><sup>1</sup> 35 - BEAM TRAWL (summer flounder, <strong>winter flounder</strong>, <strong>yellowtail flounder</strong>)</p>
+<p><sup>1</sup> 36 - SCOTTISH SEINE (<strong>silver hake</strong>, <strong>cod</strong>, plaice, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, red hake)</p>
+<p><sup>1</sup> 16 - DANISH SEINE (<strong>cod</strong>, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, plaice, <strong>silver hake</strong>)</p>
+<p><sup>1</sup> 32 - FYKE NET (<strong>winter fl</strong>, windowpane fl, <strong>dogfish</strong>, <strong>skates</strong>)</p>
 </div>
+<div id="pelagic" class="section level2">
+<h2>Pelagic</h2>
+<p>10 - GILL NET, FIXED (<strong>dogfish</strong> (22%), <strong>cod</strong>(22%), <strong>goosefish</strong> (20%))</p>
+<p>01 - LONGLINE, BOTTOM (<strong>cod</strong> (40%), <strong>dogfish</strong> (21%), tilefish (20%), <strong>haddock</strong> (9%) + pollock , white hake)</p>
+<p>02 - HANDLINE (<strong>dogfish</strong>(22%), <strong>cod</strong> (22%), <strong>goosefish</strong> (20%), <strong>skates</strong>(20%), pollock (7%))</p>
+<p><sup>1</sup> 52 - GILL NET (skate, angler, <strong>haddock</strong>, swordfish, <strong>mackerel</strong>, <strong>cod</strong> )</p>
+<p><sup>1</sup> 50 - GILL NET (angler, bluefish, <strong>skate</strong>, <strong>dogfish</strong>)</p>
 </div>
-<div id="models" class="section level1">
-<h1>Models</h1>
-<div id="model-documentation" class="section level2">
-<h2>Model documentation</h2>
+<div id="squid" class="section level2">
+<h2>Squid</h2>
+<p>14 - POUND NET (loligo (35%) , scup (20%), <strong>mackerel</strong> (20%), many other &lt; 5%)</p>
+<p><sup>1</sup> 8 - FLOATING TRAP (<strong>mackerel</strong>, scup, loligo, tuna)</p>
+<p><sup>1</sup> 26 - WEIR (loligo, <strong>mackerel</strong>, scup)</p>
 </div>
-<div id="model-results" class="section level2">
-<h2>Model results</h2>
+<div id="forage-fish" class="section level2">
+<h2>Forage Fish</h2>
+<p>17 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (7%), <strong>Herring</strong> (91%))</p>
+<p>37 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (11%) , <strong>Herring</strong> (88%))</p>
+<p>12 - PURSE SEINE (1970’s menhaden, modern Tuna, <strong>Herring</strong>)</p>
 </div>
+<div id="shellfish" class="section level2">
+<h2>Shellfish</h2>
+<p>38 - DREDGE (mussel(40%), scallop(30%), clam+quahog (17%) + bottom fish)</p>
+<p>40 - DREDGE (surfclam (56%), ocean quahog(43%) )</p>
+<p>13 - DREDGE, SCALLOP (scallop (88%) (<strong>Goosefish</strong> , <strong>yellowtail</strong>, bottom fish))</p>
+<p><sup>1</sup> 22 - HOES/FORK (soft clam, oysters, bay scallop)</p>
+<p><sup>1</sup> 41 - TONGS AND GRABS (quahog, soft clam, surf clam)</p>
+<p><sup>1</sup> 25 - RAKES (quahog, soft clam, mussels, crab, oysters)</p>
 </div>
-<div id="results" class="section level1">
-<h1>Results</h1>
-<div id="individual-model-keyrun-results" class="section level2">
-<h2>Individual model keyrun results</h2>
+<div id="lobstercrab" class="section level2">
+<h2>Lobster/Crab</h2>
+<p>21 - POT/TRAP (Lobster (88%), crab (10%) + bottom fish)</p>
+<p>20 - POT/TRAP (lobster(53%) + crab(46%), bottom fish &lt; 1%)</p>
+<p>30 - POTS + TRAPS (crab (&gt;99%))</p>
+<p>18 - POTS + TRAPS (crab (20%), lobster (20%), whelk (10%), snails (10%), hagfish (20%) + bottom fish (20%))</p>
+<p><sup>1</sup> 15 - TRAWL (lobster, 1972,1974)</p>
+<p><sup>1</sup> 53 - TRAMMEL NET (lobster , 2012)</p>
+<p><sup>1</sup> 19 - POTS + TRAPS (rock crab, lobster, 2004)</p>
+<p><sup>1</sup> 23 - BY HAND (soft clam, crab, quahog, oysters, clam)</p>
+<p><sup>1</sup> 33 - DIVING GEAR (lobster, sea urch, squid)</p>
 </div>
-<div id="overall-keyrun-results" class="section level2">
-<h2>Overall keyrun results</h2>
+<div id="hms" class="section level2">
+<h2>HMS</h2>
+<p><sup>1</sup> 3 - HARPOONS (Tuna, swordfish)</p>
+<p><sup>1</sup> 11 - GILL NET, DRIFT (swordfish, tuna, shark )</p>
+<p><sup>1</sup> 6 - TROLL LINE (Tuna, sea herring, striped bass, bluefish)</p>
+<p><sup>1</sup> 4 - LONGLINE (swordfish, tunas, tilefish)</p>
 </div>
+<div id="other-gear" class="section level2">
+<h2>Other gear</h2>
+<p><sup>1</sup> 28 - DREDGE (southern flounder, 1989-1997)</p>
+<p><sup>1</sup> 27 - BOX TRAP (cod, angler, lobster, 2004)</p>
+<p><sup>1</sup> 99 - UNKNOWN (silver hake, oysters, lobster, quahog, sea herring, angler, mussels )</p>
+<p><sup>1,2</sup> 44 - WEEDWHACKER, SEAWEED (whelks, 2016)</p>
+<p><sup>1,2</sup> 31 - LIFT NET (lobster, 2002)</p>
+<p><sup>1,2</sup> 34 - CAST NETS (quahog, surf clam, skate, plaice )</p>
+<p><sup>1,2</sup> 81 - SUCTION PUMP ()</p>
+<p><sup>1,2</sup> 45 - TRAWL, SHRIMP (crustacean, 2017)</p>
+<p><sup>1,2</sup> 9 - DIP NET (alewife, yellow flounder, scallop, soft clam)</p>
+<p><sup>1,2</sup> 7 - HAUL SEINE (perch, alewife, cod, winter flounder, lobster)</p>
 </div>
 
 
@@ -469,6 +574,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
