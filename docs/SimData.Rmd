@@ -325,7 +325,7 @@ singletons <- data.frame(
   Nspecies=length(sppsubset$Name),
   Nsizebins=5,
   Nareas=1,
-  Nfleets=5,
+  Nfleets=length(unique(NOBAom_ms$truecatchage_ss$fleet)),
   Nsurveys=2,
   wtconv=1,
   yr1Nphase=0,
@@ -350,12 +350,31 @@ singletons <- data.frame(
 )
 
 # M1 same for all species, depends on n length bins
+# to get annual M1 of 0.1, this matrix needs to be M1 per timestep
+# right now input works for 5 timesteps per year, but should be 
+# done in the code with input annual M1 in case timestep changes
 M1mat <- matrix(0.02, singletons$Nspecies, singletons$Nsizebins, 
                 dimnames = list(c(sort.default(sppsubset$Name)),  c(paste0("sizeclass",seq(1:singletons$Nsizebins))))) 
 M1 <- as.data.frame(M1mat)
 
+# sexratio fixed 50:50 for all species
+# sexratio <- vector(0.5, )
+# rbind(species = sort.default(sppsubset$Name),
+#                   ratio = rep(0.5))
+# colnames(sexratio) <- sexratio[1,]
+# sexratio <- as.data.frame(sexratio[-1,])
+
+
 # placeholders for unused covariates dimenstioned to the number of simulated years
 dummycovar <- data.frame(dummy1 = rep(1, NOBAom_ms$runpar$nyears))
+
+# placeholder for effort data dimensioned by year and nfleets
+allfleets <- atlantisom::load_fisheries(d.name, fisheries.file)
+fleets <- unique(NOBAom_ms$truecatchage_ss$fleet)
+
+dummyeffort <- data.frame(1:singletons$Nyrs,
+                          matrix(1, singletons$Nyrs, singletons$Nfleets))
+names(dummyeffort) <- c("year", fleets)
 
 # will need to fit von B and maturity curve functions to back out hydra input pars
 # maturity from maturity ogive input in biol file
@@ -373,6 +392,7 @@ write.csv(M1, paste0(o.name,"mortality_M1_NOBA.csv"))
 write_csv(dummycovar, paste0(o.name,"recruitment_covariates_NOBA.csv"))
 write_csv(dummycovar, paste0(o.name,"maturity_covariates_NOBA.csv"))
 write_csv(dummycovar, paste0(o.name,"growth_covariates_NOBA.csv"))
+write_csv(dummyeffort, paste0(o.name,"observation_effort_NOBA.csv"))
 
 ```
 
