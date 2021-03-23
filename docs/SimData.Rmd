@@ -568,24 +568,23 @@ cat(as.character(meta), file=paste0(here("simulated-data/msinput/hydra/"),"READM
 
 Output temperature data from surveys using "Temp" variable in .nc file and the `atlantisom::load_nc_physics` function. A survey (timestep, polygons, possibly observation error) can then be applied to this output. 
 
-We can get surface and bottom temp from atlatis using the layers from each polygon, with layer 0 (?) being the surface and the maximum layer in the polygon being the bottom. 
-```{r}
+We can get surface and bottom temp from Atlantis using the layers from each polygon, with layer 0 being the bottom and the maximum layer in the polygon being the surface (according to the [Atlantis wiki/Atlantis output files/Atlantis NetCDF structure](https://confluence.csiro.au/display/Atlantis/Atlantis+NetCDF+Structure). 
+```{r surveytemp, eval=FALSE}
 
-# taken from existing load_nc
-
-file.nc <- file.path(d.name, "outputnordic_runresults_01.nc")
-
-  # Load ATLANTIS output!
-  at_out <- RNetCDF::open.nc(con = file.nc)
-
-  # Get info from netcdf file! (Filestructure and all variable names)
-  var_names_ncdf <- sapply(seq_len(RNetCDF::file.inq.nc(at_out)$nvars - 1),
-    function(x) RNetCDF::var.inq.nc(at_out, x)$name)
-  n_timesteps <- RNetCDF::dim.inq.nc(at_out, 0)$length
-  n_boxes     <- RNetCDF::dim.inq.nc(at_out, 1)$length
-  n_layers    <- RNetCDF::dim.inq.nc(at_out, 2)$length
-
-RNetCDF::close.nc(at_out)
+# taken from existing load_nc to explore
+# file.nc <- file.path(d.name, "outputnordic_runresults_01.nc")
+# 
+#   # Load ATLANTIS output!
+#   at_out <- RNetCDF::open.nc(con = file.nc)
+# 
+#   # Get info from netcdf file! (Filestructure and all variable names)
+#   var_names_ncdf <- sapply(seq_len(RNetCDF::file.inq.nc(at_out)$nvars - 1),
+#     function(x) RNetCDF::var.inq.nc(at_out, x)$name)
+#   n_timesteps <- RNetCDF::dim.inq.nc(at_out, 0)$length
+#   n_boxes     <- RNetCDF::dim.inq.nc(at_out, 1)$length
+#   n_layers    <- RNetCDF::dim.inq.nc(at_out, 2)$length
+# 
+# RNetCDF::close.nc(at_out)
 
 #'@physic_variables A character value spefifying which variables
 #'   should be loaded. Only one variable can be loaded at a time.
@@ -600,13 +599,87 @@ truetemp <- atlantisom::load_nc_physics(dir = d.name,
                   bboxes = atlantisom::get_boundary(NOBAom_ms$boxpars))
   #if(verbose) message("Temperature read in.")
 
-truetempagg <- atlantisom::load_nc_physics(dir = d.name,
-                  file_nc = "outputnordic_runresults_01.nc",
-                  physic_variables = "Temp",
-                  aggregate_layers = TRUE,
-                  bboxes = atlantisom::get_boundary(NOBAom_ms$boxpars))
+# this averages all depth layers, don't want this
+# truetempagg <- atlantisom::load_nc_physics(dir = d.name,
+#                   file_nc = "outputnordic_runresults_01.nc",
+#                   physic_variables = "Temp",
+#                   aggregate_layers = TRUE,
+#                   bboxes = atlantisom::get_boundary(NOBAom_ms$boxpars))
+
+truebottomtemp <- truetemp %>%
+  filter(layer == 0) # according to Atlantis wiki, layer 0 is bottom
+
+truesurfacetemp <- truetemp %>%
+  filter(layer<7) %>%  #layer 7 is always identical temp to layer 0, may be the added sediment layer?
+  group_by(polygon, time) %>%
+  filter(layer==max(layer)) %>%
+  ungroup
+
+surveyenv <- function(trueenv, 
+                      survboxes,
+                      survtimes) {
+  surveydat <- trueenv %>%
+    dplyr::filter(polygon %in% survboxes) %>%
+    dplyr::filter(time %in% survtimes)
+  
+  return(surveydat)
+}
+
+omlist_ss <- NOBAom_ms
+source(here("simulated-data/config/omdimensions.R"))
+
+#need to weight by polygon area to get mean annual temp time series for each survey
+boxarea <- map_dfr(NOBAom_ms$boxpars$boxes, "area") %>%
+  pivot_longer(everything(), names_to = "polygon", values_to = "area") %>%
+  mutate(polygon = as.integer(polygon)) %>%
+  mutate(proparea = area/sum(area))
 
 
+source(here("simulated-data/config/mssurvey_fall.R"))
+
+fallcensus_bottomtemp <- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+fallcensus_btempindex <- left_join(fallcensus_bottomtemp, boxarea) %>%
+  dplyr::group_by(time) %>%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %>%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+  dplyr::select(year, meantemp) %>%
+  write_csv(paste0(o.name,"observation_temperature_NOBA_",survey.name,".csv"))
+
+source(here("simulated-data/config/mssurvey_spring.R"))
+
+springcensus_bottomtemp <- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+springcensus_btempindex <- left_join(springcensus_bottomtemp, boxarea) %>%
+  dplyr::group_by(time) %>%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %>%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+  dplyr::select(year, meantemp) %>%
+  write_csv(paste0(o.name,"observation_temperature_NOBA_",survey.name,".csv"))
+
+source(here("simulated-data/config/mssurvey_fall_01.R"))
+
+fallnearbox_bottomtemp <- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+fallnearbox_btempindex <- left_join(fallnearbox_bottomtemp, boxarea) %>%
+  dplyr::group_by(time) %>%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %>%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+  dplyr::select(year, meantemp) %>%
+  write_csv(paste0(o.name,"observation_temperature_NOBA_",survey.name,".csv"))
+
+source(here("simulated-data/config/mssurvey_spring_01.R"))
+
+springnearbox_bottomtemp <- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+springnearbox_btempindex <- left_join(springnearbox_bottomtemp, boxarea) %>%
+  dplyr::group_by(time) %>%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %>%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+  dplyr::select(year, meantemp) %>%
+  write_csv(paste0(o.name,"observation_temperature_NOBA_",survey.name,".csv"))
+
+  
 ```
 
 

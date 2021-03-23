@@ -421,7 +421,7 @@ pre code {
 
 <h1 class="title toc-ignore">Generating Simulated Data</h1>
 <h4 class="author">Sarah Gaichas</h4>
-<h4 class="date">17 March, 2021</h4>
+<h4 class="date">23 March, 2021</h4>
 
 </div>
 
@@ -1002,6 +1002,9 @@ M1mat &lt;- matrix(0.02, singletons$Nspecies, singletons$Nsizebins,
                 dimnames = list(c(sort.default(sppsubset$Name)),  c(paste0(&quot;sizeclass&quot;,seq(1:singletons$Nsizebins))))) 
 M1 &lt;- as.data.frame(M1mat)
 
+# placeholders for unused covariates dimenstioned to the number of simulated years
+dummycovar &lt;- data.frame(dummy1 = rep(1, NOBAom_ms$runpar$nyears))
+
 # will need to fit von B and maturity curve functions to back out hydra input pars
 # maturity from maturity ogive input in biol file
 # growth functions from length at age in model...
@@ -1014,9 +1017,24 @@ write_csv(lenwtpar, paste0(o.name,&quot;lengthweight_species_NOBA.csv&quot;))
 write.csv(intakespp, paste0(o.name,&quot;intake_species_NOBA.csv&quot;))
 write.csv(sizepref, paste0(o.name,&quot;mortality_M2sizePreference_NOBA.csv&quot;))
 write.table(t(singletons), paste0(o.name,&quot;singletons_NOBA.csv&quot;), sep=&quot;,&quot;,  col.names=FALSE)
-write.csv(M1, paste0(o.name,&quot;mortality_M1_NOBA.csv&quot;))</code></pre>
+write.csv(M1, paste0(o.name,&quot;mortality_M1_NOBA.csv&quot;))
+write_csv(dummycovar, paste0(o.name,&quot;recruitment_covariates_NOBA.csv&quot;))
+write_csv(dummycovar, paste0(o.name,&quot;maturity_covariates_NOBA.csv&quot;))
+write_csv(dummycovar, paste0(o.name,&quot;growth_covariates_NOBA.csv&quot;))</code></pre>
 <p>Decisions on size bins for hydra: keep 5 bins per species for now, build in flexibility to allocate size data to any number of bins with any definitions.</p>
-<p>Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases. <em>Consider a function to do this using species max size and the desired number of bins for more consistency and to easily change Nsizebins.</em></p>
+<p>Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases.</p>
+<p><em>Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.</em></p>
+<pre class="r"><code># see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
+# estimated optimal bin size for VBGF estimation is 0.23 x Lmax ^0.6
+
+binwidths &lt;- function(Lmax, vonBk, Nsizebins){
+  #optimal bin size is lower end
+  binopt &lt;- 0.23*Lmax^0.6
+  #vonBk tells you how many fine bins for fast growth
+  
+  #aggregate bins in multiples of optimal for bigger fish/slower growth to get Nsizebins
+  
+}</code></pre>
 <p>Initially, we’ll directly transfer bin widths for GB and NOBA common species:</p>
 <ul>
 <li>Aherring = <a href="https://www.hi.no/en/hi/temasider/species/herring">Norwegian_ssh</a></li>
@@ -1085,9 +1103,11 @@ len_comp_data &lt;- read_savedsurvs(d.name, &#39;survLen&#39;)
 for(s in names(len_comp_data)){
   #arrange into wide format: year, Species1, Species2 ... and write csv
   svlen &lt;- len_comp_data[[s]][[1]] %&gt;%
-    #calc_timestep2time(d.name, ., run.prm.file) %&gt;% #this gives an arbitrary start year of 1970
     dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
-    dplyr::select(species, year, atoutput) %&gt;%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %&gt;%
+    
+  
+  
     tidyr::spread(species, atoutput) %&gt;%
     write_csv(paste0(o.name,&quot;observation_lengths_NOBA_&quot;,s,&quot;.csv&quot;))
 }
@@ -1171,6 +1191,115 @@ meta &lt;- c(&quot;Simulated data from Norweigan-Barents Atlantis Model by Hanse
           )
 
 cat(as.character(meta), file=paste0(here(&quot;simulated-data/msinput/hydra/&quot;),&quot;README.txt&quot;))</code></pre>
+<p>Output temperature data from surveys using “Temp” variable in .nc file and the <code>atlantisom::load_nc_physics</code> function. A survey (timestep, polygons, possibly observation error) can then be applied to this output.</p>
+<p>We can get surface and bottom temp from Atlantis using the layers from each polygon, with layer 0 being the bottom and the maximum layer in the polygon being the surface (according to the <a href="https://confluence.csiro.au/display/Atlantis/Atlantis+NetCDF+Structure">Atlantis wiki/Atlantis output files/Atlantis NetCDF structure</a>.</p>
+<pre class="r"><code># taken from existing load_nc to explore
+# file.nc &lt;- file.path(d.name, &quot;outputnordic_runresults_01.nc&quot;)
+# 
+#   # Load ATLANTIS output!
+#   at_out &lt;- RNetCDF::open.nc(con = file.nc)
+# 
+#   # Get info from netcdf file! (Filestructure and all variable names)
+#   var_names_ncdf &lt;- sapply(seq_len(RNetCDF::file.inq.nc(at_out)$nvars - 1),
+#     function(x) RNetCDF::var.inq.nc(at_out, x)$name)
+#   n_timesteps &lt;- RNetCDF::dim.inq.nc(at_out, 0)$length
+#   n_boxes     &lt;- RNetCDF::dim.inq.nc(at_out, 1)$length
+#   n_layers    &lt;- RNetCDF::dim.inq.nc(at_out, 2)$length
+# 
+# RNetCDF::close.nc(at_out)
+
+#&#39;@physic_variables A character value spefifying which variables
+#&#39;   should be loaded. Only one variable can be loaded at a time.
+#&#39;   Currently, only the following variables are allowed:
+#&#39;   &quot;salt&quot;, &quot;NO3&quot;, &quot;NH3&quot;, &quot;Temp&quot;, &quot;Oxygen&quot;, &quot;Si&quot;, &quot;Det_Si&quot;, &quot;DON&quot;,
+#&#39;    &quot;Chl_a&quot;, &quot;Denitrifiction&quot;, &quot;Nitrification&quot;.
+
+truetemp &lt;- atlantisom::load_nc_physics(dir = d.name,
+                  file_nc = &quot;outputnordic_runresults_01.nc&quot;,
+                  physic_variables = &quot;Temp&quot;,
+                  aggregate_layers = FALSE,
+                  bboxes = atlantisom::get_boundary(NOBAom_ms$boxpars))
+  #if(verbose) message(&quot;Temperature read in.&quot;)
+
+# this averages all depth layers, don&#39;t want this
+# truetempagg &lt;- atlantisom::load_nc_physics(dir = d.name,
+#                   file_nc = &quot;outputnordic_runresults_01.nc&quot;,
+#                   physic_variables = &quot;Temp&quot;,
+#                   aggregate_layers = TRUE,
+#                   bboxes = atlantisom::get_boundary(NOBAom_ms$boxpars))
+
+truebottomtemp &lt;- truetemp %&gt;%
+  filter(layer == 0) # according to Atlantis wiki, layer 0 is bottom
+
+truesurfacetemp &lt;- truetemp %&gt;%
+  filter(layer&lt;7) %&gt;%  #layer 7 is always identical temp to layer 0, may be the added sediment layer?
+  group_by(polygon, time) %&gt;%
+  filter(layer==max(layer)) %&gt;%
+  ungroup
+
+surveyenv &lt;- function(trueenv, 
+                      survboxes,
+                      survtimes) {
+  surveydat &lt;- trueenv %&gt;%
+    dplyr::filter(polygon %in% survboxes) %&gt;%
+    dplyr::filter(time %in% survtimes)
+  
+  return(surveydat)
+}
+
+omlist_ss &lt;- NOBAom_ms
+source(here(&quot;simulated-data/config/omdimensions.R&quot;))
+
+#need to weight by polygon area to get mean annual temp time series for each survey
+boxarea &lt;- map_dfr(NOBAom_ms$boxpars$boxes, &quot;area&quot;) %&gt;%
+  pivot_longer(everything(), names_to = &quot;polygon&quot;, values_to = &quot;area&quot;) %&gt;%
+  mutate(polygon = as.integer(polygon)) %&gt;%
+  mutate(proparea = area/sum(area))
+
+
+source(here(&quot;simulated-data/config/mssurvey_fall.R&quot;))
+
+fallcensus_bottomtemp &lt;- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+fallcensus_btempindex &lt;- left_join(fallcensus_bottomtemp, boxarea) %&gt;%
+  dplyr::group_by(time) %&gt;%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %&gt;%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+  dplyr::select(year, meantemp) %&gt;%
+  write_csv(paste0(o.name,&quot;observation_temperature_NOBA_&quot;,survey.name,&quot;.csv&quot;))
+
+source(here(&quot;simulated-data/config/mssurvey_spring.R&quot;))
+
+springcensus_bottomtemp &lt;- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+springcensus_btempindex &lt;- left_join(springcensus_bottomtemp, boxarea) %&gt;%
+  dplyr::group_by(time) %&gt;%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %&gt;%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+  dplyr::select(year, meantemp) %&gt;%
+  write_csv(paste0(o.name,&quot;observation_temperature_NOBA_&quot;,survey.name,&quot;.csv&quot;))
+
+source(here(&quot;simulated-data/config/mssurvey_fall_01.R&quot;))
+
+fallnearbox_bottomtemp &lt;- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+fallnearbox_btempindex &lt;- left_join(fallnearbox_bottomtemp, boxarea) %&gt;%
+  dplyr::group_by(time) %&gt;%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %&gt;%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+  dplyr::select(year, meantemp) %&gt;%
+  write_csv(paste0(o.name,&quot;observation_temperature_NOBA_&quot;,survey.name,&quot;.csv&quot;))
+
+source(here(&quot;simulated-data/config/mssurvey_spring_01.R&quot;))
+
+springnearbox_bottomtemp &lt;- surveyenv(truebottomtemp, survboxes = survboxes, survtimes = survtime)
+
+springnearbox_btempindex &lt;- left_join(springnearbox_bottomtemp, boxarea) %&gt;%
+  dplyr::group_by(time) %&gt;%
+  dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %&gt;%
+  dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+  dplyr::select(year, meantemp) %&gt;%
+  write_csv(paste0(o.name,&quot;observation_temperature_NOBA_&quot;,survey.name,&quot;.csv&quot;))</code></pre>
 </div>
 </div>
 <div id="generating-a-survey-dataset" class="section level2">
