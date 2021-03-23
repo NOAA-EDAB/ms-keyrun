@@ -51,7 +51,7 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 
 <sup>1</sup>  32 - FYKE NET (**winter fl**, windowpane fl, **dogfish**, **skates**)
 
-## Pelagic
+## Fixed Gear
 
 10 - GILL NET, FIXED (**dogfish** (22%), **cod**(22%), **goosefish** (20%))
 
@@ -64,7 +64,7 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 <sup>1</sup>  50 - GILL NET (angler, bluefish, **skate**, **dogfish**)
 
 
-## Squid
+## Trap
 
 14 - POUND NET (loligo (35%) , scup (20%), **mackerel** (20%), many other < 5%)
 
@@ -82,14 +82,18 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 
 12 - PURSE SEINE (1970's menhaden, modern Tuna, **Herring**)
 
-## Shellfish
 
+## Scallop
 
-38 - DREDGE (mussel(40%), scallop(30%), clam+quahog (17%) + bottom fish)
+13 - DREDGE, SCALLOP (scallop (88%) (**Goosefish** , **yellowtail**, bottom fish))
+
+## Surf clam
 
 40 - DREDGE (surfclam (56%), ocean quahog(43%) )
 
-13 - DREDGE, SCALLOP (scallop (88%) (**Goosefish** , **yellowtail**, bottom fish))
+## Other shellfish
+
+38 - DREDGE (mussel(40%), scallop(30%), clam+quahog (17%) + bottom fish)
 
 <sup>1</sup> 22 - HOES/FORK (soft clam, oysters, bay scallop)
 
