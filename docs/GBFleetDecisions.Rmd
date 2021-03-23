@@ -41,85 +41,88 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 ## Demersal
 
 
-05 - OTTER TRAWL, BOTTOM (**cod** (16%), **yellowtail fl** (15%), **haddock** (12%), **silver hake** (10%), **winter fl** (8%), loligo (6%) + 33% other bottom) - Large and small mesh
+05 - OTTER TRAWL, BOTTOM (**cod** (16%), **yellowtail fl** (15%), **haddock** (12%), **silver hake** (10%), **winter fl** (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs
 
-<sup>1</sup> 35 - BEAM TRAWL (summer flounder, **winter flounder**, **yellowtail flounder**)
+<sup>1</sup> 16 - DANISH SEINE (**cod**, witch fl, **yellowtail flounder**, **winter fl**, plaice, **silver hake**) - 5,194,870 lbs 
 
-<sup>1</sup> 36 - SCOTTISH SEINE (**silver hake**, **cod**, plaice, witch fl, **yellowtail flounder**, **winter fl**, red hake)
+<sup>1</sup> 36 - SCOTTISH SEINE (**silver hake**, **cod**, plaice, witch fl, **yellowtail flounder**, **winter fl**, red hake) - 4,521,702 lbs
 
-<sup>1</sup> 16 - DANISH SEINE (**cod**, witch fl, **yellowtail flounder**, **winter fl**, plaice, **silver hake**)
+<sup>1</sup> 35 - BEAM TRAWL (summer flounder, **winter flounder**, **yellowtail flounder**) - 927,806 lbs
 
-<sup>1</sup>  32 - FYKE NET (**winter fl**, windowpane fl, **dogfish**, **skates**)
+<sup>1</sup>  32 - FYKE NET (**winter fl**, windowpane fl, **dogfish**, **skates**) - 1,602 lb
 
 ## Fixed Gear
+10 - GILL NET, FIXED (**dogfish** (22%), **cod** (22%), **goosefish** (20%), **winter skate/skates** (21%), pollock (6%)) - 417,501,765 lbs
 
-10 - GILL NET, FIXED (**dogfish** (22%), **cod**(22%), **goosefish** (20%))
+01 - LONGLINE, BOTTOM (**cod** (40%), **dogfish** (21%), tilefish (20%), **haddock** (9%) + pollock , white hake) - 234,755,227 lbs
 
-01 - LONGLINE, BOTTOM (**cod** (40%), **dogfish** (21%), tilefish (20%), **haddock** (9%) + pollock , white hake)
+02 - HANDLINE (**cod**(42%), scup (15%), tuna (13%), **spiny dogfish**(6%), **mackerel** (5%)) -72,859,422 lbs
 
-02 - HANDLINE (**dogfish**(22%), **cod** (22%), **goosefish** (20%), **skates**(20%), pollock (7%))
+<sup>1</sup>  50 - GILL NET (angler, bluefish, **skate**, **dogfish**) - 789,780 lbs
 
-<sup>1</sup>  52 - GILL NET (skate, angler, **haddock**, swordfish, **mackerel**, **cod** )
+<sup>1</sup>  52 - GILL NET (skate, angler, **haddock**, swordfish, **mackerel**, **cod** ) - 367,823 lbs
 
-<sup>1</sup>  50 - GILL NET (angler, bluefish, **skate**, **dogfish**)
 
 
 ## Trap
 
-14 - POUND NET (loligo (35%) , scup (20%), **mackerel** (20%), many other < 5%)
+14 - POUND NET (loligo (35%) , scup (20%), **mackerel** (20%), many other < 5%) - 39,571,508 lbs
 
-<sup>1</sup> 8 - FLOATING TRAP (**mackerel**, scup, loligo, tuna)
+<sup>1</sup>  26 - WEIR (loligo, **mackerel**, scup) - 3,094,066 lbs
 
-<sup>1</sup>  26 - WEIR (loligo, **mackerel**, scup)
+<sup>1</sup> 8 - FLOATING TRAP (**mackerel**, scup, loligo, tuna) - 1,850,040 lbs 
+
 
 
 ## Forage Fish
 
 
-17 - MIDWATER OTTER TRAWL (**Mackerel** (7%), **Herring** (91%))
+17 - MIDWATER OTTER TRAWL (**Mackerel** (7%), **Herring** (91%)) -  598,176,314 lbs
 
-37 - MIDWATER OTTER TRAWL (**Mackerel** (11%) , **Herring** (88%))
+37 - MIDWATER OTTER TRAWL (**Mackerel** (11%) , **Herring** (88%)) - 367,414,353 lbs
 
-12 - PURSE SEINE (1970's menhaden, modern Tuna, **Herring**)
+12 - PURSE SEINE (1970's menhaden (40%), Tuna (34%), **Herring** (5%)) - 41,291,228 lbs
 
 
 ## Scallop
 
-13 - DREDGE, SCALLOP (scallop (88%) (**Goosefish** , **yellowtail**, bottom fish))
+13 - DREDGE, SCALLOP (scallop (88%) (**Goosefish** , **yellowtail**, bottom fish)) - 733,761,209 lbs
 
 ## Surf clam
 
-40 - DREDGE (surfclam (56%), ocean quahog(43%) )
+40 - DREDGE (surfclam (56%), ocean quahog(43%) ) - 425,058,521 lbs
 
 ## Other shellfish
 
-38 - DREDGE (mussel(40%), scallop(30%), clam+quahog (17%) + bottom fish)
+38 - DREDGE (mussel(40%), sea scallop(30%), clam+quahog (17%) + bottom fish) - 48,683,622 lbs
 
-<sup>1</sup> 22 - HOES/FORK (soft clam, oysters, bay scallop)
+<sup>1</sup> 25 - RAKES (quahog, soft clam, mussels, crab, oysters) - 13,153,618 lbs
 
-<sup>1</sup> 41 - TONGS AND GRABS (quahog, soft clam, surf clam)
+<sup>1</sup> 41 - TONGS AND GRABS (quahog, soft clam, surf clam) - 232,351 lbs
 
-<sup>1</sup> 25 - RAKES (quahog, soft clam, mussels, crab, oysters)
+<sup>1</sup> 22 - HOES/FORK (soft clam, oysters, bay scallop) - 217,491 lbs
+
+
 
 ## Lobster/Crab
 
-21 - POT/TRAP (Lobster (88%), crab (10%) + bottom fish)
+20 - POT/TRAP (lobster(53%) + crab(46%), bottom fish < 1%) - 340,059,280 lbs
 
-20 - POT/TRAP (lobster(53%) + crab(46%), bottom fish < 1%)
+18 - POTS + TRAPS (crab (20%), lobster (20%), whelk (10%), snails (10%), hagfish (20%) + bottom fish (20%)) - 79,123,496 lbs
 
-30 - POTS + TRAPS (crab (>99%))
+30 - POTS + TRAPS (crab (>99%)) - 68,329,188 lbs
 
-18 - POTS + TRAPS (crab (20%), lobster (20%), whelk (10%), snails (10%), hagfish (20%) + bottom fish (20%))
+21 - POT/TRAP (Lobster (88%), crab (10%) + bottom fish) - 39,633,570 lbs
 
-<sup>1</sup> 15 - TRAWL (lobster, 1972,1974)
+<sup>1</sup> 23 - BY HAND (soft clam, crab, quahog, oysters, clam) - 1,665,727 lbs
 
-<sup>1</sup> 53 - TRAMMEL NET (lobster , 2012)
- 
-<sup>1</sup> 19 - POTS + TRAPS (rock crab, lobster, 2004)
+<sup>1</sup> 33 - DIVING GEAR (lobster, sea urch, squid) - 878,986 lbs
 
-<sup>1</sup> 23 - BY HAND (soft clam, crab, quahog, oysters, clam)
+<sup>1</sup> 15 - TRAWL (lobster, 1972,1974) - 21,437 lbs
 
-<sup>1</sup> 33 - DIVING GEAR (lobster, sea urch, squid)
+<sup>1</sup> 19 - POTS + TRAPS (rock crab, lobster, 2004) - 23525 lbs
+
+<sup>1</sup> 53 - TRAMMEL NET (lobster , 2012) - 193 lbs
 
 ## HMS 
 
