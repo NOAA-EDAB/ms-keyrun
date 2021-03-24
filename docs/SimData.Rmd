@@ -358,11 +358,8 @@ M1mat <- matrix(0.02, singletons$Nspecies, singletons$Nsizebins,
 M1 <- as.data.frame(M1mat)
 
 # sexratio fixed 50:50 for all species
-# sexratio <- vector(0.5, )
-# rbind(species = sort.default(sppsubset$Name),
-#                   ratio = rep(0.5))
-# colnames(sexratio) <- sexratio[1,]
-# sexratio <- as.data.frame(sexratio[-1,])
+sexratio <- matrix(0.5, 1, singletons$Nspecies,
+                   dimnames = list("ratio", c(sort.default(sppsubset$Name))))
 
 
 # placeholders for unused covariates dimenstioned to the number of simulated years
@@ -393,6 +390,7 @@ write_csv(dummycovar, paste0(o.name,"recruitment_covariates_NOBA.csv"))
 write_csv(dummycovar, paste0(o.name,"maturity_covariates_NOBA.csv"))
 write_csv(dummycovar, paste0(o.name,"growth_covariates_NOBA.csv"))
 write_csv(dummyeffort, paste0(o.name,"observation_effort_NOBA.csv"))
+write.csv(sexratio, paste0(o.name,"sexratio_NOBA.csv"))
 
 ```
 
@@ -477,7 +475,9 @@ write_csv(sizebins, paste0(o.name,"length_sizebins_NOBA.csv"))
 
 These decisions on matching species can carry through to other life history parameters, at least initially.
 
-Need to fit growth and maturity parameters from Atlantis output for input into hydra. Possibly also recruitment? Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
+Need to fit growth and maturity parameters from Atlantis output for input into hydra. Fit growth using code below.
+
+Generating length composition input data requires mapping numbers at length in the atlantisom 1 cm bin length output to our selected length bins, then summing the numbers at length in those bins for all species. The input required is a 4d array, indexed by survey, species, year, and sizebin. So each survey can be a separate csv with #species at the top of year rows and sizebin columns with n at length the values, scrolling down for each species.
 
 ```{r fitpars, eval=FALSE}
 
@@ -486,21 +486,47 @@ Need to fit growth and maturity parameters from Atlantis output for input into h
 
 len_comp_data <- read_savedsurvs(d.name, 'survLen')
 
+# VBGF packages all take age and length pairs, reformat from length comp at agecl
+
 #multiple surveys named in list object, use as filename
 for(s in names(len_comp_data)){
-  #arrange into wide format: year, Species1, Species2 ... and write csv
-  svlen <- len_comp_data[[s]][[1]] %>%
+  #arrange into long format: year, Species, agecl, length 
+  svlenage <- len_comp_data[[s]][[1]] %>%
     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
     dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
     
   
   
-    tidyr::spread(species, atoutput) %>%
+}
+
+# rearrange into length bins and write length comp data csvs
+#multiple surveys named in list object, use as filename
+for(s in names(len_comp_data)){
+  #arrange into long format: year, Species, agecl, length 
+  svlenbin <- len_comp_data[[s]][[1]] %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
+    
+  
+  
+    tidyr::spread(lenbins, atoutput) %>%
     write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
 }
 
-
 # need 2-par maturity curve based on length, atlantis maturity ogive based on age group
+
+```
+
+Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.
+
+```{r stomwt}
+
+
+```
+
+Do we need to fit recruitment? May just need average recriutment starting values, which I can get from atlantis. Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
+
+```{r}
 
 ```
 
