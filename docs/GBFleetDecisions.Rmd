@@ -52,6 +52,7 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 <sup>1</sup>  32 - FYKE NET (**winter fl**, windowpane fl, **dogfish**, **skates**) - 1,602 lb
 
 ## Fixed Gear
+
 10 - GILL NET, FIXED (**dogfish** (22%), **cod** (22%), **goosefish** (20%), **winter skate/skates** (21%), pollock (6%)) - 417,501,765 lbs
 
 01 - LONGLINE, BOTTOM (**cod** (40%), **dogfish** (21%), tilefish (20%), **haddock** (9%) + pollock , white hake) - 234,755,227 lbs
@@ -74,7 +75,7 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 
 
 
-## Forage Fish
+## Pelagic
 
 
 17 - MIDWATER OTTER TRAWL (**Mackerel** (7%), **Herring** (91%)) -  598,176,314 lbs
