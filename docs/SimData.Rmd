@@ -486,15 +486,53 @@ Generating length composition input data requires mapping numbers at length in t
 
 len_comp_data <- read_savedsurvs(d.name, 'survLen')
 
+# need to shift agecl to represent midpoint of actual age groups
+# using part of the wtage interpolation function calc_avgwtstage2age()
+annage_comp_data <- read_savedsurvs(d.name, 'survAnnAge')
+
+
+library(FSA)
 # VBGF packages all take age and length pairs, reformat from length comp at agecl
+# break into 3 chunks of time, "era" 48 years each more like our survey
+# subsample after reformatting with uncount because we wouldn't have this many ages
 
 #multiple surveys named in list object, use as filename
 for(s in names(len_comp_data)){
+  
+  annages <- annage_comp_data[[s]][[1]] %>%
+    group_by(species, time, agecl) %>%
+    rename(trueage = agecl) %>%
+    summarise(truenatage = sum(atoutput))
+    
+  # Figure out the groups that have multiple ages classes in each stage (or
+  # cohort)
+  multiple_ages <- sp_age[sp_age$NumAgeClassSize>1,]
+  
+  # finds the average age of each agecl each timestep based on truenatage
+  svlen_avgage <- annages %>%
+    dplyr::semi_join(len_comp_data[[s]][[1]], by = c("species", "time")) %>%
+    dplyr::inner_join(multiple_ages, by = c("species" = "Name")) %>%
+    dplyr::mutate(agecl = as.integer(ceiling(trueage/NumAgeClassSize))) %>%
+    dplyr::group_by(species, time, agecl) %>%
+    dplyr::mutate(avgage = weighted.mean(trueage, truenatage))
+
+
   #arrange into long format: year, Species, agecl, length 
   svlenage <- len_comp_data[[s]][[1]] %>%
+    dplyr::left_join(svlen_avgage) %>%
     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
-    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
-    
+    dplyr::select(species, agecl, avgage, year, upper.bins, atoutput) %>%
+    dplyr::mutate(avgage = coalesce(avgage,agecl)) %>%
+    dplyr::rename(length = upper.bins) %>%
+    dplyr::mutate(era = as.numeric(cut_number(year,3))) %>%
+    tidyr::uncount(atoutput) %>%
+    dplyr::group_by(species, avgage, year) %>%
+    dplyr::sample_frac(0.01) 
+  
+  svvbgf <- svlenage %>%
+    dplyr::group_by(species, era) %>%
+    group_map(~nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .)))
   
   
 }
