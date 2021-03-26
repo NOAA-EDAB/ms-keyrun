@@ -609,12 +609,38 @@ for(s in names(len_comp_data)){
 #  residual sum-of-squares: 3197990
 # 
 # Number of iterations to convergence: 13 
-# Achieved convergence tolerance: 8.316e-06    
+# Achieved convergence tolerance: 8.316e-06 
     
-    #dplyr::group_by(species, era) %>%
-    #group_map(try(~nls(length~vb1(avgage, Linf, K, t0), data = .,
-    #              start = vbStarts(length~avgage,data = .))))
-  
+    saithe1 <- svlenage %>%
+      filter(species=="Saithe",
+             era==1)
+    
+    nls(length~vb1(avgage, Linf, K, t0), data = saithe1,
+                  start = vbStarts(length~avgage,data = saithe1))
+#Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: saithe1
+#      Linf         K        t0 
+# 388.18797   0.01975  -3.94798 
+#  residual sum-of-squares: 5691213
+# 
+# Number of iterations to convergence: 5 
+# Achieved convergence tolerance: 5.511e-06
+    
+ svvbgf <- svlenage %>%   
+    dplyr::group_by(species) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .))))
+ 
+ svvbgf2 <- svlenage %>%   
+    dplyr::group_by(species) %>%
+    group_modify(~broom::tidy(possibly(nls(length~vb1(avgage, Linf, K, t0), data = .x,
+                  start = vbStarts(length~avgage,data = .x)), otherwise = NA_real_)))
+ svvbgf3 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .))))
+
   
 }
 
