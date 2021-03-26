@@ -481,6 +481,13 @@ Generating length composition input data requires mapping numbers at length in t
 
 ```{r fitpars, eval=FALSE}
 
+sp_age <- NOBAom_ms$funct.group_ss[, c("Name", "NumCohorts", "NumAgeClassSize")]
+sp_age <- sp_age %>%
+  mutate(n_annages = NumCohorts * NumAgeClassSize) 
+
+stepperyr <- if(NOBAom_ms$runpar$outputstepunit=="days") 365/NOBAom_ms$runpar$toutinc
+
+
 # need growth, vonB t0, K, and Linf and simple growth function
 # would you really base this on 140 years of data? I used all survey years 
 
@@ -492,6 +499,7 @@ annage_comp_data <- read_savedsurvs(d.name, 'survAnnAge')
 
 
 library(FSA)
+vb1 <- vbFuns()
 # VBGF packages all take age and length pairs, reformat from length comp at agecl
 # break into 3 chunks of time, "era" 48 years each more like our survey
 # subsample after reformatting with uncount because we wouldn't have this many ages
@@ -529,10 +537,83 @@ for(s in names(len_comp_data)){
     dplyr::group_by(species, avgage, year) %>%
     dplyr::sample_frac(0.01) 
   
-  svvbgf <- svlenage %>%
-    dplyr::group_by(species, era) %>%
-    group_map(~nls(length~vb1(avgage, Linf, K, t0), data = .,
-                  start = vbStarts(length~avgage,data = .)))
+  saveRDS(svlenage, file.path(d.name, paste0(scenario.name, "_",
+                                                       s, "agelensamp.rds")))
+  
+  capelinvbgf <- svlenage %>%
+    filter(species == "Capelin") %>%
+    group_by(era) %>%
+    group_map(try(~nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .))))
+  
+  # herringvbgf <- svlenage %>%
+  #   filter(species == "Norweigan_ssh", era==1) %>%
+  #   group_map(try(~nls(length~vb1(avgage, Linf, K, t0), data = .,
+  #                 start = vbStarts(length~avgage,data = .))))
+     
+#Error in nls(length ~ vb1(avgage, Linf, K, t0), data = ., start = vbStarts(length ~  : 
+  #singular gradient with group_map, era 2 and 3
+  codvbgf <- svlenage %>%
+    filter(species == "North_atl_cod") 
+    #group_by(era) %>%
+    nls(length~vb1(avgage, Linf, K, t0), data = codvbgf,
+                  start = vbStarts(length~avgage,data = codvbgf))
+#  era==1   Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: codvbgf
+#     Linf        K       t0 
+# 104.7120   0.4260   0.2176 
+#  residual sum-of-squares: 4109723
+# 
+# Number of iterations to convergence: 7 
+# Achieved convergence tolerance: 2.169e-06
+    
+#  all years Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: codvbgf
+#     Linf        K       t0 
+# 112.4694   0.3912   0.2097 
+#  residual sum-of-squares: 7354906
+# 
+# Number of iterations to convergence: 11 
+# Achieved convergence tolerance: 9.964e-06
+    
+  
+  hadvbgf <- svlenage %>%
+    filter(species == "Haddock") 
+    #group_by(era) %>%
+    nls(length~vb1(avgage, Linf, K, t0), data = hadvbgf,
+                  start = vbStarts(length~avgage,data = hadvbgf))
+# all years
+#     Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: hadvbgf
+#    Linf       K      t0 
+# 77.0277  0.3601 -0.3546 
+#  residual sum-of-squares: 15637500
+# 
+# Number of iterations to convergence: 11 
+# Achieved convergence tolerance: 4.187e-06
+    
+  redvbgf <- svlenage %>%
+    filter(species == "Redfish") 
+    #group_by(era) %>%
+    nls(length~vb1(avgage, Linf, K, t0), data = redvbgf,
+                  start = vbStarts(length~avgage,data = redvbgf))
+#all years
+# Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: redvbgf
+#    Linf       K      t0 
+# 40.8016  0.1165 -1.6688 
+#  residual sum-of-squares: 3197990
+# 
+# Number of iterations to convergence: 13 
+# Achieved convergence tolerance: 8.316e-06    
+    
+    #dplyr::group_by(species, era) %>%
+    #group_map(try(~nls(length~vb1(avgage, Linf, K, t0), data = .,
+    #              start = vbStarts(length~avgage,data = .))))
   
   
 }
