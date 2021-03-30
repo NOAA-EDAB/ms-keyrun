@@ -477,7 +477,6 @@ These decisions on matching species can carry through to other life history para
 
 Need to fit growth and maturity parameters from Atlantis output for input into hydra. Fit growth using code below.
 
-Generating length composition input data requires mapping numbers at length in the atlantisom 1 cm bin length output to our selected length bins, then summing the numbers at length in those bins for all species. The input required is a 4d array, indexed by survey, species, year, and sizebin. So each survey can be a separate csv with #species at the top of year rows and sizebin columns with n at length the values, scrolling down for each species.
 
 ```{r fitpars, eval=FALSE}
 
@@ -539,14 +538,62 @@ for(s in names(len_comp_data)){
   
   saveRDS(svlenage, file.path(d.name, paste0(scenario.name, "_",
                                                        s, "agelensamp.rds")))
-  #plot len-age data and start values, some are bad
-  svlenage_pl <- svlenage %>%
+  
+  # try different start points to see if we can get more species fit
+  # this one goes to 11!
+  # need because group_map doesn't keep group names
+  gk <- svlenage %>%
     group_by(species, era) %>%
-    group_map(~vbStarts(length~avgage,data=cur_group(),plot=TRUE))
+    group_keys()
   
+  svvbgf3.2 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                       start = vbStarts(length~avgage,data = .,methLinf="longFish"))))
   
-}
+  #this gets exponential growth pars, probably won't use this growth mod though
+  svexp3 <- svlenage %>%
+    dplyr::group_by(species, era) %>%
+    group_modify(~ broom::tidy(lm(log(length) ~ log(avgage), data = .x))) %>%
+    select(species, era, term, estimate) %>%
+    pivot_wider(names_from = "term", values_from = "estimate") %>%
+    mutate(psi = exp(`(Intercept)`)) %>%
+    rename(kappa = `log(avgage)`) %>%
+    select(species, era, kappa, psi)
+    
+  vbout.2 <- data.frame() 
+  for(i in 1:length(svvbgf3.2)) {
+    if(is.list(svvbgf3.2[[i]])) {
+      spe <- cbind(as.data.frame(gk)[i,], as.data.frame(t(coef(svvbgf3.2[[i]]))))
+      vbout.2 <- rbind(vbout.2, spe)
+    }
+  }
+  
+  growthpars <- left_join(svexp3, vbout.2) 
+  
+  maxera <- growthpars %>% 
+    filter(!is.na(Linf)) %>% 
+    group_by(era) %>% 
+    tally() %>%
+    filter(n==11) %>%
+    select(era)
+  
+  growthspp <- growthpars %>%
+    filter(era==maxera) %>%
+    select(species, psi, kappa, Linf, K) %>%
+    t() %>%
+    as.data.frame()
 
+  
+  write_csv(paste0(o.name,"growth_species_NOBA_",s,".csv"))
+}
+```
+
+Generating length composition input data requires mapping numbers at length in the atlantisom 1 cm bin length output to our selected length bins, then summing the numbers at length in those bins for all species. The input required is a 4d array, indexed by survey, species, year, and sizebin. So each survey can be a separate csv with #species at the top of year rows and sizebin columns with n at length the values, scrolling down for each species.
+
+Arrange lengths into appropriate bins:
+
+```{r lendat}
 # rearrange into length bins and write length comp data csvs
 #multiple surveys named in list object, use as filename
 for(s in names(len_comp_data)){
@@ -675,6 +722,12 @@ for(s in names(len_comp_data)){
 # 
 # Number of iterations to convergence: 5 
 # Achieved convergence tolerance: 5.511e-06
+    
+#plot len-age data and start values, some are bad
+  svlenage_pl <- svlenage %>%
+    group_by(species, era) %>%
+    group_map(~vbStarts(length~avgage,data=cur_group(),plot=TRUE))
+
   
 ### full time series fits with different start points  
     
