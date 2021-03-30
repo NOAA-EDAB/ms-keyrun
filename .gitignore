@@ -33,6 +33,7 @@ data/timeSeriesSpeciesByGear.rds
 Landings_VTR_Geret_Data.rds
 comland
 simulated-data/atlantisoutput/
+simulated-data/diagnostics-scratch/
 # folders
 other
 
