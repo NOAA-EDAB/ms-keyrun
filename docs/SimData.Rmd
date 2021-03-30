@@ -539,12 +539,45 @@ for(s in names(len_comp_data)){
   
   saveRDS(svlenage, file.path(d.name, paste0(scenario.name, "_",
                                                        s, "agelensamp.rds")))
+  #plot len-age data and start values, some are bad
+  svlenage_pl <- svlenage %>%
+    group_by(species, era) %>%
+    group_map(~vbStarts(length~avgage,data=cur_group(),plot=TRUE))
   
+  
+}
+
+# rearrange into length bins and write length comp data csvs
+#multiple surveys named in list object, use as filename
+for(s in names(len_comp_data)){
+  #arrange into long format: year, Species, agecl, length 
+  svlenbin <- len_comp_data[[s]][[1]] %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
+    
+  
+  
+    tidyr::spread(lenbins, atoutput) %>%
+    write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
+}
+
+# need 2-par maturity curve based on length, atlantis maturity ogive based on age group
+
+```
+
+```{r vbfits-scratch, eval=FALSE}
+
   capelinvbgf <- svlenage %>%
     filter(species == "Capelin") %>%
     group_by(era) %>%
     group_map(try(~nls(length~vb1(avgage, Linf, K, t0), data = .,
                   start = vbStarts(length~avgage,data = .))))
+  
+  capelinall <- svlenage %>% filter(species == "Capelin")
+  plot(length~avgage,data=capelinall,pch=19,col=rgb(0,0,0,1/5))
+  curve(vb1(x,Linf=coef(capelinvbgf[[1]])),from=0,to=5,col="red",lwd=2,add=TRUE)
+  curve(vb1(x,Linf=coef(capelinvbgf[[2]])),from=0,to=5,col="blue",lwd=2,add=TRUE)
+  curve(vb1(x,Linf=coef(capelinvbgf[[3]])),from=0,to=5,col="green",lwd=2,add=TRUE)
   
   # herringvbgf <- svlenage %>%
   #   filter(species == "Norweigan_ssh", era==1) %>%
@@ -556,8 +589,11 @@ for(s in names(len_comp_data)){
   codvbgf <- svlenage %>%
     filter(species == "North_atl_cod") 
     #group_by(era) %>%
-    nls(length~vb1(avgage, Linf, K, t0), data = codvbgf,
+    codfit <- nls(length~vb1(avgage, Linf, K, t0), data = codvbgf,
                   start = vbStarts(length~avgage,data = codvbgf))
+    
+    plot(length~avgage,data=codvbgf,pch=19,col=rgb(0,0,0,1/5))
+    curve(vb1(x,Linf=coef(codfit)),from=0,to=20,col="red",lwd=2,add=TRUE)
 #  era==1   Nonlinear regression model
 #   model: length ~ vb1(avgage, Linf, K, t0)
 #    data: codvbgf
@@ -582,8 +618,13 @@ for(s in names(len_comp_data)){
   hadvbgf <- svlenage %>%
     filter(species == "Haddock") 
     #group_by(era) %>%
-    nls(length~vb1(avgage, Linf, K, t0), data = hadvbgf,
+  hadfit <- nls(length~vb1(avgage, Linf, K, t0), data = hadvbgf,
                   start = vbStarts(length~avgage,data = hadvbgf))
+  
+  plot(length~avgage,data=hadvbgf,pch=19,col=rgb(0,0,0,1/5))
+  curve(vb1(x,Linf=coef(hadfit)),from=0,to=20,col="red",lwd=2,add=TRUE)
+
+  
 # all years
 #     Nonlinear regression model
 #   model: length ~ vb1(avgage, Linf, K, t0)
@@ -598,8 +639,13 @@ for(s in names(len_comp_data)){
   redvbgf <- svlenage %>%
     filter(species == "Redfish") 
     #group_by(era) %>%
-    nls(length~vb1(avgage, Linf, K, t0), data = redvbgf,
+    
+  redfit <- nls(length~vb1(avgage, Linf, K, t0), data = redvbgf,
                   start = vbStarts(length~avgage,data = redvbgf))
+  
+  plot(length~avgage,data=redvbgf,pch=19,col=rgb(0,0,0,1/5))
+  curve(vb1(x,Linf=coef(redfit)),from=0,to=40,col="red",lwd=2,add=TRUE)
+  
 #all years
 # Nonlinear regression model
 #   model: length ~ vb1(avgage, Linf, K, t0)
@@ -615,8 +661,11 @@ for(s in names(len_comp_data)){
       filter(species=="Saithe",
              era==1)
     
-    nls(length~vb1(avgage, Linf, K, t0), data = saithe1,
+    saithe1fit <- nls(length~vb1(avgage, Linf, K, t0), data = saithe1,
                   start = vbStarts(length~avgage,data = saithe1))
+    
+    plot(length~avgage,data=saithe1,pch=19,col=rgb(0,0,0,1/5))
+    curve(vb1(x,Linf=coef(saithe1fit)),from=0,to=20,col="red",lwd=2,add=TRUE)
 #Nonlinear regression model
 #   model: length ~ vb1(avgage, Linf, K, t0)
 #    data: saithe1
@@ -626,41 +675,105 @@ for(s in names(len_comp_data)){
 # 
 # Number of iterations to convergence: 5 
 # Achieved convergence tolerance: 5.511e-06
+  
+### full time series fits with different start points  
     
  svvbgf <- svlenage %>%   
     dplyr::group_by(species) %>%
     group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
                   start = vbStarts(length~avgage,data = .))))
  
- svvbgf2 <- svlenage %>%   
+ spk <- svlenage %>%
+   group_by(species) %>%
+   group_keys()
+ 
+vballout <- data.frame() 
+for(i in 1:length(svvbgf)) {
+  if(is.list(svvbgf[[i]])) {
+    sp <- cbind(as.data.frame(spk)[i,], t(coef(svvbgf[[i]])))
+    vballout <- rbind(vballout, sp)
+  }
+}
+ 
+svvbgf.1 <- svlenage %>%   
     dplyr::group_by(species) %>%
-    group_modify(~broom::tidy(possibly(nls(length~vb1(avgage, Linf, K, t0), data = .x,
-                  start = vbStarts(length~avgage,data = .x)), otherwise = NA_real_)))
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="oldAge"))))
+ 
+vballout.1 <- data.frame() 
+for(i in 1:length(svvbgf.1)) {
+  if(is.list(svvbgf.1[[i]])) {
+    sp <- cbind(as.data.frame(spk)[i,], t(coef(svvbgf.1[[i]])))
+    vballout.1 <- rbind(vballout.1, sp)
+  }
+}
+
+svvbgf.2 <- svlenage %>%   
+    dplyr::group_by(species) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="longFish"))))
+ 
+vballout.2 <- data.frame() 
+for(i in 1:length(svvbgf.2)) {
+  if(is.list(svvbgf.2[[i]])) {
+    sp <- cbind(as.data.frame(spk)[i,], t(coef(svvbgf.2[[i]])))
+    vballout.2 <- rbind(vballout.2, sp)
+  }
+}
+
+################## by era
+
+ gk <- svlenage %>%
+   group_by(species, era) %>%
+   group_keys()
+
  svvbgf3 <- svlenage %>%   
     dplyr::group_by(species, era) %>%
     group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
                   start = vbStarts(length~avgage,data = .))))
-
-  
+ 
+vbout <- data.frame() 
+for(i in 1:length(svvbgf3)) {
+  if(is.list(svvbgf3[[i]])) {
+    spe <- cbind(as.data.frame(gk)[i,], t(coef(svvbgf3[[i]])))
+    vbout <- rbind(vbout, spe)
+  }
 }
 
-# rearrange into length bins and write length comp data csvs
-#multiple surveys named in list object, use as filename
-for(s in names(len_comp_data)){
-  #arrange into long format: year, Species, agecl, length 
-  svlenbin <- len_comp_data[[s]][[1]] %>%
-    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
-    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
-    
-  
-  
-    tidyr::spread(lenbins, atoutput) %>%
-    write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
+# try different start points to see if we can get more species fit
+ svvbgf3.1 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="oldAge"))))
+
+
+vbout.1 <- data.frame() 
+for(i in 1:length(svvbgf3.1)) {
+  if(is.list(svvbgf3.1[[i]])) {
+    spe <- cbind(as.data.frame(gk)[i,], t(coef(svvbgf3.1[[i]])))
+    vbout.1 <- rbind(vbout.1, spe)
+  }
 }
 
-# need 2-par maturity curve based on length, atlantis maturity ogive based on age group
+# try different start points to see if we can get more species fit
+# this one goes to 11!
+svvbgf3.2 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="longFish"))))
+
+
+vbout.2 <- data.frame() 
+for(i in 1:length(svvbgf3.2)) {
+  if(is.list(svvbgf3.2[[i]])) {
+    spe <- cbind(as.data.frame(gk)[i,], t(coef(svvbgf3.2[[i]])))
+    vbout.2 <- rbind(vbout.2, spe)
+  }
+}
+
 
 ```
+
 
 Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.
 
