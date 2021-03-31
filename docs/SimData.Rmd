@@ -131,6 +131,8 @@ unlink(here("docs/config"), recursive = TRUE)
 
 ### Write to model input files
 
+#### Multispecies surplus production model (MSSPM)
+
 Example input files are in the `model-input-files` directory. First we write the fairly simple biomass and catch inputs for the multispecies surplus production model MSSPM from our census survey outputs. 
 
 ```{r write-msspm, eval=FALSE}
@@ -259,6 +261,8 @@ for(s in names(all_diets)){
 }
 
 ```
+
+#### Length-structured multispecies model (Hydra)
 
 For the length-based model [hydra](https://github.com/thefaylab/hydra_sim), we can write .csv files to be used as input in the [hydradata](https://github.com/thefaylab/hydradata) package, which writes .dat and .pin files.
 
@@ -475,8 +479,7 @@ write_csv(sizebins, paste0(o.name,"length_sizebins_NOBA.csv"))
 
 These decisions on matching species can carry through to other life history parameters, at least initially.
 
-Need to fit growth and maturity parameters from Atlantis output for input into hydra. Fit growth using code below.
-
+Need to fit growth and maturity parameters from Atlantis output for input into hydra. Fit growth using code below, based on the package FSA [@ogle-fsa-2021]. The package provides multiple ways to get starting values for the R `nls` function for fitting nonlinear models. It was necessary to try several different methods for starting values to get at least one von Bertalannfy growth parameter set for each species. A scratch code block shows some of the experiments to get the fitting working that resulted in the function to fit for all surveys.
 
 ```{r fitpars, eval=FALSE}
 
@@ -569,7 +572,8 @@ for(s in names(len_comp_data)){
     }
   }
   
-  growthpars <- left_join(svexp3, vbout.2) 
+  growthpars <- left_join(svexp3, vbout.2) %>%
+    mutate(growthType = 4) # use only vonB for now, can change later
   
   maxera <- growthpars %>% 
     filter(!is.na(Linf)) %>% 
@@ -580,37 +584,19 @@ for(s in names(len_comp_data)){
   
   growthspp <- growthpars %>%
     filter(era==maxera) %>%
-    select(species, psi, kappa, Linf, K) %>%
-    t() %>%
-    as.data.frame()
-
-  
-  write_csv(paste0(o.name,"growth_species_NOBA_",s,".csv"))
-}
-```
-
-Generating length composition input data requires mapping numbers at length in the atlantisom 1 cm bin length output to our selected length bins, then summing the numbers at length in those bins for all species. The input required is a 4d array, indexed by survey, species, year, and sizebin. So each survey can be a separate csv with #species at the top of year rows and sizebin columns with n at length the values, scrolling down for each species.
-
-Arrange lengths into appropriate bins:
-
-```{r lendat}
-# rearrange into length bins and write length comp data csvs
-#multiple surveys named in list object, use as filename
-for(s in names(len_comp_data)){
-  #arrange into long format: year, Species, agecl, length 
-  svlenbin <- len_comp_data[[s]][[1]] %>%
-    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
-    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
-    
-  
-  
-    tidyr::spread(lenbins, atoutput) %>%
-    write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
+    select(species, psi, kappa, Linf, K, growthType) %>%
+    pivot_longer(psi:growthType, names_to = "par") %>%
+    pivot_wider(names_from = species, 
+                values_from = value) %>%
+    ungroup() %>%
+    select(-era) %>%
+    remove_rownames %>% column_to_rownames(var="par") %>%
+    write.csv(paste0(o.name,"growth_species_NOBA_era",maxera,"_",s,".csv"))
 }
 
-# need 2-par maturity curve based on length, atlantis maturity ogive based on age group
-
 ```
+
+This code block has experiments with different fits and different ways to splice the length at age data.
 
 ```{r vbfits-scratch, eval=FALSE}
 
@@ -827,10 +813,34 @@ for(i in 1:length(svvbgf3.2)) {
 
 ```
 
+Generating length composition input data requires mapping numbers at length in the atlantisom 1 cm bin length output to our selected length bins, then summing the numbers at length in those bins for all species. The input required is a 4d array, indexed by survey, species, year, and sizebin. So each survey can be a separate csv with #species at the top of year rows and sizebin columns with n at length the values, scrolling down for each species.
+
+Arrange lengths into appropriate bins:
+
+```{r lendat, eval=FALSE}
+# rearrange into length bins and write length comp data csvs
+#multiple surveys named in list object, use as filename
+for(s in names(len_comp_data)){
+  #arrange into long format: year, Species, agecl, length 
+  svlenbin <- len_comp_data[[s]][[1]] %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
+    
+  
+  
+    tidyr::spread(lenbins, atoutput) %>%
+    write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
+}
+
+# need 2-par maturity curve based on length, atlantis maturity ogive based on age group
+
+```
+
+
 
 Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.
 
-```{r stomwt}
+```{r stomwt, eval=FALSE}
 
 
 ```
@@ -926,6 +936,7 @@ cat(as.character(meta), file=paste0(here("simulated-data/msinput/hydra/"),"READM
 Output temperature data from surveys using "Temp" variable in .nc file and the `atlantisom::load_nc_physics` function. A survey (timestep, polygons, possibly observation error) can then be applied to this output. 
 
 We can get surface and bottom temp from Atlantis using the layers from each polygon, with layer 0 being the bottom and the maximum layer in the polygon being the surface (according to the [Atlantis wiki/Atlantis output files/Atlantis NetCDF structure](https://confluence.csiro.au/display/Atlantis/Atlantis+NetCDF+Structure). 
+
 ```{r surveytemp, eval=FALSE}
 
 # taken from existing load_nc to explore
@@ -1039,6 +1050,13 @@ springnearbox_btempindex <- left_join(springnearbox_bottomtemp, boxarea) %>%
   
 ```
 
+#### Age structured multispecies statistical catch at age model (MSSCAA)
 
 
-## Generating a survey dataset
+
+## References
+
+
+
+
+
