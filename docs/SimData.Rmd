@@ -575,23 +575,32 @@ for(s in names(len_comp_data)){
   growthpars <- left_join(svexp3, vbout.2) %>%
     mutate(growthType = 4) # use only vonB for now, can change later
   
-  maxera <- growthpars %>% 
-    filter(!is.na(Linf)) %>% 
-    group_by(era) %>% 
-    tally() %>%
-    filter(n==11) %>%
-    select(era)
+  # sadly doesn't work so just make a csv for each era and use the one with most spp
+  # maxera <- growthpars %>% 
+  #   filter(!is.na(Linf)) %>% 
+  #   group_by(era) %>% 
+  #   tally() %>%
+  #   filter(n==1) %>%
+  #   select(era)
   
   growthspp <- growthpars %>%
-    filter(era==maxera) %>%
     select(species, psi, kappa, Linf, K, growthType) %>%
     pivot_longer(psi:growthType, names_to = "par") %>%
     pivot_wider(names_from = species, 
-                values_from = value) %>%
-    ungroup() %>%
-    select(-era) %>%
-    remove_rownames %>% column_to_rownames(var="par") %>%
-    write.csv(paste0(o.name,"growth_species_NOBA_era",maxera,"_",s,".csv"))
+                values_from = value) 
+  
+  growthspp.era <- split(growthspp, list(growthspp$era)) 
+  
+  for(era in names(growthspp.era)) {
+    gpar <- growthspp.era[[era]] %>%
+      ungroup()%>%
+      select(-era) %>%
+      remove_rownames() %>% 
+      column_to_rownames(var="par") %>%
+      write.csv(paste0(o.name,"growth_species_NOBA_era",era,"_",s,".csv"))
+    
+  }
+  
 }
 
 ```

@@ -1209,23 +1209,32 @@ for(s in names(len_comp_data)){
   growthpars &lt;- left_join(svexp3, vbout.2) %&gt;%
     mutate(growthType = 4) # use only vonB for now, can change later
   
-  maxera &lt;- growthpars %&gt;% 
-    filter(!is.na(Linf)) %&gt;% 
-    group_by(era) %&gt;% 
-    tally() %&gt;%
-    filter(n==11) %&gt;%
-    select(era)
+  # sadly doesn&#39;t work so just make a csv for each era and use the one with most spp
+  # maxera &lt;- growthpars %&gt;% 
+  #   filter(!is.na(Linf)) %&gt;% 
+  #   group_by(era) %&gt;% 
+  #   tally() %&gt;%
+  #   filter(n==1) %&gt;%
+  #   select(era)
   
   growthspp &lt;- growthpars %&gt;%
-    filter(era==maxera) %&gt;%
     select(species, psi, kappa, Linf, K, growthType) %&gt;%
     pivot_longer(psi:growthType, names_to = &quot;par&quot;) %&gt;%
     pivot_wider(names_from = species, 
-                values_from = value) %&gt;%
-    ungroup() %&gt;%
-    select(-era) %&gt;%
-    remove_rownames %&gt;% column_to_rownames(var=&quot;par&quot;) %&gt;%
-    write.csv(paste0(o.name,&quot;growth_species_NOBA_era&quot;,maxera,&quot;_&quot;,s,&quot;.csv&quot;))
+                values_from = value) 
+  
+  growthspp.era &lt;- split(growthspp, list(growthspp$era)) 
+  
+  for(era in names(growthspp.era)) {
+    gpar &lt;- growthspp.era[[era]] %&gt;%
+      ungroup()%&gt;%
+      select(-era) %&gt;%
+      remove_rownames() %&gt;% 
+      column_to_rownames(var=&quot;par&quot;) %&gt;%
+      write.csv(paste0(o.name,&quot;growth_species_NOBA_era&quot;,era,&quot;_&quot;,s,&quot;.csv&quot;))
+    
+  }
+  
 }</code></pre>
 <p>This code block has experiments with different fits and different ways to splice the length at age data.</p>
 <pre class="r"><code>  capelinvbgf &lt;- svlenage %&gt;%
