@@ -421,7 +421,7 @@ pre code {
 
 <h1 class="title toc-ignore">Generating Simulated Data</h1>
 <h4 class="author">Sarah Gaichas</h4>
-<h4 class="date">31 March, 2021</h4>
+<h4 class="date">01 April, 2021</h4>
 
 </div>
 
@@ -1175,7 +1175,20 @@ for(s in names(len_comp_data)){
   
   saveRDS(svlenage, file.path(d.name, paste0(scenario.name, &quot;_&quot;,
                                                        s, &quot;agelensamp.rds&quot;)))
-  
+}
+
+  # read saved sample from above
+  survs &lt;- list.files(path=d.name, pattern = &quot;agelensamp.rds&quot;, full.names = TRUE)
+
+  survname &lt;-  str_match(survs, paste0(scenario.name,&quot;_\\s*(.*?)\\s&quot;,&quot;*agelensamp.rds&quot;))[,2]
+
+  agelensamp_data &lt;- lapply(survs, readRDS)
+
+  names(agelensamp_data) &lt;- survname
+
+
+for(s in names(agelensamp_data)){
+
   # try different start points to see if we can get more species fit
   # this one goes to 11!
   # need because group_map doesn&#39;t keep group names
@@ -1207,7 +1220,9 @@ for(s in names(len_comp_data)){
   }
   
   growthpars &lt;- left_join(svexp3, vbout.2) %&gt;%
-    mutate(growthType = 4) # use only vonB for now, can change later
+    mutate(growthType = case_when(
+      is.na(Linf) ~ 2,
+      TRUE ~ 4)) # vonB default, exponential if no vonB
   
   # sadly doesn&#39;t work so just make a csv for each era and use the one with most spp
   # maxera &lt;- growthpars %&gt;% 
