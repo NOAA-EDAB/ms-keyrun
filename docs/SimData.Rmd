@@ -131,6 +131,8 @@ unlink(here("docs/config"), recursive = TRUE)
 
 ### Write to model input files
 
+#### Multispecies surplus production model (MSSPM)
+
 Example input files are in the `model-input-files` directory. First we write the fairly simple biomass and catch inputs for the multispecies surplus production model MSSPM from our census survey outputs. 
 
 ```{r write-msspm, eval=FALSE}
@@ -260,6 +262,8 @@ for(s in names(all_diets)){
 
 ```
 
+#### Length-structured multispecies model (Hydra)
+
 For the length-based model [hydra](https://github.com/thefaylab/hydra_sim), we can write .csv files to be used as input in the [hydradata](https://github.com/thefaylab/hydradata) package, which writes .dat and .pin files.
 
 Hydra needs survey biomass time series, catch time series, survey length composition, fishery length composition, and diet composition data. 
@@ -358,11 +362,8 @@ M1mat <- matrix(0.02, singletons$Nspecies, singletons$Nsizebins,
 M1 <- as.data.frame(M1mat)
 
 # sexratio fixed 50:50 for all species
-# sexratio <- vector(0.5, )
-# rbind(species = sort.default(sppsubset$Name),
-#                   ratio = rep(0.5))
-# colnames(sexratio) <- sexratio[1,]
-# sexratio <- as.data.frame(sexratio[-1,])
+sexratio <- matrix(0.5, 1, singletons$Nspecies,
+                   dimnames = list("ratio", c(sort.default(sppsubset$Name))))
 
 
 # placeholders for unused covariates dimenstioned to the number of simulated years
@@ -393,6 +394,7 @@ write_csv(dummycovar, paste0(o.name,"recruitment_covariates_NOBA.csv"))
 write_csv(dummycovar, paste0(o.name,"maturity_covariates_NOBA.csv"))
 write_csv(dummycovar, paste0(o.name,"growth_covariates_NOBA.csv"))
 write_csv(dummyeffort, paste0(o.name,"observation_effort_NOBA.csv"))
+write.csv(sexratio, paste0(o.name,"sexratio_NOBA.csv"))
 
 ```
 
@@ -477,30 +479,399 @@ write_csv(sizebins, paste0(o.name,"length_sizebins_NOBA.csv"))
 
 These decisions on matching species can carry through to other life history parameters, at least initially.
 
-Need to fit growth and maturity parameters from Atlantis output for input into hydra. Possibly also recruitment? Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
+Need to fit growth and maturity parameters from Atlantis output for input into hydra. Fit growth using code below, based on the package FSA [@ogle-fsa-2021]. The package provides multiple ways to get starting values for the R `nls` function for fitting nonlinear models. It was necessary to try several different methods for starting values to get at least one von Bertalannfy growth parameter set for each species. A scratch code block shows some of the experiments to get the fitting working that resulted in the function to fit for all surveys.
 
 ```{r fitpars, eval=FALSE}
+
+sp_age <- NOBAom_ms$funct.group_ss[, c("Name", "NumCohorts", "NumAgeClassSize")]
+sp_age <- sp_age %>%
+  mutate(n_annages = NumCohorts * NumAgeClassSize) 
+
+stepperyr <- if(NOBAom_ms$runpar$outputstepunit=="days") 365/NOBAom_ms$runpar$toutinc
+
 
 # need growth, vonB t0, K, and Linf and simple growth function
 # would you really base this on 140 years of data? I used all survey years 
 
 len_comp_data <- read_savedsurvs(d.name, 'survLen')
 
+# need to shift agecl to represent midpoint of actual age groups
+# using part of the wtage interpolation function calc_avgwtstage2age()
+annage_comp_data <- read_savedsurvs(d.name, 'survAnnAge')
+
+
+library(FSA)
+vb1 <- vbFuns()
+# VBGF packages all take age and length pairs, reformat from length comp at agecl
+# break into 3 chunks of time, "era" 48 years each more like our survey
+# subsample after reformatting with uncount because we wouldn't have this many ages
+
 #multiple surveys named in list object, use as filename
 for(s in names(len_comp_data)){
-  #arrange into wide format: year, Species1, Species2 ... and write csv
-  svlen <- len_comp_data[[s]][[1]] %>%
+  
+  annages <- annage_comp_data[[s]][[1]] %>%
+    group_by(species, time, agecl) %>%
+    rename(trueage = agecl) %>%
+    summarise(truenatage = sum(atoutput))
+    
+  # Figure out the groups that have multiple ages classes in each stage (or
+  # cohort)
+  multiple_ages <- sp_age[sp_age$NumAgeClassSize>1,]
+  
+  # finds the average age of each agecl each timestep based on truenatage
+  svlen_avgage <- annages %>%
+    dplyr::semi_join(len_comp_data[[s]][[1]], by = c("species", "time")) %>%
+    dplyr::inner_join(multiple_ages, by = c("species" = "Name")) %>%
+    dplyr::mutate(agecl = as.integer(ceiling(trueage/NumAgeClassSize))) %>%
+    dplyr::group_by(species, time, agecl) %>%
+    dplyr::mutate(avgage = weighted.mean(trueage, truenatage))
+
+
+  #arrange into long format: year, Species, agecl, length 
+  svlenage <- len_comp_data[[s]][[1]] %>%
+    dplyr::left_join(svlen_avgage) %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, agecl, avgage, year, upper.bins, atoutput) %>%
+    dplyr::mutate(avgage = coalesce(avgage,agecl)) %>%
+    dplyr::rename(length = upper.bins) %>%
+    dplyr::mutate(era = as.numeric(cut_number(year,3))) %>%
+    tidyr::uncount(atoutput) %>%
+    dplyr::group_by(species, avgage, year) %>%
+    dplyr::sample_frac(0.01) 
+  
+  saveRDS(svlenage, file.path(d.name, paste0(scenario.name, "_",
+                                                       s, "agelensamp.rds")))
+}
+
+  # read saved sample from above
+  survs <- list.files(path=d.name, pattern = "agelensamp.rds", full.names = TRUE)
+
+  survname <-  str_match(survs, paste0(scenario.name,"_\\s*(.*?)\\s","*agelensamp.rds"))[,2]
+
+  agelensamp_data <- lapply(survs, readRDS)
+
+  names(agelensamp_data) <- survname
+
+
+for(s in names(agelensamp_data)){
+
+  # try different start points to see if we can get more species fit
+  # this one goes to 11!
+  # need because group_map doesn't keep group names
+  gk <- svlenage %>%
+    group_by(species, era) %>%
+    group_keys()
+  
+  svvbgf3.2 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                       start = vbStarts(length~avgage,data = .,methLinf="longFish"))))
+  
+  #this gets exponential growth pars, probably won't use this growth mod though
+  svexp3 <- svlenage %>%
+    dplyr::group_by(species, era) %>%
+    group_modify(~ broom::tidy(lm(log(length) ~ log(avgage), data = .x))) %>%
+    select(species, era, term, estimate) %>%
+    pivot_wider(names_from = "term", values_from = "estimate") %>%
+    mutate(psi = exp(`(Intercept)`)) %>%
+    rename(kappa = `log(avgage)`) %>%
+    select(species, era, kappa, psi)
+    
+  vbout.2 <- data.frame() 
+  for(i in 1:length(svvbgf3.2)) {
+    if(is.list(svvbgf3.2[[i]])) {
+      spe <- cbind(as.data.frame(gk)[i,], as.data.frame(t(coef(svvbgf3.2[[i]]))))
+      vbout.2 <- rbind(vbout.2, spe)
+    }
+  }
+  
+  growthpars <- left_join(svexp3, vbout.2) %>%
+    mutate(growthType = case_when(
+      is.na(Linf) ~ 2,
+      TRUE ~ 4)) # vonB default, exponential if no vonB
+  
+  # sadly doesn't work so just make a csv for each era and use the one with most spp
+  # maxera <- growthpars %>% 
+  #   filter(!is.na(Linf)) %>% 
+  #   group_by(era) %>% 
+  #   tally() %>%
+  #   filter(n==1) %>%
+  #   select(era)
+  
+  growthspp <- growthpars %>%
+    select(species, psi, kappa, Linf, K, growthType) %>%
+    pivot_longer(psi:growthType, names_to = "par") %>%
+    pivot_wider(names_from = species, 
+                values_from = value) 
+  
+  growthspp.era <- split(growthspp, list(growthspp$era)) 
+  
+  for(era in names(growthspp.era)) {
+    gpar <- growthspp.era[[era]] %>%
+      ungroup()%>%
+      select(-era) %>%
+      remove_rownames() %>% 
+      column_to_rownames(var="par") %>%
+      write.csv(paste0(o.name,"growth_species_NOBA_era",era,"_",s,".csv"))
+    
+  }
+  
+}
+
+```
+
+This code block has experiments with different fits and different ways to splice the length at age data.
+
+```{r vbfits-scratch, eval=FALSE}
+
+  capelinvbgf <- svlenage %>%
+    filter(species == "Capelin") %>%
+    group_by(era) %>%
+    group_map(try(~nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .))))
+  
+  capelinall <- svlenage %>% filter(species == "Capelin")
+  plot(length~avgage,data=capelinall,pch=19,col=rgb(0,0,0,1/5))
+  curve(vb1(x,Linf=coef(capelinvbgf[[1]])),from=0,to=5,col="red",lwd=2,add=TRUE)
+  curve(vb1(x,Linf=coef(capelinvbgf[[2]])),from=0,to=5,col="blue",lwd=2,add=TRUE)
+  curve(vb1(x,Linf=coef(capelinvbgf[[3]])),from=0,to=5,col="green",lwd=2,add=TRUE)
+  
+  # herringvbgf <- svlenage %>%
+  #   filter(species == "Norweigan_ssh", era==1) %>%
+  #   group_map(try(~nls(length~vb1(avgage, Linf, K, t0), data = .,
+  #                 start = vbStarts(length~avgage,data = .))))
+     
+#Error in nls(length ~ vb1(avgage, Linf, K, t0), data = ., start = vbStarts(length ~  : 
+  #singular gradient with group_map, era 2 and 3
+  codvbgf <- svlenage %>%
+    filter(species == "North_atl_cod") 
+    #group_by(era) %>%
+    codfit <- nls(length~vb1(avgage, Linf, K, t0), data = codvbgf,
+                  start = vbStarts(length~avgage,data = codvbgf))
+    
+    plot(length~avgage,data=codvbgf,pch=19,col=rgb(0,0,0,1/5))
+    curve(vb1(x,Linf=coef(codfit)),from=0,to=20,col="red",lwd=2,add=TRUE)
+#  era==1   Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: codvbgf
+#     Linf        K       t0 
+# 104.7120   0.4260   0.2176 
+#  residual sum-of-squares: 4109723
+# 
+# Number of iterations to convergence: 7 
+# Achieved convergence tolerance: 2.169e-06
+    
+#  all years Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: codvbgf
+#     Linf        K       t0 
+# 112.4694   0.3912   0.2097 
+#  residual sum-of-squares: 7354906
+# 
+# Number of iterations to convergence: 11 
+# Achieved convergence tolerance: 9.964e-06
+    
+  
+  hadvbgf <- svlenage %>%
+    filter(species == "Haddock") 
+    #group_by(era) %>%
+  hadfit <- nls(length~vb1(avgage, Linf, K, t0), data = hadvbgf,
+                  start = vbStarts(length~avgage,data = hadvbgf))
+  
+  plot(length~avgage,data=hadvbgf,pch=19,col=rgb(0,0,0,1/5))
+  curve(vb1(x,Linf=coef(hadfit)),from=0,to=20,col="red",lwd=2,add=TRUE)
+
+  
+# all years
+#     Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: hadvbgf
+#    Linf       K      t0 
+# 77.0277  0.3601 -0.3546 
+#  residual sum-of-squares: 15637500
+# 
+# Number of iterations to convergence: 11 
+# Achieved convergence tolerance: 4.187e-06
+    
+  redvbgf <- svlenage %>%
+    filter(species == "Redfish") 
+    #group_by(era) %>%
+    
+  redfit <- nls(length~vb1(avgage, Linf, K, t0), data = redvbgf,
+                  start = vbStarts(length~avgage,data = redvbgf))
+  
+  plot(length~avgage,data=redvbgf,pch=19,col=rgb(0,0,0,1/5))
+  curve(vb1(x,Linf=coef(redfit)),from=0,to=40,col="red",lwd=2,add=TRUE)
+  
+#all years
+# Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: redvbgf
+#    Linf       K      t0 
+# 40.8016  0.1165 -1.6688 
+#  residual sum-of-squares: 3197990
+# 
+# Number of iterations to convergence: 13 
+# Achieved convergence tolerance: 8.316e-06 
+    
+    saithe1 <- svlenage %>%
+      filter(species=="Saithe",
+             era==1)
+    
+    saithe1fit <- nls(length~vb1(avgage, Linf, K, t0), data = saithe1,
+                  start = vbStarts(length~avgage,data = saithe1))
+    
+    plot(length~avgage,data=saithe1,pch=19,col=rgb(0,0,0,1/5))
+    curve(vb1(x,Linf=coef(saithe1fit)),from=0,to=20,col="red",lwd=2,add=TRUE)
+#Nonlinear regression model
+#   model: length ~ vb1(avgage, Linf, K, t0)
+#    data: saithe1
+#      Linf         K        t0 
+# 388.18797   0.01975  -3.94798 
+#  residual sum-of-squares: 5691213
+# 
+# Number of iterations to convergence: 5 
+# Achieved convergence tolerance: 5.511e-06
+    
+#plot len-age data and start values, some are bad
+  svlenage_pl <- svlenage %>%
+    group_by(species, era) %>%
+    group_map(~vbStarts(length~avgage,data=cur_group(),plot=TRUE))
+
+  
+### full time series fits with different start points  
+    
+ svvbgf <- svlenage %>%   
+    dplyr::group_by(species) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .))))
+ 
+ spk <- svlenage %>%
+   group_by(species) %>%
+   group_keys()
+ 
+vballout <- data.frame() 
+for(i in 1:length(svvbgf)) {
+  if(is.list(svvbgf[[i]])) {
+    sp <- cbind(as.data.frame(spk)[i,], t(coef(svvbgf[[i]])))
+    vballout <- rbind(vballout, sp)
+  }
+}
+ 
+svvbgf.1 <- svlenage %>%   
+    dplyr::group_by(species) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="oldAge"))))
+ 
+vballout.1 <- data.frame() 
+for(i in 1:length(svvbgf.1)) {
+  if(is.list(svvbgf.1[[i]])) {
+    sp <- cbind(as.data.frame(spk)[i,], t(coef(svvbgf.1[[i]])))
+    vballout.1 <- rbind(vballout.1, sp)
+  }
+}
+
+svvbgf.2 <- svlenage %>%   
+    dplyr::group_by(species) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="longFish"))))
+ 
+vballout.2 <- data.frame() 
+for(i in 1:length(svvbgf.2)) {
+  if(is.list(svvbgf.2[[i]])) {
+    sp <- cbind(as.data.frame(spk)[i,], t(coef(svvbgf.2[[i]])))
+    vballout.2 <- rbind(vballout.2, sp)
+  }
+}
+
+################## by era
+
+ gk <- svlenage %>%
+   group_by(species, era) %>%
+   group_keys()
+
+ svvbgf3 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .))))
+ 
+vbout <- data.frame() 
+for(i in 1:length(svvbgf3)) {
+  if(is.list(svvbgf3[[i]])) {
+    spe <- cbind(as.data.frame(gk)[i,], t(coef(svvbgf3[[i]])))
+    vbout <- rbind(vbout, spe)
+  }
+}
+
+# try different start points to see if we can get more species fit
+ svvbgf3.1 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="oldAge"))))
+
+
+vbout.1 <- data.frame() 
+for(i in 1:length(svvbgf3.1)) {
+  if(is.list(svvbgf3.1[[i]])) {
+    spe <- cbind(as.data.frame(gk)[i,], t(coef(svvbgf3.1[[i]])))
+    vbout.1 <- rbind(vbout.1, spe)
+  }
+}
+
+# try different start points to see if we can get more species fit
+# this one goes to 11!
+svvbgf3.2 <- svlenage %>%   
+    dplyr::group_by(species, era) %>%
+    group_map(~try(nls(length~vb1(avgage, Linf, K, t0), data = .,
+                  start = vbStarts(length~avgage,data = .,methLinf="longFish"))))
+
+
+vbout.2 <- data.frame() 
+for(i in 1:length(svvbgf3.2)) {
+  if(is.list(svvbgf3.2[[i]])) {
+    spe <- cbind(as.data.frame(gk)[i,], t(coef(svvbgf3.2[[i]])))
+    vbout.2 <- rbind(vbout.2, spe)
+  }
+}
+
+
+```
+
+Generating length composition input data requires mapping numbers at length in the atlantisom 1 cm bin length output to our selected length bins, then summing the numbers at length in those bins for all species. The input required is a 4d array, indexed by survey, species, year, and sizebin. So each survey can be a separate csv with #species at the top of year rows and sizebin columns with n at length the values, scrolling down for each species.
+
+Arrange lengths into appropriate bins:
+
+```{r lendat, eval=FALSE}
+# rearrange into length bins and write length comp data csvs
+#multiple surveys named in list object, use as filename
+for(s in names(len_comp_data)){
+  #arrange into long format: year, Species, agecl, length 
+  svlenbin <- len_comp_data[[s]][[1]] %>%
     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
     dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
     
   
   
-    tidyr::spread(species, atoutput) %>%
+    tidyr::spread(lenbins, atoutput) %>%
     write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
 }
 
-
 # need 2-par maturity curve based on length, atlantis maturity ogive based on age group
+
+```
+
+
+
+Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.
+
+```{r stomwt, eval=FALSE}
+
+
+```
+
+Do we need to fit recruitment? May just need average recriutment starting values, which I can get from atlantis. Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
+
+```{r}
 
 ```
 
@@ -589,6 +960,7 @@ cat(as.character(meta), file=paste0(here("simulated-data/msinput/hydra/"),"READM
 Output temperature data from surveys using "Temp" variable in .nc file and the `atlantisom::load_nc_physics` function. A survey (timestep, polygons, possibly observation error) can then be applied to this output. 
 
 We can get surface and bottom temp from Atlantis using the layers from each polygon, with layer 0 being the bottom and the maximum layer in the polygon being the surface (according to the [Atlantis wiki/Atlantis output files/Atlantis NetCDF structure](https://confluence.csiro.au/display/Atlantis/Atlantis+NetCDF+Structure). 
+
 ```{r surveytemp, eval=FALSE}
 
 # taken from existing load_nc to explore
@@ -702,6 +1074,13 @@ springnearbox_btempindex <- left_join(springnearbox_bottomtemp, boxarea) %>%
   
 ```
 
+#### Age structured multispecies statistical catch at age model (MSSCAA)
 
 
-## Generating a survey dataset
+
+## References
+
+
+
+
+
