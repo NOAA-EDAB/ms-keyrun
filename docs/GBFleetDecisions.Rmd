@@ -38,8 +38,7 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 
 
 
-## Demersal
-
+## Demersal (large mesh > 3")
 
 05 - OTTER TRAWL, BOTTOM (**cod** (16%), **yellowtail fl** (15%), **haddock** (12%), **silver hake** (10%), **winter fl** (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs
 
@@ -50,6 +49,13 @@ gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 <sup>1</sup> 35 - BEAM TRAWL (summer flounder, **winter flounder**, **yellowtail flounder**) - 927,806 lbs
 
 <sup>1</sup>  32 - FYKE NET (**winter fl**, windowpane fl, **dogfish**, **skates**) - 1,602 lb
+
+## Demersal (small mesh <= 3")
+
+Predominantly Silver Hake, White Hake, Butterfish, Short fin, and long fin squid
+
+05 - OTTER TRAWL, BOTTOM (**cod** (16%), **yellowtail fl** (15%), **haddock** (12%), **silver hake** (10%), **winter fl** (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs
+
 
 ## Fixed Gear
 
