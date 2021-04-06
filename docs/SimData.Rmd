@@ -541,19 +541,19 @@ for(s in names(len_comp_data)){
   
   saveRDS(svlenage, file.path(d.name, paste0(scenario.name, "_",
                                                        s, "agelensamp.rds")))
-}
-
-  # read saved sample from above
-  survs <- list.files(path=d.name, pattern = "agelensamp.rds", full.names = TRUE)
-
-  survname <-  str_match(survs, paste0(scenario.name,"_\\s*(.*?)\\s","*agelensamp.rds"))[,2]
-
-  agelensamp_data <- lapply(survs, readRDS)
-
-  names(agelensamp_data) <- survname
-
-
-for(s in names(agelensamp_data)){
+# }
+# 
+#   # read saved sample from above
+#   survs <- list.files(path=d.name, pattern = "agelensamp.rds", full.names = TRUE)
+# 
+#   survname <-  str_match(survs, paste0(scenario.name,"_\\s*(.*?)\\s","*agelensamp.rds"))[,2]
+# 
+#   agelensamp_data <- lapply(survs, readRDS)
+# 
+#   names(agelensamp_data) <- survname
+# 
+# 
+# for(s in names(agelensamp_data)){
 
   # try different start points to see if we can get more species fit
   # this one goes to 11!
