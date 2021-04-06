@@ -458,7 +458,7 @@ summary {
 
 <h1 class="title toc-ignore">Fleet Definitions for Georges Bank</h1>
 <h4 class="author">Andy Beet</h4>
-<h4 class="date">24 March, 2021</h4>
+<h4 class="date">02 April, 2021</h4>
 
 </div>
 
@@ -471,13 +471,18 @@ summary {
 <p>Species of interest are <strong>bolded</strong></p>
 <pre class="r"><code>gearData &lt;- readRDS(file=paste0(here::here(&quot;data&quot;,&quot;timeSeriesSpeciesByGear.rds&quot;)))
 gearData$data %&gt;% dplyr::filter(NEGEAR2==gearCode)</code></pre>
-<div id="demersal" class="section level2">
-<h2>Demersal</h2>
+<div id="demersal-large-mesh-3" class="section level2">
+<h2>Demersal (large mesh &gt; 3&quot;)</h2>
 <p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%), <strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%), <strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs</p>
 <p><sup>1</sup> 16 - DANISH SEINE (<strong>cod</strong>, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, plaice, <strong>silver hake</strong>) - 5,194,870 lbs</p>
 <p><sup>1</sup> 36 - SCOTTISH SEINE (<strong>silver hake</strong>, <strong>cod</strong>, plaice, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, red hake) - 4,521,702 lbs</p>
 <p><sup>1</sup> 35 - BEAM TRAWL (summer flounder, <strong>winter flounder</strong>, <strong>yellowtail flounder</strong>) - 927,806 lbs</p>
 <p><sup>1</sup> 32 - FYKE NET (<strong>winter fl</strong>, windowpane fl, <strong>dogfish</strong>, <strong>skates</strong>) - 1,602 lb</p>
+</div>
+<div id="demersal-small-mesh-3" class="section level2">
+<h2>Demersal (small mesh &lt;= 3&quot;)</h2>
+<p>Predominantly Silver Hake, White Hake, Butterfish, Short fin, and long fin squid</p>
+<p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%), <strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%), <strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs</p>
 </div>
 <div id="fixed-gear" class="section level2">
 <h2>Fixed Gear</h2>

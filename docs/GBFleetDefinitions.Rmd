@@ -258,9 +258,21 @@ knitr::include_graphics("figures/dendrogram4.png")
 
 ```
 
-## Bottom trawls (small/large mesh)
+## Bottom trawls (small/large mesh) {.tabset .tabset-pills}
 
-Over time (dates/references????) changes in regulations resulted in the requirement of fisherman to increase the mesh size in their nets. This allowed smaller fish to escape the nets. However there were, and still are, exemptions to this regulation allowing fishermen to fish with smaller meshed nets depending on the time of the year and the area they fish. However all of the associated landings are flagged as using the same gear type code. Since the change in regulations dictate a change in the composition of species caught over time, this gear type needs to be investigated separately.
+Over time (dates/references????) changes in regulations resulted in the requirement of fisherman to increase the mesh size in their nets. This allowed smaller fish to escape the nets. However there were, and still are, exemptions to this regulation allowing fishermen to fish with smaller meshed nets depending on the time of the year and the area they fish. However all of the associated landings are flagged as using the same gear type code. Since the change in regulations dictate a change in the composition of species caught over time, this gear type needs to be investigated separately. The data base holds information based on the mesh size of the otter trawl nets for NEGEAR code = 5 (from 1982 onward).
+
+Below are plots of species caught in the otter trawl (making up 96% of the total catch from 1964 to 2020) by mesh size (in inches). Note that the figure begins in 1982. Any trip without a mesh size attributed is not displayed, this includes all trips prior to 1982. A lack of mesh size accounts for approximately 20% of landing post 1982 and approximately 50% of all landings
+
+### plotted on same scale
+```{r fixed,  echo=F, eval =T}
+knitr::include_graphics("figures/demersalfixed.png")
+```
+
+### plotted on different scale
+```{r free,  echo=F, eval =T}
+knitr::include_graphics("figures/demersalfree_y.png")
+```
 
 ## Decision
 
