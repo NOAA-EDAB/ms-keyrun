@@ -481,6 +481,8 @@ These decisions on matching species can carry through to other life history para
 
 Need to fit growth and maturity parameters from Atlantis output for input into hydra. Fit growth using code below, based on the package FSA [@ogle-fsa-2021]. The package provides multiple ways to get starting values for the R `nls` function for fitting nonlinear models. It was necessary to try several different methods for starting values to get at least one von Bertalannfy growth parameter set for each species. A scratch code block shows some of the experiments to get the fitting working that resulted in the function to fit for all surveys.
 
+Note that spring surveys don't get mackerel at all (not in the model domain then). A full set of von B parameters could only be estimated for the first era of both versions of the fall survey tested here.  
+
 ```{r fitpars, eval=FALSE}
 
 sp_age <- NOBAom_ms$funct.group_ss[, c("Name", "NumCohorts", "NumAgeClassSize")]
@@ -843,16 +845,30 @@ Arrange lengths into appropriate bins:
 
 ```{r lendat, eval=FALSE}
 # rearrange into length bins and write length comp data csvs
+# modbins from sizebins above, differ by species so need modbin.min and modbin.max
+# pcumsum is an FSA function
+
+modbins <- sizebins %>%
+  rename(species = `commentField-notused`) %>%
+  pivot_longer(!species, names_to = "sizebin", values_to = "binwidth") %>%
+  group_by(species) %>%
+  arrange(sizebin) %>%
+  mutate(modbin.min = pcumsum(binwidth),
+         modbin.max = cumsum(binwidth)) %>%
+  arrange(species, sizebin)
+
+
 #multiple surveys named in list object, use as filename
 for(s in names(len_comp_data)){
   #arrange into long format: year, Species, agecl, length 
   svlenbin <- len_comp_data[[s]][[1]] %>%
     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
     dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
-    
-  
-  
-    tidyr::spread(lenbins, atoutput) %>%
+    dplyr::left_join(modbins) %>%
+    dplyr::filter(modbin.min < upper.bins & upper.bins <= modbin.max) %>%
+    dplyr::group_by(species, year, sizebin) %>%
+    dplyr::summarise(sumlen = sum(atoutput)) %>%
+    tidyr::spread(sizebin, sumlen) %>%
     write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
 }
 
