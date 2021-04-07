@@ -421,7 +421,7 @@ pre code {
 
 <h1 class="title toc-ignore">Generating Simulated Data</h1>
 <h4 class="author">Sarah Gaichas</h4>
-<h4 class="date">06 April, 2021</h4>
+<h4 class="date">07 April, 2021</h4>
 
 </div>
 
@@ -1046,18 +1046,6 @@ write_csv(dummyeffort, paste0(o.name,&quot;observation_effort_NOBA.csv&quot;))
 write.csv(sexratio, paste0(o.name,&quot;sexratio_NOBA.csv&quot;))</code></pre>
 <p>Decisions on size bins for hydra: keep 5 bins per species for now, build in flexibility to allocate size data to any number of bins with any definitions.</p>
 <p>Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases.</p>
-<p><em>Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.</em></p>
-<pre class="r"><code># see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
-# estimated optimal bin size for VBGF estimation is 0.23 x Lmax ^0.6
-
-binwidths &lt;- function(Lmax, vonBk, Nsizebins){
-  #optimal bin size is lower end
-  binopt &lt;- 0.23*Lmax^0.6
-  #vonBk tells you how many fine bins for fast growth
-  
-  #aggregate bins in multiples of optimal for bigger fish/slower growth to get Nsizebins
-  
-}</code></pre>
 <p>Initially, we’ll directly transfer bin widths for GB and NOBA common species:</p>
 <ul>
 <li>Aherring = <a href="https://www.hi.no/en/hi/temasider/species/herring">Norwegian_ssh</a></li>
@@ -1490,11 +1478,43 @@ for(s in names(len_comp_data)){
     dplyr::summarise(sumlen = sum(atoutput)) %&gt;%
     tidyr::spread(sizebin, sumlen) %&gt;%
     write_csv(paste0(o.name,&quot;observation_lengths_NOBA_&quot;,s,&quot;.csv&quot;))
+}</code></pre>
+<p>The first pass through with the current bins results in very few lengths in the smallest bin for most species. This suggests we need to change the binwidths and possibly the number of bins to optimize length fitting. Perhaps a larger first bin or don’t start it at 0?</p>
+<p><em>Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.</em> Do we need t0 as well? Haven’t saved it.</p>
+<pre class="r"><code># see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
+# estimated optimal bin size for VBGF estimation is 0.23 x Lmax ^0.6
+
+# see Ogle citing Schnute and Fornier on K as a growth increment
+# https://derekogle.com/NCNRS349/modules/Growth/BKG
+# K exponential rate of approach to asymptotic size
+# exp(-K) fraction by which growth increment is multiplied each year
+# at what length is increment*exp(-K) small? group those lengths into bigger bins
+
+# pull observed min and max size from data to optimize start and end bins
+minmaxlen &lt;- list()
+for(s in names(len_comp_data)){
+  minmaxlen[[s]] &lt;- len_comp_data[[s]][[1]] %&gt;%
+    dplyr::group_by(species) %&gt;%
+    dplyr::summarise(minlen = min(lower.bins, na.rm = TRUE),
+                     maxlen = max(upper.bins, na.rm = TRUE)) 
 }
 
-# need 2-par maturity curve based on length, atlantis maturity ogive based on age group</code></pre>
+# note!
+# Green_halibut and Saithe have maxlen at 200 in at least one survey, 
+# may need higher maxlength when running atlantisom comps wrapper, fix survey config files
+
+binwidths &lt;- function(Lmax, vonBk, Nsizebins){
+  #optimal bin size is lower end
+  binopt &lt;- 0.23*Lmax^0.6
+  #vonBk tells you how many fine bins for fast growth
+  
+  #aggregate bins in multiples of optimal for bigger fish/slower growth to get Nsizebins
+  
+}</code></pre>
 <p>Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.</p>
 <p>Do we need to fit recruitment? May just need average recriutment starting values, which I can get from atlantis. Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don’t need SSB, maturity and recruitment inputs could be dummy parameters for now.</p>
+<pre class="r"><code># need 2-par maturity curve based on length, atlantis maturity ogive based on age group
+# or just translate age at 50% maturity to length and call it good?</code></pre>
 <p>Survey and catch datasets for hydra from NOBA (same methods as MSSPM). Make this a function that takes output directory name and output names as arguments.</p>
 <pre class="r"><code>o.name &lt;- here(&quot;simulated-data/msinput/hydra/&quot;)
 
