@@ -13,6 +13,7 @@ library(here)
 library(tidyverse)  
 library(atlantisom)
 library(ggthemes)
+library(FSA)
 
 ```
 
@@ -485,7 +486,7 @@ len_comp_data <- read_savedsurvs(d.name, 'survLen')
 annage_comp_data <- read_savedsurvs(d.name, 'survAnnAge')
 
 
-library(FSA)
+
 vb1 <- vbFuns()
 # VBGF packages all take age and length pairs, reformat from length comp at agecl
 # break into 3 chunks of time, "era" 48 years each more like our survey
