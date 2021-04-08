@@ -874,18 +874,37 @@ The first pass through with the current bins results in very few lengths in the 
 
 # pull observed min and max size from data to optimize start and end bins
 minmaxlen <- list()
+# read in saved vonB pars--see if seasons are different and will need a replacement if K wasn't estimated
+era <- 1
+vonBK <- list()
+minmaxvonBK <- list()
 for(s in names(len_comp_data)){
-  minmaxlen[[s]] <- len_comp_data[[s]][[1]] %>%
+  minmaxlendf <- len_comp_data[[s]][[1]] %>%
     dplyr::group_by(species) %>%
     dplyr::summarise(minlen = min(lower.bins, na.rm = TRUE),
                      maxlen = max(upper.bins, na.rm = TRUE)) 
+  
+  vonBKdf <- read.csv(paste0(o.name,"growth_species_NOBA_era",era,"_",s,".csv")) %>%
+    rename(par = X) %>%
+    pivot_longer(!par, names_to = "species") %>%
+    pivot_wider(names_from = par, 
+                values_from = value) %>%
+    select(species, K)
+
+  minmaxvonBKdf <- left_join(minmaxlendf,vonBKdf)
+  
+  minmaxlen[[s]] <- minmaxlendf
+  vonBK[[s]] <- vonBKdf
+  minmaxvonBK[[s]] <- minmaxvonBKdf
+
 }
 
 # note!
 # Green_halibut and Saithe have maxlen at 200 in at least one survey, 
 # may need higher maxlength when running atlantisom comps wrapper, fix survey config files
 
-binwidths <- function(Lmax, vonBk, Nsizebins){
+
+binwidths <- function(Lmin, Lmax, vonBk, Nsizebins){
   #optimal bin size is lower end
   binopt <- 0.23*Lmax^0.6
   #vonBk tells you how many fine bins for fast growth
