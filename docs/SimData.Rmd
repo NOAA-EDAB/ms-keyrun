@@ -917,7 +917,11 @@ binwidths <- function(Lmin, Lmax, vonBk, Nsizebins){
   binopt <- 0.23*Lmax^0.6
   
   #range gives initial default binwidth, all equal (range/Nbins)
+  #or should it be max/nbins?
+  #can use if no K estimated
   bindef <- (Lmax-Lmin)/Nsizebins
+  
+  #minmaxvonBK$BTS_fall_allbox_effic1 %>% group_by(species) %>% mutate(bindef = (maxlen)/5)
   
   #vonBk tells you how many fine bins for fast growth
   # threshold cumprod of 0.05 to define last bin? tiny growth increment
@@ -928,7 +932,9 @@ binwidths <- function(Lmin, Lmax, vonBk, Nsizebins){
   # lines(cumprod(rep(1, 130)*exp(-0.344)), ylim=c(0,1), xlim=c(0,180)) #cod
   
   thresh <- 0.05
-  which(cumprod(rep(1, Lmax)*exp(-vonBk)) < thresh) #gives lengths of fast growth
+  which(cumprod(rep(1, Lmax)*exp(-vonBk)) > thresh) #gives 1 cm increments of fast growth?
+  
+  #
 
   
   #low vonBK is doesn't asympote, divide length range equally into nbins?
