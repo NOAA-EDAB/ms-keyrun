@@ -915,7 +915,17 @@ for(s in names(len_comp_data)){
 binwidths <- function(Lmin, Lmax, vonBk, Nsizebins){
   #optimal bin size is lower end
   binopt <- 0.23*Lmax^0.6
+  
+  #range gives initial default binwidth, all equal (range/Nbins)
+  bindef <- (Lmax-Lmin)/Nsizebins
+  
   #vonBk tells you how many fine bins for fast growth
+  # threshold cumprod of 0.05 to define last bin? tiny growth increment
+  # use binopt up to this threshold?
+  # plot(cumprod(rep(1, 160)*exp(-0.0386)), ylim=c(0,1), xlim=c(0,180)) #saithe
+  # lines(cumprod(rep(1, 20)*exp(-1.4)), ylim=c(0,1), xlim=c(0,180)) #capelin
+  # lines(cumprod(rep(1, 40)*exp(-0.163)), ylim=c(0,1), xlim=c(0,180)) #redfish
+  # lines(cumprod(rep(1, 130)*exp(-0.344)), ylim=c(0,1), xlim=c(0,180)) #cod
   #low vonBK is doesn't asympote, divide length range equally into nbins?
   
   #high vonBK asympotes quickly, 
