@@ -912,38 +912,48 @@ for(s in names(len_comp_data)){
 # may need higher maxlength when running atlantisom comps wrapper, fix survey config files
 
 
-binwidths <- function(Lmin, Lmax, vonBk, Nsizebins){
+estbinwidths <- function(Lmax, vonBk, Nsizebins, thresh = 0.05){
   #optimal bin size is lower end
   binopt <- 0.23*Lmax^0.6
   
   #range gives initial default binwidth, all equal (range/Nbins)
   #or should it be max/nbins?
   #can use if no K estimated
-  bindef <- (Lmax-Lmin)/Nsizebins
+  bindef <- max(1,ceiling(Lmax/Nsizebins))
   
-  #minmaxvonBK$BTS_fall_allbox_effic1 %>% group_by(species) %>% mutate(bindef = (maxlen)/5)
+  #minmaxvonBK$BTS_fall_allbox_effic1 %>% group_by(species) %>% mutate(bindef = ceiling(maxlen/5))
   
   #vonBk tells you how many fine bins for fast growth
-  # threshold cumprod of 0.05 to define last bin? tiny growth increment
+  #low vonBK is doesn't asympote, divide length range equally into nbins?
+  #high vonBK asympotes quickly, 
+  # threshold cumprod of 0.05 or 0.1 to define last bin? tiny growth increment
   # use binopt up to this threshold? 
   # plot(cumprod(rep(1, 160)*exp(-0.0386)), ylim=c(0,1), xlim=c(0,180)) #saithe
   # lines(cumprod(rep(1, 20)*exp(-1.4)), ylim=c(0,1), xlim=c(0,180)) #capelin
   # lines(cumprod(rep(1, 40)*exp(-0.163)), ylim=c(0,1), xlim=c(0,180)) #redfish
   # lines(cumprod(rep(1, 130)*exp(-0.344)), ylim=c(0,1), xlim=c(0,180)) #cod
   
-  thresh <- 0.05
-  which(cumprod(rep(1, Lmax)*exp(-vonBk)) > thresh) #gives 1 cm increments of fast growth?
+  lenthresh <- max(which(cumprod(rep(1, Lmax)*exp(-vonBk)) > thresh)) #gives 1 cm increments of fast growth
   
-  #
-
+  #put all lengths above this into one big bin, 
+  binwidth.max <- Lmax-lenthresh
   
-  #low vonBK is doesn't asympote, divide length range equally into nbins?
-  
-  #high vonBK asympotes quickly, 
+  #divide lengths below this by thresholds? for min 5 bins, use .5, .3, .2, .1, .05?
+  # or divide equally into nbins-1 bins? equal may be best
+  # hightest growth bin will be very small and we won't have fish in it
+  # dont go smaller than binopt
+  binwidth.gro <- max(ceiling(binopt), ceiling(lenthresh/(Nsizebins-1)))
   
   #aggregate bins in multiples of optimal for bigger fish/slower growth to get Nsizebins
+  ifelse(binwidth.max > bindef, #& binwidth.max < 0.5*Lmax,
+         binwidths <- c(rep(binwidth.gro, Nsizebins-1), binwidth.max),
+         binwidths <- rep(bindef, Nsizebins))
+  
+  return(binwidths)
   
 }
+
+
 
 ```
 
