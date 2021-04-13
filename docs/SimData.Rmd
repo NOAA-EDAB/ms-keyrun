@@ -984,6 +984,44 @@ write_csv(sizebins, paste0(o.name,"length_sizebins_NOBA.csv"))
 
 ```
 
+Reran the lendat code block above to make the survey-specific length input files with the new equal sized bins.
+
+Now write input files in Gavin's format to have surveys together in one file:
+
+```{r altinput, eval=FALSE}
+
+modbins <- sizebins %>%
+  rename(species = `commentField-notused`) %>%
+  pivot_longer(!species, names_to = "sizebin", values_to = "binwidth") %>%
+  group_by(species) %>%
+  arrange(sizebin) %>%
+  mutate(modbin.min = pcumsum(binwidth),
+         modbin.max = cumsum(binwidth)) %>%
+  arrange(species, sizebin)
+
+
+#multiple surveys named in list object, use as filename
+for(s in names(len_comp_data)){
+  #arrange into long format: year, Species, agecl, length 
+  svlenbin <- len_comp_data[[s]][[1]] %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
+    dplyr::left_join(modbins) %>%
+    dplyr::filter(modbin.min < upper.bins & upper.bins <= modbin.max) %>%
+    dplyr::group_by(species, year, sizebin) %>%
+    dplyr::summarise(sumlen = sum(atoutput)) %>%
+    tidyr::spread(sizebin, sumlen) %>%
+    ungroup() %>%
+    dplyr::mutate(inpN = rowSums(.[,-(1:2)], na.rm = TRUE)) %>%
+    dplyr::mutate(type = 0) %>%
+    dplyr::mutate(survey = s) %>%
+    #dplyr::mutate(vars(matches("sizebin"))/inpN)
+    
+}
+write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
+
+
+```
 
 Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.
 
