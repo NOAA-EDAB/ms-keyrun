@@ -860,7 +860,9 @@ for(s in names(len_comp_data)){
 
 The first pass through with the current bins results in very few lengths in the smallest bin for most species. This suggests we need to change the binwidths and possibly the number of bins to optimize length fitting. Perhaps a larger first bin or don't start it at 0?
 
-*Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.* Do we need t0 as well? Haven't saved it.
+*Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.* 
+
+This function is below, but with only 5 bins I don't likw how it works, allocating more smaller bins to the smallest sizes that we don't observe and aggregating many lengths into one large bin. Therefore the simplest approach is to have equal sized bins (max observed length/desired number of bins). We will try this for the length comps.
 
 ```{r lbinfunction, eval=FALSE}
 # see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
@@ -945,7 +947,7 @@ estbinwidths <- function(Lmax, vonBk, Nsizebins, thresh = 0.05){
   binwidth.gro <- max(ceiling(binopt), ceiling(lenthresh/(Nsizebins-1)))
   
   #aggregate bins in multiples of optimal for bigger fish/slower growth to get Nsizebins
-  ifelse(binwidth.max > bindef, #& binwidth.max < 0.5*Lmax,
+  ifelse(binwidth.max > bindef & binwidth.max < 0.5*Lmax,
          binwidths <- c(rep(binwidth.gro, Nsizebins-1), binwidth.max),
          binwidths <- rep(bindef, Nsizebins))
   
@@ -953,7 +955,32 @@ estbinwidths <- function(Lmax, vonBk, Nsizebins, thresh = 0.05){
   
 }
 
+equalbinwidths <- function(Lmax, Nsizebins){
+  bindef <- max(1,ceiling(Lmax/Nsizebins))
+  binwidths <- rep(bindef, Nsizebins)
+  return(binwidths)
+}
 
+# for fixed bins across surveys find min and max observed lengths 
+
+maxLrange <- bind_rows(minmaxvonBK) %>%
+  group_by(species) %>%
+  summarise(minminL = min(minlen),
+            maxmaxL = max(maxlen))
+  
+Nsizebins  <-  5
+
+newbins <- maxLrange %>%
+  group_by(species) %>%
+  group_modify(~broom::tidy(equalbinwidths(.$maxmaxL, Nsizebins))) %>%
+  mutate(lb = paste0("sizebin",seq(1:Nsizebins))) %>%
+  pivot_wider(names_from = lb, values_from = x)
+
+sizebins <- as.data.frame(newbins) %>%
+  rename('commentField-notused' = species) %>%
+  relocate('commentField-notused', .after = last_col())
+                        
+write_csv(sizebins, paste0(o.name,"length_sizebins_NOBA.csv"))
 
 ```
 
