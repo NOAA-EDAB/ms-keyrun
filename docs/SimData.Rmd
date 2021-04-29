@@ -862,7 +862,7 @@ The first pass through with the current bins results in very few lengths in the 
 
 *Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.* 
 
-This function is below, but with only 5 bins I don't likw how it works, allocating more smaller bins to the smallest sizes that we don't observe and aggregating many lengths into one large bin. Therefore the simplest approach is to have equal sized bins (max observed length/desired number of bins). We will try this for the length comps.
+This function is below, but with only 5 bins I don't like how it works, allocating more smaller bins to the smallest sizes that we don't observe and aggregating many lengths into one large bin. Therefore the simplest approach is to have equal sized bins (max observed length/desired number of bins). We will try this for the length comps.
 
 ```{r lbinfunction, eval=FALSE}
 # see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
@@ -1123,6 +1123,59 @@ meta <- c("Simulated data from Norweigan-Barents Atlantis Model by Hansen et al.
 cat(as.character(meta), file=paste0(here("simulated-data/msinput/hydra/"),"README.txt"))
 
 ```
+
+Survey and catch datasets in Gavin's suggested format (all surveys together, all fleets together):
+
+```{r svcatchalt, eval=FALSE}
+#read in survey biomass data
+survObsBiom <- read_savedsurvs(d.name, 'survB') #reads in all surveys
+
+# get cvs from config files
+svcon <- list.files(path=here("/simulated-data/config/"), pattern = "*survey*", full.names = TRUE)
+fishcon <- list.files(path=here("/simulated-data/config/"), pattern = "*fishery*", full.names = TRUE)
+
+omlist_ss <- NOBAom_ms
+source(here("/simulated-data/config/omdimensions.R"))
+
+svcvlook <- tibble()
+for(c in 1:length(svcon)){
+  source(svcon[c])
+  surv_cv_n <- surv_cv %>% 
+    mutate(survey=survey.name)
+  svcvlook <- bind_rows(svcvlook, surv_cv_n)
+}
+
+fcvlook <- tibble()
+for(c in 1:length(fishcon)){
+  source(fishcon[c])
+  fish_cv_n <- fish_cv %>%
+    mutate(fishery=fishery.name)
+  fcvlook <- bind_rows(fcvlook, fish_cv_n)
+}
+
+allsvbio <- tibble()
+
+#multiple surveys named in list object, use as filename
+for(s in names(survObsBiom)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  svbio <- survObsBiom[[s]][[1]] %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, year, atoutput) %>%
+    dplyr::rename(biomass = atoutput) %>%
+    dplyr::mutate(survey = s,
+                  CV = 0.2) %>% #placeholder, can get actual value used to generate from config files
+    dplyr::select(survey, year, species, everything()) %>%
+    dplyr::arrange(survey, species, year)
+  
+  allsvbio <- bind_rows(allsvbio, svbio)
+}
+write_csv(allsvbio, paste0(o.name,"observation_biomass_NOBA_allsurvs.csv"))
+
+
+
+
+```
+
 
 Output temperature data from surveys using "Temp" variable in .nc file and the `atlantisom::load_nc_physics` function. A survey (timestep, polygons, possibly observation error) can then be applied to this output. 
 
