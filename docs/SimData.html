@@ -421,7 +421,7 @@ pre code {
 
 <h1 class="title toc-ignore">Generating Simulated Data</h1>
 <h4 class="author">Sarah Gaichas</h4>
-<h4 class="date">07 April, 2021</h4>
+<h4 class="date">29 April, 2021</h4>
 
 </div>
 
@@ -1123,7 +1123,7 @@ len_comp_data &lt;- read_savedsurvs(d.name, &#39;survLen&#39;)
 annage_comp_data &lt;- read_savedsurvs(d.name, &#39;survAnnAge&#39;)
 
 
-library(FSA)
+
 vb1 &lt;- vbFuns()
 # VBGF packages all take age and length pairs, reformat from length comp at agecl
 # break into 3 chunks of time, &quot;era&quot; 48 years each more like our survey
@@ -1480,7 +1480,8 @@ for(s in names(len_comp_data)){
     write_csv(paste0(o.name,&quot;observation_lengths_NOBA_&quot;,s,&quot;.csv&quot;))
 }</code></pre>
 <p>The first pass through with the current bins results in very few lengths in the smallest bin for most species. This suggests we need to change the binwidths and possibly the number of bins to optimize length fitting. Perhaps a larger first bin or don’t start it at 0?</p>
-<p><em>Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.</em> Do we need t0 as well? Haven’t saved it.</p>
+<p><em>Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.</em></p>
+<p>This function is below, but with only 5 bins I don’t likw how it works, allocating more smaller bins to the smallest sizes that we don’t observe and aggregating many lengths into one large bin. Therefore the simplest approach is to have equal sized bins (max observed length/desired number of bins). We will try this for the length comps.</p>
 <pre class="r"><code># see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
 # estimated optimal bin size for VBGF estimation is 0.23 x Lmax ^0.6
 
@@ -1492,25 +1493,145 @@ for(s in names(len_comp_data)){
 
 # pull observed min and max size from data to optimize start and end bins
 minmaxlen &lt;- list()
+# read in saved vonB pars--see if seasons are different and will need a replacement if K wasn&#39;t estimated
+#era &lt;- 1
+vonBK &lt;- list()
+minmaxvonBK &lt;- list()
 for(s in names(len_comp_data)){
-  minmaxlen[[s]] &lt;- len_comp_data[[s]][[1]] %&gt;%
+  minmaxlendf &lt;- len_comp_data[[s]][[1]] %&gt;%
     dplyr::group_by(species) %&gt;%
     dplyr::summarise(minlen = min(lower.bins, na.rm = TRUE),
-                     maxlen = max(upper.bins, na.rm = TRUE)) 
+                     maxlen = max(upper.bins, na.rm = TRUE),
+                     range = maxlen-minlen) 
+  
+  for(era in 1:3){
+  vonBKer &lt;- read.csv(paste0(o.name,&quot;growth_species_NOBA_era&quot;,era,&quot;_&quot;,s,&quot;.csv&quot;)) %&gt;%
+    rename(par = X) %&gt;%
+    pivot_longer(!par, names_to = &quot;species&quot;) %&gt;%
+    pivot_wider(names_from = par,
+                names_prefix = era,
+                values_from = value) %&gt;%
+    select(species, paste0(era,&quot;K&quot;))
+  
+  ifelse(era==1,
+         vonBKdf &lt;- vonBKer,
+         vonBKdf &lt;- left_join(vonBKdf, vonBKer))
+  }
+
+  minmaxvonBKdf &lt;- left_join(minmaxlendf,vonBKdf)
+  
+  minmaxlen[[s]] &lt;- minmaxlendf
+  vonBK[[s]] &lt;- vonBKdf
+  minmaxvonBK[[s]] &lt;- minmaxvonBKdf
+
 }
 
 # note!
 # Green_halibut and Saithe have maxlen at 200 in at least one survey, 
 # may need higher maxlength when running atlantisom comps wrapper, fix survey config files
 
-binwidths &lt;- function(Lmax, vonBk, Nsizebins){
+
+estbinwidths &lt;- function(Lmax, vonBk, Nsizebins, thresh = 0.05){
   #optimal bin size is lower end
   binopt &lt;- 0.23*Lmax^0.6
+  
+  #range gives initial default binwidth, all equal (range/Nbins)
+  #or should it be max/nbins?
+  #can use if no K estimated
+  bindef &lt;- max(1,ceiling(Lmax/Nsizebins))
+  
+  #minmaxvonBK$BTS_fall_allbox_effic1 %&gt;% group_by(species) %&gt;% mutate(bindef = ceiling(maxlen/5))
+  
   #vonBk tells you how many fine bins for fast growth
+  #low vonBK is doesn&#39;t asympote, divide length range equally into nbins?
+  #high vonBK asympotes quickly, 
+  # threshold cumprod of 0.05 or 0.1 to define last bin? tiny growth increment
+  # use binopt up to this threshold? 
+  # plot(cumprod(rep(1, 160)*exp(-0.0386)), ylim=c(0,1), xlim=c(0,180)) #saithe
+  # lines(cumprod(rep(1, 20)*exp(-1.4)), ylim=c(0,1), xlim=c(0,180)) #capelin
+  # lines(cumprod(rep(1, 40)*exp(-0.163)), ylim=c(0,1), xlim=c(0,180)) #redfish
+  # lines(cumprod(rep(1, 130)*exp(-0.344)), ylim=c(0,1), xlim=c(0,180)) #cod
+  
+  lenthresh &lt;- max(which(cumprod(rep(1, Lmax)*exp(-vonBk)) &gt; thresh)) #gives 1 cm increments of fast growth
+  
+  #put all lengths above this into one big bin, 
+  binwidth.max &lt;- Lmax-lenthresh
+  
+  #divide lengths below this by thresholds? for min 5 bins, use .5, .3, .2, .1, .05?
+  # or divide equally into nbins-1 bins? equal may be best
+  # hightest growth bin will be very small and we won&#39;t have fish in it
+  # dont go smaller than binopt
+  binwidth.gro &lt;- max(ceiling(binopt), ceiling(lenthresh/(Nsizebins-1)))
   
   #aggregate bins in multiples of optimal for bigger fish/slower growth to get Nsizebins
+  ifelse(binwidth.max &gt; bindef &amp; binwidth.max &lt; 0.5*Lmax,
+         binwidths &lt;- c(rep(binwidth.gro, Nsizebins-1), binwidth.max),
+         binwidths &lt;- rep(bindef, Nsizebins))
   
-}</code></pre>
+  return(binwidths)
+  
+}
+
+equalbinwidths &lt;- function(Lmax, Nsizebins){
+  bindef &lt;- max(1,ceiling(Lmax/Nsizebins))
+  binwidths &lt;- rep(bindef, Nsizebins)
+  return(binwidths)
+}
+
+# for fixed bins across surveys find min and max observed lengths 
+
+maxLrange &lt;- bind_rows(minmaxvonBK) %&gt;%
+  group_by(species) %&gt;%
+  summarise(minminL = min(minlen),
+            maxmaxL = max(maxlen))
+  
+Nsizebins  &lt;-  5
+
+newbins &lt;- maxLrange %&gt;%
+  group_by(species) %&gt;%
+  group_modify(~broom::tidy(equalbinwidths(.$maxmaxL, Nsizebins))) %&gt;%
+  mutate(lb = paste0(&quot;sizebin&quot;,seq(1:Nsizebins))) %&gt;%
+  pivot_wider(names_from = lb, values_from = x)
+
+sizebins &lt;- as.data.frame(newbins) %&gt;%
+  rename(&#39;commentField-notused&#39; = species) %&gt;%
+  relocate(&#39;commentField-notused&#39;, .after = last_col())
+                        
+write_csv(sizebins, paste0(o.name,&quot;length_sizebins_NOBA.csv&quot;))</code></pre>
+<p>Reran the lendat code block above to make the survey-specific length input files with the new equal sized bins.</p>
+<p>Now write input files in Gavin’s format to have surveys together in one file:</p>
+<pre class="r"><code>modbins &lt;- sizebins %&gt;%
+  rename(species = `commentField-notused`) %&gt;%
+  pivot_longer(!species, names_to = &quot;sizebin&quot;, values_to = &quot;binwidth&quot;) %&gt;%
+  group_by(species) %&gt;%
+  arrange(sizebin) %&gt;%
+  mutate(modbin.min = pcumsum(binwidth),
+         modbin.max = cumsum(binwidth)) %&gt;%
+  arrange(species, sizebin)
+
+allsvlenbin &lt;- tibble()
+
+#multiple surveys named in list object, use as filename
+for(s in names(len_comp_data)){
+  #arrange into long format: year, Species, agecl, length 
+  svlenbin &lt;- len_comp_data[[s]][[1]] %&gt;%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %&gt;%
+    dplyr::left_join(modbins) %&gt;%
+    dplyr::filter(modbin.min &lt; upper.bins &amp; upper.bins &lt;= modbin.max) %&gt;%
+    dplyr::group_by(species, year, sizebin) %&gt;%
+    dplyr::summarise(sumlen = sum(atoutput)) %&gt;%
+    tidyr::spread(sizebin, sumlen) %&gt;%
+    ungroup() %&gt;%
+    dplyr::mutate(inpN = rowSums(.[,-(1:2)], na.rm = TRUE)) %&gt;%
+    dplyr::mutate(type = 0) %&gt;%
+    dplyr::mutate(survey = s) %&gt;%
+    dplyr::mutate_at(vars(contains(&quot;sizebin&quot;)), ~./inpN) %&gt;%
+    dplyr::select(survey, year, species, type, inpN, everything())
+  
+  allsvlenbin &lt;- bind_rows(allsvlenbin, svlenbin)
+}
+write_csv(allsvlenbin, paste0(o.name,&quot;observation_lengths_NOBA_allsurvs.csv&quot;))</code></pre>
 <p>Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.</p>
 <p>Do we need to fit recruitment? May just need average recriutment starting values, which I can get from atlantis. Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don’t need SSB, maturity and recruitment inputs could be dummy parameters for now.</p>
 <pre class="r"><code># need 2-par maturity curve based on length, atlantis maturity ogive based on age group

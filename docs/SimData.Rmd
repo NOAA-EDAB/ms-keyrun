@@ -999,6 +999,7 @@ modbins <- sizebins %>%
          modbin.max = cumsum(binwidth)) %>%
   arrange(species, sizebin)
 
+allsvlenbin <- tibble()
 
 #multiple surveys named in list object, use as filename
 for(s in names(len_comp_data)){
@@ -1015,10 +1016,12 @@ for(s in names(len_comp_data)){
     dplyr::mutate(inpN = rowSums(.[,-(1:2)], na.rm = TRUE)) %>%
     dplyr::mutate(type = 0) %>%
     dplyr::mutate(survey = s) %>%
-    #dplyr::mutate(vars(matches("sizebin"))/inpN)
-    
+    dplyr::mutate_at(vars(contains("sizebin")), ~./inpN) %>%
+    dplyr::select(survey, year, species, type, inpN, everything())
+  
+  allsvlenbin <- bind_rows(allsvlenbin, svlenbin)
 }
-write_csv(paste0(o.name,"observation_lengths_NOBA_",s,".csv"))
+write_csv(allsvlenbin, paste0(o.name,"observation_lengths_NOBA_allsurvs.csv"))
 
 
 ```
