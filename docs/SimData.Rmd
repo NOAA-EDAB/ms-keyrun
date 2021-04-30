@@ -1023,7 +1023,7 @@ for(s in names(len_comp_data)){
 }
 write_csv(allsvlenbin, paste0(o.name,"observation_lengths_NOBA_allsurvs.csv"))
 
-#requires function below
+#requires read_savedfisheries function below, add to atlantisom
 catchlen_ss <- read_savedfisheries(d.name, "catchLen")
 
 allfishlenbin <- tibble()
@@ -1055,10 +1055,92 @@ write_csv(allfishlenbin, paste0(o.name,"observation_lengths_NOBA_allfisheries.cs
 
 Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.
 
+What we have saved so far is a diet comp in proportion that has had bias and observation error added to proportions. However, we need the stomach weight portion of the equation, which has the survey timing/area/efficiency/selectivity applied to true consumed weight.
+
 ```{r stomwt, eval=FALSE}
+
+# apply surveys to true total consumption (snipped from atlantosom om_diet.R and om_comps.R)
+detaileddiet <- readRDS(file.path(d.name, paste0(scenario.name, "detaileddiet.rds")))
+
+usersurvey <- c(here("simulated-data/config/mssurvey_spring.R"),
+                here("simulated-data/config/mssurvey_fall.R"),
+                here("simulated-data/config/mssurvey_spring_01.R"),
+                here("simulated-data/config/mssurvey_fall_01.R"))
+
+survObsStomWt <- list()
+
+for (s in usersurvey)
+{
+  source(s, local = TRUE)
+  
+  # survtime doesn't match units of time.days in detaileddiet
+  survtime <- survey_sample_full*omlist_ss$runpar$outputstep
+  
+  # apply survey design to detailed diet
+  survey_cons <- create_survey_diet(dat = detaileddiet,
+                                    time = survtime,
+                                    species = survspp,
+                                    boxes = survboxes,
+                                    effic = surveffic,
+                                    selex = survselex)
+  
+  # get numbers at ageclass for same survey design
+  survey_N <- atlantisom::create_survey(dat = omlist_ss$truenums_ss,
+                                        time = survtime,
+                                        species = survspp,
+                                        boxes = survboxes,
+                                        effic = surveffic,
+                                        selex = survselex.agecl)
+  
+  # divide surv_cons by survey numbers at agecl to get per capita consumption at agecl
+  
+  
+  #save survey consumption, takes a long time to generate with lots of reps/species
+  #if(save){
+  saveRDS(survey_cons, file.path(d.name, paste0(scenario.name, "_",
+                                                survey.name, "surveycons.rds")))
+  #}
+  
+  survObsStomWt[[survey.name]] <- survey_cons
+  
+}
+
+
+# divide by survey numbers at agecl to get per capita consumption at agecl
+
+# map to length bins using surey numbers at agecl in length bins
+
+# #multiple surveys named in list object, use as filename
+# for(s in names(all_diets)){
+#   #arrange into wide format: year, Species1, Species2 ... and write csv
+#   svdiet <- all_diets[[s]][[1]] %>%
+#     #calc_timestep2time(d.name, ., run.prm.file) %>% #this gives an arbitrary start year of 1970
+#     dplyr::mutate(time = time.days/NOBAom_ms$runpar$toutinc) %>%
+#     dplyr::left_join(., trueBagecl) %>%
+#     dplyr::mutate(dietBwt = dietSamp*trueBatage) %>%
+#     dplyr::group_by(species,time,prey,trueB) %>%
+#     dplyr::summarise(totdietBwt = sum(dietBwt)) %>%
+#     dplyr::mutate(totdietComp = totdietBwt/trueB) %>%
+#     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+#     dplyr::ungroup() %>%
+#     dplyr::select(year, species, prey, totdietComp) %>%
+#     write_csv(paste0(o.name,"diet_",s,".csv"))
+# }
 
 
 ```
+
+We also plan to fit to time series of prey proportions for each predator size class. Gavin suggests an input format similar to those for survey lengths. 
+
+```{r preyatsize, eval=FALSE}
+
+# same file as for MSSPM, diet proportion by agecl
+all_diets <- read_savedsurvs(d.name, 'survDiet')
+
+# 
+
+```
+
 
 Do we need to fit recruitment? May just need average recriutment starting values, which I can get from atlantis. Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don't need SSB, maturity and recruitment inputs could be dummy parameters for now.
 
