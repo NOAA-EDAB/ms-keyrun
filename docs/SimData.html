@@ -1481,7 +1481,7 @@ for(s in names(len_comp_data)){
 }</code></pre>
 <p>The first pass through with the current bins results in very few lengths in the smallest bin for most species. This suggests we need to change the binwidths and possibly the number of bins to optimize length fitting. Perhaps a larger first bin or don’t start it at 0?</p>
 <p><em>Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.</em></p>
-<p>This function is below, but with only 5 bins I don’t likw how it works, allocating more smaller bins to the smallest sizes that we don’t observe and aggregating many lengths into one large bin. Therefore the simplest approach is to have equal sized bins (max observed length/desired number of bins). We will try this for the length comps.</p>
+<p>This function is below, but with only 5 bins I don’t like how it works, allocating more smaller bins to the smallest sizes that we don’t observe and aggregating many lengths into one large bin. Therefore the simplest approach is to have equal sized bins (max observed length/desired number of bins). We will try this for the length comps.</p>
 <pre class="r"><code># see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297
 # estimated optimal bin size for VBGF estimation is 0.23 x Lmax ^0.6
 
@@ -1599,7 +1599,7 @@ sizebins &lt;- as.data.frame(newbins) %&gt;%
                         
 write_csv(sizebins, paste0(o.name,&quot;length_sizebins_NOBA.csv&quot;))</code></pre>
 <p>Reran the lendat code block above to make the survey-specific length input files with the new equal sized bins.</p>
-<p>Now write input files in Gavin’s format to have surveys together in one file:</p>
+<p>Now write input files in Gavin’s format to have surveys together in one file. Note that this is just a test. The folder has two different survey and two different fishery configurations; they are not independent. Also, fishery catch is not currently separated into fleets. We wouldn’t use all of these in an input file. Also add fishery length comps:</p>
 <pre class="r"><code>modbins &lt;- sizebins %&gt;%
   rename(species = `commentField-notused`) %&gt;%
   pivot_longer(!species, names_to = &quot;sizebin&quot;, values_to = &quot;binwidth&quot;) %&gt;%
@@ -1611,7 +1611,7 @@ write_csv(sizebins, paste0(o.name,&quot;length_sizebins_NOBA.csv&quot;))</code><
 
 allsvlenbin &lt;- tibble()
 
-#multiple surveys named in list object, use as filename
+#multiple surveys named in list object, add to file
 for(s in names(len_comp_data)){
   #arrange into long format: year, Species, agecl, length 
   svlenbin &lt;- len_comp_data[[s]][[1]] %&gt;%
@@ -1631,7 +1631,34 @@ for(s in names(len_comp_data)){
   
   allsvlenbin &lt;- bind_rows(allsvlenbin, svlenbin)
 }
-write_csv(allsvlenbin, paste0(o.name,&quot;observation_lengths_NOBA_allsurvs.csv&quot;))</code></pre>
+write_csv(allsvlenbin, paste0(o.name,&quot;observation_lengths_NOBA_allsurvs.csv&quot;))
+
+#requires function below
+catchlen_ss &lt;- read_savedfisheries(d.name, &quot;catchLen&quot;)
+
+allfishlenbin &lt;- tibble()
+for(f in names(catchlen_ss)){
+  #arrange into long format: year, Species, agecl, length 
+  fishlenbin &lt;- catchlen_ss[[f]][[1]] %&gt;%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %&gt;%
+    dplyr::left_join(modbins) %&gt;%
+    dplyr::filter(modbin.min &lt; upper.bins &amp; upper.bins &lt;= modbin.max) %&gt;%
+    dplyr::group_by(species, year, sizebin) %&gt;%
+    dplyr::summarise(sumlen = sum(atoutput)) %&gt;%
+    tidyr::spread(sizebin, sumlen) %&gt;%
+    ungroup() %&gt;%
+    dplyr::mutate(inpN = rowSums(.[,-(1:2)], na.rm = TRUE)) %&gt;%
+    dplyr::mutate(type = 0) %&gt;%
+    dplyr::mutate(fishery = f,
+                  area = 1) %&gt;%
+    dplyr::mutate_at(vars(contains(&quot;sizebin&quot;)), ~./inpN) %&gt;%
+    dplyr::select(fishery, area, year, species, type, inpN, everything()) %&gt;%
+    dplyr::arrange(fishery, area, species, year)
+  
+  allfishlenbin &lt;- bind_rows(allfishlenbin, fishlenbin)
+}
+write_csv(allfishlenbin, paste0(o.name,&quot;observation_lengths_NOBA_allfisheries.csv&quot;))</code></pre>
 <p>Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.</p>
 <p>Do we need to fit recruitment? May just need average recriutment starting values, which I can get from atlantis. Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don’t need SSB, maturity and recruitment inputs could be dummy parameters for now.</p>
 <pre class="r"><code># need 2-par maturity curve based on length, atlantis maturity ogive based on age group
@@ -1713,6 +1740,68 @@ meta &lt;- c(&quot;Simulated data from Norweigan-Barents Atlantis Model by Hanse
           )
 
 cat(as.character(meta), file=paste0(here(&quot;simulated-data/msinput/hydra/&quot;),&quot;README.txt&quot;))</code></pre>
+<p>Survey and catch datasets in Gavin’s suggested format (all surveys together, all fleets together). As above, note that this is just a test. The folder has two different survey and two different fishery configurations; they are not independent. Also, fishery catch is not currently separated into fleets. We wouldn’t use all of these in an input file.</p>
+<pre class="r"><code>#read in survey biomass data
+survObsBiom &lt;- read_savedsurvs(d.name, &#39;survB&#39;) #reads in all surveys
+
+# get cvs from config files
+svcon &lt;- list.files(path=here(&quot;/simulated-data/config/&quot;), pattern = &quot;*survey*&quot;, full.names = TRUE)
+fishcon &lt;- list.files(path=here(&quot;/simulated-data/config/&quot;), pattern = &quot;*fishery*&quot;, full.names = TRUE)
+
+omlist_ss &lt;- NOBAom_ms
+source(here(&quot;/simulated-data/config/omdimensions.R&quot;))
+
+svcvlook &lt;- tibble()
+for(c in 1:length(svcon)){
+  source(svcon[c])
+  surv_cv_n &lt;- surv_cv %&gt;% 
+    mutate(survey=survey.name)
+  svcvlook &lt;- bind_rows(svcvlook, surv_cv_n)
+}
+
+fcvlook &lt;- tibble()
+for(c in 1:length(fishcon)){
+  source(fishcon[c])
+  fish_cv_n &lt;- fish_cv %&gt;%
+    mutate(fishery=fishery.name)
+  fcvlook &lt;- bind_rows(fcvlook, fish_cv_n)
+}
+
+allsvbio &lt;- tibble()
+
+#multiple surveys named in list object, use as filename
+for(s in names(survObsBiom)){
+  #arrange into wide format: year, Species1, Species2 ... and write csv
+  svbio &lt;- survObsBiom[[s]][[1]] %&gt;%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %&gt;%
+    dplyr::select(species, year, atoutput) %&gt;%
+    dplyr::rename(biomass = atoutput) %&gt;%
+    dplyr::mutate(survey = s) %&gt;%
+    dplyr::left_join(svcvlook) %&gt;%
+    dplyr::select(survey, year, species, everything()) %&gt;%
+    dplyr::arrange(survey, species, year)
+  
+  allsvbio &lt;- bind_rows(allsvbio, svbio)
+}
+write_csv(allsvbio, paste0(o.name,&quot;observation_biomass_NOBA_allsurvs.csv&quot;))
+
+allcatch &lt;- tibble()
+
+for(f in names(catchbio_ss)){
+  catchbio &lt;- catchbio_ss[[f]][[1]] %&gt;%
+    dplyr::mutate(year = time/365) %&gt;%
+    dplyr::select(species, year, atoutput) %&gt;%
+    dplyr::rename(catch = atoutput) %&gt;%
+    dplyr::mutate(fishery = f) %&gt;%
+    dplyr::mutate(area = 1) %&gt;%
+    dplyr::left_join(fcvlook) %&gt;%
+    dplyr::select(fishery, area, year, species, everything()) %&gt;%
+    dplyr::arrange(fishery, species, year)
+      
+  allcatch &lt;- bind_rows(allcatch, catchbio)  
+}
+
+write_csv(allcatch, paste0(o.name,&quot;observation_catch_NOBA_allfisheries.csv&quot;))</code></pre>
 <p>Output temperature data from surveys using “Temp” variable in .nc file and the <code>atlantisom::load_nc_physics</code> function. A survey (timestep, polygons, possibly observation error) can then be applied to this output.</p>
 <p>We can get surface and bottom temp from Atlantis using the layers from each polygon, with layer 0 being the bottom and the maximum layer in the polygon being the surface (according to the <a href="https://confluence.csiro.au/display/Atlantis/Atlantis+NetCDF+Structure">Atlantis wiki/Atlantis output files/Atlantis NetCDF structure</a>.</p>
 <pre class="r"><code># taken from existing load_nc to explore

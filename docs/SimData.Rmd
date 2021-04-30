@@ -986,7 +986,7 @@ write_csv(sizebins, paste0(o.name,"length_sizebins_NOBA.csv"))
 
 Reran the lendat code block above to make the survey-specific length input files with the new equal sized bins.
 
-Now write input files in Gavin's format to have surveys together in one file:
+Now write input files in Gavin's format to have surveys together in one file. Note that this is just a test. The folder has two different survey and two different fishery configurations; they are not independent. Also, fishery catch is not currently separated into fleets. We wouldn't use all of these in an input file. Also add fishery length comps:
 
 ```{r altinput, eval=FALSE}
 
@@ -1001,7 +1001,7 @@ modbins <- sizebins %>%
 
 allsvlenbin <- tibble()
 
-#multiple surveys named in list object, use as filename
+#multiple surveys named in list object, add to file
 for(s in names(len_comp_data)){
   #arrange into long format: year, Species, agecl, length 
   svlenbin <- len_comp_data[[s]][[1]] %>%
@@ -1022,6 +1022,33 @@ for(s in names(len_comp_data)){
   allsvlenbin <- bind_rows(allsvlenbin, svlenbin)
 }
 write_csv(allsvlenbin, paste0(o.name,"observation_lengths_NOBA_allsurvs.csv"))
+
+#requires function below
+catchlen_ss <- read_savedfisheries(d.name, "catchLen")
+
+allfishlenbin <- tibble()
+for(f in names(catchlen_ss)){
+  #arrange into long format: year, Species, agecl, length 
+  fishlenbin <- catchlen_ss[[f]][[1]] %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
+    dplyr::left_join(modbins) %>%
+    dplyr::filter(modbin.min < upper.bins & upper.bins <= modbin.max) %>%
+    dplyr::group_by(species, year, sizebin) %>%
+    dplyr::summarise(sumlen = sum(atoutput)) %>%
+    tidyr::spread(sizebin, sumlen) %>%
+    ungroup() %>%
+    dplyr::mutate(inpN = rowSums(.[,-(1:2)], na.rm = TRUE)) %>%
+    dplyr::mutate(type = 0) %>%
+    dplyr::mutate(fishery = f,
+                  area = 1) %>%
+    dplyr::mutate_at(vars(contains("sizebin")), ~./inpN) %>%
+    dplyr::select(fishery, area, year, species, type, inpN, everything()) %>%
+    dplyr::arrange(fishery, area, species, year)
+  
+  allfishlenbin <- bind_rows(allfishlenbin, fishlenbin)
+}
+write_csv(allfishlenbin, paste0(o.name,"observation_lengths_NOBA_allfisheries.csv"))
 
 
 ```
@@ -1124,7 +1151,7 @@ cat(as.character(meta), file=paste0(here("simulated-data/msinput/hydra/"),"READM
 
 ```
 
-Survey and catch datasets in Gavin's suggested format (all surveys together, all fleets together):
+Survey and catch datasets in Gavin's suggested format (all surveys together, all fleets together). As above, note that this is just a test. The folder has two different survey and two different fishery configurations; they are not independent. Also, fishery catch is not currently separated into fleets. We wouldn't use all of these in an input file. 
 
 ```{r svcatchalt, eval=FALSE}
 #read in survey biomass data
@@ -1162,8 +1189,8 @@ for(s in names(survObsBiom)){
     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
     dplyr::select(species, year, atoutput) %>%
     dplyr::rename(biomass = atoutput) %>%
-    dplyr::mutate(survey = s,
-                  CV = 0.2) %>% #placeholder, can get actual value used to generate from config files
+    dplyr::mutate(survey = s) %>%
+    dplyr::left_join(svcvlook) %>%
     dplyr::select(survey, year, species, everything()) %>%
     dplyr::arrange(survey, species, year)
   
@@ -1171,9 +1198,23 @@ for(s in names(survObsBiom)){
 }
 write_csv(allsvbio, paste0(o.name,"observation_biomass_NOBA_allsurvs.csv"))
 
+allcatch <- tibble()
 
+for(f in names(catchbio_ss)){
+  catchbio <- catchbio_ss[[f]][[1]] %>%
+    dplyr::mutate(year = time/365) %>%
+    dplyr::select(species, year, atoutput) %>%
+    dplyr::rename(catch = atoutput) %>%
+    dplyr::mutate(fishery = f) %>%
+    dplyr::mutate(area = 1) %>%
+    dplyr::left_join(fcvlook) %>%
+    dplyr::select(fishery, area, year, species, everything()) %>%
+    dplyr::arrange(fishery, species, year)
+      
+  allcatch <- bind_rows(allcatch, catchbio)  
+}
 
-
+write_csv(allcatch, paste0(o.name,"observation_catch_NOBA_allfisheries.csv"))
 ```
 
 
