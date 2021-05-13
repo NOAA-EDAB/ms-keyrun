@@ -1055,7 +1055,7 @@ write_csv(allfishlenbin, paste0(o.name,"observation_lengths_NOBA_allfisheries.cs
 
 Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.
 
-What we have saved so far is a diet comp in proportion that has had bias and observation error added to proportions. However, we need the stomach weight portion of the equation, which has the survey timing/area/efficiency/selectivity applied to true consumed weight.
+What we have saved so far is a diet comp in proportion that has had bias and observation error added to proportions. However, we need the stomach weight portion of the equation, which has the survey timing/area/efficiency/selectivity applied to true consumed weight. The hydra input is mean daily stomach weight in grams. From the Atlantis manual, "DetailedDietCheck.txt returns the total consumed biomass since the last output given for each cell (box and layer) of each age group of each functional group." So daily per capita consumed biomass is this output, summed over prey for total consumption, divided by the numbers from the same survey design, divided by the output step `omlist_ss$runpar$outputstep`. 
 
 ```{r stomwt, eval=FALSE}
 
@@ -1066,6 +1066,10 @@ usersurvey <- c(here("simulated-data/config/mssurvey_spring.R"),
                 here("simulated-data/config/mssurvey_fall.R"),
                 here("simulated-data/config/mssurvey_spring_01.R"),
                 here("simulated-data/config/mssurvey_fall_01.R"))
+
+omlist_ss <- readRDS(file.path(d.name, paste0(scenario.name, "omlist_ss.rds")))
+
+source(here("simulated-data/config/omdimensions.R"))
 
 survObsStomWt <- list()
 
@@ -1085,16 +1089,31 @@ for (s in usersurvey)
                                     selex = survselex)
   
   # get numbers at ageclass for same survey design
+  # note different time units!
   survey_N <- atlantisom::create_survey(dat = omlist_ss$truenums_ss,
-                                        time = survtime,
+                                        time = survey_sample_full,
                                         species = survspp,
                                         boxes = survboxes,
                                         effic = surveffic,
                                         selex = survselex.agecl)
   
-  # divide surv_cons by survey numbers at agecl to get per capita consumption at agecl
+  # convert survey N times to cons times in days
+  survey_N$time <- survey_N$time*omlist_ss$runpar$outputstep
   
+  survey_totN <- survey_N %>%
+    group_by(species, agecl, time) %>%
+    summarise(totN = sum(atoutput)) %>%
+    ungroup()
   
+  # sum over prey to get total consumption in t, divide by N and timestep, convert to g
+  survey_totcons <- survey_cons %>%
+    group_by(species, agecl, time) %>%
+    summarise(totcons = sum(atoutput)) %>%
+    ungroup() %>%
+    left_join(survey_totN) %>%
+    mutate(percap_cons = totcons/totN) %>%
+    mutate(daily_percap_g = percap_cons/omlist_ss$runpar$outputstep*1000000)
+
   #save survey consumption, takes a long time to generate with lots of reps/species
   #if(save){
   saveRDS(survey_cons, file.path(d.name, paste0(scenario.name, "_",
