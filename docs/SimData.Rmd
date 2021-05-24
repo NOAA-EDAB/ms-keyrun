@@ -63,27 +63,27 @@ Below we will double check survey census outputs against the true values, and th
 
 `NOBA2config.R` specifies location and names of files needed for atlantisom to initialize:
 
-```{r, code = readLines(here("/simulated-data/config/NOBA2Config.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/NOBA2Config.R")), eval=F}
 ```
 
 `omdimensions.R` standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):
 
-```{r, code = readLines(here("/simulated-data/config/omdimensions.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/omdimensions.R")), eval=F}
 ```
 
 ### Change these survey and fishery config files
 
 `mssurvey_spring.R` and `mssurvey_fall.R` configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):
 
-```{r, code = readLines(here("/simulated-data/config/mssurvey_spring.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/mssurvey_spring.R")), eval=F}
 ```
 
-```{r, code = readLines(here("/simulated-data/config/mssurvey_fall.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/mssurvey_fall.R")), eval=F}
 ```
 
 `msfishery.R` configures the fishery dependent data:
 
-```{r, code = readLines(here("/simulated-data/config/msfishery.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/msfishery.R")), eval=F}
 ```
 
 ### Run atlantisom and save outputs
