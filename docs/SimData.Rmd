@@ -1167,14 +1167,27 @@ modbins <- sizebins %>%
          modbin.max = cumsum(binwidth)) %>%
   arrange(species, sizebin)
 
+# get Dirichlet alphamults from config files
+svcon <- list.files(path=here("/simulated-data/config/"), pattern = "*survey*", full.names = TRUE)
+
+svalphamultlook <- tibble()
+for(c in 1:length(svcon)){
+  source(svcon[c])
+  svalp <- tibble(
+    surv_alphamult_n = alphamult, 
+    survey = survey.name
+  )
+  svalphamultlook <- bind_rows(svalphamultlook, svalp)
+}
+
 # diet is by predator agecl, need diet by predator sizebin
 # map predator agecl to lengthbin using length_comp_data from same survey
 
 allsvdietprop <- tibble()
 
-#multiple surveys named in list object, add to file
+#multiple surveys named in list object
 for(s in names(all_diets)){
-  #arrange into long format: year, Species, agecl, length 
+  #arrange into lookup for agecl to lengthbin in numbers of fish 
   svagelenbin <- len_comp_data[[s]][[1]] %>%
     dplyr::mutate(year = ceiling(time/stepperyr)) %>%
     dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
@@ -1185,27 +1198,27 @@ for(s in names(all_diets)){
     dplyr::group_by(species, year, sizebin) %>%
     dplyr::mutate(propage = sumlen/sum(sumlen)) #proportion of each agecl contributing to lengthbin
 
-  
   svdietprop <- all_diets[[s]][[1]] %>%
     dplyr::mutate(year = ceiling(time.days/365)) %>%
     # join with agecl to length lookup
     dplyr::select(species, agecl, year, prey, dietSamp) %>%
     dplyr::left_join(svagelenbin) %>%
-    
-    dplyr::filter(modbin.min < upper.bins & upper.bins <= modbin.max) %>%
-    dplyr::group_by(species, year, sizebin) %>%
-    dplyr::summarise(sumlen = sum(atoutput)) %>%
-    tidyr::spread(sizebin, sumlen) %>%
+    dplyr::mutate(dietpropage = dietSamp*propage) %>% #reweight diets for lengthbins
+    dplyr::group_by(species, year, sizebin, prey) %>%
+    dplyr::summarise(dietsize = sum(dietpropage)) %>%
+    dplyr::filter(prey %in% unique(modbins$species)) %>% #drops predators that don't eat our modeled species
+    tidyr::spread(prey, dietsize) %>%
     ungroup() %>%
-    dplyr::mutate(inpN = rowSums(.[,-(1:2)], na.rm = TRUE)) %>%
-    dplyr::mutate(type = 0) %>%
+    dplyr::filter(!is.na(sizebin)) %>% 
+    dplyr::mutate(allotherprey = 1-rowSums(.[,-(1:3)], na.rm = TRUE)) %>%
     dplyr::mutate(survey = s) %>%
-    dplyr::mutate_at(vars(contains("sizebin")), ~./inpN) %>%
-    dplyr::select(survey, year, species, type, inpN, everything())
+    dplyr::left_join(svalphamultlook) %>% #what is effective sample size for Dirichlet?
+    dplyr::rename(inpN = surv_alphamult_n) %>% #use this input for now
+    dplyr::select(survey, year, species, sizebin, inpN, everything())
   
-  allsvlenbin <- bind_rows(allsvlenbin, svlenbin)
+  allsvdietprop <- bind_rows(allsvdietprop, svdietprop)
 }
-write_csv(allsvlenbin, paste0(o.name,"observation_lengths_NOBA_allsurvs.csv"))
+write_csv(allsvdietprop, paste0(o.name,"observation_diets_NOBA_allsurvs.csv"))
 
 
 # 
