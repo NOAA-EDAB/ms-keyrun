@@ -19,6 +19,12 @@
 #' see get_landings_vtr_geret.r
 library(magrittr)
 
+
+calc_prop <- function(landings,inout) {
+  prop <- sum(landings*(inout=="in"))/sum(landings)
+  return(prop)
+}
+
 calc_all_species_proportions <- function() {
   
   # REVENUEFILE is a df where each record contains landings for a subtrip
@@ -33,42 +39,12 @@ calc_all_species_proportions <- function() {
     dplyr::mutate(YEAR = as.numeric(Year)) %>% 
     dplyr::mutate(AREA = as.numeric(AREA)) %>% 
     dplyr::group_by(YEAR,AREA,NESPP3,InOut) %>%
-    dplyr::summarise(TOTALLANDINGS=sum(InsideLANDED),.groups="drop") 
-  
-  return(data)
-    # dplyr::filter(NESPP3 %in% nespp3codes) %>% 
-    # dplyr::left_join(.,speciesNames,by="NESPP3") %>%
-    # dplyr::rename(COMMON_NAME=COMMON_NAME.y)
-  
-  #calculate landings of all other fish combined
-  otherFish <- REVENUEFILE %>%
-    dplyr::select(Year,Area,NESPP3,InsideLANDED) %>% 
-    dplyr::filter(!NESPP3 %in% nespp3codes) %>% 
-    dplyr::filter(!Area == "Other") %>%
-    dplyr::mutate(AREA=stringr::str_split_fixed(Area,"_",2)[,1]) %>%
-    dplyr::mutate(InOut=stringr::str_split_fixed(Area,"_",2)[,2]) %>%
-    dplyr::mutate(YEAR = as.numeric(Year)) %>% 
-    dplyr::mutate(AREA = as.numeric(AREA)) %>% 
-    dplyr::group_by(YEAR,AREA,InOut) %>%
-    dplyr::summarise(TOTALLANDINGS=sum(InsideLANDED)) %>% 
-    dplyr::ungroup() %>%
-    dplyr::mutate(COMMON_NAME="other Species",NESPP3="999")
-  
-  data <- rbind(data,otherFish)
-  
-  # otherSpecies <- REVENUEFILE %>%
-  #   dplyr::filter(!Area == "Other") %>%  
-  #   dplyr::filter(!NESPP3 %in% nespp3codes) %>% 
-  #   dplyr::select(NESPP3,InsideLANDED) %>% 
-  #   dplyr::group_by(NESPP3) %>%
-  #   dplyr::summarise(TOTALLANDINGS=sum(InsideLANDED)) %>%
-  #   dplyr::mutate(NESPP3=sprintf("%03d",NESPP3))
-  # 
-  # allOtherSpecies <- dbutils::create_species_lookup(channel,species = unique(otherFish$NESPP3)[-1],speciesType = "nespp3" )
-  # 
-  # a <- dplyr::left_join(allOtherSpecies$data,otherSpecies,by="NESPP3") %>%
-  #   dplyr::arrange(desc(TOTALLANDINGS))
-  # 
-  saveRDS(data,file = here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds"))
+    dplyr::summarise(TOTALLANDINGS=sum(InsideLANDED),.groups="drop")
+    # calculate proportion of landings inside GB section of stat area
+  props <- data %>% 
+      dplyr::group_by(YEAR,AREA,NESPP3) %>% 
+      dplyr::summarise(PROP_GB = calc_prop(TOTALLANDINGS,InOut),.groups = "drop")
+ 
+  saveRDS(props,file = here::here("data-raw","Landings_VTR_proportions_all_species.rds"))
   
 }
