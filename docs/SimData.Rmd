@@ -63,27 +63,27 @@ Below we will double check survey census outputs against the true values, and th
 
 `NOBA2config.R` specifies location and names of files needed for atlantisom to initialize:
 
-```{r, code = readLines(here("/simulated-data/config/NOBA2Config.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/NOBA2Config.R")), eval=F}
 ```
 
 `omdimensions.R` standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):
 
-```{r, code = readLines(here("/simulated-data/config/omdimensions.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/omdimensions.R")), eval=F}
 ```
 
 ### Change these survey and fishery config files
 
 `mssurvey_spring.R` and `mssurvey_fall.R` configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):
 
-```{r, code = readLines(here("/simulated-data/config/mssurvey_spring.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/mssurvey_spring.R")), eval=F}
 ```
 
-```{r, code = readLines(here("/simulated-data/config/mssurvey_fall.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/mssurvey_fall.R")), eval=F}
 ```
 
 `msfishery.R` configures the fishery dependent data:
 
-```{r, code = readLines(here("/simulated-data/config/msfishery.R")), eval=F}
+```{r, code = readLines(here("simulated-data/config/msfishery.R")), eval=F}
 ```
 
 ### Run atlantisom and save outputs
@@ -1100,6 +1100,7 @@ for (s in usersurvey)
   # convert survey N times to cons times in days
   survey_N$time <- survey_N$time*omlist_ss$runpar$outputstep
   
+  # get rid of polygon
   survey_totN <- survey_N %>%
     group_by(species, agecl, time) %>%
     summarise(totN = sum(atoutput)) %>%
@@ -1112,7 +1113,8 @@ for (s in usersurvey)
     ungroup() %>%
     left_join(survey_totN) %>%
     mutate(percap_cons = totcons/totN) %>%
-    mutate(daily_percap_g = percap_cons/omlist_ss$runpar$outputstep*1000000)
+    #mutate(daily_percap_g = percap_cons/omlist_ss$runpar$outputstep*1000000)
+    mutate(daily_percap_g = percap_cons*1000000) #try assuming cons is snapshot not cumulative since last timestep
 
   #save survey consumption, takes a long time to generate with lots of reps/species
   #if(save){
@@ -1123,9 +1125,6 @@ for (s in usersurvey)
   survObsStomWt[[survey.name]] <- survey_cons
   
 }
-
-
-# divide by survey numbers at agecl to get per capita consumption at agecl
 
 # map to length bins using surey numbers at agecl in length bins
 
@@ -1149,12 +1148,78 @@ for (s in usersurvey)
 
 ```
 
-We also plan to fit to time series of prey proportions for each predator size class. Gavin suggests an input format similar to those for survey lengths. 
+We also plan to fit to time series of prey proportions for each predator size class. Gavin suggests an input format similar to those for survey lengths. Diet output from surveys is by predator agecl
 
 ```{r preyatsize, eval=FALSE}
 
 # same file as for MSSPM, diet proportion by agecl
 all_diets <- read_savedsurvs(d.name, 'survDiet')
+
+# get size bins for predators
+sizebins <- read_csv(paste0(o.name,"length_sizebins_NOBA.csv"))
+
+modbins <- sizebins %>%
+  rename(species = `commentField-notused`) %>%
+  pivot_longer(!species, names_to = "sizebin", values_to = "binwidth") %>%
+  group_by(species) %>%
+  arrange(sizebin) %>%
+  mutate(modbin.min = pcumsum(binwidth),
+         modbin.max = cumsum(binwidth)) %>%
+  arrange(species, sizebin)
+
+# get Dirichlet alphamults from config files
+svcon <- list.files(path=here("/simulated-data/config/"), pattern = "*survey*", full.names = TRUE)
+
+svalphamultlook <- tibble()
+for(c in 1:length(svcon)){
+  source(svcon[c])
+  svalp <- tibble(
+    surv_alphamult_n = alphamult, 
+    survey = survey.name
+  )
+  svalphamultlook <- bind_rows(svalphamultlook, svalp)
+}
+
+# diet is by predator agecl, need diet by predator sizebin
+# map predator agecl to lengthbin using length_comp_data from same survey
+
+allsvdietprop <- tibble()
+
+#multiple surveys named in list object
+for(s in names(all_diets)){
+  #arrange into lookup for agecl to lengthbin in numbers of fish 
+  svagelenbin <- len_comp_data[[s]][[1]] %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::select(species, agecl, year, upper.bins, atoutput) %>%
+    dplyr::left_join(modbins) %>%
+    dplyr::filter(modbin.min < upper.bins & upper.bins <= modbin.max) %>%
+    dplyr::group_by(species, year, agecl, sizebin) %>%
+    dplyr::summarise(sumlen = sum(atoutput)) %>%
+    dplyr::group_by(species, year, sizebin) %>%
+    dplyr::mutate(propage = sumlen/sum(sumlen)) #proportion of each agecl contributing to lengthbin
+
+  svdietprop <- all_diets[[s]][[1]] %>%
+    dplyr::mutate(year = ceiling(time.days/365)) %>%
+    # join with agecl to length lookup
+    dplyr::select(species, agecl, year, prey, dietSamp) %>%
+    dplyr::left_join(svagelenbin) %>%
+    dplyr::mutate(dietpropage = dietSamp*propage) %>% #reweight diets for lengthbins
+    dplyr::group_by(species, year, sizebin, prey) %>%
+    dplyr::summarise(dietsize = sum(dietpropage)) %>%
+    dplyr::filter(prey %in% unique(modbins$species)) %>% #drops predators that don't eat our modeled species
+    tidyr::spread(prey, dietsize) %>%
+    ungroup() %>%
+    dplyr::filter(!is.na(sizebin)) %>% 
+    dplyr::mutate(allotherprey = 1-rowSums(.[,-(1:3)], na.rm = TRUE)) %>%
+    dplyr::mutate(survey = s) %>%
+    dplyr::left_join(svalphamultlook) %>% #what is effective sample size for Dirichlet?
+    dplyr::rename(inpN = surv_alphamult_n) %>% #use this input for now
+    dplyr::select(survey, year, species, sizebin, inpN, everything())
+  
+  allsvdietprop <- bind_rows(allsvdietprop, svdietprop)
+}
+write_csv(allsvdietprop, paste0(o.name,"observation_diets_NOBA_allsurvs.csv"))
+
 
 # 
 
