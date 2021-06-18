@@ -30,4 +30,5 @@ Imports:
 Remotes:
     andybeet/cfdbs
     andybeet/dbutils
+    andybeet/hydradata
     NOAA-EDAB/mscatch
