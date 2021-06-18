@@ -61,7 +61,7 @@ format_hydra <- function(expandedLandings,fleets,itis) {
       dplyr::summarize(w = sum(totalWeight),.groups="drop")
 
     # for all fleets calculate the proportions of landings in each size bin
-    # remove other fleet and landings witout length bins.
+    # remove other fleet and landings without length bins.
     # These dealt with separately
     proportionsinit <- spd %>% dplyr::group_by(YEAR,hydraFleets) %>%
       dplyr::filter(hydraFleets != "other") %>%

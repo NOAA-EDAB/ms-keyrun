@@ -70,7 +70,7 @@ lengthData <- hydra_pull_GB_lengths(channel, area=c(cfdbs::EPUs$data$GB,537))
 For each species of interest, the length data were then aggregated to provide the number of samples of a given fish LENGTH for each YEAR, NEGEAR combination. The landings data were also aggregated to provide total landings (metric tons) by YEAR and NEGEAR. These two aggregated data sets were then used to [expand the total landings](#expand) in a given YEAR, NEGEAR based on the sampled length distribution.
 
 ```{r processLandLen, echo=T,eval=F}
-process_hydra_GB_comland(channel,comlandData,lengthData)
+expanded <- hydra_process_GB_comland(channel,comlandData,lengthData)
 ```
 
 
@@ -104,7 +104,21 @@ for season j, j= 1, ..., 4 (spring, summer, fall, winter) or sex j, j = 1, ..., 
 
 ## Size class proportions
 
-For each species the annual landings (by NEGEAR) which are now apportioned to a population of fish lengths can be aggregated over the size class intervals described in table x (link).
+For each species the annual landings (by NEGEAR) which are now apportioned to fish lengths can be aggregated over the size class intervals described in table x (link) based on the [fleets](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) the NEGEAR codes are associated with. The Hydra [simulation and estimation](https://github.com/NOAA-EDAB/hydra_sim/wiki) model implements three fleets: demersal, pelagic, and fixed gear. For this model the broader [fleet classification](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) is aggregated further (Table xxx).
+
+Any NEGEAR gear types that do not neatly fall into any of the three defined fleets (i.e. the `other` category) are assigned to the fleet dominating landings. The proportions of total landings by size class for each fleet can then be calculated.
+
+```{r hydraformat, echo=T, eval= F}
+  speciesList <- unique(expanded$species_itis)
+  for (itis in speciesList) {
+    hydra_format(expanded,mscatch::fleets,itis)
+  }
+```
+
+```{r hydrafleet, echo=T, eval=T}
+mscatch::fleets %>%  kableExtra::kbl() %>%
+  kableExtra::kable_styling("hover", full_width = F)
+```
 
 
 
