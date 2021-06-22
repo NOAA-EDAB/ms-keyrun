@@ -109,11 +109,32 @@ For each species the annual landings (by NEGEAR) which are now apportioned to fi
 Any NEGEAR gear types that do not neatly fall into any of the three defined fleets (i.e. the `other` category) are assigned to the fleet dominating landings. The proportions of total landings by size class for each fleet can then be calculated.
 
 ```{r hydraformat, echo=T, eval= F}
-  speciesList <- unique(expanded$species_itis)
-  for (itis in speciesList) {
-    hydra_format(expanded,mscatch::fleets,itis)
-  }
+speciesList <- unique(expanded$species_itis)
+finalTable <- NULL
+for (itis in speciesList) {
+  itisData <- hydra_format(expanded,mscatch::fleets,itis)
+  finalTable <- rbind(finalTable,itisData)
+}
+
+write.csv(finalTable,here::here("data-raw","catchAtLengthProportions.csv"))
 ```
+
+The resulting table for the species of interest over 5 size class intervals. totalBiomass is in metric tons.
+
+```{r props, echo = T,eval=T}
+readr::read_csv(here::here("data-raw","catchAtLengthProportions.csv"),col_types = readr::cols()) %>% 
+  dplyr::mutate(across(dplyr::starts_with("sizeclass"),round,5)) %>% 
+  dplyr::mutate(totalBiomass=round(totalBiomass)) %>%
+  DT::datatable(.,rownames = FALSE, 
+          options = list(pageLength = 10, 
+                         order = list(list(0, 'asc'))
+          ))
+
+```
+
+## Assign fleets definition to hydra fleets
+
+The [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) definitions are further aggregated to meet the needs of the Hydra model
 
 ```{r hydrafleet, echo=T, eval=T}
 mscatch::fleets %>%  kableExtra::kbl() %>%

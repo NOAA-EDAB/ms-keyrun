@@ -10,7 +10,7 @@
 
 
 
-format_hydra <- function(expandedLandings,fleets,itis) {
+hydra_format <- function(expandedLandings,fleets,itis) {
 
   # truncate Gear code to 2 digit gear code
   new <- expandedLandings %>%

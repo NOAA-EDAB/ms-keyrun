@@ -15,7 +15,7 @@
 # need to pull comland data. Missing MARKET_CODE because pull from AA not stockeff
 # comlandData <- readRDS(here::here("data-raw","comland_negear.rds"))
 # lengthData <- readRDS(here::here("data-raw","hydra_lengths.rds")) # see test_data_pull_hydra_GB_lengths.r
-# library(magrittr)
+ library(magrittr)
 
 process_hydra_GB_comland <- function(channel,comlandData,lengthData){
 
@@ -132,6 +132,6 @@ process_hydra_GB_comland <- function(channel,comlandData,lengthData){
 
   }
 
+  saveRDS(expanded,here::here("data-raw","expandedHydraLandings.rds"))
   return(expanded)
-  #saveRDS(expanded,here::here("data-raw","expandedHydraLandings.rds"))
 }
