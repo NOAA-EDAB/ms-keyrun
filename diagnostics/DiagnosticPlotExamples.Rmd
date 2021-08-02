@@ -132,7 +132,7 @@ totNageplot <- function(dat, anndat){
 
 ```
 
-Usage examples (from msSurveysTest.Rmd)
+Usage examples (from https://github.com/sgaichas/poseidon-dev/blob/master/msSurveysTest.Rmd, see [visualization](https://sgaichas.github.io/poseidon-dev/msSurveysTest.html))
 
 ### Visualize census surveys {.tabset #census}
 
@@ -237,6 +237,8 @@ for(s in names(annage_wtage)){
 ### {-}
 
 ## Diet data (simulated)
+
+From https://github.com/sgaichas/poseidon-dev/blob/master/SurveyDietCompTest.Rmd, see [visualizations](https://sgaichas.github.io/poseidon-dev/SurveyDietCompTest.html)
 
 Plotting functions and colors for everyone
 
