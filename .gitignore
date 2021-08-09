@@ -37,3 +37,5 @@ simulated-data/diagnostics-scratch/
 # folders
 other
 
+.Rproj.user
+inst/doc
