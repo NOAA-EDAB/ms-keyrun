@@ -1,4 +1,4 @@
-Package: ms-keyrun
+Package: mskeyrun
 Title: All information for keyrun review
 Version: 0.0.0.9000
 Authors@R: 
@@ -32,3 +32,6 @@ Remotes:
     andybeet/dbutils
     andybeet/hydradata
     NOAA-EDAB/mscatch
+VignetteBuilder: knitr
+Suggests: 
+    rmarkdown
