@@ -94,6 +94,7 @@ print(speciesLeftOut)
  #plot time series of top species   
   p <- ggplot(data=gd2) +
     geom_line(mapping=aes(x=YEAR,y=totsplandlb/1e6)) +
+    geom_point(mapping=aes(x=YEAR,y=totsplandlb/1e6)) +
     facet_wrap(vars(COMMON_NAME),scales="fixed") +
     theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) +
     theme(strip.text.x = element_text(size = 5)) +
