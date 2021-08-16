@@ -27,7 +27,7 @@ plot_landings <- function() {
 
   data <- REVENUEFILE %>% 
     dplyr::group_by(YEAR,AREA,NESPP3,COMMON_NAME) %>%
-    dplyr::summarise(TOTALLANDINGS=sum(TOTALLANDINGS))
+    dplyr::summarise(TOTALLANDINGS=sum(TOTALLANDINGS),.groups="drop")
   
   # plot grid area by species
   p <- ggplot2::ggplot(data=data) +

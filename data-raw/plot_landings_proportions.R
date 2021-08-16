@@ -31,7 +31,7 @@ plot_landings_proportions <- function(species="cols") {
   # calculate proportion of landings inside GB section of stat area
   data <- REVENUEFILE %>% 
     dplyr::group_by(YEAR,AREA,NESPP3,COMMON_NAME) %>% 
-    dplyr::summarise(PROP_GB = calc_prop(TOTALLANDINGS,InOut))
+    dplyr::summarise(PROP_GB = calc_prop(TOTALLANDINGS,InOut),.groups="drop")
 
   if(species=="cols") {
     # plot grid area by species
