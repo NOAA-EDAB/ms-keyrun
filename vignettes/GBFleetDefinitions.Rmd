@@ -23,9 +23,9 @@ Statistical areas are used to define the Georges Bank footprint for pulling the 
 ```{r}
 crs <- 4326
 # read in coastline and GB shape file
-coast <- sf::st_read(here::here("gis", 'NES_LME_coast.shp'), quiet = T) %>%
+coast <- sf::st_read(here::here("vignettes/gis", 'NES_LME_coast.shp'), quiet = T) %>%
   sf::st_transform(.,crs=crs)
-GB_strata <- sf::st_read(here::here("gis","Statistical_Areas_2010.shp"),quiet=T) %>%
+GB_strata <- sf::st_read(here::here("vignettes/gis","Statistical_Areas_2010.shp"),quiet=T) %>%
     sf::st_transform(.,crs=crs) %>%
   dplyr::filter(Id %in% c(521, 522, 523, 524, 525, 526, 538, 551, 552, 561, 562, 537) )
 centroids <- sf::st_coordinates(sf::st_centroid(GB_strata))
@@ -42,7 +42,7 @@ ggplot2::ggplot(data=coast) +
 ## Gear Types
 
 ```{r getGears,  echo=F, eval=T}
-gears <- readRDS(here::here("data","gearCodeTable.rds"))
+gears <- readRDS(here::here("data-raw/data","gearCodeTable.rds"))
 gearCodes <- gears$data %>% 
   dplyr::arrange(NEGEAR,NEGEAR2) %>%
   dplyr::select(NEGEAR,NEGEAR2,GEARNM,NAFOGEAR,NAFOGRNM)
@@ -247,7 +247,7 @@ knitr::include_graphics("figures/dendrogram3.png")
 All gear types which catch any amount of the [Species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are used in the cluster analysis. The hope was the set of gear types in which to begin the cluster analysis would be substantially less. The number of gears eliminated = 10. It is apparent that species of interest are caught across a broad class of gear types.
 
 ```{r echo=T,eval=F}
-focalSpecies <- readRDS(here::here("data","focalspecies.rds"))
+focalSpecies <- readRDS(here::here("data-raw/data","focalspecies.rds"))
 clusterObj <- cluster_by_focal_species(focalSpecies)
 plot(clusterObj,ask=T,which.plots=2,main="All gear types that land species of interest",xlab="")
 ```

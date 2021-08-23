@@ -31,7 +31,7 @@ All other gear codes make up the majority (99%) of the landings. For these gear 
 Species of interest are **bolded**
 
 ```{r ,eval=F, echo=T}
-gearData <- readRDS(file=paste0(here::here("data","timeSeriesSpeciesByGear.rds")))
+gearData <- readRDS(file=paste0(here::here("data-raw/data","timeSeriesSpeciesByGear.rds")))
 gearData$data %>% dplyr::filter(NEGEAR2==gearCode)
 
 ```
