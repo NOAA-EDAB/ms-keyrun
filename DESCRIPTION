@@ -36,5 +36,5 @@ Suggests:
     ggplot2,
     dplyr,
     here
-
-    
+Depends: 
+    R (>= 2.10)

@@ -8,6 +8,7 @@
 #'
 #'@param channel obtained from logging into the sole database.
 #'@param comlandData data from comland pull
+#'@param lengthData result of \code{hydra_pull_GB_lengths}
 #'
 #'
 
@@ -17,7 +18,7 @@
 # lengthData <- readRDS(here::here("data-raw","hydra_lengths.rds")) # see test_data_pull_hydra_GB_lengths.r
  library(magrittr)
 
-process_hydra_GB_comland <- function(channel,comlandData,lengthData){
+hydra_process_GB_comland <- function(channel,comlandData,lengthData){
 
   hydraSpecies <- data.frame(oldName=c("Acod","Aherring","Amackerel","goosefish","haddock",
                                        "silverhake","spinydog","winterfl","winterskate","yellowtailfl"),
@@ -30,7 +31,7 @@ process_hydra_GB_comland <- function(channel,comlandData,lengthData){
   GBArea <- c(cfdbs::EPUs$data$GB,537)
 
   ## for test data assume we this is EPU data. To achieve this we just sum over AREAS for now
-  lands <- comlandData$comland %>%
+  lands <- comlandData %>%
     dplyr::filter(AREA %in% GBArea) %>%
     #dplyr::rename(MARKET_CODE = MKTCAT) %>%
     dplyr::group_by(YEAR, MONTH, NEGEAR, NESPP3) %>%

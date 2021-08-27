@@ -10,7 +10,7 @@
 
 #channel <- cfdbs::connect_to_database("server","user") eventually remove this
 
-pull_hydra_GB_lengths <- function(channel, area=c(cfdbs::EPUs$data$GB,537)){
+hydra_pull_GB_lengths <- function(channel, area=c(cfdbs::EPUs$data$GB,537)) {
   library(magrittr)
 
   hydraSpecies <- data.frame(oldName=c("Acod","Aherring","Amackerel","goosefish","haddock",
@@ -23,7 +23,7 @@ pull_hydra_GB_lengths <- function(channel, area=c(cfdbs::EPUs$data$GB,537)){
 
 
   # pull sample length data and massage it
-  message("Puling length data ...")
+  message("Pulling length data ...")
 
   testDataPullLength <- cfdbs::get_landings_length(channel,year="all",area=area,species=hydraSpecies$SPECIES_ITIS,species_itis=T)
 

@@ -1,11 +1,16 @@
 #' Format expanded landings for Hydra
 #'
 #'
+#'@param expandedLandings output from \code{hydra_process_GB_comland}
+#'@param fleets fleets to assign landings to (see \code{mscatch::fleets}
+#'@param itis itis code for species in which to process
+#'
 #' 1. Consolidate NEGEAR to NEGEAR2 (2 or 3 digit gear code use)
 #' 2. Drop market category
 #' 3. Find total Biomass by fleet and year for each species
 #' 4. Within fleet and year attribute biomass of fish into length bins
 #'   specified by hydra (hydradata::hydraDataList$binwidth)
+#'   
 #' @noRd
 
 
