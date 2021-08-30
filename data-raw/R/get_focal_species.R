@@ -4,9 +4,9 @@
 #'
 #'@param channel Object inherited from \link[DBI]{DBIConnection-class}. This object is used to connect
 #' to communicate with the database engine. (see \code{\link{connect_to_database}})
-#'@param saveToRDS Character string. File path to where output should be saved (Default = NULL, not saved)
+#'@param saveToData Boolean. Export to data folder (Default = T)
 #'
-#'@return A tibble
+#'@return A tibble (Also written to \code{data} folder)
 #'\item{NESPP3}{code for secies found in commercial fishing database}
 #'\item{SVSPP}{code for species found in bottom trawl survey database}
 #'\item{NAFOSPP}{code for species in nafo database}
@@ -20,7 +20,7 @@
 
 library(magrittr)
 
-get_focal_species <- function(channel,saveToRDS=NULL) {
+get_focal_species <- function(channel,saveToData=T) {
   
   # create lookup table for species of interest
   lookup <- dbutils::create_species_lookup(channel,species=c(32,73,197,74,15,106,105,121,72,23,75),speciesType = "SVSPP")
@@ -29,8 +29,9 @@ get_focal_species <- function(channel,saveToRDS=NULL) {
     dplyr::rename(SVSPP=SVSPPsv) %>%
     dplyr::distinct(.)
   
-  if (!is.null(saveToRDS)) {
-    saveRDS(focalSpecies,saveToRDS)
+  if (saveToData) {
+    #saveRDS(focalSpecies,saveToRDS)
+    usethis::use_data(focalSpecies)
   }
   
   return(focalSpecies)
