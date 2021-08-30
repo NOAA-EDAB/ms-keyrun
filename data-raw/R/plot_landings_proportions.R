@@ -26,7 +26,7 @@ calc_prop <- function(landings,inout) {
 
 plot_landings_proportions <- function(species="cols") {
    # REVENUEFILE is a df where each record contains landings for a subtrip
-  REVENUEFILE <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds"))
+  REVENUEFILE <- readRDS(here::here("data-raw/data","Landings_VTR_Geret_Data_summarized.rds"))
   
   # calculate proportion of landings inside GB section of stat area
   data <- REVENUEFILE %>% 

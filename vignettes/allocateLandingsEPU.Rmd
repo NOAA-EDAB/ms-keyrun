@@ -76,7 +76,7 @@ Fishing data are available by statistical area. The statistical areas surroundin
 ## Method for partitioning catch data
 
 ```{r vtrdmisdata, eval=T, echo = F}
-data <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds"))
+data <- readRDS(here::here("data-raw/data","Landings_VTR_Geret_Data_summarized.rds"))
 yearRange <- data %>% dplyr::distinct(YEAR) %>% range
 ```
 
@@ -94,7 +94,7 @@ The [top ranked species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.htm
 
 
 ```{r calc_props_st, eval=T,echo = F, fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area"}
-source(here::here("data-raw","plot_landings_proportions.r"))
+source(here::here("data-raw/R","plot_landings_proportions.r"))
 plot_landings_proportions(species="rows")
 
 ```
@@ -102,7 +102,7 @@ plot_landings_proportions(species="rows")
 The total landings of each species by stat area is shown below. This should ideally be compared to landings from [comlandr](https://github.com/NOAA-EDAB/comlandr). We should also determine how landings on the Canadian side of the Hague line should be handled
 
 ```{r calc_lands,  eval=T, echo = F,fig.align='center',fig.cap="Total landings by statistical area"}
-source(here::here("data-raw","plot_landings.r"))
+source(here::here("data-raw/R","plot_landings.r"))
 plot_landings()
 
 ```

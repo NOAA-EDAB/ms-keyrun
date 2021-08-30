@@ -23,7 +23,7 @@ library(magrittr)
 
 plot_landings <- function() {
   # REVENUEFILE is a df where each record contains landings for a subtrip
-  REVENUEFILE <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data_summarized.rds")) # This stores a variable called REVENUEFILE
+  REVENUEFILE <- readRDS(here::here("data-raw/data","Landings_VTR_Geret_Data_summarized.rds")) # This stores a variable called REVENUEFILE
 
   data <- REVENUEFILE %>% 
     dplyr::group_by(YEAR,AREA,NESPP3,COMMON_NAME) %>%
