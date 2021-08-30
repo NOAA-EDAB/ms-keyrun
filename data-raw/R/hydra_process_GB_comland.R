@@ -133,6 +133,6 @@ hydra_process_GB_comland <- function(channel,comlandData,lengthData){
 
   }
 
-  saveRDS(expanded,here::here("data-raw","expandedHydraLandings.rds"))
+  saveRDS(expanded,here::here("data-raw/data","GB_hydraExpandedLandings.rds"))
   return(expanded)
 }

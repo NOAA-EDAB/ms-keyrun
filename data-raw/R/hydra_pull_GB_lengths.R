@@ -43,7 +43,7 @@ hydra_pull_GB_lengths <- function(channel, area=c(cfdbs::EPUs$data$GB,537)) {
 
   sampleLengths <- dplyr::as_tibble(sampleLengths)
 
-  saveRDS(sampleLengths,here::here("data-raw","hydra_lengths.rds"))
+  saveRDS(sampleLengths,here::here("data-raw/data","GB_hydra_lengths.rds"))
   
   return(sampleLengths)
 
