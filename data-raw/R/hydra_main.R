@@ -18,7 +18,7 @@ source(here::here("data-raw/R","hydra_format.R"))
 hydra_main <- function(channel){
   
   #pull comland data
-  comlandData <- readRDS(here::here("data-raw/data","comland_negear.rds"))
+  comlandData <- readRDS(here::here("data-raw/data","hydra_comland_negear.rds"))
   comlandData <- comlandData$comland
   # get lengths in GB from cfdbs 
   lengthData <- hydra_pull_GB_lengths(channel, area=c(cfdbs::EPUs$data$GB,537))
