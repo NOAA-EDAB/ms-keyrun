@@ -1,7 +1,7 @@
 #Calculate proportions of commercial landings on Georges Bank
 library(here); library(data.table); library(magrittr)
 
-vtr <- as.data.table(readRDS(here('/data-raw/Landings_VTR_Geret_Data.rds')))
+vtr <- as.data.table(readRDS(here('/data-raw/data/Landings_VTR_Geret_Data.rds')))
   
 # split the are column to define inside and out, sum landings by year, spp, area and 
 # select just 12 species that make up 90% of landings
@@ -29,4 +29,7 @@ props <- unique(props, by = c('AREA', 'NESPP3', 'InOut'))
 #Drop extra columns
 props[, c('YEAR', 'TOTALLANDINGS', 'AllLandings', 'Prop') := NULL]
 
-saveRDS(props, file = here::here('data-raw/All_Species_Proportions.rds'))
+AllSpeciesProportions <- props
+
+#saveRDS(props, file = here::here('data-raw/data/All_Species_Proportions.rds'))
+usethis::use_data(AllSpeciesProportions)
