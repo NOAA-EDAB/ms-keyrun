@@ -28,7 +28,7 @@ calc_prop <- function(landings,inout) {
 calc_all_species_proportions <- function() {
   
   # REVENUEFILE is a df where each record contains landings for a subtrip
-  REVENUEFILE <- readRDS(here::here("data-raw","Landings_VTR_Geret_Data.rds")) # This stores a variable called REVENUEFILE
+  REVENUEFILE <- readRDS(here::here("data-raw/data","Landings_VTR_Geret_Data.rds")) # This stores a variable called REVENUEFILE
   
   # split the are column to define inside and out, sum landings by year, spp, area 
   data <- REVENUEFILE %>%
@@ -45,6 +45,6 @@ calc_all_species_proportions <- function() {
       dplyr::group_by(YEAR,AREA,NESPP3) %>% 
       dplyr::summarise(PROP_GB = calc_prop(TOTALLANDINGS,InOut),.groups = "drop")
  
-  saveRDS(props,file = here::here("data-raw","Landings_VTR_proportions_all_species.rds"))
+  saveRDS(props,file = here::here("data-raw/data","Landings_VTR_proportions_all_species.rds"))
   
 }

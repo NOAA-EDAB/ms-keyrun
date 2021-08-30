@@ -19,9 +19,9 @@ library(magrittr)
 cluster_analysis_all_gears <- function(){
 
   # read in landings data by gear/species aggregated over time
-  allGearData <- readRDS(here::here("data","gearLandingsBySpecies.rds"))
+  allGearData <- readRDS(here::here("data-raw/data","gearLandingsBySpecies.rds"))
   # read in all gear codes
-  gearCodes <- readRDS(here::here("data","gearCodeTable.rds"))
+  gearCodes <- readRDS(here::here("data-raw/data","gearCodeTable.rds"))
   
   # split long names by comma and select first name
   gearCodes <- gearCodes$data %>% 

@@ -14,7 +14,7 @@
 #' 
 #' 
 
-source(here::here("R","cluster_gears.r"))
+source(here::here("data-raw/R","cluster_gears.r"))
 library(magrittr)
 #focalSpecies <- readRDS(here::here("data","focalspecies.rds"))
 
