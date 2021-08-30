@@ -154,7 +154,7 @@ catchAtLengthProportions %>%
 The [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) definitions are further aggregated to meet the needs of the Hydra model
 
 ```{r hydrafleet, echo=T, eval=T}
-mskeyrun::::fleets %>%  kableExtra::kbl() %>%
+mskeyrun::fleets %>%  kableExtra::kbl() %>%
   kableExtra::kable_styling("hover", full_width = F)
 ```
 

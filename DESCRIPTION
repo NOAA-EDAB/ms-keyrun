@@ -26,6 +26,7 @@ Remotes:
     andybeet/dbutils
     andybeet/hydradata
     NOAA-EDAB/mscatch
+    NOAA-EDAB/survdat
 VignetteBuilder: knitr
 Suggests: 
     googledrive,
@@ -35,6 +36,8 @@ Suggests:
     sf,
     ggplot2,
     dplyr,
-    here
+    here,
+    data.table,
+    rgdal
 Depends: 
     R (>= 2.10)
