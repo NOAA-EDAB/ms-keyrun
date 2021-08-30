@@ -16,14 +16,14 @@
 
 source(here::here("R","cluster_gears.r"))
 library(magrittr)
-focalSpecies <- readRDS(here::here("data","focalspecies.rds"))
+#focalSpecies <- readRDS(here::here("data","focalspecies.rds"))
 
-cluster_by_focal_species <- function(focalSpecies){
+cluster_by_focal_species <- function(focalSpecies=mskeyrun::focalSpecies){
 
   # read in landings data by gear/species aggregated over time
-  allGearData <- readRDS(here::here("data","timeSeriesSpeciesByGear.rds"))
+  allGearData <- readRDS(here::here("data-raw/data","timeSeriesSpeciesByGear.rds"))
   # read in all gear codes
-  gearCodes <- readRDS(here::here("data","gearCodeTable.rds"))
+  gearCodes <- readRDS(here::here("data-raw/data","gearCodeTable.rds"))
   
   ## PROCESS GEAR CODES -----------------------------------
   # split long names by comma and select first name
