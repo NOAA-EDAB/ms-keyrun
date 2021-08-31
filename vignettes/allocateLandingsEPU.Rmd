@@ -25,9 +25,9 @@ The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is d
 ```{r GBfoot, eval=T, echo = F,fig.cap="Georges Bank EPU", fig.align='center'}
 crs <- 4326
 # NEW GB EPU def based on survey strata
-coast <- sf::st_read("gis/NES_LME_coast.shp", quiet = T) %>%
+coast <- sf::st_read(here::here("data-raw/gis/NES_LME_coast.shp"), quiet = T) %>%
   sf::st_transform(.,crs=crs)
-GB_strata <- sf::st_read("gis/GB_SOE_strata.shp",quiet=T) %>%
+GB_strata <- sf::st_read(here::here("data-raw/gis/GB_SOE_strata.shp"),quiet=T) %>%
     sf::st_transform(.,crs=crs)
 
 ggplot2::ggplot(data=coast) +
@@ -42,9 +42,9 @@ Overlay the surrounding statistical areas:
 ```{r GBfootstat, eval=T, echo=F, fig.cap="Statistical areas intersected by Georges Bank EPU",fig.align='center'}
 crs <- 4326
 # read in coastline and GB shape file
-coast <- sf::st_read("gis/NES_LME_coast.shp", quiet = T) %>%
+coast <- sf::st_read(here::here("data-raw/gis/NES_LME_coast.shp"), quiet = T) %>%
   sf::st_transform(.,crs=crs)
-GB_strata <- sf::st_read("gis/GB_SOE_strata_stat.shp",quiet=T) %>%
+GB_strata <- sf::st_read(here::here("data-raw/gis/GB_SOE_strata_stat.shp"),quiet=T) %>%
     sf::st_transform(.,crs=crs)
 
 # separate polygons inside GB from those outside. Calculate centroid of polygon for label
