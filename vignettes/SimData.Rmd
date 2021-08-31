@@ -29,9 +29,31 @@ Our initial species selection includes 11 single species groups from the Atlanti
 
 ```{r spp-table}
 
-fgs <- load_fgs(here("simulated-data/atlantisoutput/NOBA_March_2020"), "nordic_groups_v04.csv")
+#fgs <- load_fgs(here("simulated-data/atlantisoutput/NOBA_March_2020"), "nordic_groups_v04.csv")
 
-lname <- data.frame(Latin = c("*Hippoglossoides platessoides*",
+lname <- data.frame(Name= c("Long_rough_dab",
+                                 "Green_halibut",
+                                 "Mackerel",
+                                 "Haddock",
+                                 "Saithe",
+                                 "Redfish",
+                                 "Blue_whiting",
+                                 "Norwegian_ssh",
+                                 "North_atl_cod",
+                                 "Polar_cod",
+                                 "Capelin"),
+                    Long.Name = c("Long rogh dab",
+                                 "Greenland halibut",
+                                 "Mackerel",
+                                 "Haddock",
+                                 "Saithe",
+                                 "Redfish",
+                                 "Blue whiting",
+                                 "Norwegian spring spawning herring",
+                                 "Northeast Atlantic Cod",
+                                 "Polar cod",
+                                 "Capelin"),
+                    Latin = c("*Hippoglossoides platessoides*",
                               "*Reinhardtius hippoglossoides*",
                               "*Scomber scombrus*",
                               "*Melongrammus aeglefinus*",
@@ -46,10 +68,13 @@ lname <- data.frame(Latin = c("*Hippoglossoides platessoides*",
                              "BWH", "SSH", "NCO", "PCO", "CAP")
 )
 
-sppsubset <- merge(fgs, lname, all.y = TRUE)
-spptable <- sppsubset %>% 
-  arrange(Index) %>%
-  select(Name, Long.Name, Latin)
+# sppsubset <- merge(fgs, lname, all.y = TRUE)
+# spptable <- sppsubset %>% 
+#   arrange(Index) %>%
+#   select(Name, Long.Name, Latin)
+
+spptable <- lname %>%
+   select(Name, Long.Name, Latin)
 
 knitr::kable(spptable, col.names = c("Model name", "Full name", "Latin name"))
 
@@ -63,27 +88,27 @@ Below we will double check survey census outputs against the true values, and th
 
 `NOBA2config.R` specifies location and names of files needed for atlantisom to initialize:
 
-```{r, code = readLines(here("simulated-data/config/NOBA2Config.R")), eval=F}
+```{r, code = readLines(here("data-raw/simulated-data/config/NOBA2Config.R")), eval=F}
 ```
 
 `omdimensions.R` standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):
 
-```{r, code = readLines(here("simulated-data/config/omdimensions.R")), eval=F}
+```{r, code = readLines(here("data-raw/simulated-data/config/omdimensions.R")), eval=F}
 ```
 
 ### Change these survey and fishery config files
 
 `mssurvey_spring.R` and `mssurvey_fall.R` configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):
 
-```{r, code = readLines(here("simulated-data/config/mssurvey_spring.R")), eval=F}
+```{r, code = readLines(here("data-raw/simulated-data/config/mssurvey_spring.R")), eval=F}
 ```
 
-```{r, code = readLines(here("simulated-data/config/mssurvey_fall.R")), eval=F}
+```{r, code = readLines(here("data-raw/simulated-data/config/mssurvey_fall.R")), eval=F}
 ```
 
 `msfishery.R` configures the fishery dependent data:
 
-```{r, code = readLines(here("simulated-data/config/msfishery.R")), eval=F}
+```{r, code = readLines(here("data-raw/simulated-data/config/msfishery.R")), eval=F}
 ```
 
 ### Run atlantisom and save outputs
