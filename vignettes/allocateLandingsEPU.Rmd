@@ -2,7 +2,7 @@
 title: "Allocate landings to Georges Bank EPU"
 author: Andy Beet
 date: "`r format(Sys.time(), '%d %B, %Y')`"
-output: 
+output:
   bookdown::html_document2:
     code_fold: hide
     number_sections: false
