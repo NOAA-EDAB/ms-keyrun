@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE,
                       message = FALSE,
                       warning = FALSE)
 
-library(googledrive)
+#library(googledrive)
 library(pacman)
 p_load(repmis, RCurl, DT, magrittr, gsubfn, stringr, tidyverse)
 
@@ -54,10 +54,12 @@ rpathlist <- full_join(singlespp, aggs)
 #survey link https://forms.gle/gfA3tKFKRBxf3Mu38
 #results link https://docs.google.com/spreadsheets/d/1sckY46jdyBa1Fhydw2syBawkjGPcHX4YwQmDCDBXcGU/edit#gid=284425233
 
-resultfile <- drive_find(pattern = "MS-Keyrun Species", type = "spreadsheet")
+# resultfile <- drive_find(pattern = "MS-Keyrun Species", type = "spreadsheet")
+# 
+# responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
+#   {read.csv(.$local_path)} 
 
-responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
-  {read.csv(.$local_path)} 
+responses <- read.csv("supportingFiles/MS-Keyrun Species, Environment, Data Format (Responses) - Form Responses 1.csv",header=T)
 
 names(responses)[3] <- "Species"
 names(responses)[5] <- "Environment"

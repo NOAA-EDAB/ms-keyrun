@@ -11,11 +11,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE, 
                       message = FALSE,
                       warning = FALSE)
-
-library(googledrive)
+#library(googledrive)
 library(pacman)
 p_load(magrittr, gsubfn, stringr, tidyverse)
-
 ```
 
 ## Proposed Dimensions
@@ -53,21 +51,19 @@ Methods for making a single survey time series from the two vessel survey time s
 [This is the survey form.](https://forms.gle/Pq78yqwa5ueFi8Kq8)
 
 ```{r getsurvey}
-
 #survey link https://forms.gle/Pq78yqwa5ueFi8Kq8
 #results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses
+# resultfile <- drive_find(pattern = "MS-Keyrun Dataset Dimensions", type = "spreadsheet")
+# responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
+#   {read.csv(.$local_path)} 
 
-resultfile <- drive_find(pattern = "MS-Keyrun Dataset Dimensions", type = "spreadsheet")
-
-responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
-  {read.csv(.$local_path)} 
+responses <- read.csv("supportingFiles/MS-Keyrun Dataset Dimensions (Responses) - Form Responses 1.csv",header=T)
 
 names(responses)[3] <- "StartYear"
 names(responses)[5] <- "EndYear"
 names(responses)[7] <- "SurvSeason"
 names(responses)[9] <- "FishSeason"
 names(responses)[11] <- "SpatialGB"
-
 ```
 
 We had `r nrow(responses)` responses.
@@ -95,12 +91,10 @@ knitr::kable(responses$Rationale.for.end.time, col.names = "End year rationale",
 
 Responses:
 ```{r seasons}
-
 seasons <- responses %>%
   select(SurvSeason, FishSeason) %>%
   gather(key = SurvFish, value = "Season") %>%
   arrange(Season)
-
 ggplot(seasons, aes(Season, fill=SurvFish)) + 
   geom_bar() +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 15))#+ 
@@ -123,12 +117,9 @@ knitr::kable(responses$Rationale.for.fishery.temporal.resolution, col.names = "F
 
 Responses:
 ```{r space}
-
 ggplot(responses, aes(SpatialGB)) + 
   geom_bar() +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 35))#+ 
-
-
 ```
 
 

@@ -11,25 +11,24 @@ output:
 knitr::opts_chunk$set(echo = TRUE, 
                       message = FALSE,
                       warning = FALSE)
-
-library(googledrive)
+#library(googledrive)
 library(pacman)
-library(ggplot2)
 p_load(repmis, RCurl, DT, magrittr, gsubfn, stringr, tidyverse)
-
 ```
 
 (We first load the survey results.)
 
 ```{r getsurvey, message=FALSE}
-
 #survey link https://forms.gle/5PkpTiCvXEgda2it6
 #results link https://docs.google.com/spreadsheets/d/1BZFqpIfmPdUW0XG3nyZbRrCBW-N-jV_r26mG7oKVdlQ/edit#gid=1759185696
+# resultfile <- drive_find(pattern = "MS-Keyrun Compositional", type = "spreadsheet")
+# responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
+#   {read.csv(.$local_path)} 
 
-resultfile <- drive_find(pattern = "MS-Keyrun Compositional", type = "spreadsheet")
 
-responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
-  {read.csv(.$local_path)} 
+responses <- read.csv("supportingFiles/MS-Keyrun Compositional Data Needs (Responses) - Form Responses 1.csv",header=T)
+
+
 
 names(responses)[3] <- "ModType"
 names(responses)[4] <- "ModName"
@@ -39,7 +38,6 @@ names(responses)[7] <- "LengthNeeds"
 names(responses)[8] <- "Diet"
 names(responses)[9] <- "DietNeeds"
 names(responses)[10] <- "Comments"
-
 ```
 
 
@@ -50,23 +48,17 @@ Multispecies models will focus on 10 species: Atlantic herring, Atlantic cod, go
 Models will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species. Data needs by model type are summarized below.
 
 ```{r modtypedat}
-
 compdat <- data.frame(ModType = responses$ModType,
                       ModName = responses$ModName,
                       AgeLength = responses$AgeLength) %>%
   filter(ModType != "NA") %>%
   separate_rows(AgeLength, sep = ",")
-
 dietdat <- data.frame(ModType = responses$ModType,
                       ModName = responses$ModName,
                       Diet = responses$Diet) %>%
   filter(ModType != "NA") %>%
   separate_rows(Diet, sep = ",")
-
 # rename AgeLength and Diet columns to CompDat and merge
-
-
-
 ```
 
 ## Age and length composition data needed
@@ -102,7 +94,6 @@ We had `r nrow(responses)` responses.
 
 Responses:
 ```{r plotagelen, fig.height=6}
-
 ggplot(compdat, aes(AgeLength)) + 
   geom_bar(aes(fill=ModType)) +
   coord_flip() +
@@ -111,7 +102,6 @@ ggplot(compdat, aes(AgeLength)) +
   #facet_wrap(~ModType, nrow = 2, scales="free") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 45))
   #theme(axis.text.x = element_text(angle = 90))
-
 ```
 
 ```{r} 
@@ -126,7 +116,6 @@ knitr::kable(responses$LengthNeeds, col.names = "Length information needs", book
 
 Responses:
 ```{r plotenv, fig.height=10}
-
 ggplot(dietdat, aes(Diet)) + 
   geom_bar(aes(fill=ModType)) +
   coord_flip() +
@@ -135,7 +124,6 @@ ggplot(dietdat, aes(Diet)) +
   #facet_wrap(~ModType, nrow = 2, scales="free") +
   scale_x_discrete(labels = function(x) str_wrap(x, width = 45))
   #theme(axis.text.x = element_text(angle = 90))
-
 ```
 
 ```{r} 
