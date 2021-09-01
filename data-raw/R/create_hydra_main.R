@@ -15,7 +15,7 @@ source(here::here("data-raw/R","hydra_pull_GB_lengths.R"))
 source(here::here("data-raw/R","hydra_process_GB_comland.R"))
 source(here::here("data-raw/R","hydra_format.R"))
 
-hydra_main <- function(channel){
+create_hydra_main <- function(channel){
   
   #pull comland data
   comlandData <- readRDS(here::here("data-raw/data","hydra_comland_negear.rds"))

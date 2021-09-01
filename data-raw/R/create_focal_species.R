@@ -20,7 +20,7 @@
 
 library(magrittr)
 
-get_focal_species <- function(channel,saveToData=T) {
+create_focal_species <- function(channel,saveToData=T) {
   
   # create lookup table for species of interest
   lookup <- dbutils::create_species_lookup(channel,species=c(32,73,197,74,15,106,105,121,72,23,75),speciesType = "SVSPP")
