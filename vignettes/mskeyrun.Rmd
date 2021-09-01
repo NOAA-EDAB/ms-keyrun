@@ -1,0 +1,52 @@
+---
+title: "NEFSC multispecies model keyrun project"
+output: html_document
+---
+
+ <!-- ADD LINKS BELOW, note, using the RMD link syntax will open the presentation in the same tab, which is annoying. Use the html with the "_blank" to fix that behavior -->
+
+These pages document decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Methods documentation and eventually draft manuscripts will be found here too. The target date for model keyrun reviews is October 2021, with all modeling results and documentation submitted by 1 September 2021.
+
+Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html). 
+
+# Data needs
+
+<a href="DataNeeds.html"> Decisions with meeting notes - 3 June 2020 </a>
+
+## Dataset dimensions
+
+<a href="DatasetDimensions.html"> Year, season, area decisions - 8 July 2020 </a>
+
+*   <a href="allocateLandingsEPU.html"> Allocate landings to EPU - 25 Nov 2020 </a>
+
+<a href="GBFleetDefinitions.html" > Fleet Definitions - 26 Feb 2021 </a>
+
+* <a href="GBFleetDecisions.html" > Fleet Decisions </a>
+
+<a href="SpeciesEnvDat.html"> Species, environment, data package decisions - 5 August 2020 </a>
+
+<a href="CompsDat.html"> Age, length, and diet composition decisions - 3 September 2020 </a>
+
+* <a href="GBLandingsByLength.html"> Landings by length for Hydra model</a>
+
+
+
+## Dataset source and methods documentation
+<a href="GBSurveySet.html" > Which Georges Bank survey footprint - 4 November 2020 </a>
+
+## Dataset descriptions and links
+
+<a href="SimData.html" > Initial simulated data for testing - 1 April 2021 </a>
+
+# Models
+
+## Model documentation
+
+## Model results
+
+# Results
+
+## Individual model keyrun results
+
+## Overall keyrun results
+

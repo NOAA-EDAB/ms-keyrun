@@ -14,15 +14,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     bookdown,
-    dplyr,
     DT,
-    ggplot2,
-    here,
-    htmltools,
     kableExtra,
-    knitr,
     remotes,
-    sf,
     stringr,
     tibble,
     tidyr,
@@ -32,6 +26,18 @@ Remotes:
     andybeet/dbutils
     andybeet/hydradata
     NOAA-EDAB/mscatch
+    NOAA-EDAB/survdat
 VignetteBuilder: knitr
 Suggests: 
-    rmarkdown
+    googledrive,
+    pacman,
+    rmarkdown,
+    htmltools,
+    sf,
+    ggplot2,
+    dplyr,
+    here,
+    data.table,
+    rgdal
+Depends: 
+    R (>= 2.10)
