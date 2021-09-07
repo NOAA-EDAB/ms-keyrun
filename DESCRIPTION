@@ -24,7 +24,7 @@ Imports:
 Remotes:
     andybeet/cfdbs,
     andybeet/dbutils,
-    andybeet/hydradata,
+    NOAA-EDAB/hydradata,
     NOAA-EDAB/mscatch,
     NOAA-EDAB/survdat
 VignetteBuilder: knitr
