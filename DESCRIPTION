@@ -36,7 +36,7 @@ Suggests:
     hydradata,
     mscatch,
     survdat,
-    atlantisom
+    atlantisom,
     googledrive,
     pacman,
     rmarkdown,
