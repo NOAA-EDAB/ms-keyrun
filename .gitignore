@@ -36,6 +36,7 @@ simulated-data/atlantisoutput/
 simulated-data/diagnostics-scratch/
 # folders
 other
+docs
 
 .Rproj.user
 inst/doc
