@@ -25,13 +25,15 @@ Imports:
     dbutils,
     hydradata,
     mscatch,
-    survdat
+    survdat,
+    atlantisom
 Remotes:
     andybeet/cfdbs,
     andybeet/dbutils,
     NOAA-EDAB/hydradata,
     NOAA-EDAB/mscatch,
-    NOAA-EDAB/survdat
+    NOAA-EDAB/survdat,
+    r4atlantis/atlantisom
 VignetteBuilder: knitr
 Suggests: 
     googledrive,
