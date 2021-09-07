@@ -20,7 +20,12 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    cluster
+    cluster,
+    cfdbs,
+    dbutils,
+    hydradata,
+    mscatch,
+    survdat
 Remotes:
     andybeet/cfdbs,
     andybeet/dbutils,
