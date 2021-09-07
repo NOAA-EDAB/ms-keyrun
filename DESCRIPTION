@@ -14,6 +14,16 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
     bookdown,
+    knitr
+Remotes:
+    andybeet/cfdbs,
+    andybeet/dbutils,
+    NOAA-EDAB/hydradata,
+    NOAA-EDAB/mscatch,
+    NOAA-EDAB/survdat,
+    r4atlantis/atlantisom
+VignetteBuilder: knitr
+Suggests: 
     DT,
     kableExtra,
     remotes,
@@ -27,15 +37,6 @@ Imports:
     mscatch,
     survdat,
     atlantisom
-Remotes:
-    andybeet/cfdbs,
-    andybeet/dbutils,
-    NOAA-EDAB/hydradata,
-    NOAA-EDAB/mscatch,
-    NOAA-EDAB/survdat,
-    r4atlantis/atlantisom
-VignetteBuilder: knitr
-Suggests: 
     googledrive,
     pacman,
     rmarkdown,
@@ -45,6 +46,8 @@ Suggests:
     dplyr,
     here,
     data.table,
-    rgdal
+    rgdal,
+    ggthemes,
+    FSA
 Depends: 
     R (>= 2.10)
