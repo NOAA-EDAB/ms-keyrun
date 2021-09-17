@@ -134,7 +134,6 @@ To see if there was an noticeable difference between the three options outlined 
 library(data.table); library(here); library(rgdal)#; library(Survdat);
 library(ggplot2); library(survdat)
 
-sf::sf_use_s2(FALSE)
 
 #source(here('Survdat.r'))
 load(here('data-raw/data/Survdat.RData'))
