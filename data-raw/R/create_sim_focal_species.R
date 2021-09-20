@@ -26,17 +26,17 @@ create_sim_focal_species <- function(atlmod,saveToData=T) {
   modsim <- modsim[length(modsim)]
   
   #hardcoded because not part of fgs
-  lname <- data.frame(SciName = c("*Hippoglossoides platessoides*",
-                                "*Reinhardtius hippoglossoides*",
-                                "*Scomber scombrus*",
-                                "*Melongrammus aeglefinus*",
-                                "*Pollachius virens*",
-                                "*Sebastes mentella*",
-                                "*Micromesistius poutassou*",
-                                "*Clupea harengus*",
-                                "*Gadus morhua*",
-                                "*Boreogadus saida*",
-                                "*Mallotus villosus*"),
+  lname <- data.frame(SciName = c("Hippoglossoides platessoides",
+                                "Reinhardtius hippoglossoides",
+                                "Scomber scombrus",
+                                "Melongrammus aeglefinus",
+                                "Pollachius virens",
+                                "Sebastes mentella",
+                                "Micromesistius poutassou",
+                                "Clupea harengus",
+                                "Gadus morhua",
+                                "Boreogadus saida",
+                                "Mallotus villosus"),
                       Code = c("LRD", "GRH", "MAC", "HAD", "SAI", "RED", 
                                "BWH", "SSH", "NCO", "PCO", "CAP")
   )
@@ -49,7 +49,7 @@ create_sim_focal_species <- function(atlmod,saveToData=T) {
   
   if (saveToData) {
     #saveRDS(focalSpecies,saveToRDS)
-    usethis::use_data(simFocalSpecies)
+    usethis::use_data(simFocalSpecies, overwrite = TRUE)
   }
   
   return(simFocalSpecies)
