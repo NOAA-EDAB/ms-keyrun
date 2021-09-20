@@ -55,10 +55,10 @@ effpelagics <- data.frame(species=pelagics, efficiency=rep(ef.pl,length(pelagics
 effdemersals <- data.frame(species=demersals, efficiency=rep(ef.dm,length(demersals)))
 effselflats <- data.frame(species=selflats, efficiency=rep(ef.fl,length(selflats)))
 
-efficmix <- bind_rows(effnontrawl, effpelagics, effdemersals, effselflats)
+efficmix <- dplyr::bind_rows(effnontrawl, effpelagics, effdemersals, effselflats)
 
 surveffic <- efficmix %>%
-  filter(species %in% survspp)
+  dplyr::filter(species %in% survspp)
 
 # survey selectivity (true age based, flat)
 # for annage output uses names(annages) NOT alphabetical survspp
@@ -79,7 +79,7 @@ sigmoid <- function(a,b,x) {
 }
 
 sp_age <- sp_age %>%
-  mutate(n_annages = NumCohorts * NumAgeClassSize) 
+  dplyr::mutate(n_annages = NumCohorts * NumAgeClassSize) 
 # 
 # survey selectivity specification for true ages 1-10 by species group--replace for each group in surselex
 
@@ -96,29 +96,29 @@ selselflats <- data.frame(species=rep(selflats, each=10),
                           agecl=rep(c(1:10),length(selflats)),
                           selex=sigmoid(1,1,seq(-10,10,length.out=10)))
 
-selexmix <- bind_rows(selnontrawl, selpelagics, seldemersals, selselflats) 
+selexmix <- dplyr::bind_rows(selnontrawl, selpelagics, seldemersals, selselflats) 
 
 selexmix <- selexmix %>%
-  filter(species %in% survspp) %>%
-  rename(selex10 = selex)
+  dplyr::filter(species %in% survspp) %>%
+  dplyr::rename(selex10 = selex)
 
 survselex <- merge(survselex, selexmix, all = TRUE) %>%
-  filter(!is.na(selex)) %>%
-  mutate(selex = case_when(!is.na(selex10) ~ selex10,
+  dplyr::filter(!is.na(selex)) %>%
+  dplyr::mutate(selex = dplyr::case_when(!is.na(selex10) ~ selex10,
                            is.na(selex10) ~ selex)) %>%
-  select(-selex10)
+  dplyr::select(-selex10)
 
 # now apply this for agecl selectivity that matches
 # and figure out how to use in wrapper!
 #ageclsel <- fullsel[seq(NumAgeClassSize, n_annages, length.out=NumCohorts)]
 
-survselex.agecl <- survselex %>% left_join(sp_age, by=c("species"="Name")) %>%
-  group_by(species) %>%
-  filter(agecl %in% seq(unique(NumAgeClassSize), 
+survselex.agecl <- survselex %>% dplyr::left_join(sp_age, by=c("species"="Name")) %>%
+  dplyr::group_by(species) %>%
+  dplyr::filter(agecl %in% seq(unique(NumAgeClassSize), 
                         unique(n_annages), 
                         length.out=unique(NumCohorts))) %>%
-  mutate(agecl = agecl/unique(NumAgeClassSize)) %>%
-  select(species, agecl, selex)
+  dplyr::mutate(agecl = agecl/unique(NumAgeClassSize)) %>%
+  dplyr::select(species, agecl, selex)
 
 # effective sample size needed for sample_fish
 # this is the number of *lengths* per species that are measured on a survey
@@ -144,10 +144,10 @@ surv_cv_pelagics <- data.frame(species=pelagics, cv=rep(cv.pl,length(pelagics)))
 surv_cv_demersals <- data.frame(species=demersals, cv=rep(cv.dm,length(demersals)))
 surv_cv_selflats <- data.frame(species=selflats, cv=rep(cv.fl,length(selflats)))
 
-surv_cv_mix <- bind_rows(surv_cv_nontrawl, surv_cv_pelagics, surv_cv_demersals, surv_cv_selflats)
+surv_cv_mix <- dplyr::bind_rows(surv_cv_nontrawl, surv_cv_pelagics, surv_cv_demersals, surv_cv_selflats)
 
 surv_cv <- surv_cv_mix %>%
-  filter(species %in% survspp)
+  dplyr::filter(species %in% survspp)
 
 # length at age cv for input into calc_age2length function
 # function designed to take one cv for all species, need to change to pass it a vector
