@@ -19,7 +19,7 @@
 
 library(magrittr)
 
-get_sim_survey_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=T) {
+create_sim_survey_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=T) {
 
   # input is path to model config file for atlantisom
   source(atlmod)
