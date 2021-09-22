@@ -8,9 +8,9 @@ channel <- dbutils::connect_to_database(server = 'sole', uid = 'slucey')
 survdat <- survdat::get_survdat_data(channel)
 
 #save data
-save(survdat, file = here::here('data-raw', 'survdat.RData'))
+save(survdat, file = here::here('data-raw', 'data', 'survdat.RData'))
 
 #Pull bio data
 survdat.bio <- survdat::get_survdat_data(channel, getBio = T)
 
-save(survdat.bio, file = here::here('data-raw', 'survdat_bio.RData'))
+save(survdat.bio, file = here::here('data-raw', 'data', 'survdat_bio.RData'))
