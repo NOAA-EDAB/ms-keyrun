@@ -29,7 +29,7 @@ create_sim_fishery_agecomp(atlmod, fitstart=40, fitend=120)
 
 create_sim_survey_lencomp(atlmod, fitstart=40, fitend=120)
 
-create_sim_fishery_lencomp()
+create_sim_fishery_lencomp(atlmod, fitstart=40, fitend=120)
 
 create_sim_survey_dietcomp()
 

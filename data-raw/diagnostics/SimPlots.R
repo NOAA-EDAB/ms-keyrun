@@ -37,3 +37,18 @@ for(s in unique(mskeyrun::simSurveyLencomp$survey)){
   cat("  \n")
 }
 
+for(s in unique(mskeyrun::simFisheryLencomp$fishery)){
+  cat("  \n##### ",  s,"  \n")
+  lcompsub <- filter(mskeyrun::simFisheryLencomp, year %in% c(50:60)) %>%
+    rename(time = year,
+           upper.bins = lenbin, #plot function uses upper.bins but dataset uses lower
+           atoutput = value,
+           species = Name) %>%
+    group_by(species) %>%
+    group_map(~ plotlen(.x), keep = TRUE)
+  
+  for(i in 1:length(lcompsub)) {
+    print(lcompsub[[i]])
+  }
+  cat("  \n")
+}
