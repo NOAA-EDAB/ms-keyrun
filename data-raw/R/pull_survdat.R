@@ -5,12 +5,12 @@ library(here); library(data.table); library(survdat)
 channel <- dbutils::connect_to_database(server = 'sole', uid = 'slucey')
 
 #Pull data
-data <- survdat::get_survdat_data(channel)
+survdat <- survdat::get_survdat_data(channel)
 
 #save data
-saveRDS(data, file = here::here('data-raw', 'survdat.RDS'))
+save(survdat, file = here::here('data-raw', 'survdat.RData'))
 
 #Pull bio data
-bio <- survdat::get_survdat_data(channel, getBio = T)
+survdat.bio <- survdat::get_survdat_data(channel, getBio = T)
 
-saveRDS(bio, file = here::here('data-raw', 'survdat_bio.RDS'))
+save(survdat.bio, file = here::here('data-raw', 'survdat_bio.RData'))
