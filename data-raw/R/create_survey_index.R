@@ -13,34 +13,34 @@ spp <- c(32, 73, 197, 74, 15, 106, 105, 121, 72, 23, 75)
 GB <- read_sf(here('data-raw', 'gis'), 'GB_SOE_strata')
 
 #Focal species
-SurveyIndexA4 <- survdat::calc_stratified_mean(survdat.a4$survdat, 
+surveyIndexA4 <- survdat::calc_stratified_mean(survdat.a4$survdat, 
                                                areaPolygon = GB,
                                                areaDescription = 'EPU',
                                                filterBySeason = c('FALL', 'SPRING'),
                                                filterByGroup = spp, tidy = T)
 
-SurveyIndexHB <- survdat::calc_stratified_mean(survdat.hb$survdat, 
+surveyIndexHB <- survdat::calc_stratified_mean(survdat.hb$survdat, 
                                                areaPolygon = GB,
                                                areaDescription = 'EPU',
                                                filterBySeason = c('FALL', 'SPRING'),
                                                filterByGroup = spp, tidy = T)
 
 #All species
-SurveyIndexA4All <- survdat::calc_stratified_mean(survdat.a4$survdat, 
+surveyIndexA4All <- survdat::calc_stratified_mean(survdat.a4$survdat, 
                                                areaPolygon = GB,
                                                areaDescription = 'EPU',
                                                filterBySeason = c('FALL', 'SPRING'),
                                                tidy = T)
 
-SurveyIndexHBAll <- survdat::calc_stratified_mean(survdat.hb$survdat, 
+surveyIndexHBAll <- survdat::calc_stratified_mean(survdat.hb$survdat, 
                                                areaPolygon = GB,
                                                areaDescription = 'EPU',
                                                filterBySeason = c('FALL', 'SPRING'),
                                                tidy = T)
 
 #Output to package
-usethis::use_data(SurveyIndexA4, overwrite = TRUE)
-usethis::use_data(SurveyIndexHB, overwrite = TRUE)
-usethis::use_data(SurveyIndexA4All, overwrite = TRUE)
-usethis::use_data(SurveyIndexHBAll, overwrite = TRUE)
+usethis::use_data(surveyIndexA4, overwrite = TRUE)
+usethis::use_data(surveyIndexHB, overwrite = TRUE)
+usethis::use_data(surveyIndexA4All, overwrite = TRUE)
+usethis::use_data(surveyIndexHBAll, overwrite = TRUE)
 
