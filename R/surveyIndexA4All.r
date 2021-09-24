@@ -1,4 +1,4 @@
-#' The survey biomass indices for the focal species within the mskeyrun project 
+#' The survey biomass indices for all species within the mskeyrun project
 #' from the Albatross IV era
 #'
 #' Survey data comes from Northeast Fisheries Science Center's Bottom Trawl
@@ -6,12 +6,12 @@
 #' set covers the Albatross IV era of the bottom trawl survey from 1968 to 2008.
 #' All appropriate calibration factors have been applied for changes in gear/vessels
 #' over the years.  Data from the Bigelow era (>2008) are in a separate data set 
-#' (\code{surveyIndexHB}).  This data only covers the focal species of the MS Keyrun
-#' Project.  For an expanded data set see \code{surveyIndexA4All}.
+#' (\code{surveyIndexHBAll}).  This data covers all species caught on the survey.
+#' For the data set containing only the focal species see \code{surveyIndexA4}.
 #'
 #' @format A data frame
 #' @family surveyIndex
-#' 
+#'
 #' \describe{
 #'\item{YEAR}{year survey conducted}
 #'\item{SVSPP}{Survey Species Code see \code{focalSpecies}}
@@ -24,4 +24,4 @@
 #' }
 #'
 #'
-"surveyIndexA4"
+"surveyIndexA4All"
