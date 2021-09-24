@@ -5,7 +5,8 @@
 #' set covers the Albatross IV era of the bottom trawl survey from 1968 to 2008.
 #' All appropriate calibration factors have been applied for changes in gear/vessels
 #' over the years.  Data from the Bigelow era (>2008) are in a separate data set 
-#' (\code{SurveyIndexHB}).
+#' (\code{surveyIndexHB}).  This data only covers the focal species of the MS Keyrun
+#' Project.  For an expanded data set see \code{surveyIndexA4All}.
 #'
 #' @format A data frame
 #'
@@ -21,4 +22,4 @@
 #' }
 #'
 #'
-"SurveyIndexA4"
+"surveyIndexA4"
