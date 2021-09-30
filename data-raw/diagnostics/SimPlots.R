@@ -52,3 +52,21 @@ for(s in unique(mskeyrun::simFisheryLencomp$fishery)){
   }
   cat("  \n")
 }
+  
+for(s in unique(mskeyrun::simFisheryAgecomp$fishery)){
+  cat("  \n##### ",  s,"  \n")
+  acompsub <- filter(mskeyrun::simFisheryAgecomp, fishery==s, year %in% c(70:80)) %>%
+    rename(time = year,
+           agecl = age,
+           atoutput = value,
+           species = Name) %>%
+    group_by(species) %>%
+    #left_join(., trueNage) %>%
+    group_map(~ Natageplot(.x), keep = TRUE) # plots only sampled age comp
+  #group_map(~ Natageplot(.x, effN = 100000, truedat = 1), keep = TRUE) # plots merged true age comp
+  
+  for(i in 1:length(acompsub)) {
+    print(acompsub[[i]])
+  }
+  cat("  \n")
+}
