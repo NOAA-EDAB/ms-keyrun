@@ -8,6 +8,8 @@ Authors@R:
     person(given = "Kiersten", family = "Kurti", role = c("aut"), email = "kiersten.kurti@noaa.gov"))
 Description: All information for keyrun review
 License: file LICENSE
+URL: https://github.com/NOAA-EDAB/ms-keyrun
+BugReports: https://github.com/NOAA-EDAB/ms-keyrun/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
