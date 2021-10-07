@@ -1,0 +1,350 @@
+---
+title: "Diagnostic scripts"
+author: "Sarah Gaichas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    code_fold: hide
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
+library(here)
+library(tidyverse)  
+library(atlantisom)
+library(ggthemes)
+library(FSA)
+
+```
+
+# Plotting functions for comparisons
+
+A collection of functions used previosuly that may be harvested and modified for diagnostics or visualizations in the ms-keyrun project.
+
+## Multispecies output plotting functions
+
+These are also assuming you are using atlantisom output datasets but could be generalized. 
+
+My plotting functions: too specialized to include in the package?
+
+```{r plotfuns}
+
+# plot biomass time series facet wrapped by species
+plotB <- function(dat, truedat=NULL){
+  
+    ggplot() +
+    geom_line(data=dat, aes(x=time/stepperyr,y=atoutput, color="Survey Biomass"), 
+              alpha = 10/10) +
+    {if(!is.null(truedat)) geom_line(data=truedat, aes(x=time/365,y=atoutput, color="True B"), alpha = 3/10)} + 
+    theme_tufte() +
+    theme(legend.position = "top") +
+    xlab("model year") +
+    ylab("tons") +
+    labs(colour=scenario.name) +
+    facet_wrap(~species, scales="free") 
+  
+}
+
+# make a catch series function that can be split by fleet? this doesnt
+# also note different time (days) from model timestep in all other output
+plotC <- function(dat, truedat=NULL){
+  
+    ggplot() +
+    geom_line(data=dat, aes(x=time/365,y=atoutput, color="Catch biomass"), 
+              alpha = 10/10) +
+    {if(!is.null(truedat)) geom_line(data=truedat, aes(x=time/365,y=atoutput, color="True Catch"), alpha = 3/10)} + 
+    theme_tufte() +
+    theme(legend.position = "top") +
+    xlab("model year") +
+    ylab("tons") +
+    labs(colour=scenario.name) +
+    facet_wrap(~species, scales="free") 
+  
+}
+
+# note on ggplot default colors, can get the first and second using this
+# library(scales)
+# show_col(hue_pal()(2))
+
+# plot length frequencies by timestep (one species)
+plotlen <- function(dat, effN=1, truedat=NULL){
+  
+  cols <- c("Census Lcomp"="#00BFC4","Sample Lcomp"="#F8766D")  
+  ggplot(mapping=aes(x=upper.bins)) +
+    {if(is.null(truedat)) geom_bar(data=dat, aes(weight = atoutput/effN))} +
+    {if(!is.null(truedat)) geom_bar(data=dat, aes(weight = censuslen/totlen, fill="Census Lcomp"), alpha = 5/10)} +
+    {if(!is.null(truedat)) geom_bar(data=dat, aes(weight = atoutput/effN, fill="Sample Lcomp"), alpha = 5/10)} +
+    theme_tufte() +
+    theme(legend.position = "bottom") +
+    xlab("length (cm)") +
+    {if(is.null(truedat)) ylab("number")} +
+    {if(!is.null(truedat)) ylab("proportion")} +
+    scale_colour_manual(name="", values=cols) +
+    labs(subtitle = paste(scenario.name,
+                          dat$species)) +
+    facet_wrap(~time, ncol=6, scales="free_y")
+
+}
+
+# plot numbers at age by timestep (one species)
+Natageplot <- function(dat, effN=1, truedat=NULL){
+  ggplot() +
+    geom_point(data=dat, aes(x=agecl, y=atoutput/effN, color="Est Comp")) +
+    {if(!is.null(truedat)) geom_line(data=dat, aes(x=agecl, y=numAtAge/totN, color="True Comp"))} + 
+    theme_tufte() +
+    theme(legend.position = "bottom") +    
+    xlab("age/agecl") +
+    {if(is.null(truedat)) ylab("number")} +
+    {if(!is.null(truedat)) ylab("proportion")} +
+    labs(subtitle = paste(scenario.name,
+                          dat$species)) + 
+    facet_wrap(~time, ncol=6, scales="free_y")
+}
+
+# plot weight at age time series facet wrapped by species
+wageplot <- function(dat, truedat=NULL){
+  ggplot(dat, aes(time/stepperyr, atoutput)) +
+    geom_line(aes(colour = factor(agecl))) +
+    theme_tufte() +
+    theme(legend.position = "bottom") +
+    xlab("model year") +
+    ylab("average individual weight (g)") +
+    labs(subtitle = paste0(scenario.name)) +
+    facet_wrap(c("species"), scales="free_y")
+}
+  
+# compare N at age and C at age between standard and ANNAGE outputs
+totNageplot <- function(dat, anndat){
+  
+    ggplot() +
+    geom_line(data=dat, aes(x=time/stepperyr,y=totN, color="Tot N cohorts"), 
+              alpha = 5/10) +
+    geom_line(data=anndat, aes(x=time/stepperyr,y=totN, color="Tot N annage"), alpha = 5/10) + 
+    theme_tufte() +
+    theme(legend.position = "top") +
+    xlab("model year") +
+    ylab("N") +
+    labs(colour=scenario.name) +
+    facet_wrap(~species, scales="free") 
+  
+}
+
+```
+
+Usage examples (from https://github.com/sgaichas/poseidon-dev/blob/master/msSurveysTest.Rmd, see [visualization](https://sgaichas.github.io/poseidon-dev/msSurveysTest.html))
+
+### Visualize census surveys {.tabset #census}
+
+We are using the full time series for biomass and weight at age, and a subsample of years 30-53 for compositions. In this test we see the effect of surveying in one season, with migratory species missed or only partially represented in some surveys, and with the overall surveyed biomass being at the lower or higher end of the range depending on the time of year. (Observation error is included in the survey biomass time series.) Samples for length and age assume a total of 100000 fish were randomly sampled for each species in each survey (surveffN defined in the survey config files). 
+
+#### Survey biomass
+```{r, results="asis"}
+
+# compare with true output (all timesteps)
+for(s in names(survObsBiom)){
+  cat("  \n##### ",  s,"  \n")
+  print(plotB(survObsBiom[[s]][[1]], omlist_ss$truetotbio_ss))
+  cat("  \n")
+}
+
+# plots survey only
+# for(s in names(survObsBiom)){
+#   print(plotB(survObsBiom[[s]][[1]]))
+# }
+
+```
+
+#### Survey length composition
+```{r, results="asis"}
+
+for(s in names(len_comp_data)){
+  cat("  \n##### ",  s,"  \n")
+  lcompsub <- as.data.frame(len_comp_data[[s]][[1]]) %>% filter(time %in% c(150:270)) %>%
+    group_by(species) %>%
+    group_map(~ plotlen(.x), keep = TRUE)
+  
+  for(i in 1:length(lcompsub)) {
+    print(lcompsub[[i]])
+  }
+  cat("  \n")
+}
+
+```
+
+#### Survey age class composition (Atlantis age class)
+```{r, results="asis", message=FALSE, warning=FALSE}
+
+for(s in names(age_comp_data)){
+  cat("  \n##### ",  s,"  \n")
+  acompsub <- as.data.frame(age_comp_data[[s]][[1]]) %>% filter(time %in% c(150:270)) %>%
+    group_by(species) %>%
+    left_join(., trueNagecl) %>%
+    #group_map(~ Natageplot(.x), keep = TRUE) # plots only sampled age comp
+    group_map(~ Natageplot(.x, effN = 100000, truedat = 1), keep = TRUE) # plots merged true age comp
+
+  for(i in 1:length(acompsub)) {
+    print(acompsub[[i]])
+  }
+  cat("  \n")
+}
+
+```
+
+#### Survey age composition (annual ages)
+```{r plot-annagecomp, results="asis", message=FALSE, warning=FALSE}
+
+for(s in names(annage_comp_data)){
+  cat("  \n##### ",  s,"  \n")
+  acompsub <- as.data.frame(annage_comp_data[[s]][[1]]) %>% filter(time %in% c(150:270)) %>%
+    group_by(species) %>%
+    left_join(., trueNage) %>%
+    #group_map(~ Natageplot(.x), keep = TRUE) # plots only sampled age comp
+    group_map(~ Natageplot(.x, effN = 100000, truedat = 1), keep = TRUE) # plots merged true age comp
+  
+  for(i in 1:length(acompsub)) {
+    print(acompsub[[i]])
+  }
+  cat("  \n")
+}
+```
+
+#### Survey weight at age (Atlantis age class)
+```{r, results='asis'}
+
+for(s in names(wtage)){
+  cat("  \n##### ",  s,"  \n")
+  print(wageplot(wtage[[s]][[1]]))
+  cat("  \n")
+}
+
+```
+
+#### Survey iterpolated weight at age (annual ages) 
+```{r plot-annwtage, fig.height=10, results='asis'}
+
+# annage_wtage read in above 
+# annage_wtage <- annage_wtage[[1]] #this still has second list component, diagnostic plot
+# annage_wtage <- annage_wtage[[1]] #still in this old version but just removed from function.
+
+for(s in names(annage_wtage)){
+  cat("  \n##### ",  s,"  \n")
+  print(wageplot(annage_wtage[[s]][[1]][[1]]))
+  cat("  \n")
+}
+```
+
+### {-}
+
+## Diet data (simulated)
+
+From https://github.com/sgaichas/poseidon-dev/blob/master/SurveyDietCompTest.Rmd, see [visualizations](https://sgaichas.github.io/poseidon-dev/SurveyDietCompTest.html)
+
+Plotting functions and colors for everyone
+
+```{r color-plotfun}
+
+# length(unique(samp2$prey)) #39 prey categories max 
+# 35 categories in samp5 without unid length(unique) #http://medialab.github.io/iwanthue/
+preycol <- c("#7b7927",
+             "#746dd8",
+             "#a6bc3a",
+             "#4f3587",
+             "#86af42",
+             "#c666c7",
+             "#42c87f",
+             "#cb417f",
+             "#6fb95c",
+             "#882e7b",
+             "#67b271",
+             "#c83c63",
+             "#43c8ac",
+             "#da4953",
+             "#3ba7e5",
+             "#caa432",
+             "#5081db",
+             "#c8802f",
+             "#6c79c2",
+             "#c7b961",
+             "#bb86d6",
+             "#3b7125",
+             "#d672b9",
+             "#b57e43",
+             "#872957",
+             "#dd6741",
+             "#db75a2",
+             "#9e3d14",
+             "#db6f81",
+             "#7b3015",
+             "#e08262",
+             "#8d2a41",
+             "#d56467",
+             "#8c242e",
+             "#a73830")
+names(preycol) <- as.factor(sort(unique(samp5$prey)))
+
+# going for more greyscale for unident categories, same website
+unidcol <- c("#b8b8b2",
+             "#302a1d",
+             "#6b7069",
+             "#1e3430")
+names(unidcol) <- as.factor(c("Unid", "Unid_Fish",  "Unid_Invert", "Unid_Plankton"))
+
+col <- c(preycol, unidcol)
+
+# plot diet comp over time at age by species
+plotdiet <- function(dat, compdat=NULL, namedat, namecomp=NULL){
+  
+  dat <- dat %>% add_column(run = namedat)
+  if(!is.null(compdat)) compdat <- compdat %>% add_column(run = namecomp)
+  
+    ggplot() +
+    geom_bar(data=dat, aes(time.days/365, dietSamp, fill=prey), stat = "identity") +
+    {if(!is.null(compdat)) geom_bar(data=compdat, aes(time.days/365, dietSamp, fill=prey), stat = "identity")} + 
+    theme_tufte() +
+    theme(legend.position = "bottom") +
+    xlab("year") +
+    ylab("diet proportion") +
+    facet_grid(agecl~run) + 
+    scale_fill_manual(values=col) + 
+    ggtitle(dat$species)
+  
+}
+
+# method for a single species diet, no comparisons
+# plist = lapply(split(ms_diet, ms_diet$species), function(d) {
+#   ggplot(d, aes(time.days/365, atoutput, fill=prey)) + 
+#     geom_bar(stat = "identity") +
+#     facet_wrap(species~agecl) +
+#     xlab("year") +
+#     ylab("diet proportion") +
+#     theme_tufte() +
+#     theme(legend.position="bottom")
+# })
+
+```
+
+Usage example, assuming you have an atlantis survey diet output in the `d.name` folder:
+
+### Compare spring and fall surveys {.tabset}
+
+The diet was sampled with alphamult = 10 and unidprey = 0.3 using the survey configuration files. 
+
+```{r, fig.width=9, fig.height=12, results='asis'}
+
+NOBAom_ms_diet <- atlantisom::read_savedsurvs(d.name, 'survDiet')
+
+preds <- unique(unique(NOBAom_ms_diet[[2]][[1]]$species))
+
+fall <- as.data.frame(NOBAom_ms_diet$BTS_fall_nearbox_qmix_selmix[[1]])
+spring <- as.data.frame(NOBAom_ms_diet$BTS_spring_nearbox_qmix_selmix[[1]])
+
+for(i in 1:length(preds)) {
+  cat("  \n####",  as.character(preds[i]),"  \n")
+  print(plotdiet(dat = filter(spring, species %in% preds[i]), namedat = "Spring survey diet", compdat = filter(fall, species %in% preds[i]), namecomp = "Fall survey diet")) 
+  cat("  \n")
+}
+
+```
+
+### {-}

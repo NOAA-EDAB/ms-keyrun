@@ -1,4 +1,4 @@
-# ms-keyrun
+# mskeyrun
 
 [![gitleaks](https://github.com/NOAA-EDAB/ms-keyrun/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ms-keyrun/actions/workflows/secretScan.yml)
 

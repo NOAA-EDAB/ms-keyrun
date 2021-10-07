@@ -1,34 +1,54 @@
-Package: ms-keyrun
+Package: mskeyrun
 Title: All information for keyrun review
 Version: 0.0.0.9000
 Authors@R: 
-    c(person(given = "Andy", family = "Beet", role = c("aut"), email = "andrew.beet@noaa.gov"),
+  c(person(given = "Andy", family = "Beet", role = c("aut"), email = "andrew.beet@noaa.gov"),
     person(given = "Sean", family = "Lucey", role = c("aut"), email = "sean.lucey@noaa.gov"),
     person(given = "Sarah", family = "Gaichas", role = c("aut","cre"), email = "sarah.gaichase@noaa.gov"),
     person(given = "Kiersten", family = "Kurti", role = c("aut"), email = "kiersten.kurti@noaa.gov"))
 Description: All information for keyrun review
 License: file LICENSE
+URL: https://github.com/NOAA-EDAB/ms-keyrun
+BugReports: https://github.com/NOAA-EDAB/ms-keyrun/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
-    bookdown,
-    dplyr,
-    DT,
-    ggplot2,
-    here,
-    htmltools,
-    kableExtra,
-    knitr,
-    remotes,
-    sf,
-    stringr,
-    tibble,
-    tidyr,
-    cluster
+  bookdown,
+  knitr
 Remotes:
-    andybeet/cfdbs
-    andybeet/dbutils
-    andybeet/hydradata
-    NOAA-EDAB/mscatch
+  andybeet/cfdbs,
+  andybeet/dbutils,
+  NOAA-EDAB/hydradata,
+  NOAA-EDAB/mscatch,
+  NOAA-EDAB/survdat,
+  r4atlantis/atlantisom
+VignetteBuilder: knitr
+Suggests: 
+  DT,
+  kableExtra,
+  remotes,
+  stringr,
+  tibble,
+  tidyr,
+  cluster,
+  cfdbs,
+  dbutils,
+  hydradata,
+  mscatch,
+  survdat,
+  atlantisom,
+  googledrive,
+  pacman,
+  rmarkdown,
+  htmltools,
+  sf,
+  ggplot2,
+  dplyr,
+  here,
+  data.table,
+  rgdal,
+  ggthemes,
+  FSA
+  

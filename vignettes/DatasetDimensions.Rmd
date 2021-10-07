@@ -1,0 +1,132 @@
+---
+title: "MS Keyrun Dataset Dimensions"
+author: "Sarah Gaichas"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+  html_document:
+    code_fold: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, 
+                      message = FALSE,
+                      warning = FALSE)
+#library(googledrive)
+library(pacman)
+p_load(magrittr, gsubfn, stringr, tidyverse)
+```
+
+## Proposed Dimensions
+
+### Years: 1968-2019
+
+All surveyed agreed to end with the complete year of data 2019 to be as up to date as possible. Start year is the earliest survey year where both spring and fall are available.
+
+### Seasons: Annual fisheries, Seasonal surveys
+
+Pull annual data for fisheries, pull annual survey maintaining seasons as "spring", "fall" etc. for each year. Many models use annual catch so further resolution is unnecessary; modelers can choose to fit seasonal survey indices separately or combine to a single annual value from seasonal (documenting methods).
+
+### Spatial: 2 Approaches for Georges Bank
+
+Ideal: Define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using [ratios in spatially explicit VTR subset of catch data](allocateLandingsEPU.html). Work towards this ideal, comparing coverage of VTR data by species and different methods for scaling as part of data documentation. Consult with ADIOS team and assessment experts to see if results look reasonable. 
+
+The ideal is time-consuming and cannot be started until mid-late September 2020 at the earliest.
+
+Interim: Define using fishery statistical areas (521-522, 525-526, 551-552, 561-562) and match survey data as much as possible to these. It is easier to map survey strata to larger fishery areas than the other way around; Sean can share code which may be modified by Gavin's student to achieve this. 
+
+The interim represents the upper bound of what catch would be by species for comparison to the ideal approach and can be implemented fairly quickly.
+
+### Other notes
+
+By either spatial definition, inshore survey strata should not be relevant to Georges Bank, so the beginning and end years remain as above, and there should not be a need to combine inshore and offshore surveys using Conn method or VAST for Bigelow years.
+
+The group decided that the base dataset would pull survey data separately for the Albatross and Bigelow years without applying any conversion factors. These separate series can be used as indices in the structured models (MSCAA and Hydra). 
+
+Methods for making a single survey time series from the two vessel survey time series (and for making annual indices from the seasonal surveys) would need to be discussed for the other models, and methods clearly documented. For example, the Georges Bank Rpath was calibrated to Bigelow data from 2013-2015; therefore if a single survey time series is needed, it makes sense to convert Albatross survey catches to Bigelow units using established conversion factors. We are putting off this discussion for now.
+
+## Full survey results
+
+### Survey conducted week of June 15 2020, extended to 3 July
+
+[This is the survey form.](https://forms.gle/Pq78yqwa5ueFi8Kq8)
+
+```{r getsurvey}
+#survey link https://forms.gle/Pq78yqwa5ueFi8Kq8
+#results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses
+# resultfile <- drive_find(pattern = "MS-Keyrun Dataset Dimensions", type = "spreadsheet")
+# responses <- drive_download(resultfile, type = "csv", overwrite = TRUE) %>%
+#   {read.csv(.$local_path)} 
+
+responses <- read.csv("supportingFiles/MS-Keyrun Dataset Dimensions (Responses) - Form Responses 1.csv",header=T)
+
+names(responses)[3] <- "StartYear"
+names(responses)[5] <- "EndYear"
+names(responses)[7] <- "SurvSeason"
+names(responses)[9] <- "FishSeason"
+names(responses)[11] <- "SpatialGB"
+```
+
+We had `r nrow(responses)` responses.
+
+### Years (start-end)
+
+Responses:
+```{r}
+startend <- data.frame(Start = responses$StartYear,
+                       End = responses$EndYear)
+knitr::kable(startend, booktabs=TRUE)
+```
+
+
+```{r} 
+knitr::kable(responses$Rationale.for.start.time, col.names = "Start year rationale", booktabs=TRUE)
+```
+
+
+```{r}
+knitr::kable(responses$Rationale.for.end.time, col.names = "End year rationale", booktabs=TRUE)
+```
+
+### Seasons (fall/spring surveys? fishery seasons?)
+
+Responses:
+```{r seasons}
+seasons <- responses %>%
+  select(SurvSeason, FishSeason) %>%
+  gather(key = SurvFish, value = "Season") %>%
+  arrange(Season)
+ggplot(seasons, aes(Season, fill=SurvFish)) + 
+  geom_bar() +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 15))#+ 
+  #theme(axis.text.x = element_text(angle = 90))
+  
+```
+
+
+```{r} 
+knitr::kable(responses$Rationale.for.survey.temporal.resolution, col.names = "Survey season rationale", booktabs=TRUE)
+```
+
+
+```{r} 
+knitr::kable(responses$Rationale.for.fishery.temporal.resolution, col.names = "Fishery season rationale", booktabs=TRUE)
+```
+
+
+### Spatial footprint (Georges Bank defined how)
+
+Responses:
+```{r space}
+ggplot(responses, aes(SpatialGB)) + 
+  geom_bar() +
+  scale_x_discrete(labels = function(x) str_wrap(x, width = 35))#+ 
+```
+
+
+```{r} 
+knitr::kable(responses$Rationale.for.spatial.definition, col.names = "Spatial Rationale", booktabs=TRUE)
+```
+
+## Meeting minutes
+
+[Click here!](https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq)

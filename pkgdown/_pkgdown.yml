@@ -1,0 +1,38 @@
+url: https://noaa-edab.github.io/ms-keyrun/
+
+reference:
+- title: "Simulated data products"
+  desc: "Extracted from Atlantis output "
+- contents:
+  - simCatchIndex
+  - simFisheryAgecomp
+  - simFisheryLencomp
+  - simFocalSpecies
+  - simSurveyAgecomp
+  - simSurveyLencomp
+  - simSurveyDietcomp
+  - simSurveyIndex
+- title: "Survey data products"
+  desc: "Extracted from Bottom trawl surveys "
+- contents:
+  - surveyIndexA4
+  - surveyIndexA4All
+  - surveyIndexHB
+  - surveyIndexHBAll
+- title: "Commerical fishing data products"
+  desc: "Extracted from Commercial fishery database "
+- contents:
+  - AllSpeciesProportions 
+- title: "Hydra specific data products"
+  desc: "For use in Hydra estimation model"
+- contents:
+  - catchAtLengthProportions
+- title: "Miscellaneous data products"
+  desc: " "
+- contents:
+  - focalSpecies
+  - fleets
+  - mskeyrun
+  
+  
+  
