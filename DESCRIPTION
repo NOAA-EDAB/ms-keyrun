@@ -23,7 +23,8 @@ Remotes:
   NOAA-EDAB/hydradata,
   NOAA-EDAB/mscatch,
   NOAA-EDAB/survdat,
-  r4atlantis/atlantisom
+  r4atlantis/atlantisom,
+  NOAA-EDAB/ecodata
 VignetteBuilder: knitr
 Suggests: 
   DT,
@@ -50,5 +51,6 @@ Suggests:
   data.table,
   rgdal,
   ggthemes,
-  FSA
+  FSA,
+  ecodata
   
