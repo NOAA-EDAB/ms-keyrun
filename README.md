@@ -1,7 +1,7 @@
 # mskeyrun
 
 [![gitleaks](https://github.com/NOAA-EDAB/ms-keyrun/actions/workflows/secretScan.yml/badge.svg)](https://github.com/NOAA-EDAB/ms-keyrun/actions/workflows/secretScan.yml)
-
+[![gh-pages](https://github.com/NOAA-EDAB/ms-keyrun/actions/workflows/pkgdown.yml/badge.svg)](https://github.com/NOAA-EDAB/ms-keyrun/actions/workflows/pkgdown.yml)
 
 Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html).
 
