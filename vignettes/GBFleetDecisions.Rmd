@@ -1,5 +1,5 @@
 ---
-title: "Fleet Definitions for Georges Bank"
+title: "Fleet Decisions for Georges Bank"
 author: Andy Beet
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
