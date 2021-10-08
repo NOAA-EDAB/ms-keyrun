@@ -5,9 +5,13 @@
 
 Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html).
 
-This repository documents decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Data, methods documentation, links to model code repositories and results, and eventually draft manuscripts will be found here too. 
+This repository [documents](https://noaa-edab.github.io/ms-keyrun/articles/mskeyrun.html) decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Data products can be accessed by installing this R data package. Methods are found in the [documentation](https://noaa-edab.github.io/ms-keyrun/articles/). Links to model code repositories; results and draft manuscripts will eventually be found here too. 
 
 The target date for model keyrun reviews is October 2021, with all modeling results and documentation submitted by 1 September 2021.
+
+## Installation
+
+```remotes::install_github("NOAA-EDAB/ms-keyrun")```
 
 ## Contributors (in alphabetical order)
 
