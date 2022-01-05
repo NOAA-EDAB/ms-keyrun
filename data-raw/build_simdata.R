@@ -33,6 +33,8 @@ create_sim_fishery_lencomp(atlmod, fitstart=40, fitend=120)
 
 create_sim_survey_dietcomp(atlmod, fitstart=40, fitend=120)
 
+create_sim_survey_bottemp(atlmod, fitstart=40, fitend=120)
+
 
 
 
