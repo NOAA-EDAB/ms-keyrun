@@ -12,6 +12,7 @@ reference:
   - simSurveyLencomp
   - simSurveyDietcomp
   - simSurveyIndex
+  - simSurveyBottemp
 - title: "Survey data products"
   desc: "Extracted from Bottom trawl surveys "
 - contents:
