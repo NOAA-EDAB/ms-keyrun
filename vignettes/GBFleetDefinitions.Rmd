@@ -276,7 +276,7 @@ knitr::include_graphics("figures/demersalfree_y.png")
 
 ## Decision
 
-This exploratory study resulted in the following designation of [Fleets](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html)
+This exploratory study resulted in the following designation of [Fleets](https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html)
 
 
 
