@@ -7,7 +7,7 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 This repository documents decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Data, methods documentation, links to model code repositories and results, and eventually draft manuscripts will be found here too. 
 
-The target date for model keyrun reviews is October 2021, with all modeling results and documentation submitted by 1 September 2021.
+The target date for model keyrun reviews is October 2022, with all modeling results and documentation submitted by 1 September 2022.
 
 ## Contributors (in alphabetical order)
 
