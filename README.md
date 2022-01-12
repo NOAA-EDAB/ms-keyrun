@@ -7,7 +7,7 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 This repository [documents](https://noaa-edab.github.io/ms-keyrun/articles/mskeyrun.html) decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Data products can be accessed by installing this R data package. Methods are found in the [documentation](https://noaa-edab.github.io/ms-keyrun/articles/). Links to model code repositories; results and draft manuscripts will eventually be found here too. 
 
-The target date for model keyrun reviews is October 2021, with all modeling results and documentation submitted by 1 September 2021.
+The target date for model keyrun reviews is October 2022, with all modeling results and documentation submitted by 1 September 2022.
 
 ## Installation
 

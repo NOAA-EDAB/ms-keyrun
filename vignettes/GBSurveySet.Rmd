@@ -136,7 +136,9 @@ library(ggplot2); library(survdat)
 
 
 #source(here('Survdat.r'))
-load(here('data-raw/data/Survdat.RData'))
+#load(here('data-raw/data/Survdat.RData'))
+load(here('data-raw/data/survdat_Albatross.RData'))
+survdat <- survdat.a4$survdat
 
 #Top 10(11) species
 top10 <- c(15, 23, 32, 72, 73, 74, 75, 105, 106, 121, 197)
