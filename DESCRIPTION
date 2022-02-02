@@ -27,7 +27,7 @@ Remotes:
   NOAA-EDAB/survdat,
   r4atlantis/atlantisom
 VignetteBuilder: knitr
-Suggests: 
+Suggests:
   DT,
   kableExtra,
   remotes,
@@ -46,6 +46,7 @@ Suggests:
   rmarkdown,
   htmltools,
   sf,
+  lwgeom,
   ggplot2,
   dplyr,
   here,
@@ -53,3 +54,4 @@ Suggests:
   rgdal,
   ggthemes,
   FSA
+  
