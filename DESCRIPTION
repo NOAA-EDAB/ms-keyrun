@@ -25,9 +25,11 @@ Remotes:
   NOAA-EDAB/hydradata,
   NOAA-EDAB/mscatch,
   NOAA-EDAB/survdat,
+  NOAA-EDAB/ecodata,
   r4atlantis/atlantisom
 VignetteBuilder: knitr
 Suggests:
+  ecodata,
   DT,
   kableExtra,
   remotes,
