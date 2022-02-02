@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mskeyrun</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mskeyrun.html">Get started</a>
 </li>
@@ -75,6 +71,9 @@
       <a href="../articles/GBLandingsByLength.html">Landings by Length for Georges Bank</a>
     </li>
     <li>
+      <a href="../articles/GBSurveySet.html">MS Keyrun - GB survey footprint</a>
+    </li>
+    <li>
       <a href="../articles/SimData.html">Generating Simulated Data</a>
     </li>
     <li>
@@ -88,7 +87,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NOAA-EDAB/ms-keyrun/">
+  <a href="https://github.com/NOAA-EDAB/ms-keyrun/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -104,45 +103,45 @@
       
 
       </header><script src="SpeciesEnvDat_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="SpeciesEnvDat_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="SpeciesEnvDat_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="SpeciesEnvDat_files/datatables-binding-0.19/datatables.js"></script><script src="SpeciesEnvDat_files/jquery-3.6.0/jquery-3.6.0.min.js"></script><link href="SpeciesEnvDat_files/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="SpeciesEnvDat_files/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="SpeciesEnvDat_files/dt-core-1.10.20/js/jquery.dataTables.min.js"></script><link href="SpeciesEnvDat_files/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet">
-<script src="SpeciesEnvDat_files/crosstalk-1.1.1/js/crosstalk.min.js"></script><div class="row">
+<script src="SpeciesEnvDat_files/datatables-binding-0.20/datatables.js"></script><link href="SpeciesEnvDat_files/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="SpeciesEnvDat_files/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="SpeciesEnvDat_files/dt-core-1.11.3/js/jquery.dataTables.min.js"></script><link href="SpeciesEnvDat_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="SpeciesEnvDat_files/crosstalk-1.2.0/js/crosstalk.min.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>MS Keyrun Species, Environment, Data Formats</h1>
-                        <h4 class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
             
-            <h4 class="date">12 October, 2021</h4>
+            <h4 data-toc-skip class="date">02 February, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/master/vignettes/SpeciesEnvDat.Rmd"><code>vignettes/SpeciesEnvDat.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/SpeciesEnvDat.Rmd" class="external-link"><code>vignettes/SpeciesEnvDat.Rmd</code></a></small>
       <div class="hidden name"><code>SpeciesEnvDat.Rmd</code></div>
 
     </div>
 
     
     
-<div id="species-lists" class="section level2">
-<h2 class="hasAnchor">
-<a href="#species-lists" class="anchor"></a>Species lists</h2>
+<div class="section level2">
+<h2 id="species-lists">Species lists<a class="anchor" aria-label="anchor" href="#species-lists"></a>
+</h2>
 <p>(We first pull species lists from the Rpath model and load the survey results.)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Sean's file from https://github.com/NOAA-EDAB/GBRpath/blob/master/data/SOE_species_list.RData</span>
 <span class="co"># loads the RData as object "species"</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span><span class="op">(</span><span class="fu">source_data</span><span class="op">(</span><span class="st">"https://github.com/NOAA-EDAB/GBRpath/blob/master/data/SOE_species_list.RData?raw=True"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/invisible.html" class="external-link">invisible</a></span><span class="op">(</span><span class="fu">source_data</span><span class="op">(</span><span class="st">"https://github.com/NOAA-EDAB/GBRpath/blob/master/data/SOE_species_list.RData?raw=True"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># used to get a list to paste into google form</span>
 <span class="co">#write.table(file = "spplist.txt", sort(unique(species$RPATH)))</span>
 
 <span class="va">rpathspp</span> <span class="op">&lt;-</span> <span class="va">species</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="va">RPATH</span>, <span class="va">COMNAME</span>, <span class="va">SCINAME</span>, <span class="va">SVSPP</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">RPATH</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">RPATH</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">distinct</span><span class="op">(</span><span class="op">)</span> 
 
 <span class="va">aggs</span> <span class="op">&lt;-</span> <span class="va">rpathspp</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">RPATH</span>, sort <span class="op">=</span> <span class="cn">TRUE</span>, name <span class="op">=</span> <span class="st">"Nspp"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Nspp</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Nspp</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span>
 
 <span class="va">singlespp</span> <span class="op">&lt;-</span> <span class="fu">anti_join</span><span class="op">(</span><span class="va">rpathspp</span>, <span class="va">aggs</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>Nspp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
@@ -157,16 +156,16 @@
 <span class="co"># responses &lt;- drive_download(resultfile, type = "csv", overwrite = TRUE) %&gt;%</span>
 <span class="co">#   {read.csv(.$local_path)} </span>
 
-<span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Species, Environment, Data Format (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
+<span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Species, Environment, Data Format (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Species"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Environment"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModelInR"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModelUseR"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"RData"</span></code></pre></div>
-<div id="focalSpecies" class="section level3">
-<h3 class="hasAnchor">
-<a href="#focalSpecies" class="anchor"></a>Multispecies models (focal species)</h3>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Species"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Environment"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModelInR"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModelUseR"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"RData"</span></code></pre></div>
+<div class="section level3">
+<h3 id="focalSpecies">Multispecies models (focal species)<a class="anchor" aria-label="anchor" href="#focalSpecies"></a>
+</h3>
 <p>Multispecies models focus on a subset of interacting species. They will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species.</p>
 <p>Decision: Use the top ranked 10 species in the table below: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate. Rationale: These species occupy Georges Bank while pollock is found more in the neighboring Gulf of Maine.</p>
 <p>These species received &gt;1 vote for inclusion in MS-Keyrun multispecies models:</p>
@@ -176,21 +175,21 @@
 <span class="co"># tally by species</span>
 <span class="co"># histogram</span>
 
-<span class="va">msspecies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Species <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">Species</span>,
-                        Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MS"</span>, <span class="st">"MS"</span>, <span class="st">"NA"</span>, <span class="st">"MS"</span>, <span class="st">"Rpath"</span>, <span class="st">"MS"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">msspecies</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Species <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">Species</span>,
+                        Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MS"</span>, <span class="st">"MS"</span>, <span class="st">"NA"</span>, <span class="st">"MS"</span>, <span class="st">"Rpath"</span>, <span class="st">"MS"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">separate_rows</span><span class="op">(</span><span class="va">Species</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>Species <span class="op">=</span> <span class="fu">str_trim</span><span class="op">(</span><span class="va">Species</span>, side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">focal</span> <span class="op">&lt;-</span> <span class="va">msspecies</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"MS"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">==</span> <span class="st">"MS"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">left_join</span><span class="op">(</span><span class="va">rpathspp</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="st">"RPATH"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">left_join</span><span class="op">(</span><span class="va">rpathspp</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Species"</span> <span class="op">=</span> <span class="st">"RPATH"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="va">COMNAME</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">focal</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">focal</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Species</th>
@@ -269,23 +268,23 @@
 </table>
 <p>Species modeled by all compared multispecies models could include all of these, or could be limited to a subset.</p>
 </div>
-<div id="food-web-model-focal-rest-of-system" class="section level3">
-<h3 class="hasAnchor">
-<a href="#food-web-model-focal-rest-of-system" class="anchor"></a>Food web model (focal + rest of system)</h3>
+<div class="section level3">
+<h3 id="food-web-model-focal-rest-of-system">Food web model (focal + rest of system)<a class="anchor" aria-label="anchor" href="#food-web-model-focal-rest-of-system"></a>
+</h3>
 <p>The food web model is intended to examine wider ecosystem responses to management measures applied to a subset of interacting species. It will estimate predator-prey interaction and other parameters based on fits to biomass, catch, and diet information. This model should track general trends (if not interannual variability) for focal species and produce reasonable reactions by their predators and prey.</p>
 <p>Current species groups in the GB Rpath model (all retained for MS-Keyrun):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">datatable</span><span class="op">(</span><span class="va">rpathlist</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, 
-          options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">25</span>, 
-                         order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">'asc'</span><span class="op">)</span><span class="op">)</span>
+          options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">25</span>, 
+                         order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">'asc'</span><span class="op">)</span><span class="op">)</span>
           <span class="op">)</span><span class="op">)</span></code></pre></div>
-<div id="htmlwidget-f3f4e29193f9fea307af" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-f3f4e29193f9fea307af">{"x":{"filter":"none","vertical":false,"data":[["Redfish","AmLobster","AmPlaice","AmShad","Cod","AtlCroaker","AtlHalibut","AtlHerring","AtlMackerel","Barndoor","BlackSeaBass","Bluefish","Butterfish","RedCrab","Fourspot","Goosefish","Haddock","LittleSkate","Loligo","Illex","NShrimp","OceanPout","OffHake","Pollock","RedDrum","RedHake","Scup","AtlScallop","SilverHake","SmoothDogfish","SpinyDogfish","StripedBass","SummerFlounder","Weakfish","WhiteHake","Windowpane","WinterFlounder","WinterSkate","WitchFlounder","YTFlounder","SouthernDemersals","OtherDemersals","OtherPelagics","Mesopelagics","Sharks","Megabenthos","Macrobenthos","Freshwater","OtherFlatfish","OtherShrimps","Rays","SmPelagics","OtherCephalopods","LargePelagics","Fauna","OtherSkates","SmFlatfishes","Turtles","Tilefish","Sturgeon","SmallPelagics","Clams","HMS","RiverHerring"],["ACADIAN REDFISH","AMERICAN LOBSTER","AMERICAN PLAICE","AMERICAN SHAD","ATLANTIC COD","ATLANTIC CROAKER","ATLANTIC HALIBUT","ATLANTIC HERRING","ATLANTIC MACKEREL","BARNDOOR SKATE","BLACK SEA BASS","BLUEFISH","BUTTERFISH","CRAB,RED DEEPSEA","FOURSPOT FLOUNDER","GOOSEFISH","HADDOCK","LITTLE SKATE","LONGFIN SQUID","NORTHERN SHORTFIN SQUID","NORTHERN SHRIMP","OCEAN POUT","OFFSHORE HAKE","POLLOCK","RED DRUM","RED HAKE","SCUP","SEA SCALLOP","SILVER HAKE","SMOOTH DOGFISH","SPINY DOGFISH","STRIPED BASS","SUMMER FLOUNDER","WEAKFISH","WHITE HAKE","WINDOWPANE","WINTER FLOUNDER","WINTER SKATE","WITCH FLOUNDER","YELLOWTAIL FLOUNDER",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["SEBASTES FASCIATUS","HOMARUS AMERICANUS","HIPPOGLOSSOIDES PLATESSOIDES","ALOSA SAPIDISSIMA","GADUS MORHUA","MICROPOGONIAS UNDULATUS","HIPPOGLOSSUS HIPPOGLOSSUS","CLUPEA HARENGUS","SCOMBER SCOMBRUS","DIPTURUS LAEVIS","CENTROPRISTIS STRIATA","POMATOMUS SALTATRIX","PEPRILUS TRIACANTHUS","CHACEON QUINQUEDENS","PARALICHTHYS OBLONGUS","LOPHIUS AMERICANUS","MELANOGRAMMUS AEGLEFINUS","LEUCORAJA ERINACEA","LOLIGO PEALEII","ILLEX ILLECEBROSUS","PANDALUS BOREALIS","ZOARCES AMERICANUS","MERLUCCIUS ALBIDUS","POLLACHIUS VIRENS","SCIAENOPS OCELLATUS","UROPHYCIS CHUSS","STENOTOMUS CHRYSOPS","PLACOPECTEN MAGELLANICUS","MERLUCCIUS BILINEARIS","MUSTELUS CANIS","SQUALUS ACANTHIAS","MORONE SAXATILIS","PARALICHTHYS DENTATUS","CYNOSCION REGALIS","UROPHYCIS TENUIS","SCOPHTHALMUS AQUOSUS","PSEUDOPLEURONECTES AMERICANUS ","LEUCORAJA OCELLATA","GLYPTOCEPHALUS CYNOGLOSSUS","LIMANDA FERRUGINEA ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[155,301,102,35,73,136,101,32,121,22,141,135,131,310,104,197,74,26,503,502,306,193,69,75,654,77,143,401,72,13,15,139,103,145,76,108,106,23,107,105,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,256,142,75,64,51,48,42,38,30,28,20,20,18,16,15,13,11,11,7,4,3,2,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>RPATH<\/th>\n      <th>COMNAME<\/th>\n      <th>SCINAME<\/th>\n      <th>SVSPP<\/th>\n      <th>Nspp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"order":[[0,"asc"]],"columnDefs":[{"className":"dt-right","targets":[3,4]}],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-854665ec8f20de37a3b0" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-854665ec8f20de37a3b0">{"x":{"filter":"none","vertical":false,"data":[["Redfish","AmLobster","AmPlaice","AmShad","Cod","AtlCroaker","AtlHalibut","AtlHerring","AtlMackerel","Barndoor","BlackSeaBass","Bluefish","Butterfish","RedCrab","Fourspot","Goosefish","Haddock","LittleSkate","Loligo","Illex","NShrimp","OceanPout","OffHake","Pollock","RedDrum","RedHake","Scup","AtlScallop","SilverHake","SmoothDogfish","SpinyDogfish","StripedBass","SummerFlounder","Weakfish","WhiteHake","Windowpane","WinterFlounder","WinterSkate","WitchFlounder","YTFlounder","SouthernDemersals","OtherDemersals","OtherPelagics","Mesopelagics","Sharks","Megabenthos","Macrobenthos","Freshwater","OtherFlatfish","OtherShrimps","Rays","SmPelagics","OtherCephalopods","LargePelagics","Fauna","OtherSkates","SmFlatfishes","Turtles","Tilefish","Sturgeon","SmallPelagics","Clams","HMS","RiverHerring"],["ACADIAN REDFISH","AMERICAN LOBSTER","AMERICAN PLAICE","AMERICAN SHAD","ATLANTIC COD","ATLANTIC CROAKER","ATLANTIC HALIBUT","ATLANTIC HERRING","ATLANTIC MACKEREL","BARNDOOR SKATE","BLACK SEA BASS","BLUEFISH","BUTTERFISH","CRAB,RED DEEPSEA","FOURSPOT FLOUNDER","GOOSEFISH","HADDOCK","LITTLE SKATE","LONGFIN SQUID","NORTHERN SHORTFIN SQUID","NORTHERN SHRIMP","OCEAN POUT","OFFSHORE HAKE","POLLOCK","RED DRUM","RED HAKE","SCUP","SEA SCALLOP","SILVER HAKE","SMOOTH DOGFISH","SPINY DOGFISH","STRIPED BASS","SUMMER FLOUNDER","WEAKFISH","WHITE HAKE","WINDOWPANE","WINTER FLOUNDER","WINTER SKATE","WITCH FLOUNDER","YELLOWTAIL FLOUNDER",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["SEBASTES FASCIATUS","HOMARUS AMERICANUS","HIPPOGLOSSOIDES PLATESSOIDES","ALOSA SAPIDISSIMA","GADUS MORHUA","MICROPOGONIAS UNDULATUS","HIPPOGLOSSUS HIPPOGLOSSUS","CLUPEA HARENGUS","SCOMBER SCOMBRUS","DIPTURUS LAEVIS","CENTROPRISTIS STRIATA","POMATOMUS SALTATRIX","PEPRILUS TRIACANTHUS","CHACEON QUINQUEDENS","PARALICHTHYS OBLONGUS","LOPHIUS AMERICANUS","MELANOGRAMMUS AEGLEFINUS","LEUCORAJA ERINACEA","LOLIGO PEALEII","ILLEX ILLECEBROSUS","PANDALUS BOREALIS","ZOARCES AMERICANUS","MERLUCCIUS ALBIDUS","POLLACHIUS VIRENS","SCIAENOPS OCELLATUS","UROPHYCIS CHUSS","STENOTOMUS CHRYSOPS","PLACOPECTEN MAGELLANICUS","MERLUCCIUS BILINEARIS","MUSTELUS CANIS","SQUALUS ACANTHIAS","MORONE SAXATILIS","PARALICHTHYS DENTATUS","CYNOSCION REGALIS","UROPHYCIS TENUIS","SCOPHTHALMUS AQUOSUS","PSEUDOPLEURONECTES AMERICANUS ","LEUCORAJA OCELLATA","GLYPTOCEPHALUS CYNOGLOSSUS","LIMANDA FERRUGINEA ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[155,301,102,35,73,136,101,32,121,22,141,135,131,310,104,197,74,26,503,502,306,193,69,75,654,77,143,401,72,13,15,139,103,145,76,108,106,23,107,105,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,256,142,75,64,51,48,42,38,30,28,20,20,18,16,15,13,11,11,7,4,3,2,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>RPATH<\/th>\n      <th>COMNAME<\/th>\n      <th>SCINAME<\/th>\n      <th>SVSPP<\/th>\n      <th>Nspp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"order":[[0,"asc"]],"columnDefs":[{"className":"dt-right","targets":[3,4]}],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-<div id="envrionmental-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#envrionmental-data" class="anchor"></a>Envrionmental data</h2>
+<div class="section level2">
+<h2 id="envrionmental-data">Envrionmental data<a class="anchor" aria-label="anchor" href="#envrionmental-data"></a>
+</h2>
 <p>Hydra, the length-based multispecies model, already incorporates a time series of Georges Bank bottom temperature as a covariate in simulation mode to force changes in growth, maturity, and recruitment. For MS-Keyrun, we can explore fitting the parameters governing the influence of this covariate.</p>
 <p>Rpath can be directly forced by a primary production time series, and temperature-based mediation functions can be included (but it is unclear whether parameters can be fit for these functions).</p>
 <p>Two mulispecies models are not currently set up to incorporate environmental data: MSCAA, MSSPM/Kraken</p>
@@ -297,18 +296,18 @@
 <span class="co"># tally by dataset</span>
 <span class="co"># histogram</span>
 
-<span class="va">msenv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>Environment <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">Environment</span>,
-                        Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"MS"</span>, <span class="st">"MS"</span>, <span class="st">"NA"</span>, <span class="st">"MS"</span>, <span class="st">"Rpath"</span>, <span class="st">"MS"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">msenv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Environment <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">Environment</span>,
+                        Model <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"MS"</span>, <span class="st">"MS"</span>, <span class="st">"NA"</span>, <span class="st">"MS"</span>, <span class="st">"Rpath"</span>, <span class="st">"MS"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Model</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">separate_rows</span><span class="op">(</span><span class="va">Environment</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>Environment <span class="op">=</span> <span class="fu">str_trim</span><span class="op">(</span><span class="va">Environment</span>, side <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">includedenv</span> <span class="op">&lt;-</span> <span class="va">msenv</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">Environment</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>
 
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">includedenv</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">includedenv</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Environment</th>
@@ -362,41 +361,41 @@
 </tbody>
 </table>
 <p>Decision: We will include GB temperature and primary production time series as part of the MS-Keyrun dataset. Modelers may retrieve additional data from <code>ecodata</code>.</p>
-<p>The <code>ecodata</code> R package has up to date information at the Georges Bank EPU scale as listed here: <a href="https://noaa-edab.github.io/ecodata/landing_page" class="uri">https://noaa-edab.github.io/ecodata/landing_page</a>.</p>
+<p>The <code>ecodata</code> R package has up to date information at the Georges Bank EPU scale as listed here: <a href="https://noaa-edab.github.io/ecodata/landing_page" class="external-link uri">https://noaa-edab.github.io/ecodata/landing_page</a>.</p>
 <p>Current time series in ecodata:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co">#remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">ecodata</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">ecodata</span><span class="op">)</span>
 
-<span class="va">ecodsets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"ecodata"</span><span class="op">)</span><span class="op">$</span><span class="va">result</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Item"</span>, <span class="st">"Title"</span><span class="op">)</span><span class="op">]</span>
+<span class="va">ecodsets</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"ecodata"</span><span class="op">)</span><span class="op">$</span><span class="va">result</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Item"</span>, <span class="st">"Title"</span><span class="op">)</span><span class="op">]</span>
 
 <span class="fu">datatable</span><span class="op">(</span><span class="va">ecodsets</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, 
-          options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>
+          options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
-<div id="htmlwidget-a30e9f99fdf9372f75a2" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-a30e9f99fdf9372f75a2">{"x":{"filter":"none","vertical":false,"data":[["aggregate_biomass","aquaculture","bennet","blue_runner","bottom_temp","bottom_temp_glorys","calanus_stage","ch_bay_sal","ch_bay_temp","ches_bay_wq","chl_pp","coast","cold_pool","cold_pool_sf","comdat","commercial_div","energy_density","engagement","epu_sf","ESP_heatwave","ESP_seasonal_chl","ESP_seasonal_oisst_anom","ESP_seasonal_pp","ESP_sf","exp_n","forage_anomaly","grayseal","gsi","gsi_old","habitat_occupancy","habitat_vulnerability","harborporpoise","heatwave","heatwave_anom_gridded","heatwave_peak_date","heatwave_year","hms_category","hms_cpue","hms_landings","hp_density","ichthyo_diversity","long_term_sst","mab_inshore_survey","mass_inshore_survey","nao","narw","ne_inshore_survey","ne_inshore_survey_species","ne_wind","nefsc_survey","nefsc_survey_disaggregated","new_england","observed_sharks","phyto_size","ppr","productivity_anomaly","rec_hms","recdat","seabird_mab (seabird_MAB)","seabird_ne","seal_pups","seasonal_oisst_anom","seasonal_sst_anomaly_gridded","slopewater","species_dist","species_groupings","stock_status","stom_fullness","stratification","survey_shannon","wcr","wind_dev_speed","wind_occupancy","wind_revenue","zoo_abund","zoo_diversity","zoo_oi","zoo_sli_anom","zoo_strat_abun"],["NEFSC survey data broken into season and aggregate group biomass","Oyster aquaculture","Bennet indicator","SAFMC managed Blue Runner presence on NES","Bottom temperature","Bottom temperature - GLORYS","Calanus Stage","Chesapeake Bay 2018 - 2019 salinity with historical trends for comapirson","","Chesapeake Bay Water Quality Attainment","Chlorophyll _a_ and primary production","Coast","Cold pool index","Cold pool sf index","Aggregated commercial fisheries data","Commercial fisheries diversity","Forage fish energy density","Commercial and recreational fishery social-economic indicators","Ecological Production Units","","","","","","Expected Number of Species per 1000 Individuals","Forage Anomaly","Gray Seal Bycatch","Gulf Stream Index","","Habitat Occupancy","Habitat Vulnerability","Harbor porpoise bycatch","Marine Heatwaves","Maximum heatwave day gridded","Maximum heatwave peak day gridded","Marine heatwaves within 2019","Highly Migratory Species Category","Highly Migratory Species Catch per Unit Effort","Highly Migratory Species Landings and Revenue","Harbor porpoise density estimates","Ichthyoplankton diversity","Long-term SST","NEAMAP Mid-Atlantic inshore trawl survey","Massachusetts inshore bottom trawl survey","","North Atlantic right whale abundance","New England inshore state survey data","","NCEP NARR Wind","NEFSC Bottom Trawl Survey (aggregated)","NEFSC Bottom Trawl Survey (species-level)","New England Spatial data","","Phytoplankton size class","Ecosystem Overfishing Inidcators","Small fish per large fish biomass anomaly","Recreational Higly Migratory Species","Recreational fishing indicators","Virginia waterbor productivity","Common tern productivity and diet composition","Seal Pups","Sea-surface temperature anomaly time serries","Sea-surface temperature anomaly","Northeast Channel slopewater proportions","Species distribution on the NES.","Species groupings","Managed species stock status","Stomach fullness index calculated from NEFSC fall bottom trawl surveys","","Shannon Diversity of NEFSC Bottom Trawl Survey","Warm core rings spun off of gulf stream","Wind energy development speed","Wind lease area and habitat occupancy model overlap","Fisheries revenue from wind lease areas","Zooplankton abundance (EcoMon seasonal and interpolated)","Zooplankton diversity","Zooplankton abundance (EcoMon seasonal and interpolated)","Zooplankton small large index","Zooplankton small large absolute values"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Item<\/th>\n      <th>Title<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-bf619993843c590d3c74" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-bf619993843c590d3c74">{"x":{"filter":"none","vertical":false,"data":[["abc.acl","aggregate_biomass","aquaculture","bennet","blue_runner","bottom_heatwave","bottom_temp","bottom_temp_glorys","calanus_stage","ch_bay_sal","ch_bay_temp","ches_bay_sf","ches_bay_sst","ches_bay_wq","chl_pp","coast","cold_pool","cold_pool_sf","comdat","commercial_div","energy_density","engagement","epu_sf","ESP_heatwave","ESP_seasonal_chl","ESP_seasonal_oisst_anom","ESP_seasonal_pp","ESP_sf","exp_n","forage_anomaly","grayseal","gsi","gsi_old","habitat_occupancy","habitat_vulnerability","habs","harborporpoise","heatwave","heatwave_anom_gridded","heatwave_peak_date","heatwave_year","hms_category","hms_cpue","hms_landings","hms_stock_status","hp_density","ichthyo_diversity","long_line_survey","long_term_sst","longlinesurvey_sf","mab_inshore_survey","mass_inshore_survey","nao","narw","ne_inshore_survey","ne_inshore_survey_species","ne_wind","nefsc_survey","nefsc_survey_disaggregated","new_england","observed_sharks","phyto_size","ppr","productivity_anomaly","rec_hms","recdat","sandlance","SAV","seabird_mab (seabird_MAB)","seabird_ne","seal_pups","seasonal_oisst_anom","seasonal_sst_anomaly_gridded","sharks","slopewater","species_dist","species_groupings","stock_status","stom_fullness","stratification","survey_shannon","wcr","wea_landings_rev","wind_dev_speed","wind_occupancy","wind_port","wind_revenue","zoo_abund","zoo_diversity","zoo_oi","zoo_sli_anom","zoo_strat_abun"],["","NEFSC survey data broken into season and aggregate group biomass","Oyster aquaculture","Bennet indicator","SAFMC managed Blue Runner presence on NES","","Bottom temperature","Bottom temperature - GLORYS","Calanus Stage","Chesapeake Bay 2018 - 2019 salinity with historical trends for comapirson","","","","Chesapeake Bay Water Quality Attainment","Chlorophyll _a_ and primary production","Coast","Cold pool index","Cold pool sf index","Aggregated commercial fisheries data","Commercial fisheries diversity","Forage fish energy density","Commercial and recreational fishery social-economic indicators","Ecological Production Units","","","","","","Expected Number of Species per 1000 Individuals","Forage Anomaly","Gray Seal Bycatch","Gulf Stream Index","","Habitat Occupancy","Habitat Vulnerability","","Harbor porpoise bycatch","Marine Heatwaves","Maximum heatwave day gridded","Maximum heatwave peak day gridded","Marine heatwaves within 2019","Highly Migratory Species Category","Highly Migratory Species Catch per Unit Effort","Highly Migratory Species Landings and Revenue","","Harbor porpoise density estimates","Ichthyoplankton diversity","","Long-term SST","","NEAMAP Mid-Atlantic inshore trawl survey","Massachusetts inshore bottom trawl survey","","North Atlantic right whale abundance","New England inshore state survey data","","NCEP NARR Wind","NEFSC Bottom Trawl Survey (aggregated)","NEFSC Bottom Trawl Survey (species-level)","New England Spatial data","","Phytoplankton size class","Ecosystem Overfishing Inidcators","Small fish per large fish biomass anomaly","Recreational Higly Migratory Species","Recreational fishing indicators","","","Virginia waterbor productivity","Common tern productivity and diet composition","Seal Pups","Sea-surface temperature anomaly time serries","Sea-surface temperature anomaly","","Northeast Channel slopewater proportions","Species distribution on the NES.","Species groupings","Managed species stock status","Stomach fullness index calculated from NEFSC fall bottom trawl surveys","","Shannon Diversity of NEFSC Bottom Trawl Survey","Warm core rings spun off of gulf stream","","Wind energy development speed","Wind lease area and habitat occupancy model overlap","","Fisheries revenue from wind lease areas","Zooplankton abundance (EcoMon seasonal and interpolated)","Zooplankton diversity","Zooplankton abundance (EcoMon seasonal and interpolated)","Zooplankton small large index","Zooplankton small large absolute values"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Item<\/th>\n      <th>Title<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="programming-frameworks-and-data-formats" class="section level2">
-<h2 class="hasAnchor">
-<a href="#programming-frameworks-and-data-formats" class="anchor"></a>Programming frameworks and data formats</h2>
+<div class="section level2">
+<h2 id="programming-frameworks-and-data-formats">Programming frameworks and data formats<a class="anchor" aria-label="anchor" href="#programming-frameworks-and-data-formats"></a>
+</h2>
 <p>Most models are either implemented in R or can work directly with R datasets:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># these are multiple choice yes/no so just plot</span>
 
-<span class="va">useR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>ModelInR <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModelInR</span>,
+<span class="va">useR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModelInR <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModelInR</span>,
                    ModelUseR <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModelUseR</span>,
                    RData <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">RData</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">gather</span><span class="op">(</span><span class="va">question</span>, <span class="va">answer</span>, <span class="va">ModelInR</span><span class="op">:</span><span class="va">RData</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>shortans <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu">word</span><span class="op">(</span><span class="va">answer</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, 
+  <span class="fu">mutate</span><span class="op">(</span>shortans <span class="op">=</span> <span class="fu"><a href="https://Rdatatable.gitlab.io/data.table/reference/fifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu">word</span><span class="op">(</span><span class="va">answer</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>, 
                            <span class="va">answer</span>, 
                            <span class="fu">word</span><span class="op">(</span><span class="va">answer</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="va">yesR</span> <span class="op">&lt;-</span> <span class="va">useR</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">question</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">answer</span><span class="op">==</span><span class="st">"Yes"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>tot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu">mutate</span><span class="op">(</span>tot <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>percent <span class="op">=</span> <span class="va">n</span><span class="op">/</span><span class="va">tot</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> 
 
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">yesR</span><span class="op">)</span></code></pre></div>
+<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">yesR</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">question</th>
@@ -444,29 +443,29 @@
 </tbody>
 </table>
 <p>Decision: All surveyed agreed that we should maintain datasets within an R data package for the MS-Keyrun project.</p>
-<p>See <a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq">discussion</a> of pros and cons of using R data package for standardizing input datasets and making them available.</p>
+<p>See <a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq" class="external-link">discussion</a> of pros and cons of using R data package for standardizing input datasets and making them available.</p>
 </div>
-<div id="full-survey-results" class="section level2">
-<h2 class="hasAnchor">
-<a href="#full-survey-results" class="anchor"></a>Full survey results</h2>
-<div id="survey-conducted-july-13-29-2020" class="section level3">
-<h3 class="hasAnchor">
-<a href="#survey-conducted-july-13-29-2020" class="anchor"></a>Survey conducted July 13-29 2020</h3>
-<p><a href="https://forms.gle/gfA3tKFKRBxf3Mu38">This is the survey form.</a></p>
+<div class="section level2">
+<h2 id="full-survey-results">Full survey results<a class="anchor" aria-label="anchor" href="#full-survey-results"></a>
+</h2>
+<div class="section level3">
+<h3 id="survey-conducted-july-13-29-2020">Survey conducted July 13-29 2020<a class="anchor" aria-label="anchor" href="#survey-conducted-july-13-29-2020"></a>
+</h3>
+<p><a href="https://forms.gle/gfA3tKFKRBxf3Mu38" class="external-link">This is the survey form.</a></p>
 <p>We had 6 responses.</p>
 </div>
-<div id="species" class="section level3">
-<h3 class="hasAnchor">
-<a href="#species" class="anchor"></a>Species</h3>
+<div class="section level3">
+<h3 id="species">Species<a class="anchor" aria-label="anchor" href="#species"></a>
+</h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">msspecies</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Model</span>, nrow <span class="op">=</span> <span class="fl">2</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">msspecies</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Model</span>, nrow <span class="op">=</span> <span class="fl">2</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="SpeciesEnvDat_files/figure-html/plotspp-1.png" width="700"></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.species.included</span>, col.names <span class="op">=</span> <span class="st">"Species rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.species.included</span>, col.names <span class="op">=</span> <span class="st">"Species rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -494,18 +493,18 @@
 </tbody>
 </table>
 </div>
-<div id="environment" class="section level3">
-<h3 class="hasAnchor">
-<a href="#environment" class="anchor"></a>Environment</h3>
+<div class="section level3">
+<h3 id="environment">Environment<a class="anchor" aria-label="anchor" href="#environment"></a>
+</h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">msenv</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Environment</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Model</span>, nrow <span class="op">=</span> <span class="fl">2</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">msenv</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Environment</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Model</span>, nrow <span class="op">=</span> <span class="fl">2</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="SpeciesEnvDat_files/figure-html/plotenv-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.environmental.time.series.included</span>, col.names <span class="op">=</span> <span class="st">"Environment rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.environmental.time.series.included</span>, col.names <span class="op">=</span> <span class="st">"Environment rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -533,26 +532,26 @@
 </tbody>
 </table>
 </div>
-<div id="model-programming-frameworks" class="section level3">
-<h3 class="hasAnchor">
-<a href="#model-programming-frameworks" class="anchor"></a>Model programming frameworks</h3>
+<div class="section level3">
+<h3 id="model-programming-frameworks">Model programming frameworks<a class="anchor" aria-label="anchor" href="#model-programming-frameworks"></a>
+</h3>
 <p>Many but not all models interface with R and can use R datasets. Even for those that do not, all agreed on using an R data package for standardizing input datasets and making them available.</p>
 <p>Responses:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">useR</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">question</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill<span class="op">=</span><span class="va">shortans</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Question"</span>, 
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">useR</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">question</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">shortans</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Question"</span>, 
        fill <span class="op">=</span> <span class="st">"Short Answer"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="SpeciesEnvDat_files/figure-html/plotdat-1.png" width="700"></p>
 <p>Short answer key: “No but” = No but we should be able to implement some R connections to the MSSPM software.<br>
 “Probably, we” = Probably, we would need to sort out how to exprt from R into Mysql</p>
 </div>
 </div>
-<div id="meeting-minutes-5-august-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#meeting-minutes-5-august-2020" class="anchor"></a>Meeting minutes, 5 August 2020</h2>
-<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.m573izndd2nh">Click here!</a></p>
+<div class="section level2">
+<h2 id="meeting-minutes-5-august-2020">Meeting minutes, 5 August 2020<a class="anchor" aria-label="anchor" href="#meeting-minutes-5-august-2020"></a>
+</h2>
+<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.m573izndd2nh" class="external-link">Click here!</a></p>
 </div>
   </div>
 
@@ -567,11 +566,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
+  <p></p>
+<p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -579,6 +580,8 @@
 
   
 
+
+  
 
   </body>
 </html>

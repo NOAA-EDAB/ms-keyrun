@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mskeyrun</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mskeyrun.html">Get started</a>
 </li>
@@ -75,6 +71,9 @@
       <a href="../articles/GBLandingsByLength.html">Landings by Length for Georges Bank</a>
     </li>
     <li>
+      <a href="../articles/GBSurveySet.html">MS Keyrun - GB survey footprint</a>
+    </li>
+    <li>
       <a href="../articles/SimData.html">Generating Simulated Data</a>
     </li>
     <li>
@@ -88,7 +87,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NOAA-EDAB/ms-keyrun/">
+  <a href="https://github.com/NOAA-EDAB/ms-keyrun/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -107,11 +106,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Fleet Decisions for Georges Bank</h1>
-                        <h4 class="author">Andy Beet</h4>
+                        <h4 data-toc-skip class="author">Andy Beet</h4>
             
-            <h4 class="date">12 October, 2021</h4>
+            <h4 data-toc-skip class="date">02 February, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/master/vignettes/GBFleetDecisions.Rmd"><code>vignettes/GBFleetDecisions.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/GBFleetDecisions.Rmd" class="external-link"><code>vignettes/GBFleetDecisions.Rmd</code></a></small>
       <div class="hidden name"><code>GBFleetDecisions.Rmd</code></div>
 
     </div>
@@ -125,67 +124,67 @@
 <p>All other gear codes make up the majority (99%) of the landings. For these gear codes each species contribution to the total landings (aggregated over time) are shown as percentages</p>
 <p>Species of interest are <strong>bolded</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gearData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw/data"</span>,<span class="st">"timeSeriesSpeciesByGear.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gearData</span><span class="op">$</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">NEGEAR2</span><span class="op">==</span><span class="va">gearCode</span><span class="op">)</span></code></pre></div>
-<div id="demersal-large-mesh-3" class="section level2">
-<h2 class="hasAnchor">
-<a href="#demersal-large-mesh-3" class="anchor"></a>Demersal (large mesh &gt; 3")</h2>
+<code class="sourceCode R"><span class="va">gearData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/data"</span>,<span class="st">"timeSeriesSpeciesByGear.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">gearData</span><span class="op">$</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NEGEAR2</span><span class="op">==</span><span class="va">gearCode</span><span class="op">)</span></code></pre></div>
+<div class="section level2">
+<h2 id="demersal-large-mesh-3">Demersal (large mesh &gt; 3")<a class="anchor" aria-label="anchor" href="#demersal-large-mesh-3"></a>
+</h2>
 <p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%), <strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%), <strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs</p>
 <p><sup>1</sup> 16 - DANISH SEINE (<strong>cod</strong>, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, plaice, <strong>silver hake</strong>) - 5,194,870 lbs</p>
 <p><sup>1</sup> 36 - SCOTTISH SEINE (<strong>silver hake</strong>, <strong>cod</strong>, plaice, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, red hake) - 4,521,702 lbs</p>
 <p><sup>1</sup> 35 - BEAM TRAWL (summer flounder, <strong>winter flounder</strong>, <strong>yellowtail flounder</strong>) - 927,806 lbs</p>
 <p><sup>1</sup> 32 - FYKE NET (<strong>winter fl</strong>, windowpane fl, <strong>dogfish</strong>, <strong>skates</strong>) - 1,602 lb</p>
 </div>
-<div id="demersal-small-mesh-3" class="section level2">
-<h2 class="hasAnchor">
-<a href="#demersal-small-mesh-3" class="anchor"></a>Demersal (small mesh &lt;= 3")</h2>
+<div class="section level2">
+<h2 id="demersal-small-mesh-3">Demersal (small mesh &lt;= 3")<a class="anchor" aria-label="anchor" href="#demersal-small-mesh-3"></a>
+</h2>
 <p>Predominantly Silver Hake, White Hake, Butterfish, Short fin, and long fin squid</p>
 <p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%), <strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%), <strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs</p>
 </div>
-<div id="fixed-gear" class="section level2">
-<h2 class="hasAnchor">
-<a href="#fixed-gear" class="anchor"></a>Fixed Gear</h2>
+<div class="section level2">
+<h2 id="fixed-gear">Fixed Gear<a class="anchor" aria-label="anchor" href="#fixed-gear"></a>
+</h2>
 <p>10 - GILL NET, FIXED (<strong>dogfish</strong> (22%), <strong>cod</strong> (22%), <strong>goosefish</strong> (20%), <strong>winter skate/skates</strong> (21%), pollock (6%)) - 417,501,765 lbs</p>
 <p>01 - LONGLINE, BOTTOM (<strong>cod</strong> (40%), <strong>dogfish</strong> (21%), tilefish (20%), <strong>haddock</strong> (9%) + pollock , white hake) - 234,755,227 lbs</p>
 <p>02 - HANDLINE (<strong>cod</strong>(42%), scup (15%), tuna (13%), <strong>spiny dogfish</strong>(6%), <strong>mackerel</strong> (5%)) -72,859,422 lbs</p>
 <p><sup>1</sup> 50 - GILL NET (angler, bluefish, <strong>skate</strong>, <strong>dogfish</strong>) - 789,780 lbs</p>
 <p><sup>1</sup> 52 - GILL NET (skate, angler, <strong>haddock</strong>, swordfish, <strong>mackerel</strong>, <strong>cod</strong> ) - 367,823 lbs</p>
 </div>
-<div id="trap" class="section level2">
-<h2 class="hasAnchor">
-<a href="#trap" class="anchor"></a>Trap</h2>
+<div class="section level2">
+<h2 id="trap">Trap<a class="anchor" aria-label="anchor" href="#trap"></a>
+</h2>
 <p>14 - POUND NET (loligo (35%) , scup (20%), <strong>mackerel</strong> (20%), many other &lt; 5%) - 39,571,508 lbs</p>
 <p><sup>1</sup> 26 - WEIR (loligo, <strong>mackerel</strong>, scup) - 3,094,066 lbs</p>
 <p><sup>1</sup> 8 - FLOATING TRAP (<strong>mackerel</strong>, scup, loligo, tuna) - 1,850,040 lbs</p>
 </div>
-<div id="pelagic" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pelagic" class="anchor"></a>Pelagic</h2>
+<div class="section level2">
+<h2 id="pelagic">Pelagic<a class="anchor" aria-label="anchor" href="#pelagic"></a>
+</h2>
 <p>17 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (7%), <strong>Herring</strong> (91%)) - 598,176,314 lbs</p>
 <p>37 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (11%) , <strong>Herring</strong> (88%)) - 367,414,353 lbs</p>
 <p>12 - PURSE SEINE (1970’s menhaden (40%), Tuna (34%), <strong>Herring</strong> (5%)) - 41,291,228 lbs</p>
 </div>
-<div id="scallop" class="section level2">
-<h2 class="hasAnchor">
-<a href="#scallop" class="anchor"></a>Scallop</h2>
+<div class="section level2">
+<h2 id="scallop">Scallop<a class="anchor" aria-label="anchor" href="#scallop"></a>
+</h2>
 <p>13 - DREDGE, SCALLOP (scallop (88%) (<strong>Goosefish</strong> , <strong>yellowtail</strong>, bottom fish)) - 733,761,209 lbs</p>
 </div>
-<div id="surf-clam" class="section level2">
-<h2 class="hasAnchor">
-<a href="#surf-clam" class="anchor"></a>Surf clam</h2>
+<div class="section level2">
+<h2 id="surf-clam">Surf clam<a class="anchor" aria-label="anchor" href="#surf-clam"></a>
+</h2>
 <p>40 - DREDGE (surfclam (56%), ocean quahog(43%) ) - 425,058,521 lbs</p>
 </div>
-<div id="other-shellfish" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-shellfish" class="anchor"></a>Other shellfish</h2>
+<div class="section level2">
+<h2 id="other-shellfish">Other shellfish<a class="anchor" aria-label="anchor" href="#other-shellfish"></a>
+</h2>
 <p>38 - DREDGE (mussel(40%), sea scallop(30%), clam+quahog (17%) + bottom fish) - 48,683,622 lbs</p>
 <p><sup>1</sup> 25 - RAKES (quahog, soft clam, mussels, crab, oysters) - 13,153,618 lbs</p>
 <p><sup>1</sup> 41 - TONGS AND GRABS (quahog, soft clam, surf clam) - 232,351 lbs</p>
 <p><sup>1</sup> 22 - HOES/FORK (soft clam, oysters, bay scallop) - 217,491 lbs</p>
 </div>
-<div id="lobstercrab" class="section level2">
-<h2 class="hasAnchor">
-<a href="#lobstercrab" class="anchor"></a>Lobster/Crab</h2>
+<div class="section level2">
+<h2 id="lobstercrab">Lobster/Crab<a class="anchor" aria-label="anchor" href="#lobstercrab"></a>
+</h2>
 <p>20 - POT/TRAP (lobster(53%) + crab(46%), bottom fish &lt; 1%) - 340,059,280 lbs</p>
 <p>18 - POTS + TRAPS (crab (20%), lobster (20%), whelk (10%), snails (10%), hagfish (20%) + bottom fish (20%)) - 79,123,496 lbs</p>
 <p>30 - POTS + TRAPS (crab (&gt;99%)) - 68,329,188 lbs</p>
@@ -196,17 +195,17 @@
 <p><sup>1</sup> 19 - POTS + TRAPS (rock crab, lobster, 2004) - 23525 lbs</p>
 <p><sup>1</sup> 53 - TRAMMEL NET (lobster , 2012) - 193 lbs</p>
 </div>
-<div id="hms" class="section level2">
-<h2 class="hasAnchor">
-<a href="#hms" class="anchor"></a>HMS</h2>
+<div class="section level2">
+<h2 id="hms">HMS<a class="anchor" aria-label="anchor" href="#hms"></a>
+</h2>
 <p><sup>1</sup> 3 - HARPOONS (Tuna, swordfish)</p>
 <p><sup>1</sup> 11 - GILL NET, DRIFT (swordfish, tuna, shark )</p>
 <p><sup>1</sup> 6 - TROLL LINE (Tuna, sea herring, striped bass, bluefish)</p>
 <p><sup>1</sup> 4 - LONGLINE (swordfish, tunas, tilefish)</p>
 </div>
-<div id="other-gear" class="section level2">
-<h2 class="hasAnchor">
-<a href="#other-gear" class="anchor"></a>Other gear</h2>
+<div class="section level2">
+<h2 id="other-gear">Other gear<a class="anchor" aria-label="anchor" href="#other-gear"></a>
+</h2>
 <p><sup>1</sup> 28 - DREDGE (southern flounder, 1989-1997)</p>
 <p><sup>1</sup> 27 - BOX TRAP (cod, angler, lobster, 2004)</p>
 <p><sup>1</sup> 99 - UNKNOWN (silver hake, oysters, lobster, quahog, sea herring, angler, mussels )</p>
@@ -231,11 +230,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
+  <p></p>
+<p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -243,6 +244,8 @@
 
   
 
+
+  
 
   </body>
 </html>

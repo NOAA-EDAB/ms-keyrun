@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mskeyrun</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mskeyrun.html">Get started</a>
 </li>
@@ -75,6 +71,9 @@
       <a href="../articles/GBLandingsByLength.html">Landings by Length for Georges Bank</a>
     </li>
     <li>
+      <a href="../articles/GBSurveySet.html">MS Keyrun - GB survey footprint</a>
+    </li>
+    <li>
       <a href="../articles/SimData.html">Generating Simulated Data</a>
     </li>
     <li>
@@ -88,7 +87,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NOAA-EDAB/ms-keyrun/">
+  <a href="https://github.com/NOAA-EDAB/ms-keyrun/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -107,29 +106,29 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>MS Keyrun Data Needs</h1>
-                        <h4 class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
             
-            <h4 class="date">12 October, 2021</h4>
+            <h4 data-toc-skip class="date">02 February, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/master/vignettes/DataNeeds.Rmd"><code>vignettes/DataNeeds.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/DataNeeds.Rmd" class="external-link"><code>vignettes/DataNeeds.Rmd</code></a></small>
       <div class="hidden name"><code>DataNeeds.Rmd</code></div>
 
     </div>
 
     
     
-<div id="decisions-from-meeting-june-3-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#decisions-from-meeting-june-3-2020" class="anchor"></a>Decisions from meeting June 3 2020</h2>
-<p>Notes were taken on the <a href="https://www.st.nmfs.noaa.gov/jira/secure/RapidBoard.jspa?rapidView=384&amp;projectKey=KEYRUN">KEYRUN Kanban board</a> under the epic <a href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-4">KEYRUN-4</a> (a password is required to access these sites, but current information is copied below).</p>
+<div class="section level2">
+<h2 id="decisions-from-meeting-june-3-2020">Decisions from meeting June 3 2020<a class="anchor" aria-label="anchor" href="#decisions-from-meeting-june-3-2020"></a>
+</h2>
+<p>Notes were taken on the <a href="https://www.st.nmfs.noaa.gov/jira/secure/RapidBoard.jspa?rapidView=384&amp;projectKey=KEYRUN" class="external-link">KEYRUN Kanban board</a> under the epic <a href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-4" class="external-link">KEYRUN-4</a> (a password is required to access these sites, but current information is copied below).</p>
 </div>
-<div id="objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models" class="section level2">
-<h2 class="hasAnchor">
-<a href="#objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models" class="anchor"></a>Objective: Develop a common input dataset for use in all keyrun models</h2>
+<div class="section level2">
+<h2 id="objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models">Objective: Develop a common input dataset for use in all keyrun models<a class="anchor" aria-label="anchor" href="#objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models"></a>
+</h2>
 <p>The purpose of the June 3 meeting was to describe the decisions and components required to develop the common input dataset for the project.</p>
-<div id="epic-description" class="section level3">
-<h3 class="hasAnchor">
-<a href="#epic-description" class="anchor"></a>Epic description</h3>
+<div class="section level3">
+<h3 id="epic-description">Epic description<a class="anchor" aria-label="anchor" href="#epic-description"></a>
+</h3>
 <p>(This text copied from KEYRUN-4 Description and lightly edited)</p>
 <p>Below is a list of potential stories under this Epic with links to other Epics. Numbers indicate order tasks need to be done (priority) established at the June 3 2020 meeting.</p>
 <p>TODO: Add each story. Add done condition for each story.</p>
@@ -157,18 +156,18 @@
 <li><p>Define which life history data from surveys and/or fisheries for all models (e.g. maturity, weight at age, maximum age for mortality estimation, etc)</p></li>
 </ol>
 </div>
-<div id="additional-meeting-notes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#additional-meeting-notes" class="anchor"></a>Additional meeting notes</h3>
+<div class="section level3">
+<h3 id="additional-meeting-notes">Additional meeting notes<a class="anchor" aria-label="anchor" href="#additional-meeting-notes"></a>
+</h3>
 <p>Progress on catch data:</p>
 <p>Notes on mscatch and comlands. comlands in a package now. dataset from comland is input to mscatch which combines with observer data length samples, for each quarter/yr for species, gear, can assign length samples to each of those landings bins. done and tested. Discards not yet accounted for, difficult and needs decisions. mostly documented, decision process for filling blanks documented in log file. Canadian landings for GB may be needed.</p>
 <p>there is a comdisc as well, computes discard to kept ratio. add to subtasks under discard story</p>
 <p>Identify done criteria, meet them, then run by key stock assessment folks.</p>
 </div>
-<div id="progress" class="section level3">
-<h3 class="hasAnchor">
-<a href="#progress" class="anchor"></a>Progress</h3>
-<p>Stories have been added to the board as of 12 October, 2021:</p>
+<div class="section level3">
+<h3 id="progress">Progress<a class="anchor" aria-label="anchor" href="#progress"></a>
+</h3>
+<p>Stories have been added to the board as of 02 February, 2022:</p>
 
     
         <title>NMFS JIRA</title>
@@ -232,7 +231,7 @@
             </x:ExcelWorksheet>
             </x:ExcelWorksheets>
             </x:ExcelWorkbook>
-            </xml><![endif]--><table class="table">
+            </xml><![endif]--><table border="1" class="table">
 <tr bgcolor="#0747a6" height="30">
 <td colspan="394">
                     <img src="https://www.st.nmfs.noaa.gov/jira/images/jira-software.png" width="57" height="30" border="0" alt="NMFS JIRA">
@@ -240,7 +239,7 @@
             </tr>
 <tr>
 <td colspan="394">
-                    <a href="https://www.st.nmfs.noaa.gov/jira/issues/?jql=project+%3D+KEYRUN+AND+created+%3E%3D+-14d">NMFS JIRA</a>
+                    <a href="https://www.st.nmfs.noaa.gov/jira/issues/?jql=project+%3D+KEYRUN+AND+created+%3E%3D+-14d" class="external-link">NMFS JIRA</a>
                 </td>
             </tr>
 <tr>
@@ -249,7 +248,7 @@
                 </td>
             </tr>
 </table>
-<issuetable-web-component><table class="table">
+<issuetable-web-component><table id="issuetable" border="1" cellpadding="3" cellspacing="1" width="100%" class="table">
 <thead><tr class="rowHeader">
 <th class="colHeaderLink headerrow-project" data-id="project">
                             Project
@@ -1833,7 +1832,7 @@
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-24" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-24">KEYRUN-24</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-24" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-24">KEYRUN-24</a>
 </td>
                                             <td class="summary">
 <p>
@@ -2385,7 +2384,7 @@
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-23" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-23">KEYRUN-23</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-23" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-23">KEYRUN-23</a>
 </td>
                                             <td class="summary">
 <p>
@@ -2940,7 +2939,7 @@ ages/lengths in diets needed?
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-22" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-22">KEYRUN-22</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-22" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-22">KEYRUN-22</a>
 </td>
                                             <td class="summary">
 <p>
@@ -3502,7 +3501,7 @@ Done when: Methodology finalized and code written to implement methods
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-21" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-21">KEYRUN-21</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-21" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-21">KEYRUN-21</a>
 </td>
                                             <td class="summary">
 <p>
@@ -4059,7 +4058,7 @@ Done when: Methodology finalized and code written to implement methods
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-20" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-20">KEYRUN-20</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-20" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-20">KEYRUN-20</a>
 </td>
                                             <td class="summary">
 <p>
@@ -4637,7 +4636,7 @@ Done when: have sign off from pop dynamics
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-19" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-19">KEYRUN-19</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-19" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-19">KEYRUN-19</a>
 </td>
                                             <td class="summary">
 <p>
@@ -5197,7 +5196,7 @@ Done: Agreed upon list of fleets and how input data to them should be aggregated
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-18" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-18">KEYRUN-18</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-18" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-18">KEYRUN-18</a>
 </td>
                                             <td class="summary">
 <p>
@@ -5759,7 +5758,7 @@ Define accessible location for all project participants
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-17" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-17">KEYRUN-17</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-17" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-17">KEYRUN-17</a>
 </td>
                                             <td class="summary">
 <p>
@@ -6313,7 +6312,7 @@ List, ensure that it is available at spatial and temporal scales defined for KEY
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-16" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-16">KEYRUN-16</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-16" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-16">KEYRUN-16</a>
 </td>
                                             <td class="summary">
 <p>
@@ -6867,7 +6866,7 @@ shorter list for structured and aggregate multispecies models in KEYRUN-1 and KE
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-15" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-15">KEYRUN-15</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-15" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-15">KEYRUN-15</a>
 </td>
                                             <td class="summary">
 <p>
@@ -7423,7 +7422,7 @@ Define spatial footprint: what is Georges Bank for survey and for fishery?
 </td>
                                             <td class="issuekey">
 
-    <a class="issue-link" data-issue-key="KEYRUN-14" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-14">KEYRUN-14</a>
+    <a class="external-link issue-link" data-issue-key="KEYRUN-14" href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-14">KEYRUN-14</a>
 </td>
                                             <td class="summary">
 <p>
@@ -7972,7 +7971,7 @@ Define spatial footprint: what is Georges Bank for survey and for fishery?
                     </tr>
 </tbody>
 </table></issuetable-web-component><div class="end-of-stable-message"></div>
-            <table class="table"><tr>
+            <table border="1" class="table"><tr>
 <td bgcolor="#f5f5f5" colspan="394"><font size="1">
         Generated at Mon Jun 15 10:11:28 EDT 2020 by sarah.gaichas using Jira 8.3.4#803005-sha1:1f96e09b3c60279a408a2ae47be3c745f571388b.
     </font></td>
@@ -7992,11 +7991,13 @@ Define spatial footprint: what is Georges Bank for survey and for fishery?
 
 
       <footer><div class="copyright">
-  <p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
+  <p></p>
+<p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -8004,6 +8005,8 @@ Define spatial footprint: what is Georges Bank for survey and for fishery?
 
   
 
+
+  
 
   </body>
 </html>

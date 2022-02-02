@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mskeyrun</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mskeyrun.html">Get started</a>
 </li>
@@ -75,6 +71,9 @@
       <a href="../articles/GBLandingsByLength.html">Landings by Length for Georges Bank</a>
     </li>
     <li>
+      <a href="../articles/GBSurveySet.html">MS Keyrun - GB survey footprint</a>
+    </li>
+    <li>
       <a href="../articles/SimData.html">Generating Simulated Data</a>
     </li>
     <li>
@@ -88,7 +87,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NOAA-EDAB/ms-keyrun/">
+  <a href="https://github.com/NOAA-EDAB/ms-keyrun/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -107,20 +106,19 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Allocate landings to Georges Bank EPU</h1>
-                        <h4 class="author">Andy Beet</h4>
+                        <h4 data-toc-skip class="author">Andy Beet</h4>
             
-            <h4 class="date">12 October, 2021</h4>
+            <h4 data-toc-skip class="date">02 February, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/master/vignettes/allocateLandingsEPU.Rmd"><code>vignettes/allocateLandingsEPU.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/allocateLandingsEPU.Rmd" class="external-link"><code>vignettes/allocateLandingsEPU.Rmd</code></a></small>
       <div class="hidden name"><code>allocateLandingsEPU.Rmd</code></div>
 
     </div>
 
     
     
-<div id="spatial-approaches-for-georges-bank-option-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#spatial-approaches-for-georges-bank-option-1" class="anchor"></a>Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option 1</a>
+<div class="section level2">
+<h2 id="spatial-approaches-for-georges-bank-option-1">Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option 1</a><a class="anchor" aria-label="anchor" href="#spatial-approaches-for-georges-bank-option-1"></a>
 </h2>
 <p>The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is defined as the set of survey strata that are at 50% within the 10 min square definition of the EPU.</p>
 <div class="figure" style="text-align: center">
@@ -136,10 +134,10 @@ Statistical areas intersected by Georges Bank EPU
 </div>
 <p>Fishing data are available by statistical area. The statistical areas surrounding Georges Bank EPU (521, 522, 525, 526, 537, 538, 551, 552, 561, 562) contain catch from Georges Bank and its neighboring EPUs. This data needs to be partitioned and catch allocated to the Georges Bank EPU.</p>
 </div>
-<div id="method-for-partitioning-catch-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#method-for-partitioning-catch-data" class="anchor"></a>Method for partitioning catch data</h2>
-<p>Methods found in <span class="citation">(Benjamin, S et al., 2018; DePiper, 2014)</span> and the <a href="https://github.com/dcorvi/offshoreWind"><code>offshoreWind</code></a> package are briefly summarized below. It is necessary to run the package from the <code>mars</code> server.</p>
+<div class="section level2">
+<h2 id="method-for-partitioning-catch-data">Method for partitioning catch data<a class="anchor" aria-label="anchor" href="#method-for-partitioning-catch-data"></a>
+</h2>
+<p>Methods found in <span class="citation">(Benjamin, S et al., 2018; DePiper, 2014)</span> and the <a href="https://github.com/dcorvi/offshoreWind" class="external-link"><code>offshoreWind</code></a> package are briefly summarized below. It is necessary to run the package from the <code>mars</code> server.</p>
 <ul>
 <li><p>VTR data are joined with observer data (since observer data is considered reliable). A duration model is fitted to characterize a spatial footprint (rather than a single point location) associated with a trip (<span class="citation">DePiper (2014)</span>). Gear type and trip length (which includes multiple hauls) influence the spatial precision.</p></li>
 <li><p>The duration model is then broadly applied to all VTR data. The result being a set of maps (or rasters). Each map/raster depicts the spatial probability of fishing for a trip.</p></li>
@@ -152,7 +150,7 @@ Statistical areas intersected by Georges Bank EPU
 Proportion of landings in GB relative to statistical area
 </p>
 </div>
-<p>The total landings of each species by stat area is shown below. This should ideally be compared to landings from <a href="https://github.com/NOAA-EDAB/comlandr">comlandr</a>. We should also determine how landings on the Canadian side of the Hague line should be handled</p>
+<p>The total landings of each species by stat area is shown below. This should ideally be compared to landings from <a href="https://github.com/NOAA-EDAB/comlandr" class="external-link">comlandr</a>. We should also determine how landings on the Canadian side of the Hague line should be handled</p>
 <div class="figure" style="text-align: center">
 <img src="allocateLandingsEPU_files/figure-html/calc_lands-1.png" alt="Total landings by statistical area" width="700"><p class="caption">
 Total landings by statistical area
@@ -160,9 +158,9 @@ Total landings by statistical area
 </div>
 <p>The majority of landings (for a species) occurs in statistical areas where the proportion allocated to Georges Bank is fairly constant.</p>
 </div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
+<div class="section level2 unnumbered">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <div id="refs" class="references">
 <div id="ref-benjamins2018">
 <p>Benjamin, S, Lee, Min-Yang, &amp; DePiper, G. (2018). <em>Visualizing fishing data as rasters</em>.</p>
@@ -185,11 +183,13 @@ Total landings by statistical area
 
 
       <footer><div class="copyright">
-  <p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
+  <p></p>
+<p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -197,6 +197,8 @@ Total landings by statistical area
 
   
 
+
+  
 
   </body>
 </html>

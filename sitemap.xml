@@ -1,84 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//index.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/404.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/AllSpeciesProportions.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/catchAtLengthProportions.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/CompsDat.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/fleets.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/DataNeeds.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/focalSpecies.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/DatasetDimensions.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simCatchIndex.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simFisheryAgecomp.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDefinitions.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simFisheryLencomp.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simFocalSpecies.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBSurveySet.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simSurveyAgecomp.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/NMFS_JIRA_2020-06-15T_0_11_28-0400.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simSurveyDietcomp.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/SimData.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simSurveyIndex.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/SpeciesEnvDat.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/simSurveyLencomp.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/allocateLandingsEPU.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/surveyIndexA4.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/surveyIndexA4All.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/mskeyrun.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/surveyIndexHB.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/authors.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//reference/surveyIndexHBAll.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/index.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/CompsDat.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/AllSpeciesProportions.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/DataNeeds.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/catchAtLengthProportions.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/DatasetDimensions.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/fleets.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/GBFleetDecisions.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/focalSpecies.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/GBFleetDefinitions.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/GBLandingsByLength.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simCatchIndex.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/SimData.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryAgecomp.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/SpeciesEnvDat.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryLencomp.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/allocateLandingsEPU.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFocalSpecies.html</loc>
   </url>
   <url>
-    <loc>https://noaa-edab.github.io/ms-keyrun//articles/mskeyrun.html</loc>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyAgecomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyBottemp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyDietcomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyIndex.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyLencomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexA4.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexA4All.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexHB.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexHBAll.html</loc>
   </url>
 </urlset>

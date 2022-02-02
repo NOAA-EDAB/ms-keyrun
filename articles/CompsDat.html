@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mskeyrun</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.0.9000</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../articles/mskeyrun.html">Get started</a>
 </li>
@@ -75,6 +71,9 @@
       <a href="../articles/GBLandingsByLength.html">Landings by Length for Georges Bank</a>
     </li>
     <li>
+      <a href="../articles/GBSurveySet.html">MS Keyrun - GB survey footprint</a>
+    </li>
+    <li>
       <a href="../articles/SimData.html">Generating Simulated Data</a>
     </li>
     <li>
@@ -88,7 +87,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/NOAA-EDAB/ms-keyrun/">
+  <a href="https://github.com/NOAA-EDAB/ms-keyrun/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -107,11 +106,11 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>MS Keyrun Age, Length, and Diet Composition Data Needs</h1>
-                        <h4 class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
             
-            <h4 class="date">12 October, 2021</h4>
+            <h4 data-toc-skip class="date">02 February, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/master/vignettes/CompsDat.Rmd"><code>vignettes/CompsDat.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/CompsDat.Rmd" class="external-link"><code>vignettes/CompsDat.Rmd</code></a></small>
       <div class="hidden name"><code>CompsDat.Rmd</code></div>
 
     </div>
@@ -127,64 +126,64 @@
 <span class="co">#   {read.csv(.$local_path)} </span>
 
 
-<span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Compositional Data Needs (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
+<span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Compositional Data Needs (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
 
 
 
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModType"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModName"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeLength"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeNeeds"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"LengthNeeds"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Diet"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"DietNeeds"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Comments"</span></code></pre></div>
-<div id="model-types" class="section level2">
-<h2 class="hasAnchor">
-<a href="#model-types" class="anchor"></a>Model types</h2>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModType"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModName"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeLength"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeNeeds"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"LengthNeeds"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Diet"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"DietNeeds"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Comments"</span></code></pre></div>
+<div class="section level2">
+<h2 id="model-types">Model types<a class="anchor" aria-label="anchor" href="#model-types"></a>
+</h2>
 <p>Multispecies models will focus on 10 species: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate.</p>
 <p>Models will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species. Data needs by model type are summarized below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">compdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,
+<code class="sourceCode R"><span class="va">compdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,
                       ModName <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModName</span>,
                       AgeLength <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">AgeLength</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">separate_rows</span><span class="op">(</span><span class="va">AgeLength</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
-<span class="va">dietdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,
+<span class="va">dietdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,
                       ModName <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModName</span>,
                       Diet <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">Diet</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">separate_rows</span><span class="op">(</span><span class="va">Diet</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
 <span class="co"># rename AgeLength and Diet columns to CompDat and merge</span></code></pre></div>
 </div>
-<div id="age-and-length-composition-data-needed" class="section level2">
-<h2 class="hasAnchor">
-<a href="#age-and-length-composition-data-needed" class="anchor"></a>Age and length composition data needed</h2>
+<div class="section level2">
+<h2 id="age-and-length-composition-data-needed">Age and length composition data needed<a class="anchor" aria-label="anchor" href="#age-and-length-composition-data-needed"></a>
+</h2>
 <p>Structured models need both survey numbers at length and age. The length structured model Hydra is currently set up with separate fishing fleets and would require fishery catch and discard data by fleet, while MSCAA is not set up by fleet. WHAM requires fleet specific catch and discards at age, so it makes sense to pull catch and landings numbers at length and age data by fleet to the extent possible, as well as for total catch.</p>
 <p>Therefore, fleet definitions are necessary to pull the fleet specific data.</p>
 <p>This data will also be needed for Rpath for age structured groups (TBD). Pulling data by individual age and 1cm length bins should allow us to aggregate to the appropriate age and length classes for Rpath and Hydra.</p>
 <p>Some decisions on how to deal with predators with poor or no age data (e.g. goosefish) will be needed for age strutured models.</p>
 </div>
-<div id="diet-composition-data-needed" class="section level2">
-<h2 class="hasAnchor">
-<a href="#diet-composition-data-needed" class="anchor"></a>Diet composition data needed</h2>
-<p>All multispecies models require some form of diet composition matrix (in the form of % of each other modeled species observed in the diet). The diet composition has already been pulled for Rpath <a href="https://github.com/NOAA-EDAB/GBRpath/blob/master/GBRpath_diet_pull.R">code</a>, and is highly abstracted based on diet data for Hydra (matrix of 0 and 1 to indicate whether predation can happen). Biomass dynamic model interaction matrices are currently input parameters, so should be compared with diet data pulls for Rpath diet compositions for consistency. Methods used to estimate the biomass dynamics interaction parameters, whether within the model framework or outside the model, are needed for documentation.</p>
+<div class="section level2">
+<h2 id="diet-composition-data-needed">Diet composition data needed<a class="anchor" aria-label="anchor" href="#diet-composition-data-needed"></a>
+</h2>
+<p>All multispecies models require some form of diet composition matrix (in the form of % of each other modeled species observed in the diet). The diet composition has already been pulled for Rpath <a href="https://github.com/NOAA-EDAB/GBRpath/blob/master/GBRpath_diet_pull.R" class="external-link">code</a>, and is highly abstracted based on diet data for Hydra (matrix of 0 and 1 to indicate whether predation can happen). Biomass dynamic model interaction matrices are currently input parameters, so should be compared with diet data pulls for Rpath diet compositions for consistency. Methods used to estimate the biomass dynamics interaction parameters, whether within the model framework or outside the model, are needed for documentation.</p>
 <p>Structured models require annual predator mean total stomach weight and gastric evaluatin rates. Pulling the diet data by predator size class will be needed for strucured models and Rpath. Prey size information is also needed to estimate prey size ratios for predators (whether estimated within the model framework or outside the model).</p>
 <p>Predator size classes will need to align Rpath age structure groupings as well as Hydra size class groups, and map to ages for age structured models.</p>
 <p>Estimates of consumption rates are critical for the performance of these models. It may be useful to have time series of biomass consumed, which can be estimated from diet data combined with predator biomass estimates.</p>
 </div>
-<div id="full-survey-results" class="section level2">
-<h2 class="hasAnchor">
-<a href="#full-survey-results" class="anchor"></a>Full survey results</h2>
-<div id="survey-conducted-august-27-september-2-2020" class="section level3">
-<h3 class="hasAnchor">
-<a href="#survey-conducted-august-27-september-2-2020" class="anchor"></a>Survey conducted August 27-September 2 2020</h3>
-<p><a href="https://forms.gle/5PkpTiCvXEgda2it6">This is the survey form.</a></p>
+<div class="section level2">
+<h2 id="full-survey-results">Full survey results<a class="anchor" aria-label="anchor" href="#full-survey-results"></a>
+</h2>
+<div class="section level3">
+<h3 id="survey-conducted-august-27-september-2-2020">Survey conducted August 27-September 2 2020<a class="anchor" aria-label="anchor" href="#survey-conducted-august-27-september-2-2020"></a>
+</h3>
+<p><a href="https://forms.gle/5PkpTiCvXEgda2it6" class="external-link">This is the survey form.</a></p>
 <p>We had 4 responses.</p>
 </div>
-<div id="age-and-length-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#age-and-length-data" class="anchor"></a>Age and Length data</h3>
+<div class="section level3">
+<h3 id="age-and-length-data">Age and Length data<a class="anchor" aria-label="anchor" href="#age-and-length-data"></a>
+</h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">compdat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">AgeLength</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -198,7 +197,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">AgeNeeds</span>, col.names <span class="op">=</span> <span class="st">"Age information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">AgeNeeds</span>, col.names <span class="op">=</span> <span class="st">"Age information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -220,7 +219,7 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">LengthNeeds</span>, col.names <span class="op">=</span> <span class="st">"Length information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">LengthNeeds</span>, col.names <span class="op">=</span> <span class="st">"Length information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -242,9 +241,9 @@
 </tbody>
 </table>
 </div>
-<div id="diet-data" class="section level3">
-<h3 class="hasAnchor">
-<a href="#diet-data" class="anchor"></a>Diet data</h3>
+<div class="section level3">
+<h3 id="diet-data">Diet data<a class="anchor" aria-label="anchor" href="#diet-data"></a>
+</h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">dietdat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
@@ -258,7 +257,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R">  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">DietNeeds</span>, col.names <span class="op">=</span> <span class="st">"Diet information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">DietNeeds</span>, col.names <span class="op">=</span> <span class="st">"Diet information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -280,11 +279,11 @@
 </tbody>
 </table>
 </div>
-<div id="other-comments" class="section level3">
-<h3 class="hasAnchor">
-<a href="#other-comments" class="anchor"></a>Other comments</h3>
+<div class="section level3">
+<h3 id="other-comments">Other comments<a class="anchor" aria-label="anchor" href="#other-comments"></a>
+</h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Comments</span>, col.names <span class="op">=</span> <span class="st">"Other comments"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Comments</span>, col.names <span class="op">=</span> <span class="st">"Other comments"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -307,10 +306,10 @@
 </table>
 </div>
 </div>
-<div id="meeting-minutes-2-september-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#meeting-minutes-2-september-2020" class="anchor"></a>Meeting minutes, 2 September 2020</h2>
-<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.7xrj7zm307ft">Click here!</a></p>
+<div class="section level2">
+<h2 id="meeting-minutes-2-september-2020">Meeting minutes, 2 September 2020<a class="anchor" aria-label="anchor" href="#meeting-minutes-2-september-2020"></a>
+</h2>
+<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.7xrj7zm307ft" class="external-link">Click here!</a></p>
 </div>
   </div>
 
@@ -325,11 +324,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
+  <p></p>
+<p>Developed by Andy Beet, Sean Lucey, Sarah Gaichas, Kiersten Curti.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -337,6 +338,8 @@
 
   
 
+
+  
 
   </body>
 </html>
