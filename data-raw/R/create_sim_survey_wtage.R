@@ -33,7 +33,24 @@ create_sim_survey_wtage <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=
   modsim <- modpath[length(modpath)]
   
   #read in survey annual mean weight at age data
+  #all species by agecl, including species with 10 or fewer annual ages
+  wtage <- atlantisom::read_savedsurvs(d.name, 'survWtage')
+  #interpolated wt at annual age for species with >10 annual ages
   annage_wtage <- atlantisom::read_savedsurvs(d.name, 'survAnnWtage')
+  
+  #join to get a full set of annual wt at age
+  # by survey, make same list structure, add this to atlantisom?
+  for(s in names(wtage)){
+    
+    # these species didn't need interpolation because they are annual
+    nointerp <- wtage[[s]][[1]] %>%
+      dplyr::anti_join(annage_wtage[[s]][[1]], by="species")
+    
+    # bind them back to annage dataset because they are annual
+    annage_wtage[[s]][[1]] <- annage_wtage[[s]][[1]] %>%
+      dplyr::bind_rows(nointerp)
+    
+  }
   
   # get config files -- needed?
   svcon <- list.files(path=cfgpath, pattern = "*survey*", full.names = TRUE)
