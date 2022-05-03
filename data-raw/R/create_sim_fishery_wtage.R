@@ -1,6 +1,6 @@
 #' Read in fishery data save as rda
 #' 
-#' atlantosom output is accessed and fishery catch pulled over time
+#' atlantisom output is accessed and fishery weight at age pulled over time
 #' 
 #'@param atlmod configuration file specifying Atlantis simulation model filenames 
 #'and locations  
@@ -33,7 +33,22 @@ create_sim_fishery_wtage <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
   modsim <- modpath[length(modpath)]
   
   #read in fishery annual mean wt at age data
+  fish_wtage <- atlantisom::read_savedfisheries(d.name, 'catchWtage')
   fish_annage_wtage <- atlantisom::read_savedfisheries(d.name, 'catchAnnWtage')
+  
+  #join to get a full set of annual wt at age
+  # by fishery, make same list structure, add this to atlantisom?
+  for(f in names(fish_wtage)){
+    
+    # these species didn't need interpolation because they are annual
+    nointerp <- fish_wtage[[f]][[1]] %>%
+      dplyr::anti_join(fish_annage_wtage[[f]][[1]], by="species")
+    
+    # bind them back to annage dataset because they are annual
+    fish_annage_wtage[[f]][[1]] <- fish_annage_wtage[[f]][[1]] %>%
+      dplyr::bind_rows(nointerp)
+    
+  }
   
   # get config files -- needed?
   fvcon <- list.files(path=cfgpath, pattern = "*fishery*", full.names = TRUE)
@@ -79,7 +94,7 @@ create_sim_fishery_wtage <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
       dplyr::mutate(year = floor(time/stepperyr)) %>%
       dplyr::select(species, year, agecl, atoutput) %>%
       dplyr::group_by(species, year, agecl) %>%
-      dplyr::summarise(Wtage = mean(atoutput)) %>%
+      dplyr::summarise(Wtage = mean(atoutput, na.rm=T)) %>%
       dplyr::ungroup() %>%
       dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
       dplyr::mutate(ModSim = modsim) %>%
