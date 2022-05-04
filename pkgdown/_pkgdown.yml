@@ -4,14 +4,16 @@ reference:
 - title: "Simulated data products"
   desc: "Extracted from Atlantis output "
 - contents:
+  - simFocalSpecies
   - simCatchIndex
   - simFisheryAgecomp
   - simFisheryLencomp
-  - simFocalSpecies
+  - simFisheryWtatAge
+  - simSurveyIndex
   - simSurveyAgecomp
   - simSurveyLencomp
+  - simSurveyWtatAge
   - simSurveyDietcomp
-  - simSurveyIndex
   - simSurveyBottemp
 - title: "Survey data products"
   desc: "Extracted from Bottom trawl surveys "
@@ -34,4 +36,3 @@ reference:
   - mskeyrun
   - focalSpecies
   - fleets
-  
