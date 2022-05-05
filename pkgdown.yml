@@ -1,5 +1,5 @@
 pandoc: 2.7.3
-pkgdown: 2.0.2
+pkgdown: 2.0.3
 pkgdown_sha: ~
 articles:
   CompsDat: CompsDat.html
@@ -13,7 +13,7 @@ articles:
   SpeciesEnvDat: SpeciesEnvDat.html
   allocateLandingsEPU: allocateLandingsEPU.html
   mskeyrun: mskeyrun.html
-last_built: 2022-02-02T16:53Z
+last_built: 2022-05-05T13:33Z
 urls:
   reference: https://noaa-edab.github.io/ms-keyrun/reference
   article: https://noaa-edab.github.io/ms-keyrun/articles

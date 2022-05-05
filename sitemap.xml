@@ -76,6 +76,9 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryLencomp.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryWtatAge.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFocalSpecies.html</loc>
   </url>
   <url>
@@ -92,6 +95,9 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyLencomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyWtatAge.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexA4.html</loc>
