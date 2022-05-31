@@ -1,5 +1,8 @@
 url: https://noaa-edab.github.io/ms-keyrun/
 
+deploy:
+  install_metadata: true
+
 reference:
 - title: "Simulated data products"
   desc: "Extracted from Atlantis output "
@@ -26,6 +29,7 @@ reference:
   desc: "Extracted from Commercial fishery database "
 - contents:
   - AllSpeciesProportions 
+  - realFisheryLencomp
 - title: "Hydra specific data products"
   desc: "For use in Hydra estimation model"
 - contents:
