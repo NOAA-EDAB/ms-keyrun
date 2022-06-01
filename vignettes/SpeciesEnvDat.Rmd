@@ -76,7 +76,7 @@ Multispecies models focus on a subset of interacting species. They will estimate
 
 Decision: Use the top ranked 10 species in the table below: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate. Rationale: These species occupy Georges Bank while pollock is found more in the neighboring Gulf of Maine.
 
-These species received >1 vote for inclusion in MS-Keyrun multispecies models:
+These species received >2 vote for inclusion in MS-Keyrun multispecies models:
 
 ```{r msmodspp}
 # each row is a response with a comma delimited list of species
@@ -93,7 +93,7 @@ msspecies <- data.frame(Species = responses$Species,
 focal <- msspecies %>%
   filter(Model == "MS") %>%
   count(Species) %>%
-  filter(n > 1) %>%
+  filter(n > 2) %>%
   left_join(rpathspp, by = c("Species" = "RPATH")) %>%
   select(-COMNAME) %>%
   arrange(desc(n))
