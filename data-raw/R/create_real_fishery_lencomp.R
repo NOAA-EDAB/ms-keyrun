@@ -20,7 +20,7 @@ realFisheryLencomp <- NULL
 
 for (it in itis) {
   fileNm <- here::here("data-raw/data",paste0(it,".rds"))
-  if (it %in% c(564145,161722)) {
+  if (it %in% c(564145)) {
     next
   }
   
