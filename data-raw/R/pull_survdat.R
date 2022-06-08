@@ -14,10 +14,13 @@ survdat.a4 <- survdat::get_survdat_data(channel, filterByYear = 1968:2008,
                                         conversion.factor = T)
 survdat.hb <- survdat::get_survdat_data(channel, filterByYear = 2009:2019,
                                         conversion.factor = F)
+survdat    <- survdat::get_survdat_data(channel, filterByYear = 1968:2019,
+                                        conversion.factor = T)
 
 #save data
 save(survdat.a4, file = here::here('data-raw', 'data', 'survdat_Albatross.RData'))
 save(survdat.hb, file = here::here('data-raw', 'data', 'survdat_Bigelow.RData'))
+save(survdat,    file = here::here('data-raw', 'data', 'survdat.RData'))
 
 #Pull bio data
 survdat.bio <- survdat::get_survdat_data(channel, getBio = T)

@@ -5,6 +5,7 @@ library(here); library(survdat); library(data.table); library(sf)
 #Load seperete albatross and bigelow data sets
 load(here::here('data-raw', 'data', 'survdat_Albatross.RData'))
 load(here::here('data-raw', 'data', 'survdat_Bigelow.RData'))
+load(here::here('data-raw', 'data', 'survdat.RData'))
 
 #Focal species
 spp <- c(32, 73, 197, 74, 15, 106, 105, 121, 72, 23, 75)
@@ -25,6 +26,12 @@ surveyIndexHB <- survdat::calc_stratified_mean(survdat.hb$survdat,
                                                filterBySeason = c('FALL', 'SPRING'),
                                                filterByGroup = spp, tidy = T)
 
+surveyIndex   <- survdat::calc_stratified_mean(survdat$survdat, 
+                                               areaPolygon = GB,
+                                               areaDescription = 'EPU',
+                                               filterBySeason = c('FALL', 'SPRING'),
+                                               filterByGroup = spp, tidy = T)
+
 #All species
 surveyIndexA4All <- survdat::calc_stratified_mean(survdat.a4$survdat, 
                                                areaPolygon = GB,
@@ -38,9 +45,17 @@ surveyIndexHBAll <- survdat::calc_stratified_mean(survdat.hb$survdat,
                                                filterBySeason = c('FALL', 'SPRING'),
                                                tidy = T)
 
+surveyIndexAll   <- survdat::calc_stratified_mean(survdat$survdat, 
+                                                  areaPolygon = GB,
+                                                  areaDescription = 'EPU',
+                                                  filterBySeason = c('FALL', 'SPRING'),
+                                                  tidy = T)
+
 #Output to package
 usethis::use_data(surveyIndexA4, overwrite = TRUE)
 usethis::use_data(surveyIndexHB, overwrite = TRUE)
+usethis::use_data(surveyIndex,   overwrite = TRUE)
 usethis::use_data(surveyIndexA4All, overwrite = TRUE)
 usethis::use_data(surveyIndexHBAll, overwrite = TRUE)
+usethis::use_data(surveyIndexAll,   overwrite = TRUE)
 
