@@ -57,7 +57,7 @@ create_sim_fishery_agecomp <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDa
   fit_ntimes <- fit_nyears*stepperyr
   fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
   #fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
-  fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
+  #fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
   fittimes.days <- if(omlist_ss$runpar$outputstepunit=="days") fittimes*omlist_ss$runpar$outputstep
   
   # # fishery cv lookup from config files
@@ -76,7 +76,7 @@ create_sim_fishery_agecomp <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDa
     #arrange into wide format: year, Species1, Species2 ... and write csv
     fishage <- fish_annage_comp[[f]][[1]] %>%
       dplyr::filter(time %in% fittimes) %>%
-      dplyr::mutate(year = floor(time/stepperyr)) %>%
+      dplyr::mutate(year = ceiling(time/stepperyr)) %>%
       dplyr::select(species, year, agecl, atoutput) %>%
       dplyr::group_by(species, year, agecl) %>%
       dplyr::summarise(Natage = sum(atoutput)) %>%

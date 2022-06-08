@@ -58,7 +58,7 @@ create_sim_survey_dietcomp <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDa
   fit_ntimes <- fit_nyears*stepperyr
   fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
   #fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
-  fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
+  #fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
   fittimes.days <- if(omlist_ss$runpar$outputstepunit=="days") fittimes*omlist_ss$runpar$outputstep
   
   
@@ -78,7 +78,7 @@ create_sim_survey_dietcomp <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDa
     #arrange into wide format: year, Species1, Species2 ... and write csv
     svdietprop <- all_diets[[s]][[1]] %>%
       dplyr::filter(time.days %in% fittimes.days) %>%
-      dplyr::mutate(year = floor(time.days/365)) %>%
+      dplyr::mutate(year = ceiling(time.days/365)) %>%
       dplyr::select(species, agecl, year, prey, dietprop=dietSamp) %>%
       dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
       dplyr::mutate(ModSim = modsim) %>%
