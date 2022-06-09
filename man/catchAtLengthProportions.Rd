@@ -8,7 +8,7 @@
 A data frame with 3 columns
 
 \describe{
-\item{fleet}{Name of \href{https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html}{fleet}}
+\item{fleet}{Name of \href{https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDefinitions.html}{fleet}}
 \item{area}{Area in which landings are reported}
 \item{year}{year in which landings reported}
 \item{species_itis}{itis code}
@@ -26,6 +26,8 @@ A data frame with 3 columns
 catchAtLengthProportions
 }
 \description{
-For the species found in the Hydra model, the \href{https://noaa-edab.github.io/ms-keyrun/GBLandingsByLength.html}{proportion} of total landings are reported by \href{https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html}{fleet}, year, and by \href{https://noaa-edab.github.io/ms-keyrun/GBLandingsByLength.html}{sizeclass}
+For the species found in the Hydra model, the \href{https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html}{proportion}
+of total landings are reported by \href{https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDefinitions.html}{fleet}, year, and
+by \href{https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html}{sizeclass}
 }
 \keyword{datasets}

@@ -38,20 +38,21 @@ create_sim_survey_bottemp <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDat
   # model timesteps, etc from omdimensions script
   source(paste0(cfgpath,"/omdimensions.R"), local = TRUE)
   
-  # user specified fit start and times if different from full run
-  fitstartyr <- ifelse(!is.null(fitstart), fitstart, 0)
-  fitendyr <- ifelse(!is.null(fitend), fitend, total_sample)
-  
   #Number of years
   nyears <- omlist_ss$runpar$nyears
-  total_sample <- noutsteps-1
-  atlantis_full <- c(0:total_sample)  
+  total_sample <- omlist_ss$runpar$tstop/omlist_ss$runpar$outputstep
+  
+  # user specified fit start and times if different from full run
+  fitstartyr <- ifelse(!is.null(fitstart), fitstart-1, 0)
+  fitendyr <- ifelse(!is.null(fitend), fitend, total_sample)
+  
+  atlantis_full <- c(1:total_sample)  
   mod_burnin <- fitstartyr*stepperyr+1
   fit_nyears <- fitendyr-fitstartyr
   fit_ntimes <- fit_nyears*stepperyr
   fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
   #fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
-  fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
+  #fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
   #fittimes.days <- if(omlist_ss$runpar$outputstepunit=="days") fittimes*omlist_ss$runpar$outputstep
   
   
@@ -82,7 +83,7 @@ create_sim_survey_bottemp <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDat
       dplyr::group_by(time) %>%
       dplyr::summarise(meantemp = weighted.mean(atoutput, proparea)) %>%
       dplyr::filter(time %in% fittimes) %>%
-      dplyr::mutate(year = floor(time/stepperyr)) %>%
+      dplyr::mutate(year = ceiling(time/stepperyr)) %>%
       dplyr::select(year, meantemp) %>%
       dplyr::mutate(survey=survey.name) %>%
       dplyr::mutate(ModSim = modsim) %>%
