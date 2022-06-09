@@ -20,7 +20,7 @@ options(warn=-1)
 
 ## Goal
 
-The ultimate goal is to create a data set that contains total annual biomass divided into size classes based on length for each of the [focal species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) and for each fleet that targets them. The resulting table will have a format similar to:
+The ultimate goal is to create a data set that contains total annual biomass divided into size classes based on length for each of the [focal species](https://noaa-edab.github.io/ms-keyrun/reference/focalSpecies.html) and for each fleet that targets them. The resulting table will have a format similar to:
 
 ```{r tabformat, echo=F,eval=T}
 
@@ -40,7 +40,7 @@ df <- data.frame(Fleet = c(1,1,1,1,1,1),
 
 ```
 
-Columns with the format `sizeclassx` represent the xth size class. A size class is defined by a range of lengths (cm) and its width is dependent on the species. Size classes were based on life history traits. (Expand this). For the focal species, the widths of each size class are defined in the following table:
+Columns with the format `sizeclassx` represent the xth size class. A size class is defined by a range of lengths (cm) and its width is dependent on the species. Size classes were based on life history traits. For the focal species, the widths of each size class are defined in the following table (subject to change):
 
 ```{r hydrabins, echo=F,eval=T,width = "50%", }
 specnames <- c("SPINY DOGFISH","WINTER SKATE","ATLANTIC HERRING", "ATLANTIC COD","HADDOCK","YELLOWTAIL FLOUNDER","WINTER FLOUNDER","ATLANTIC MACKEREL", "SILVER HAKE","GOOSEFISH") 
@@ -67,91 +67,22 @@ tab %>%  kableExtra::kbl() %>%
 
 For example, the first size class for SPINY DOGFISH is [0-20] cm, the second class is (20-40] cm, ..., the 5 size class is (80-110] cm.
 
-## Data
+## Data and methods
 
 Commercial fisheries landings were pulled using R package [`comlandr`](https://github.com/NOAA-EDAB/comlandr)
-```{r comlandLandings,eval=F,echo=T}
-comlandData <- comlandr::get_comland_data(channel = channel, filterByYear = c(1964:2019),
-    useLanded = T, removeParts = T, useHerringMaine = T, useForeign = F, 
-    refYear = NA, refMonth = NA, disagSkatesHakes = T)
-```
 
 The length data were pulled from the `stockeff.mv_cf_len` table
-```{r comlandlengths,eval=F,echo=T}
-channel <- dbutils::connect_to_database("server","user") 
-lengthData <- hydra_pull_GB_lengths(channel, area=c(cfdbs::EPUs$data$GB,537))
 
-```
+The package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to facilitate these data pulls.
 
-For each species of interest, the length data were then aggregated to provide the number of samples of a given fish LENGTH for each YEAR, NEGEAR combination. The landings data were also aggregated to provide total landings (metric tons) by YEAR and NEGEAR. These two aggregated data sets were then used to [expand the total landings](#expand) in a given YEAR, NEGEAR based on the sampled length distribution.
+For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings and discard data are aggregated based on the availability of length samples. Biomass is then estimated for each LENGTH (1 cm bins) category by YEAR and \link{https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html}{fleet}. This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html)
 
-```{r processLandLen, echo=T,eval=F}
-expanded <- hydra_process_GB_comland(channel,comlandData,lengthData)
-```
+Detailed methods can be found in the [`mscatch`](https://noaa-edab.github.io/mscatch/) package
 
 
-## Method to expand landings  {#expand}
+## Hydra fleets
 
-For each unique category (YEAR, NEGEAR) we have both total landings (metric tons) and a sample of fish lengths. The sampled fish lengths are converted to weights using the [weight-length relationship](#wl). The resulting sample fish weights are mean weights (metric tons). The weight distribution of sampled fish is then scaled to the weight of total landings. This scaling assumes that the landed (commercial) fish have the same length distribution as the sampled fish.
-
-For each unique category we define 
-
-$$expansion \; factor = \frac{total \; landings}{\sum sampled \; fish \; weigths} $$
-Therefore the expanded weights of the sample (to meet the total landings)
-
-$$expanded \; sample\; weights \; = expansion \; factor \;*\; sampled \; fish \; weights$$
-
-## Weight-length relationship {#wl}
-
-The length-weight data were obtained from SVDBS and a length-weight relationship was fit.
-
-$$ W_i = \alpha L_i ^ \beta e^{z_i}$$
-
-
-for fish i, where $\alpha$ and $\beta$ are intercept and slope parameters (on log scale) and $z_i \sim N(0,\sigma^2)$ 
-
-
-### Note: 
-
-This model can be extended to :
-
-$$ W_{ji} = \alpha L_{ji} ^ {\beta_j} e^{z_i} $$
-for season j, j= 1, ..., 4 (spring, summer, fall, winter) or sex j, j = 1, ..., 3 (0, 1, 2 categories) or extended further to include season:sex combinations. These models are all nested and can therefore be tested using standard statistical methods. For the ms-keyrun project we did not consider extended models based on season or sex.
-
-## Size class proportions
-
-For each species the annual landings (by NEGEAR) which are now apportioned to fish lengths can be aggregated over the size class intervals described in table x (link) based on the [fleets](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) the NEGEAR codes are associated with. The Hydra [simulation and estimation](https://github.com/NOAA-EDAB/hydra_sim/wiki) model implements three fleets: demersal, pelagic, and fixed gear. For this model the broader [fleet classification](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) is aggregated further (Table xxx).
-
-Any NEGEAR gear types that do not neatly fall into any of the three defined fleets (i.e. the `other` category) are assigned to the fleet dominating landings. The proportions of total landings by size class for each fleet can then be calculated.
-
-```{r hydraformat, echo=T, eval= F}
-speciesList <- unique(expanded$species_itis)
-catchAtLengthProportions <- NULL
-for (itis in speciesList) {
-  itisData <- hydra_format(expanded,mscatch::fleets,itis)
-  catchAtLengthProportions <- rbind(catchAtLengthProportions,itisData)
-}
-
-usethis::use_data(catchAtLengthProportions)
-```
-
-The resulting table for the species of interest over 5 size class intervals. totalBiomass is in metric tons.
-
-```{r props, echo = T,eval=T}
-catchAtLengthProportions %>% 
-  dplyr::mutate(dplyr::across(dplyr::starts_with("sizeclass"),round,5)) %>% 
-  dplyr::mutate(totalBiomass=round(totalBiomass)) %>%
-  DT::datatable(.,rownames = FALSE, 
-          options = list(pageLength = 10, 
-                         order = list(list(0, 'asc'))
-          ))
-
-
-```
-
-## Assign fleets definition to hydra fleets
-
-The [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) definitions are further aggregated to meet the needs of the Hydra model
+The [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) definitions for the Hydra model are defined in the table:
 
 ```{r hydrafleet, echo=T, eval=T}
 mskeyrun::fleets %>%  kableExtra::kbl() %>%

@@ -1,11 +1,13 @@
 #' catch by size class, area, fleet
 #'
-#' For the species found in the Hydra model, the [proportion](https://noaa-edab.github.io/ms-keyrun/GBLandingsByLength.html) of total landings are reported by [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html), year, and by [sizeclass](https://noaa-edab.github.io/ms-keyrun/GBLandingsByLength.html)
+#' For the species found in the Hydra model, the \href{https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html}{proportion} 
+#' of total landings are reported by \href{https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDefinitions.html}{fleet}, year, and 
+#' by \href{https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html}{sizeclass}
 #'
 #' @format A data frame with 3 columns
 #'
 #' \describe{
-#'   \item{fleet}{Name of [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html)}
+#'   \item{fleet}{Name of \href{https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDefinitions.html}{fleet}}
 #'   \item{area}{Area in which landings are reported}
 #'   \item{year}{year in which landings reported}
 #'   \item{species_itis}{itis code}
