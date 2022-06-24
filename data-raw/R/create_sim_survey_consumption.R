@@ -82,7 +82,7 @@ create_sim_survey_comsumption <- function(atlmod,fitstart=NULL,fitend=NULL,saveT
   codcons <- biomass_eaten %>% 
     dplyr::filter(species=="North_atl_cod") %>% 
     dplyr::group_by(time, agecl) %>% 
-    dplyr::summarise(bio_eaten)  
+    dplyr::summarise(totcons = sum(bio_eaten))  
   
   codn <- nordic_runresults_01omlist_ss$truenums_ss %>% 
     dplyr::filter(species=="North_atl_cod") %>% 
