@@ -108,7 +108,7 @@
       <h1 data-toc-skip>MS Keyrun Dataset Dimensions</h1>
                         <h4 data-toc-skip class="author">Sarah Gaichas</h4>
             
-            <h4 data-toc-skip class="date">22 June, 2022</h4>
+            <h4 data-toc-skip class="date">07 July, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/DatasetDimensions.Rmd" class="external-link"><code>vignettes/DatasetDimensions.Rmd</code></a></small>
       <div class="hidden name"><code>DatasetDimensions.Rmd</code></div>
@@ -154,19 +154,19 @@
 </h3>
 <p><a href="https://forms.gle/Pq78yqwa5ueFi8Kq8" class="external-link">This is the survey form.</a></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#survey link https://forms.gle/Pq78yqwa5ueFi8Kq8</span>
-<span class="co">#results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses</span>
-<span class="co"># resultfile &lt;- drive_find(pattern = "MS-Keyrun Dataset Dimensions", type = "spreadsheet")</span>
-<span class="co"># responses &lt;- drive_download(resultfile, type = "csv", overwrite = TRUE) %&gt;%</span>
-<span class="co">#   {read.csv(.$local_path)} </span>
-
-<span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Dataset Dimensions (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
-
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"StartYear"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"EndYear"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"SurvSeason"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"FishSeason"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">11</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"SpatialGB"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#survey link https://forms.gle/Pq78yqwa5ueFi8Kq8</span></span>
+<span><span class="co">#results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses</span></span>
+<span><span class="co"># resultfile &lt;- drive_find(pattern = "MS-Keyrun Dataset Dimensions", type = "spreadsheet")</span></span>
+<span><span class="co"># responses &lt;- drive_download(resultfile, type = "csv", overwrite = TRUE) %&gt;%</span></span>
+<span><span class="co">#   {read.csv(.$local_path)} </span></span>
+<span></span>
+<span><span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Dataset Dimensions (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"StartYear"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"EndYear"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"SurvSeason"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"FishSeason"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">11</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"SpatialGB"</span></span></code></pre></div>
 <p>We had 4 responses.</p>
 </div>
 <div class="section level3">
@@ -174,9 +174,9 @@
 </h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">startend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Start <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">StartYear</span>,
-                       End <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">EndYear</span><span class="op">)</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">startend</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">startend</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Start <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">StartYear</span>,</span>
+<span>                       End <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">EndYear</span><span class="op">)</span></span>
+<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">startend</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <thead><tr class="header">
 <th align="left">Start</th>
@@ -202,7 +202,7 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.start.time</span>, col.names <span class="op">=</span> <span class="st">"Start year rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.start.time</span>, col.names <span class="op">=</span> <span class="st">"Start year rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -224,7 +224,7 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.end.time</span>, col.names <span class="op">=</span> <span class="st">"End year rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.end.time</span>, col.names <span class="op">=</span> <span class="st">"End year rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -251,18 +251,18 @@
 </h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">seasons</span> <span class="op">&lt;-</span> <span class="va">responses</span> <span class="op">%&gt;%</span>
-  <span class="fu">select</span><span class="op">(</span><span class="va">SurvSeason</span>, <span class="va">FishSeason</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">gather</span><span class="op">(</span>key <span class="op">=</span> <span class="va">SurvFish</span>, value <span class="op">=</span> <span class="st">"Season"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">arrange</span><span class="op">(</span><span class="va">Season</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">seasons</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Season</span>, fill<span class="op">=</span><span class="va">SurvFish</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="co">#+ </span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">seasons</span> <span class="op">&lt;-</span> <span class="va">responses</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">SurvSeason</span>, <span class="va">FishSeason</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">gather</span><span class="op">(</span>key <span class="op">=</span> <span class="va">SurvFish</span>, value <span class="op">=</span> <span class="st">"Season"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">arrange</span><span class="op">(</span><span class="va">Season</span><span class="op">)</span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span><span class="va">seasons</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Season</span>, fill<span class="op">=</span><span class="va">SurvFish</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span><span class="co">#+ </span></span></code></pre></div>
 <p><img src="DatasetDimensions_files/figure-html/seasons-1.png" width="700"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></code></pre></div>
+<code class="sourceCode R"><span>  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.survey.temporal.resolution</span>, col.names <span class="op">=</span> <span class="st">"Survey season rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.survey.temporal.resolution</span>, col.names <span class="op">=</span> <span class="st">"Survey season rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -284,7 +284,7 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.fishery.temporal.resolution</span>, col.names <span class="op">=</span> <span class="st">"Fishery season rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.fishery.temporal.resolution</span>, col.names <span class="op">=</span> <span class="st">"Fishery season rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -311,12 +311,12 @@
 </h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">responses</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">SpatialGB</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span><span class="co">#+ </span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">responses</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">SpatialGB</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span><span class="co">#+ </span></span></code></pre></div>
 <p><img src="DatasetDimensions_files/figure-html/space-1.png" width="700"></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.spatial.definition</span>, col.names <span class="op">=</span> <span class="st">"Spatial Rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Rationale.for.spatial.definition</span>, col.names <span class="op">=</span> <span class="st">"Spatial Rationale"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -363,7 +363,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

@@ -112,7 +112,7 @@
       <h1 data-toc-skip>Fleet Definitions for Georges Bank</h1>
                         <h4 data-toc-skip class="author">Andy Beet</h4>
             
-            <h4 data-toc-skip class="date">22 June, 2022</h4>
+            <h4 data-toc-skip class="date">07 July, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/GBFleetDefinitions.Rmd" class="external-link"><code>vignettes/GBFleetDefinitions.Rmd</code></a></small>
       <div class="hidden name"><code>GBFleetDefinitions.Rmd</code></div>
@@ -126,30 +126,30 @@
 </h2>
 <p>Statistical areas are used to define the Georges Bank footprint for pulling the landings data by gear</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">crs</span> <span class="op">&lt;-</span> <span class="fl">4326</span>
-<span class="co"># read in coastline and GB shape file</span>
-<span class="va">coast</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/gis"</span>, <span class="st">'NES_LME_coast.shp'</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">.</span>,crs<span class="op">=</span><span class="va">crs</span><span class="op">)</span>
-<span class="va">GB_strata</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/gis"</span>,<span class="st">"Statistical_Areas_2010.shp"</span><span class="op">)</span>,quiet<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span>
-    <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">.</span>,crs<span class="op">=</span><span class="va">crs</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">521</span>, <span class="fl">522</span>, <span class="fl">523</span>, <span class="fl">524</span>, <span class="fl">525</span>, <span class="fl">526</span>, <span class="fl">538</span>, <span class="fl">551</span>, <span class="fl">552</span>, <span class="fl">561</span>, <span class="fl">562</span>, <span class="fl">537</span><span class="op">)</span> <span class="op">)</span>
-<span class="va">centroids</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">st_centroid</a></span><span class="op">(</span><span class="va">GB_strata</span><span class="op">)</span><span class="op">)</span>
-<span class="va">GB_strata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">GB_strata</span>,<span class="va">centroids</span><span class="op">)</span>
-
-<span class="co">#plot map</span>
-<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">coast</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">GB_strata</span>,fill<span class="op">=</span><span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">GB_strata</span>,<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">X</span>,y<span class="op">=</span><span class="va">Y</span>,label<span class="op">=</span><span class="va">Id</span><span class="op">)</span>,size<span class="op">=</span><span class="fl">2</span><span class="op">)</span>    <span class="op">+</span>
-  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">76</span>,<span class="op">-</span><span class="fl">65</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">38</span>,<span class="fl">44</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">crs</span> <span class="op">&lt;-</span> <span class="fl">4326</span></span>
+<span><span class="co"># read in coastline and GB shape file</span></span>
+<span><span class="va">coast</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/gis"</span>, <span class="st">'NES_LME_coast.shp'</span><span class="op">)</span>, quiet <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">.</span>,crs<span class="op">=</span><span class="va">crs</span><span class="op">)</span></span>
+<span><span class="va">GB_strata</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_read.html" class="external-link">st_read</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/gis"</span>,<span class="st">"Statistical_Areas_2010.shp"</span><span class="op">)</span>,quiet<span class="op">=</span><span class="cn">T</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>    <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_transform.html" class="external-link">st_transform</a></span><span class="op">(</span><span class="va">.</span>,crs<span class="op">=</span><span class="va">crs</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Id</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">521</span>, <span class="fl">522</span>, <span class="fl">523</span>, <span class="fl">524</span>, <span class="fl">525</span>, <span class="fl">526</span>, <span class="fl">538</span>, <span class="fl">551</span>, <span class="fl">552</span>, <span class="fl">561</span>, <span class="fl">562</span>, <span class="fl">537</span><span class="op">)</span> <span class="op">)</span></span>
+<span><span class="va">centroids</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">st_centroid</a></span><span class="op">(</span><span class="va">GB_strata</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">GB_strata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">cbind</a></span><span class="op">(</span><span class="va">GB_strata</span>,<span class="va">centroids</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co">#plot map</span></span>
+<span><span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">coast</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">geom_sf</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">GB_strata</span>,fill<span class="op">=</span><span class="st">"grey"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">GB_strata</span>,<span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">X</span>,y<span class="op">=</span><span class="va">Y</span>,label<span class="op">=</span><span class="va">Id</span><span class="op">)</span>,size<span class="op">=</span><span class="fl">2</span><span class="op">)</span>    <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsf.html" class="external-link">coord_sf</a></span><span class="op">(</span>xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">76</span>,<span class="op">-</span><span class="fl">65</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">38</span>,<span class="fl">44</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GBFleetDefinitions_files/figure-html/unnamed-chunk-1-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="gear-types">Gear Types<a class="anchor" aria-label="anchor" href="#gear-types"></a>
 </h2>
 <p>There are a total of 52 unique NEGEAR2 codes (found in the cfdbs.gear table). However on Georges Bank not all of these fishing gears are used. A subset of 45 gear types are used. All gear codes:</p>
-<div id="htmlwidget-928009d21a4e9fbaa81a" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-928009d21a4e9fbaa81a">{"x":{"filter":"none","vertical":false,"data":[["-1","-1","-1","-1","-1","-1","-1","-1","01","02","02","03","03","03","03","04","05","05","05","05","05","05","05","05","05","05","06","06","06","06","06","06","06","06","07","07","08","09","09","09","10","10","10","10","10","10","11","11","11","11","11","11","11","11","12","12","12","12","12","13","13","14","14","14","14","15","16","17","18","18","18","18","18","18","18","19","20","20","20","20","20","20","20","20","21","21","21","21","21","21","21","21","22","22","22","22","23","23","24","25","25","26","27","28","28","29","30","30","31","32","32","32","32","32","33","33","33","33","34","35","35","35","35","36","37","38","38","38","38","38","38","38","38","39","40","41","41","41","41","41","42","43","44","45","50","51","52","53","81","99"],[null,null,null,null,"SIDE TRAWL","STERN TRAWL","TRAWL, OTTER, MIDWATER","TRAWL, OTTER, MIDWATER","LONGLINE, BOTTOM","HANDLINE","HANDLINE,AUTO JIG","HARPOON,OTHER/NK SPECIES","HARPOON,SWORDFISH","HARPOON,TURTLE","SPEARS","LONGLINE, PELAGIC","TRAWL,OTTER,BOTTOM,FISH","TRAWL,OTTER,BOTTOM,CRAB","TRAWL,OTTER,BOTTOM,SCALLOP","TRAWL,OTTER,BOTTOM,TWIN","TRAWL,OTTER,BOTTOM,RUHLE","TRAWL,OTTER,BOTTOM,LOBSTER","TRAWL,OTTER,BOTTOM PAIRED","TRAWL,OTTER,BOTTOM,HADDOCK SEPARATOR","TRAWL,OTTER,BOTTOM,SHRIMP","TRAWL,OTTER,BOTTOM,OTHER/NK SPECIES","TROLL LINE, OTHER/NK SPECIES","TROLL LINE, TUNA","TROT LINE WITH BAIT","POWER TROLL SALMON","POWER TROLL TUNA","POWER TROLL OTHER/NK SPECIES","TROLL &amp; HANDLINE, COMBINED","TROLL LINE, GREEN-STICK","HAUL SEINE, BEACH, COMMON","HAUL SEINE, LONG","FLOATING TRAP","DIP NET, COMMON","DIP NET, DROP NET","DIP NET, PUSH NET","GILL NET, FIXED OR ANCHORED,SINK, OTHER/NK SPECIES","GILL NET,SET /STAKE, SEA BASS","GILL NET,STAKE,OTHER","GILL NET,SET, SALMON","GILL NET,SET, CRAB","GILL NET,ANCHORED-FLOATING, FISH","GILL NET,DRIFT, OTHER/NK SPECIES","GILL NET,DRIFT, SEA BASS","GILL NET,DRIFT, SHAD","GILL NET,DRIFT, SALMON","GILL NET,DRIFT, BARRACUDA","GILL NET,DRIFT, LARGE PELAGIC","GILL NET,DRIFT-FLOATING, FISH","GILL NET,DRIFT-SINK, FISH","PURSE SEINE, OTHER/NK SPECIES","PURSE SEINE, HERRING","PURSE SEINE, MACKEREL","PURSE SEINE, MENHADEN","PURSE SEINE, TUNA","DREDGE, SCALLOP,BAY","DREDGE, SCALLOP,SEA","POUND NET, OTHER/NK SPECIES","POUND NET, CRAB","POUND NET, FISH","POUND NET, HORSESHOE CRAB","TRAWL,OTTER,BOTTOM,LG MESH BELLY PANEL","DANISH SEINE","TRAWL,OTTER,MIDWATER PAIRED","POTS + TRAPS,OTHER/NK SPECIES","POTS + TRAPS,FISH","POTS + TRAPS,EEL","POTS + TRAPS,CONCH","POTS + TRAPS,OCTOPUS","POTS + TRAPS,TURTLE","POTS + TRAPS, HAGFISH","POTS + TRAPS,SHRIMP","POT/TRAP, LOBSTER OFFSH NK","POT/TRAP, LOBSTER OFFSH WOOD","POT/TRAP, LOBSTER OFFSH WIRE","POT/TRAP, LOBSTER OFFSH WD/WR","POT/TRAP, LOBSTER OFFSH WD/NET","POT/TRAP, LOBSTER OFFSH WR/NET","POT/TRAP, LOBSTER OFFSH PLASTIC","POT/TRAP, LOBSTER OFFSH CONICAL","POT/TRAP, LOBSTER INSH NK","POT/TRAP, LOBSTER INSH WOOD","POT/TRAP, LOBSTER INSH WIRE","POT/TRAP, LOBSTER INSH WD/WR","POT/TRAP, LOBSTER INSH WD/NET","POT/TRAP, LOBSTER INSH WR/NET","POT/TRAP, LOBSTER INSH PLASTIC","POT/TRAP, LOBSTER INSH CONICAL","HOES","FORKS","SHOVELS","PICKS","BY HAND, OTHER/NK SPECIES","BY HAND, OYSTERS","STOP SEINE","RAKES, OTHER/NK SPECIES","RAKES, OYSTER","WEIR","BOX TRAP","DREDGE, OYSTER COMMON","DREDGE, OYSTER SUCTION","BAG NET","POTS + TRAPS,CRAB OTHER","POTS + TRAPS,BLUE CRAB","LIFT NET","FYKE NET, OTHER/NK SPECIES","FYKE NET, CRAB","FYKE NET, FISH","FYKE NET, TURTLE","HOOP NET","DIVING GEAR","DIVING GEAR, SCALLOP","DIVING GEAR, URCHIN","DIVING GEAR,SUCTION PUMP,HAND","CAST NETS","BEAM TRAWL, OTHER/NK SPECIES","BEAM TRAWL, SHRIMP","BEAM TRAWL,SCALLOP","BEAM TRAWL,FISH","SCOTTISH SEINE","TRAWL,OTTER,MIDWATER","SCRAPES","DREDGE, OTHER/NK SPECIES","DREDGE, CLAM","DREDGE, CRAB","DREDGE, CONCH","DREDGE, MUSSEL","DREDGE, CLAM, HYDRAULIC","DREDGE, URCHIN","STOP NET","DREDGE, SURF CLAM + OCEAN QUAHO","TONGS AND GRABS, OTHER/NK SPECIES","TONGS AND GRABS, CLAM","TONGS AND GRABS, OYSTER","TONGS AND GRABS, CLAM,PATEN","TONGS AND GRABS,OYSTER,PATEN","HOOKS","KNIFE, SEAWEED","WEEDWHACKER, SEAWEED","TRAWL,SHRIMP,TWINNED","GILL NET,RUNAROUND","GILL NET,GREAT LAKES","GILL NET,OTHER","TRAMMEL NET","SUCTION PUMP","UNKNOWN"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>NEGEAR2<\/th>\n      <th>GEARNM<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"order":[[0,"asc"]],"columnDefs":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d56a3af893f7ba7db180" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d56a3af893f7ba7db180">{"x":{"filter":"none","vertical":false,"data":[["-1","-1","-1","-1","-1","-1","-1","-1","01","02","02","03","03","03","03","04","05","05","05","05","05","05","05","05","05","05","06","06","06","06","06","06","06","06","07","07","08","09","09","09","10","10","10","10","10","10","11","11","11","11","11","11","11","11","12","12","12","12","12","13","13","14","14","14","14","15","16","17","18","18","18","18","18","18","18","19","20","20","20","20","20","20","20","20","21","21","21","21","21","21","21","21","22","22","22","22","23","23","24","25","25","26","27","28","28","29","30","30","31","32","32","32","32","32","33","33","33","33","34","35","35","35","35","36","37","38","38","38","38","38","38","38","38","39","40","41","41","41","41","41","42","43","44","45","50","51","52","53","81","99"],[null,null,null,null,"SIDE TRAWL","STERN TRAWL","TRAWL, OTTER, MIDWATER","TRAWL, OTTER, MIDWATER","LONGLINE, BOTTOM","HANDLINE","HANDLINE,AUTO JIG","HARPOON,OTHER/NK SPECIES","HARPOON,SWORDFISH","HARPOON,TURTLE","SPEARS","LONGLINE, PELAGIC","TRAWL,OTTER,BOTTOM,FISH","TRAWL,OTTER,BOTTOM,CRAB","TRAWL,OTTER,BOTTOM,SCALLOP","TRAWL,OTTER,BOTTOM,TWIN","TRAWL,OTTER,BOTTOM,RUHLE","TRAWL,OTTER,BOTTOM,LOBSTER","TRAWL,OTTER,BOTTOM PAIRED","TRAWL,OTTER,BOTTOM,HADDOCK SEPARATOR","TRAWL,OTTER,BOTTOM,SHRIMP","TRAWL,OTTER,BOTTOM,OTHER/NK SPECIES","TROLL LINE, OTHER/NK SPECIES","TROLL LINE, TUNA","TROT LINE WITH BAIT","POWER TROLL SALMON","POWER TROLL TUNA","POWER TROLL OTHER/NK SPECIES","TROLL &amp; HANDLINE, COMBINED","TROLL LINE, GREEN-STICK","HAUL SEINE, BEACH, COMMON","HAUL SEINE, LONG","FLOATING TRAP","DIP NET, COMMON","DIP NET, DROP NET","DIP NET, PUSH NET","GILL NET, FIXED OR ANCHORED,SINK, OTHER/NK SPECIES","GILL NET,SET /STAKE, SEA BASS","GILL NET,STAKE,OTHER","GILL NET,SET, SALMON","GILL NET,SET, CRAB","GILL NET,ANCHORED-FLOATING, FISH","GILL NET,DRIFT, OTHER/NK SPECIES","GILL NET,DRIFT, SEA BASS","GILL NET,DRIFT, SHAD","GILL NET,DRIFT, SALMON","GILL NET,DRIFT, BARRACUDA","GILL NET,DRIFT, LARGE PELAGIC","GILL NET,DRIFT-FLOATING, FISH","GILL NET,DRIFT-SINK, FISH","PURSE SEINE, OTHER/NK SPECIES","PURSE SEINE, HERRING","PURSE SEINE, MACKEREL","PURSE SEINE, MENHADEN","PURSE SEINE, TUNA","DREDGE, SCALLOP,BAY","DREDGE, SCALLOP,SEA","POUND NET, OTHER/NK SPECIES","POUND NET, CRAB","POUND NET, FISH","POUND NET, HORSESHOE CRAB","TRAWL,OTTER,BOTTOM,LG MESH BELLY PANEL","DANISH SEINE","TRAWL,OTTER,MIDWATER PAIRED","POTS + TRAPS,OTHER/NK SPECIES","POTS + TRAPS,FISH","POTS + TRAPS,EEL","POTS + TRAPS,CONCH","POTS + TRAPS,OCTOPUS","POTS + TRAPS,TURTLE","POTS + TRAPS, HAGFISH","POTS + TRAPS,SHRIMP","POT/TRAP, LOBSTER OFFSH NK","POT/TRAP, LOBSTER OFFSH WOOD","POT/TRAP, LOBSTER OFFSH WIRE","POT/TRAP, LOBSTER OFFSH WD/WR","POT/TRAP, LOBSTER OFFSH WD/NET","POT/TRAP, LOBSTER OFFSH WR/NET","POT/TRAP, LOBSTER OFFSH PLASTIC","POT/TRAP, LOBSTER OFFSH CONICAL","POT/TRAP, LOBSTER INSH NK","POT/TRAP, LOBSTER INSH WOOD","POT/TRAP, LOBSTER INSH WIRE","POT/TRAP, LOBSTER INSH WD/WR","POT/TRAP, LOBSTER INSH WD/NET","POT/TRAP, LOBSTER INSH WR/NET","POT/TRAP, LOBSTER INSH PLASTIC","POT/TRAP, LOBSTER INSH CONICAL","HOES","FORKS","SHOVELS","PICKS","BY HAND, OTHER/NK SPECIES","BY HAND, OYSTERS","STOP SEINE","RAKES, OTHER/NK SPECIES","RAKES, OYSTER","WEIR","BOX TRAP","DREDGE, OYSTER COMMON","DREDGE, OYSTER SUCTION","BAG NET","POTS + TRAPS,CRAB OTHER","POTS + TRAPS,BLUE CRAB","LIFT NET","FYKE NET, OTHER/NK SPECIES","FYKE NET, CRAB","FYKE NET, FISH","FYKE NET, TURTLE","HOOP NET","DIVING GEAR","DIVING GEAR, SCALLOP","DIVING GEAR, URCHIN","DIVING GEAR,SUCTION PUMP,HAND","CAST NETS","BEAM TRAWL, OTHER/NK SPECIES","BEAM TRAWL, SHRIMP","BEAM TRAWL,SCALLOP","BEAM TRAWL,FISH","SCOTTISH SEINE","TRAWL,OTTER,MIDWATER","SCRAPES","DREDGE, OTHER/NK SPECIES","DREDGE, CLAM","DREDGE, CRAB","DREDGE, CONCH","DREDGE, MUSSEL","DREDGE, CLAM, HYDRAULIC","DREDGE, URCHIN","STOP NET","DREDGE, SURF CLAM + OCEAN QUAHO","TONGS AND GRABS, OTHER/NK SPECIES","TONGS AND GRABS, CLAM","TONGS AND GRABS, OYSTER","TONGS AND GRABS, CLAM,PATEN","TONGS AND GRABS,OYSTER,PATEN","HOOKS","KNIFE, SEAWEED","WEEDWHACKER, SEAWEED","TRAWL,SHRIMP,TWINNED","GILL NET,RUNAROUND","GILL NET,GREAT LAKES","GILL NET,OTHER","TRAMMEL NET","SUCTION PUMP","UNKNOWN"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>NEGEAR2<\/th>\n      <th>GEARNM<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"order":[[0,"asc"]],"columnDefs":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="aggregating-gear-types">Aggregating Gear Types<a class="anchor" aria-label="anchor" href="#aggregating-gear-types"></a>
@@ -157,8 +157,8 @@
 <p>Each gear type is designed to target particular species. Some gear types may catch predominantly one species (eg. Lobsters traps) where others may catch multiple species (bottom trawls). We aim to aggregate the gear types into fleets using similarities in the catch among the gear types. To achieve this we will adopt an agglomerative hierarchical, nearest neighbor clustering method (<span class="citation">Manly (<a href="#ref-manly2017" role="doc-biblioref">2017</a>)</span>) using euclidean distance as the measure of distance between groups. In this approach all gear types begin in separate groups. Groups that are similar (similar catch, defined by a distance measure) are then merged until at some distance all gear types belong to a single group. The variables used to determine the grouping are the species caught, measured by landings (in lbs)</p>
 <p>Landings data, by gear type, are pulled from the database.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">channel</span> <span class="op">&lt;-</span> <span class="fu">dbutils</span><span class="fu">::</span><span class="fu"><a href="https://andybeet.github.io/dbutils/reference/connect_to_database.html" class="external-link">connect_to_database</a></span><span class="op">(</span><span class="st">"server"</span>,<span class="st">"id"</span><span class="op">)</span>
-<span class="fu">get_landings_by_data</span><span class="op">(</span><span class="va">channel</span>,percentLanded<span class="op">=</span><span class="fl">0.90</span>,area<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">cfdbs</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cfdbs/man/EPUs.html" class="external-link">EPUs</a></span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="st">"GB"</span><span class="op">]</span><span class="op">]</span>,<span class="fl">537</span><span class="op">)</span>,outDir<span class="op">=</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">channel</span> <span class="op">&lt;-</span> <span class="fu">dbutils</span><span class="fu">::</span><span class="fu"><a href="https://andybeet.github.io/dbutils/reference/connect_to_database.html" class="external-link">connect_to_database</a></span><span class="op">(</span><span class="st">"server"</span>,<span class="st">"id"</span><span class="op">)</span></span>
+<span><span class="fu">get_landings_by_data</span><span class="op">(</span><span class="va">channel</span>,percentLanded<span class="op">=</span><span class="fl">0.90</span>,area<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">cfdbs</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cfdbs/man/EPUs.html" class="external-link">EPUs</a></span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="st">"GB"</span><span class="op">]</span><span class="op">]</span>,<span class="fl">537</span><span class="op">)</span>,outDir<span class="op">=</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The resulting data are then formatted as a data frame (or matrix) where each gear type is represented in a row and each species in a column. Each cell being the landings of the species by the gear type. Note: There will be many zeros in the data frame representing gear types that do not catch a particular species.</p>
 <p>The variables are often standardized so that all of the variables are equally important in determining distances. We standardize each variable to have zero mean and unit variance. At this point pairwise distances between all gear types are calculated using the Euclidean distance function</p>
 <p><span class="math display">\[d_{i,j} = \left( \sum_{k=1}^p(x_{i,k}-x_{j,k})^2 \right) ^{1/2} \]</span> where <span class="math inline">\(x_{i,k}\)</span> is the landings of species <span class="math inline">\(k\)</span> by gear type <span class="math inline">\(i\)</span> and <span class="math inline">\(x_{j,k}\)</span> is the landings of species <span class="math inline">\(k\)</span> by gear type <span class="math inline">\(j\)</span>. <span class="math inline">\(d_{i,j}\)</span> is the measure of distance between gear type <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span></p>
@@ -169,8 +169,8 @@
 <p>For each gear type the landings of each species are aggregated over time and then ordered from the most abundant to least abundant. To reduce the number of variables (species) in the analysis we only use species which comprise 90% of the total landings for each gear type.</p>
 <p>(Figure @ref(fig:dendro1)) shows the result of this approach. Initial inspection indicates further “cleaning” of the data is required.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis_all_gears</span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Complete gear list using 90% landing from each gear"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis_all_gears</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Complete gear list using 90% landing from each gear"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram1.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas" width="100%"><p class="caption">
 The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas
@@ -183,8 +183,8 @@ The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis o
 </h3>
 <p>Total landings, aggregated over time, are ordered by gear type. The gear types that contribute to 99% of total landings are selected and used in the cluster analysis</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis_filter_gears</span><span class="op">(</span>filterByLandings<span class="op">=</span><span class="fl">.99</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span><span class="op">$</span><span class="va">top</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Gear types contributing to 99% of total landings"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis_filter_gears</span><span class="op">(</span>filterByLandings<span class="op">=</span><span class="fl">.99</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span><span class="op">$</span><span class="va">top</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Gear types contributing to 99% of total landings"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram2.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings" width="100%"><p class="caption">
 The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings
@@ -196,193 +196,193 @@ The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis o
 </h3>
 <p>Time series of species caught by each gear type. To reduce the number of panels in each figure, species caught &lt; 30% of the time are not displayed. For example reporting of landings started in 1964 (56 years ago). So any species that have reported landings in fewer that 17 years are not displayed.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">gear</span> <span class="kw">in</span> <span class="va">clusteObj</span><span class="op">$</span><span class="va">topGears</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">explore_landings_by_gear</span><span class="op">(</span><span class="va">channel</span>,data<span class="op">=</span><span class="va">gearData</span><span class="op">$</span><span class="va">data</span>,gearCode<span class="op">=</span><span class="va">gear</span>,filterYrs<span class="op">=</span><span class="fl">0.30</span>,saveToFile<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw">for</span> <span class="op">(</span><span class="va">gear</span> <span class="kw">in</span> <span class="va">clusteObj</span><span class="op">$</span><span class="va">topGears</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">explore_landings_by_gear</span><span class="op">(</span><span class="va">channel</span>,data<span class="op">=</span><span class="va">gearData</span><span class="op">$</span><span class="va">data</span>,gearCode<span class="op">=</span><span class="va">gear</span>,filterYrs<span class="op">=</span><span class="fl">0.30</span>,saveToFile<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="section">01<a class="anchor" aria-label="anchor" href="#section"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM          </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 01      LONGLINE, BOTTOM</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM          </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 01      LONGLINE, BOTTOM</span></span></code></pre>
 <p><img src="figures/gear01.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-1">02<a class="anchor" aria-label="anchor" href="#section-1"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM           </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 02      HANDLINE         </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 02      HANDLINE,AUTO JIG</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM           </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 02      HANDLINE         </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 02      HANDLINE,AUTO JIG</span></span></code></pre>
 <p><img src="figures/gear02.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-2">05<a class="anchor" aria-label="anchor" href="#section-2"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 10 × 2</span></span>
-<span class="co">##    NEGEAR2 GEARNM                              </span>
-<span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               </span>
-<span class="co">## <span style="color: #BCBCBC;"> 1</span> 05      TRAWL,OTTER,BOTTOM,FISH             </span>
-<span class="co">## <span style="color: #BCBCBC;"> 2</span> 05      TRAWL,OTTER,BOTTOM,CRAB             </span>
-<span class="co">## <span style="color: #BCBCBC;"> 3</span> 05      TRAWL,OTTER,BOTTOM,SCALLOP          </span>
-<span class="co">## <span style="color: #BCBCBC;"> 4</span> 05      TRAWL,OTTER,BOTTOM,TWIN             </span>
-<span class="co">## <span style="color: #BCBCBC;"> 5</span> 05      TRAWL,OTTER,BOTTOM,RUHLE            </span>
-<span class="co">## <span style="color: #BCBCBC;"> 6</span> 05      TRAWL,OTTER,BOTTOM,LOBSTER          </span>
-<span class="co">## <span style="color: #BCBCBC;"> 7</span> 05      TRAWL,OTTER,BOTTOM PAIRED           </span>
-<span class="co">## <span style="color: #BCBCBC;"> 8</span> 05      TRAWL,OTTER,BOTTOM,HADDOCK SEPARATOR</span>
-<span class="co">## <span style="color: #BCBCBC;"> 9</span> 05      TRAWL,OTTER,BOTTOM,SHRIMP           </span>
-<span class="co">## <span style="color: #BCBCBC;">10</span> 05      TRAWL,OTTER,BOTTOM,OTHER/NK SPECIES</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10 × 2</span></span></span>
+<span><span class="co">##    NEGEAR2 GEARNM                              </span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 05      TRAWL,OTTER,BOTTOM,FISH             </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 05      TRAWL,OTTER,BOTTOM,CRAB             </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 05      TRAWL,OTTER,BOTTOM,SCALLOP          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 05      TRAWL,OTTER,BOTTOM,TWIN             </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 05      TRAWL,OTTER,BOTTOM,RUHLE            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 05      TRAWL,OTTER,BOTTOM,LOBSTER          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 05      TRAWL,OTTER,BOTTOM PAIRED           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 05      TRAWL,OTTER,BOTTOM,HADDOCK SEPARATOR</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 05      TRAWL,OTTER,BOTTOM,SHRIMP           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 05      TRAWL,OTTER,BOTTOM,OTHER/NK SPECIES</span></span></code></pre>
 <p><img src="figures/gear05.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-3">10<a class="anchor" aria-label="anchor" href="#section-3"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 6 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                                            </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 10      GILL NET, FIXED OR ANCHORED,SINK, OTHER/NK SPECIES</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 10      GILL NET,SET /STAKE, SEA BASS                     </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 10      GILL NET,STAKE,OTHER                              </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 10      GILL NET,SET, SALMON                              </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 10      GILL NET,SET, CRAB                                </span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 10      GILL NET,ANCHORED-FLOATING, FISH</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                                            </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                             </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 10      GILL NET, FIXED OR ANCHORED,SINK, OTHER/NK SPECIES</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 10      GILL NET,SET /STAKE, SEA BASS                     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 10      GILL NET,STAKE,OTHER                              </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 10      GILL NET,SET, SALMON                              </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 10      GILL NET,SET, CRAB                                </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> 10      GILL NET,ANCHORED-FLOATING, FISH</span></span></code></pre>
 <p><img src="figures/gear10.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-4">12<a class="anchor" aria-label="anchor" href="#section-4"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 5 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                       </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 12      PURSE SEINE, OTHER/NK SPECIES</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 12      PURSE SEINE, HERRING         </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 12      PURSE SEINE, MACKEREL        </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 12      PURSE SEINE, MENHADEN        </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 12      PURSE SEINE, TUNA</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 5 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                       </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 12      PURSE SEINE, OTHER/NK SPECIES</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 12      PURSE SEINE, HERRING         </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 12      PURSE SEINE, MACKEREL        </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 12      PURSE SEINE, MENHADEN        </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 12      PURSE SEINE, TUNA</span></span></code></pre>
 <p><img src="figures/gear12.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-5">13<a class="anchor" aria-label="anchor" href="#section-5"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM             </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 13      DREDGE, SCALLOP,BAY</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 13      DREDGE, SCALLOP,SEA</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM             </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 13      DREDGE, SCALLOP,BAY</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 13      DREDGE, SCALLOP,SEA</span></span></code></pre>
 <p><img src="figures/gear13.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-6">14<a class="anchor" aria-label="anchor" href="#section-6"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 4 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                     </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 14      POUND NET, OTHER/NK SPECIES</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 14      POUND NET, CRAB            </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 14      POUND NET, FISH            </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 14      POUND NET, HORSESHOE CRAB</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 4 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                     </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 14      POUND NET, OTHER/NK SPECIES</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 14      POUND NET, CRAB            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 14      POUND NET, FISH            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 14      POUND NET, HORSESHOE CRAB</span></span></code></pre>
 <p><img src="figures/gear14.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-7">17<a class="anchor" aria-label="anchor" href="#section-7"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                     </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 17      TRAWL,OTTER,MIDWATER PAIRED</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                     </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 17      TRAWL,OTTER,MIDWATER PAIRED</span></span></code></pre>
 <p><img src="figures/gear17.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-8">18<a class="anchor" aria-label="anchor" href="#section-8"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 7 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                       </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 18      POTS + TRAPS,OTHER/NK SPECIES</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 18      POTS + TRAPS,FISH            </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 18      POTS + TRAPS,EEL             </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 18      POTS + TRAPS,CONCH           </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 18      POTS + TRAPS,OCTOPUS         </span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 18      POTS + TRAPS,TURTLE          </span>
-<span class="co">## <span style="color: #BCBCBC;">7</span> 18      POTS + TRAPS, HAGFISH</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 7 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                       </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 18      POTS + TRAPS,OTHER/NK SPECIES</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 18      POTS + TRAPS,FISH            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 18      POTS + TRAPS,EEL             </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 18      POTS + TRAPS,CONCH           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 18      POTS + TRAPS,OCTOPUS         </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> 18      POTS + TRAPS,TURTLE          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> 18      POTS + TRAPS, HAGFISH</span></span></code></pre>
 <p><img src="figures/gear18.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-9">20<a class="anchor" aria-label="anchor" href="#section-9"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 8 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                         </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 20      POT/TRAP, LOBSTER OFFSH NK     </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 20      POT/TRAP, LOBSTER OFFSH WOOD   </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 20      POT/TRAP, LOBSTER OFFSH WIRE   </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 20      POT/TRAP, LOBSTER OFFSH WD/WR  </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 20      POT/TRAP, LOBSTER OFFSH WD/NET </span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 20      POT/TRAP, LOBSTER OFFSH WR/NET </span>
-<span class="co">## <span style="color: #BCBCBC;">7</span> 20      POT/TRAP, LOBSTER OFFSH PLASTIC</span>
-<span class="co">## <span style="color: #BCBCBC;">8</span> 20      POT/TRAP, LOBSTER OFFSH CONICAL</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 8 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                         </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 20      POT/TRAP, LOBSTER OFFSH NK     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 20      POT/TRAP, LOBSTER OFFSH WOOD   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 20      POT/TRAP, LOBSTER OFFSH WIRE   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 20      POT/TRAP, LOBSTER OFFSH WD/WR  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 20      POT/TRAP, LOBSTER OFFSH WD/NET </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> 20      POT/TRAP, LOBSTER OFFSH WR/NET </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> 20      POT/TRAP, LOBSTER OFFSH PLASTIC</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> 20      POT/TRAP, LOBSTER OFFSH CONICAL</span></span></code></pre>
 <p><img src="figures/gear20.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-10">21<a class="anchor" aria-label="anchor" href="#section-10"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 8 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                        </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 21      POT/TRAP, LOBSTER INSH NK     </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 21      POT/TRAP, LOBSTER INSH WOOD   </span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 21      POT/TRAP, LOBSTER INSH WIRE   </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 21      POT/TRAP, LOBSTER INSH WD/WR  </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 21      POT/TRAP, LOBSTER INSH WD/NET </span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 21      POT/TRAP, LOBSTER INSH WR/NET </span>
-<span class="co">## <span style="color: #BCBCBC;">7</span> 21      POT/TRAP, LOBSTER INSH PLASTIC</span>
-<span class="co">## <span style="color: #BCBCBC;">8</span> 21      POT/TRAP, LOBSTER INSH CONICAL</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 8 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                        </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 21      POT/TRAP, LOBSTER INSH NK     </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 21      POT/TRAP, LOBSTER INSH WOOD   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 21      POT/TRAP, LOBSTER INSH WIRE   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 21      POT/TRAP, LOBSTER INSH WD/WR  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 21      POT/TRAP, LOBSTER INSH WD/NET </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> 21      POT/TRAP, LOBSTER INSH WR/NET </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> 21      POT/TRAP, LOBSTER INSH PLASTIC</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> 21      POT/TRAP, LOBSTER INSH CONICAL</span></span></code></pre>
 <p><img src="figures/gear21.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-11">30<a class="anchor" aria-label="anchor" href="#section-11"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 2 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                 </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 30      POTS + TRAPS,CRAB OTHER</span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 30      POTS + TRAPS,BLUE CRAB</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 2 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                 </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 30      POTS + TRAPS,CRAB OTHER</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 30      POTS + TRAPS,BLUE CRAB</span></span></code></pre>
 <p><img src="figures/gear30.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-12">37<a class="anchor" aria-label="anchor" href="#section-12"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM              </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 37      TRAWL,OTTER,MIDWATER</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM              </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 37      TRAWL,OTTER,MIDWATER</span></span></code></pre>
 <p><img src="figures/gear37.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-13">38<a class="anchor" aria-label="anchor" href="#section-13"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 8 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                  </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 38      SCRAPES                 </span>
-<span class="co">## <span style="color: #BCBCBC;">2</span> 38      DREDGE, OTHER/NK SPECIES</span>
-<span class="co">## <span style="color: #BCBCBC;">3</span> 38      DREDGE, CLAM            </span>
-<span class="co">## <span style="color: #BCBCBC;">4</span> 38      DREDGE, CRAB            </span>
-<span class="co">## <span style="color: #BCBCBC;">5</span> 38      DREDGE, CONCH           </span>
-<span class="co">## <span style="color: #BCBCBC;">6</span> 38      DREDGE, MUSSEL          </span>
-<span class="co">## <span style="color: #BCBCBC;">7</span> 38      DREDGE, CLAM, HYDRAULIC </span>
-<span class="co">## <span style="color: #BCBCBC;">8</span> 38      DREDGE, URCHIN</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 8 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                  </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 38      SCRAPES                 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> 38      DREDGE, OTHER/NK SPECIES</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> 38      DREDGE, CLAM            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">4</span> 38      DREDGE, CRAB            </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">5</span> 38      DREDGE, CONCH           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">6</span> 38      DREDGE, MUSSEL          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">7</span> 38      DREDGE, CLAM, HYDRAULIC </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">8</span> 38      DREDGE, URCHIN</span></span></code></pre>
 <p><img src="figures/gear38.png"><!-- --></p>
 </div>
 <div class="section level4">
 <h4 id="section-14">40<a class="anchor" aria-label="anchor" href="#section-14"></a>
 </h4>
-<pre><code><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span>
-<span class="co">##   NEGEAR2 GEARNM                         </span>
-<span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span>
-<span class="co">## <span style="color: #BCBCBC;">1</span> 40      DREDGE, SURF CLAM + OCEAN QUAHO</span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 2</span></span></span>
+<span><span class="co">##   NEGEAR2 GEARNM                         </span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 40      DREDGE, SURF CLAM + OCEAN QUAHO</span></span></code></pre>
 <p><img src="figures/gear40.png"><!-- --></p>
 </div>
 </div>
@@ -391,7 +391,7 @@ The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis o
 </h3>
 <p>The remaining gears (not contributing to 99% of the landings) were used in a cluster analysis to determine how similar these gears are to each other, since 100% of landings should be accounted for.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span><span class="op">$</span><span class="va">bottom</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Gear types contributing &lt; 1% of total landings"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span><span class="op">$</span><span class="va">bottom</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Gear types contributing &lt; 1% of total landings"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram3.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on not contributing to top 99% of landings" width="100%"><p class="caption">
 The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on not contributing to top 99% of landings
@@ -403,9 +403,9 @@ The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis o
 </h3>
 <p>All gear types which catch any amount of the <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies">Species</a> of interest are used in the cluster analysis. The hope was the set of gear types in which to begin the cluster analysis would be substantially less. The number of gears eliminated = 10. It is apparent that species of interest are caught across a broad class of gear types.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#focalSpecies &lt;- readRDS(here::here("data-raw/data","focalspecies.rds"))</span>
-<span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_by_focal_species</span><span class="op">(</span><span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/focalSpecies.html">focalSpecies</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"All gear types that land species of interest"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#focalSpecies &lt;- readRDS(here::here("data-raw/data","focalspecies.rds"))</span></span>
+<span><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_by_focal_species</span><span class="op">(</span><span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/focalSpecies.html">focalSpecies</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"All gear types that land species of interest"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram4.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. All gear types that landed species of interest were selected" width="100%"><p class="caption">
 The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. All gear types that landed species of interest were selected
@@ -466,7 +466,7 @@ R package version 2.1.1 — For new features, see the ’Changelog’ file (in t
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

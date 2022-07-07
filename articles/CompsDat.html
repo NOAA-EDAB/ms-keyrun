@@ -108,7 +108,7 @@
       <h1 data-toc-skip>MS Keyrun Age, Length, and Diet Composition Data Needs</h1>
                         <h4 data-toc-skip class="author">Sarah Gaichas</h4>
             
-            <h4 data-toc-skip class="date">22 June, 2022</h4>
+            <h4 data-toc-skip class="date">07 July, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/CompsDat.Rmd" class="external-link"><code>vignettes/CompsDat.Rmd</code></a></small>
       <div class="hidden name"><code>CompsDat.Rmd</code></div>
@@ -119,42 +119,42 @@
     
 <p>(We first load the survey results.)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#survey link https://forms.gle/5PkpTiCvXEgda2it6</span>
-<span class="co">#results link https://docs.google.com/spreadsheets/d/1BZFqpIfmPdUW0XG3nyZbRrCBW-N-jV_r26mG7oKVdlQ/edit#gid=1759185696</span>
-<span class="co"># resultfile &lt;- drive_find(pattern = "MS-Keyrun Compositional", type = "spreadsheet")</span>
-<span class="co"># responses &lt;- drive_download(resultfile, type = "csv", overwrite = TRUE) %&gt;%</span>
-<span class="co">#   {read.csv(.$local_path)} </span>
-
-
-<span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Compositional Data Needs (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span>
-
-
-
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModType"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModName"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeLength"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeNeeds"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"LengthNeeds"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Diet"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"DietNeeds"</span>
-<span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Comments"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#survey link https://forms.gle/5PkpTiCvXEgda2it6</span></span>
+<span><span class="co">#results link https://docs.google.com/spreadsheets/d/1BZFqpIfmPdUW0XG3nyZbRrCBW-N-jV_r26mG7oKVdlQ/edit#gid=1759185696</span></span>
+<span><span class="co"># resultfile &lt;- drive_find(pattern = "MS-Keyrun Compositional", type = "spreadsheet")</span></span>
+<span><span class="co"># responses &lt;- drive_download(resultfile, type = "csv", overwrite = TRUE) %&gt;%</span></span>
+<span><span class="co">#   {read.csv(.$local_path)} </span></span>
+<span></span>
+<span></span>
+<span><span class="va">responses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.csv</a></span><span class="op">(</span><span class="st">"supportingFiles/MS-Keyrun Compositional Data Needs (Responses) - Form Responses 1.csv"</span>,header<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModType"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"ModName"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeLength"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">6</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"AgeNeeds"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">7</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"LengthNeeds"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">8</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Diet"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">9</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"DietNeeds"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">responses</span><span class="op">)</span><span class="op">[</span><span class="fl">10</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Comments"</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="model-types">Model types<a class="anchor" aria-label="anchor" href="#model-types"></a>
 </h2>
 <p>Multispecies models will focus on 10 species: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate.</p>
 <p>Models will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species. Data needs by model type are summarized below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">compdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,
-                      ModName <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModName</span>,
-                      AgeLength <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">AgeLength</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">separate_rows</span><span class="op">(</span><span class="va">AgeLength</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
-<span class="va">dietdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,
-                      ModName <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModName</span>,
-                      Diet <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">Diet</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">separate_rows</span><span class="op">(</span><span class="va">Diet</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span>
-<span class="co"># rename AgeLength and Diet columns to CompDat and merge</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">compdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,</span>
+<span>                      ModName <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModName</span>,</span>
+<span>                      AgeLength <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">AgeLength</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">separate_rows</span><span class="op">(</span><span class="va">AgeLength</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="va">dietdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,</span>
+<span>                      ModName <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModName</span>,</span>
+<span>                      Diet <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">Diet</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ModType</span> <span class="op">!=</span> <span class="st">"NA"</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>  <span class="fu">separate_rows</span><span class="op">(</span><span class="va">Diet</span>, sep <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span><span class="co"># rename AgeLength and Diet columns to CompDat and merge</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="age-and-length-composition-data-needed">Age and length composition data needed<a class="anchor" aria-label="anchor" href="#age-and-length-composition-data-needed"></a>
@@ -186,18 +186,18 @@
 </h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">compdat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">AgeLength</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill<span class="op">=</span><span class="va">ModType</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Data Needs"</span>, 
-       fill <span class="op">=</span> <span class="st">"Model Type"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="co">#facet_wrap(~ModType, nrow = 2, scales="free") +</span>
-  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">compdat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">AgeLength</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill<span class="op">=</span><span class="va">ModType</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Data Needs"</span>, </span>
+<span>       fill <span class="op">=</span> <span class="st">"Model Type"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co">#facet_wrap(~ModType, nrow = 2, scales="free") +</span></span>
+<span>  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CompsDat_files/figure-html/plotagelen-1.png" width="700"></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></code></pre></div>
+<code class="sourceCode R"><span>  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">AgeNeeds</span>, col.names <span class="op">=</span> <span class="st">"Age information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">AgeNeeds</span>, col.names <span class="op">=</span> <span class="st">"Age information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -219,7 +219,7 @@
 </tbody>
 </table>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">LengthNeeds</span>, col.names <span class="op">=</span> <span class="st">"Length information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">LengthNeeds</span>, col.names <span class="op">=</span> <span class="st">"Length information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -246,18 +246,18 @@
 </h3>
 <p>Responses:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span><span class="va">dietdat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill<span class="op">=</span><span class="va">ModType</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Data Needs"</span>, 
-       fill <span class="op">=</span> <span class="st">"Model Type"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="co">#facet_wrap(~ModType, nrow = 2, scales="free") +</span>
-  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span><span class="va">dietdat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">Diet</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>fill<span class="op">=</span><span class="va">ModType</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Data Needs"</span>, </span>
+<span>       fill <span class="op">=</span> <span class="st">"Model Type"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co">#facet_wrap(~ModType, nrow = 2, scales="free") +</span></span>
+<span>  <span class="fu">scale_x_discrete</span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">45</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CompsDat_files/figure-html/plotenv-1.png" width="700"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R">  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></code></pre></div>
+<code class="sourceCode R"><span>  <span class="co">#theme(axis.text.x = element_text(angle = 90))</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">DietNeeds</span>, col.names <span class="op">=</span> <span class="st">"Diet information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">DietNeeds</span>, col.names <span class="op">=</span> <span class="st">"Diet information needs"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -283,7 +283,7 @@
 <h3 id="other-comments">Other comments<a class="anchor" aria-label="anchor" href="#other-comments"></a>
 </h3>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Comments</span>, col.names <span class="op">=</span> <span class="st">"Other comments"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">responses</span><span class="op">$</span><span class="va">Comments</span>, col.names <span class="op">=</span> <span class="st">"Other comments"</span>, booktabs<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
 <colgroup><col width="100%"></colgroup>
 <thead><tr class="header">
@@ -330,7 +330,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>

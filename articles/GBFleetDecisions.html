@@ -108,7 +108,7 @@
       <h1 data-toc-skip>Fleet Decisions for Georges Bank</h1>
                         <h4 data-toc-skip class="author">Andy Beet</h4>
             
-            <h4 data-toc-skip class="date">22 June, 2022</h4>
+            <h4 data-toc-skip class="date">07 July, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/GBFleetDecisions.Rmd" class="external-link"><code>vignettes/GBFleetDecisions.Rmd</code></a></small>
       <div class="hidden name"><code>GBFleetDecisions.Rmd</code></div>
@@ -124,8 +124,8 @@
 <p>All other gear codes make up the majority (99%) of the landings. For these gear codes each species contribution to the total landings (aggregated over time) are shown as percentages</p>
 <p>Species of interest are <strong>bolded</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">gearData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/data"</span>,<span class="st">"timeSeriesSpeciesByGear.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="va">gearData</span><span class="op">$</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NEGEAR2</span><span class="op">==</span><span class="va">gearCode</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">gearData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/data"</span>,<span class="st">"timeSeriesSpeciesByGear.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">gearData</span><span class="op">$</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NEGEAR2</span><span class="op">==</span><span class="va">gearCode</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="demersal-large-mesh-3">Demersal (large mesh &gt; 3")<a class="anchor" aria-label="anchor" href="#demersal-large-mesh-3"></a>
 </h2>
@@ -236,7 +236,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer>
