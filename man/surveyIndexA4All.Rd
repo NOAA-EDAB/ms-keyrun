@@ -34,8 +34,10 @@ variance (biomass.var/abund.var), or standard error (biomass.SE/abund.SE)}
 
 }: 
 \code{\link{surveyIndexA4}},
+\code{\link{surveyIndexAll}},
 \code{\link{surveyIndexHBAll}},
-\code{\link{surveyIndexHB}}
+\code{\link{surveyIndexHB}},
+\code{\link{surveyIndex}}
 }
 \concept{surveyIndex
 
