@@ -83,11 +83,12 @@ create_real_survey_lencomp <- function(convertKGtoMT=F, overwrite=F) {
                   variable = "biomass",
                   units = unitsLabel) %>%
     dplyr::rename(year = YEAR,
+                  season = SEASON,
                   Code = SPECIES_ITIS,
                   Name = LongName,
                   lenbin = LENGTH,
                   value = weight/dplyr::all_of(scalar)) %>% # convert to metric tons
-    dplyr::select(ModSim,year,SEASON,Code,Name,fishery,lenbin,variable,value,units)
+    dplyr::select(ModSim,year,season,Code,Name,fishery,lenbin,variable,value,units)
 
   
   if (overwrite) {
