@@ -25,11 +25,13 @@ reference:
   - surveyIndexA4All
   - surveyIndexHB
   - surveyIndexHBAll
+  - realSurveyLencomp
 - title: "Commerical fishing data products"
   desc: "Extracted from Commercial fishery database "
 - contents:
   - AllSpeciesProportions 
   - realFisheryLencomp
+  - realFisheryAgecomp
 - title: "Hydra specific data products"
   desc: "For use in Hydra estimation model"
 - contents:

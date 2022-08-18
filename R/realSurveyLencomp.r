@@ -1,7 +1,7 @@
 #' Survey length composition for the mskeyrun project based on bottom trawl survey data
 #'
 #' Data pulled from the NEFSC bottom trawl survey database. Data pulled using 
-#' \link{survdat}} package.
+#'  \code{\link{survdat}} package.
 #' 
 #' @format A data frame
 #'
