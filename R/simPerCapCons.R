@@ -10,7 +10,7 @@
 #'\item{Code}{Atlantis model three letter code for predator group}
 #'\item{Name}{Atlantis model common name for predator group}
 #'\item{agecl}{age class of Atlantis functional group}
-#'\item{variable}{annual mean per capita consumption (intakeg)}
+#'\item{variable}{total consumption (totconsagecl), total numbers (totNagecl), or annual mean per capita consumption (intakeg)}
 #'\item{value}{value of the variable}
 #'\item{units}{units of the variable}
 #'

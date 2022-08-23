@@ -12,7 +12,7 @@
 #'\item{Code}{Atlantis model three letter code for predator group}
 #'\item{Name}{Atlantis model common name for predator group}
 #'\item{agecl}{age class of Atlantis functional group}
-#'\item{variable}{annual mean per capita consumption (intakeg)}
+#'\item{variable}{total consumption (totconsagecl), total numbers (totNagecl), or annual mean per capita consumption (intakeg)}
 #'\item{value}{value of the variable}
 #'\item{units}{units of the variable}
 #'
@@ -95,11 +95,14 @@ create_sim_percapconsumption <- function(atlmod,fitstart=NULL,fitend=NULL,saveTo
     dplyr::ungroup() %>%
     dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
     dplyr::mutate(ModSim = modsim) %>%  
-    dplyr::select(ModSim, year, Code, Name=species, agecl, intakeg) %>%
-    tidyr::pivot_longer(cols = c("intakeg"), 
+    dplyr::select(ModSim, year, Code, Name=species, everything()) %>%
+    tidyr::pivot_longer(cols = c("totconsagecl","totNagecl", "intakeg"), 
                         names_to = "variable",
                         values_to = "value") %>%
-    dplyr::mutate(units = ifelse(variable=="intakeg", "grams per capita", "NA")) %>%
+    dplyr::mutate(units = dplyr::case_when(variable=="intakeg" ~ "grams per capita", 
+                                    variable=="totconsagecl" ~ "tons", 
+                                    variable=="totNagecl" ~ "numbers",
+                                    TRUE ~ "NA")) %>%
     dplyr::arrange(Name, variable, year)
   
   simPerCapCons <- intake
