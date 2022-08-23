@@ -1,6 +1,6 @@
-#' Read in survey data save as rda
+#' Read in survey consumption and numbers data save as rda
 #' 
-#' atlantosom output is accessed and surveys pulled over time
+#' atlantisom output is accessed and surveys pulled over time
 #' 
 #'@param atlmod configuration file specifying Atlantis simulation model filenames 
 #'and locations  
@@ -8,20 +8,18 @@
 #'
 #'@return A tibble (Also written to \code{data} folder)
 #'\item{ModSim}{Atlantis model name and simulation id}
-#'\item{year}{year simulated survey conducted}
+#'\item{year}{simulation year}
 #'\item{Code}{Atlantis model three letter code for predator group}
 #'\item{Name}{Atlantis model common name for predator group}
-#'\item{survey}{simulated survey name}
 #'\item{agecl}{age class of Atlantis functional group}
-#'\item{prey}{Atlantis model common name for prey group}
-#'\item{variable}{proportion in diet (dietprop)}
+#'\item{variable}{annual mean per capita consumption (intakeg)}
 #'\item{value}{value of the variable}
 #'\item{units}{units of the variable}
 #'
 
 library(magrittr)
 
-create_sim_survey_comsumption <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=T) {
+create_sim_percapconsumption <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=T) {
 
   # input is path to model config file for atlantisom
   source(atlmod)
@@ -38,6 +36,10 @@ create_sim_survey_comsumption <- function(atlmod,fitstart=NULL,fitend=NULL,saveT
   
   # get config files -- needed?
   svcon <- list.files(path=cfgpath, pattern = "*survey*", full.names = TRUE)
+  
+  # omlist was amended with the new biomass_eaten generated in
+  # https://github.com/ices-eg/wg_WGSAM/blob/master/SkillAssessment/SkillAssessProject.Rmd#L1116-L1198
+  # see local file ~/Documents/0_Data/ms-keyrun/simulated-data/atlantisoutput/addcons_omlist.R
   
   # read true list with run and biol pars, etc
   omlist_ss <- readRDS(file.path(d.name, paste0(scenario.name, "omlist_ss.rds")))
@@ -71,63 +73,43 @@ create_sim_survey_comsumption <- function(atlmod,fitstart=NULL,fitend=NULL,saveT
   #     dplyr::mutate(survey=survey.name)
   #   svcvlook <- dplyr::bind_rows(svcvlook, surv_cv_n)
   # }
-  
-  allsvcons <- tibble::tibble()
-  
+
   # need, total consumption per age class from atlantisom calc_pred_cons()
   # total n per age class
   # merge and leave either as total consumption or as intake (per capita consumption)
   # test functions for one species in NOBA
   
-  codcons <- biomass_eaten %>% 
-    dplyr::filter(species=="North_atl_cod") %>% 
-    dplyr::group_by(time, agecl) %>% 
-    dplyr::summarise(totcons = sum(bio_eaten))  
+  truenumsatagecl <- omlist_ss$truenums_ss %>%
+    dplyr::filter(time %in% fittimes) %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::group_by(species, year, agecl) %>%
+    dplyr::summarise(totNagecl = sum(atoutput)) #over layer and polygon
   
-  codn <- nordic_runresults_01omlist_ss$truenums_ss %>% 
-    dplyr::filter(species=="North_atl_cod") %>% 
-    dplyr::group_by(time, agecl) %>% 
-    dplyr::summarise(totn = sum(atoutput))
+  intake <- omlist_ss$truecons_ss %>%
+    dplyr::filter(time %in% fittimes) %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::group_by(species, year, agecl) %>%
+    dplyr::summarise(totconsagecl = sum(atoutput)) %>%
+    dplyr::left_join(truenumsatagecl) %>%
+    dplyr::mutate(intakeg = (totconsagecl/totNagecl)*1000000) %>%
+    dplyr::ungroup() %>%
+    dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
+    dplyr::mutate(ModSim = modsim) %>%  
+    dplyr::select(ModSim, year, Code, Name=species, agecl, intakeg) %>%
+    tidyr::pivot_longer(cols = c("intakeg"), 
+                        names_to = "variable",
+                        values_to = "value") %>%
+    dplyr::mutate(units = ifelse(variable=="intakeg", "grams per capita", "NA")) %>%
+    dplyr::arrange(Name, variable, year)
   
-  codintake <- codcons %>% 
-    dplyr::left_join(codn) %>% 
-    dplyr::mutate(intake = (totcons/totn)*1000000) #get in grams
-  
-  ggplot(codcons %>% dplyr::filter(time<200), aes(x=time, y=totcons)) + geom_line() + facet_wrap(~agecl, scales="free")
-  ggplot(codintake, aes(x=time, y=intake)) + geom_line() + facet_wrap(~agecl, scales="free")
-  
-  
-  # NEED TO CHANGE ALL BELOW--leftover from diet file
-  
-  #multiple surveys named in list object
-  for(s in names(all_diets)){
-    #arrange into wide format: year, Species1, Species2 ... and write csv
-    svdietprop <- all_diets[[s]][[1]] %>%
-      dplyr::filter(time.days %in% fittimes.days) %>%
-      dplyr::mutate(year = ceiling(time.days/365)) %>%
-      dplyr::select(species, agecl, year, prey, dietprop=dietSamp) %>%
-      dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
-      dplyr::mutate(ModSim = modsim) %>%
-      dplyr::mutate(survey = s) %>%
-      #dplyr::left_join(svcvlook) %>%
-      dplyr::select(ModSim, year, Code, Name=species, survey, agecl, everything()) %>%
-      tidyr::pivot_longer(cols = c("dietprop"), 
-                          names_to = "variable",
-                          values_to = "value") %>%
-      dplyr::mutate(units = ifelse(variable=="dietprop", "proportion", "NA")) %>%
-      dplyr::arrange(Name, survey, variable, year, agecl)
-    
-    allsvdietprop <- dplyr::bind_rows(allsvdietprop, svdietprop)
-  }
-  
-  simSurveyDietcomp <- allsvdietprop
+  simPerCapCons <- intake
   
   if (saveToData) {
   
-    usethis::use_data(simSurveyDietcomp, overwrite = TRUE)
+    usethis::use_data(simPerCapCons, overwrite = TRUE)
   }
   
-  return(simSurveyDietcomp)
+  return(simPerCapCons)
   
   
 }
