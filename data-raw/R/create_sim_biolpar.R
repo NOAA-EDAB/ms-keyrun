@@ -36,6 +36,7 @@ create_sim_biolpar <- function(atlmod,saveToData=T) {
   
   # do von B here also? no, requires fitting to different eras
   # maybe maturity pars though
+  # Aug 2022 this is a start but not currently needed so skip
   
   maturitypar <- omlist_ss$funct.group_ss %>% 
     dplyr::left_join(omlist_ss$biol$maturityogive, by=c("Code"="code")) %>%
@@ -45,7 +46,7 @@ create_sim_biolpar <- function(atlmod,saveToData=T) {
     tidyr::pivot_longer(cols = agecl1:agecl10, names_to ="agecl", values_to = "propmat") %>%
     dplyr::mutate(agecl = readr::parse_number(as.character(agecl)))
   # fit logistic model to maturity at agecl ogive
-  # convert to parameters for maturity at length
+  # convert to parameters for maturity at length: requires VB fits!
   # return parameters as inputs
   
   

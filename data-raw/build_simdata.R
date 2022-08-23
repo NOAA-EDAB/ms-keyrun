@@ -19,6 +19,8 @@ atlmod <- here("data-raw/simulated-data/config/NOBA_sacc38Config.R")
 
 create_sim_focal_species(atlmod)
 
+create_sim_biolpar(atlmod)
+
 create_sim_survey_index(atlmod, fitstart=40, fitend=120)
 
 create_sim_fishery_index(atlmod, fitstart=40, fitend=120)
