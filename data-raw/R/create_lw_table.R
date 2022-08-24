@@ -83,7 +83,7 @@ create_lw_table <- function(overwrite=F){
                     Name = modelName,
                     WLa = alpha,
                     WLb = beta) %>% 
-      dplyr::select(ModSim,Code,Name,WLa,WLb) %>%
+      dplyr::select(ModSim,Code,Name,WLa,WLb,sigma) %>%
       dplyr::distinct() 
                           
     realBiolPar <- paramTable
