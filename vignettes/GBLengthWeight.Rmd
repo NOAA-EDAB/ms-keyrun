@@ -1,0 +1,64 @@
+---
+title: "Length-weight relationships"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+source(here::here("data-raw/R/create_lw_table.r"))
+```
+
+```{r, functions, echo = F}
+catHeader <- function(text = "", level = 3) {
+  cat(paste0("\n\n", 
+               paste(rep("#", level), collapse = ""), 
+               " ", text, "\n"))
+}
+```
+
+Length weight relationships for the [focal species](https://noaa-edab.github.io/ms-keyrun/articles/SpeciesEnvDat.html#focalSpecies) were calculated based on the Georges Bank footprint. 
+Length and weight data were obtained from the bottom trawl survey. The spatial footprint from which the data was pulled depended on the definition of the single species stock areas. For species, whose stocks are considered resident on the bank, length and weight data were pulled from [survey strata](https://noaa-edab.github.io/ms-keyrun/articles/allocateLandingsEPU.html#spatial-approaches-for-georges-bank-option-1) defined as being part of Geroges Bank. For transient species, whose stock area is considered the entire Northeast (Mackerel, Herring, Spiny Dogfish and Winter Skate) length and weight data were pulled from the entire survey footprint
+
+## Model
+
+The standard length-weight relationship was obtained by fitting the following model to the available data
+
+$$W = \alpha L ^ \beta e^Z$$
+
+where $Z \sim IID N(0,\sigma^2)$
+
+Lengths of fish are measured in cm. Weights are measured in grams
+
+
+``` {r, echo = F}
+out <- create_lw_table(overwrite=F)
+
+```
+## Table of coefficients
+
+```{r table, echo = F}
+out$paramTable %>% flextable::flextable() %>%
+  flextable::set_formatter(alpha = function(x) {
+    formatC(x, format = "e", digits = 3)
+  }) %>% 
+  flextable::autofit()
+
+```
+
+
+
+## Length-weight plots {.tabset}
+
+```{r, results = "asis", echo = FALSE}
+
+for(i in seq_along(out$plist)){
+    tmp <- out$plist[[i]]
+    # As you want to use tabset level here has to be lower than 
+    # parent level (ie, parent is 2, so here you have to use 3)
+    catHeader(tmp[[2]], 3)
+    lapply(tmp[1], print)
+}
