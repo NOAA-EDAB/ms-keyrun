@@ -8,9 +8,9 @@
 
 library(magrittr)
 
-create_real_survey_lencomp <- function(convertKGtoMT=F, overwrite=F) {
+create_real_survey_lennumcomp <- function(convertKGtoMT=F, overwrite=F) {
   
-  if (convertKGtoMT  == T) {
+  if (convertKGtoMT) {
     scalar <- 1000
     unitsLabel <- "metric tons"
   } else {
@@ -50,7 +50,7 @@ create_real_survey_lencomp <- function(convertKGtoMT=F, overwrite=F) {
   # aggregate sampled data to find total weight of subsampled species per tow
   # This is the total weight of all lengthed fish per tow
   sampledTow <- survdatLWpull$survdat %>% 
-    dplyr::select(SVSPP,YEAR,SEASON,CRUISE6,STATION,STRATUM,TOW,LENGTH,WGTLEN) %>%
+    dplyr::select(SVSPP,YEAR,SEASON,CRUISE6,STATION,STRATUM,TOW,LENGTH,NUMLEN,WGTLEN) %>%
     dplyr::filter(SVSPP %in% svspps,
                   LENGTH >0) %>%
     dplyr::arrange(SVSPP,YEAR,SEASON,CRUISE6,STATION,STRATUM,TOW) %>%
@@ -75,28 +75,37 @@ create_real_survey_lencomp <- function(convertKGtoMT=F, overwrite=F) {
     dplyr::mutate(expansionFactor = towWeight/towSampleWeight)
   
   # apply this expansion factor to the weights of lengthed fish to "scale" up/down the biomass per length class
-  realSurveyLencomp <- dplyr::left_join(db,towlw,by = c("SVSPP", "YEAR", "SEASON", "CRUISE6", "STATION", "STRATUM", "TOW")) %>%
+  # also apply expansion factor to numbers at length
+  realSurveyLennumcomp <- dplyr::left_join(db,towlw,by = c("SVSPP", "YEAR", "SEASON", "CRUISE6", "STATION", "STRATUM", "TOW")) %>%
+    dplyr::mutate(expNum = expansionFactor * NUMLEN) %>% 
     dplyr::mutate(weight = expansionFactor * WGTLEN) %>% 
     dplyr::left_join(.,species, by = "SVSPP") %>%
     dplyr::mutate(ModSim = "Actual",
-                  fishery = "demersal",
-                  variable = "biomass",
-                  units = unitsLabel) %>%
+                  fishery = "demersal") %>%
     dplyr::rename(year = YEAR,
                   season = SEASON,
                   Code = SPECIES_ITIS,
                   Name = LongName,
                   lenbin = LENGTH,
-                  value = weight/dplyr::all_of(scalar)) %>% # convert to metric tons
-    dplyr::select(ModSim,year,season,Code,Name,fishery,lenbin,variable,value,units)
+                  tbiomass = weight/dplyr::all_of(scalar), # convert to metric tons
+                  tnumbers = expNum) %>% 
 
+    dplyr::group_by(ModSim,year,season,Code,Name,fishery,lenbin) %>%
+    dplyr::summarise(biomass = sum(tbiomass),
+                     numbers = sum(tnumbers),.groups = "drop") %>%
+    tidyr::pivot_longer(.,cols=c("biomass","numbers"),names_to = "variable",values_to = "value")  %>%
+    dplyr::mutate(units = dplyr::case_when(variable == "biomass" ~ unitsLabel,
+                                           variable == "numbers" ~ "numbers",
+                                           TRUE ~ "NA")) 
+    
+    
   
   if (overwrite) {
-    usethis::use_data(realSurveyLencomp,overwrite=overwrite)
+    usethis::use_data(realSurveyLennumcomp,overwrite=overwrite)
   }
   
   
-  return(realSurveyLencomp)
+  return(realSurveyLennumcomp)
   
   
 }
