@@ -8,12 +8,11 @@
 #'
 #'@return A tibble (Also written to \code{data} folder)
 #'\item{ModSim}{Atlantis model name and simulation id}
-#'\item{year}{year simulated survey conducted}
 #'\item{Code}{Atlantis model three letter code for functional group}
 #'\item{Name}{Atlantis model common name for functional group}
-#'\item{agecl}{age class of Atlantis functional group}
+#'\item{agecl}{age class or true age of Atlantis functional group}
 #'\item{lenbin}{1 cm length bin, lower limit}
-#'\item{variable}{number at length (Natlen)}
+#'\item{variable}{start year number at age class and length (Natlen), start year number at true age (Natage), average recruitment (AvgRec)}
 #'\item{value}{value of the variable}
 #'\item{units}{units of the variable}
 #'
@@ -53,7 +52,7 @@ create_sim_startpars <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=T) 
   fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
   #fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
   #fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
-  #fittimes.days <- if(omlist_ss$runpar$outputstepunit=="days") fittimes*omlist_ss$runpar$outputstep
+  fittimes.days <- if(omlist_ss$runpar$outputstepunit=="days") fittimes*omlist_ss$runpar$outputstep
   
   
   # true N at agecl at model fit start, can run through age2length
@@ -103,7 +102,7 @@ create_sim_startpars <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=T) 
                                              CVlenage = lenage_cv,
                                              remove.zeroes=TRUE)
   
-  #find the time with the smallest fish and use that for each spp
+  #find the time with the smallest fish (recruitment!) and use that for each spp
   smallest <- modstartlen$natlength %>%
     dplyr::group_by(species) %>%
     dplyr::filter(lower.bins == min(lower.bins)) %>%
@@ -115,45 +114,117 @@ create_sim_startpars <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData=T) 
     dplyr::select(species, agecl, time, lower.bins, atoutput) %>%
     dplyr::left_join(smallest) %>%
     dplyr::filter(time == rectime) %>%
-    dplyr::select(-time, -rectime) 
+    dplyr::select(-time, -rectime) %>%
+    dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
+    dplyr::mutate(ModSim = modsim) %>%
+    dplyr::select(ModSim, Code, Name=species, agecl, lenbin=lower.bins, Natlen = atoutput) %>%
+    tidyr::pivot_longer(cols = c("Natlen"),
+                        names_to = "variable",
+                        values_to = "value") %>%
+    dplyr::mutate(units = ifelse(variable=="Natlen", "number at length in agecl in start year", "NA")) %>%
+    dplyr::arrange(Name, variable,agecl, lenbin)
   
-  
+  #use same smallest fish time for numbers at true age
   modstartNage <- omlist_ss$truenumsage_ss %>%
     dplyr::filter(time %in% fittimes[1:5]) %>%
     dplyr::group_by(species, agecl, time) %>%
     dplyr::summarise(atoutput = sum(atoutput)) %>%
     dplyr::left_join(smallest) %>%
     dplyr::filter(time == rectime) %>%
-    dplyr::select(-time, -rectime) 
+    dplyr::select(-time, -rectime) %>%
+    dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
+    dplyr::mutate(ModSim = modsim) %>%
+    dplyr::mutate(lenbin = NA) %>%  
+    dplyr::select(ModSim, Code, Name=species, agecl, lenbin, Natage = atoutput) %>%
+    tidyr::pivot_longer(cols = c("Natage"),
+                        names_to = "variable",
+                        values_to = "value") %>%
+    dplyr::mutate(units = ifelse(variable=="Natage", "number at true age in start year", "NA")) %>%
+    dplyr::arrange(Name, variable,agecl)
   
 
   
-  # average recruitment
+  # get average recruitment
   nitro <- merge(omlist_ss$biol$kwsr, omlist_ss$biol$kwrr, by = "1")
   names(nitro) <- c("Code", "KWSR", "KWRR")
   
   nitro <- nitro %>%
-    group_by(Code) %>%
-    mutate(Nsum = sum(KWSR, KWRR))
+    dplyr::group_by(Code) %>%
+    dplyr::mutate(Nsum = sum(KWSR, KWRR))
   
   truerec <- omlist_ss$YOY_ss %>% 
-    pivot_longer(-Time, names_to = "Code", values_to = "recwt") %>%
-    mutate(Code = gsub("\\.0", "", Code)) %>%
-    filter(Time>0) %>% # this output not meaningful
-    filter(Time %in% seq(365, max(Time), by=365)) %>%
-    left_join(NOBAom_ms$funct.group_ss[, c("Code", "Name")]) %>%
-    left_join(nitro) %>%
-    mutate(recnums = (recwt * 50000000.0 / NOBAom_ms$biol$redfieldcn) / Nsum) %>%
-    group_by(Name) %>%
-    mutate(meanrecnums = mean(recnums))
+    tidyr::pivot_longer(-Time, names_to = "Code", values_to = "recwt") %>%
+    dplyr::mutate(Code = gsub("\\.0", "", Code)) %>%
+    dplyr::filter(Time>0) %>% # this output not meaningful
+    dplyr::filter(Time %in% seq(365, max(Time), by=365)) %>%
+    dplyr::left_join(omlist_ss$funct.group_ss[, c("Code", "Name")]) %>%
+    dplyr::left_join(nitro) %>%
+    dplyr::mutate(recnums = (recwt * 50000000.0 / omlist_ss$biol$redfieldcn) / Nsum) %>%
+    dplyr::group_by(Name) %>%
+    dplyr::mutate(meanrecnums = mean(recnums))
   
+  #model input log(millions)
   avgrec <- truerec %>%
-    filter(Time %in% fittimes.days) %>%
-    group_by(Name) %>%
-    summarize(AvgRec = mean(log(recnums/1000000))) %>%
-    ungroup() 
+    dplyr::filter(Time %in% fittimes.days) %>%
+    dplyr::group_by(Name) %>%
+    dplyr::summarize(AvgRec = mean(log(recnums/1000000))) %>%
+    dplyr::ungroup() 
   
-  simStartPars <- # structure to get this all in
+  # some rec missing from YOY file so sub in age 1s as start values
+  #sub these in if above is -Inf, scale will be off but starting value
+  trueage1 <- omlist_ss$truenumsage_ss %>%
+    dplyr::filter(agecl==1) %>%
+    dplyr::group_by(species, agecl, time) %>%
+    dplyr::summarise(age1N = sum(atoutput)) %>%
+    dplyr::ungroup() %>%
+    dplyr::mutate(year = ceiling(time/stepperyr)) %>%
+    dplyr::group_by(species, agecl, year) %>%
+    dplyr::filter(age1N == max(age1N)) %>%
+    dplyr::select(Name=species, Time=time, age1N, year) %>%
+    dplyr::group_by(Name) %>%
+    dplyr::mutate(meanage1N = mean(age1N))
+  
+  avgage1N <- trueage1 %>%
+    dplyr::filter(Time %in% fittimes) %>%
+    dplyr::group_by(Name) %>%
+    dplyr::summarize(Avgage1N = mean(log(age1N/1000000))) %>%
+    dplyr::ungroup() 
+  
+  #scale up avgage 1 by mean ratio across stocks? 
+  meanavgrec <- avgrec %>%
+    dplyr::filter(is.finite(AvgRec)) %>%
+    dplyr::summarise(mean(AvgRec))
+  
+  meanavgage1 <- mean(avgage1N$Avgage1N)
+  
+  scale <- as.numeric(meanavgrec/meanavgage1)
+  
+  avgrec1 <- merge(avgrec, avgage1N) %>%
+    dplyr::mutate(scalerec = Avgage1N * scale) %>%
+    dplyr::filter(is.infinite(AvgRec)) %>%
+    dplyr::select(Name, AvgRec=scalerec)
+  
+  if(length(avgrec1)>0){
+    avgrec <- avgrec %>%
+      dplyr::filter(is.finite(AvgRec)) %>%
+      dplyr::full_join(avgrec1) %>%
+      dplyr::arrange(Name)
+  }
+  
+  avgrec <- avgrec %>%
+    dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name)) %>%
+    dplyr::mutate(ModSim = modsim) %>%
+    dplyr::mutate(agecl = NA) %>% 
+    dplyr::mutate(lenbin = NA) %>%  
+    dplyr::select(ModSim, Code, Name, agecl, lenbin, AvgRec) %>%
+    tidyr::pivot_longer(cols = c("AvgRec"),
+                        names_to = "variable",
+                        values_to = "value") %>%
+    dplyr::mutate(units = ifelse(variable=="AvgRec", "log average recruitment, millions", "NA")) %>%
+    dplyr::arrange(Name, variable,agecl)
+  
+  
+  simStartPars <- dplyr::bind_rows(modstartNlen, modstartNage, avgrec)
   
   if (saveToData) {
   
