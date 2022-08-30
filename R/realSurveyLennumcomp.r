@@ -1,6 +1,6 @@
 #' Survey length composition for the mskeyrun project based on bottom trawl survey data
 #'
-#' Data pulled from the NEFSC bottom trawl survey database. Data pulled using 
+#' Data pulled from the NEFSC bottom trawl survey database. Data pulled and processed using 
 #'  \code{\link{survdat}} package.
 #' 
 #' @format A data frame
@@ -14,7 +14,7 @@
 #'\item{fishery}{fishery name}
 #'\item{lenbin}{recorded 1 cm length bin}
 #'\item{variable}{metric recorded, biomass & numbers}
-#'\item{value}{value of the variable, summed over all tows}
+#'\item{value}{value of the variable}
 #'\item{units}{units of the variable}
 #'
 #' }
