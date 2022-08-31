@@ -2,9 +2,7 @@
 title: "Length-weight relationships"
 output:
   html_document:
-    df_print: paged
-editor_options:
-  chunk_output_type: inline
+    code_fold: hide
 ---
 
 ```{r setup, include=FALSE}
