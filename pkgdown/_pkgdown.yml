@@ -15,9 +15,13 @@ reference:
   - simSurveyIndex
   - simSurveyAgecomp
   - simSurveyLencomp
+  - simSurveyAgeLencomp
   - simSurveyWtatAge
   - simSurveyDietcomp
   - simSurveyBottemp
+  - simBiolPar
+  - simPerCapCons
+  - simStartPars
 - title: "Survey data products"
   desc: "Extracted from Bottom trawl surveys "
 - contents:
