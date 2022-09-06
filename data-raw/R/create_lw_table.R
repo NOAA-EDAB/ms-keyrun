@@ -76,7 +76,7 @@ create_lw_table <- function(overwrite=F){
   
   if(overwrite) {
 
-    paramTable %>%
+    realBiolPar <- paramTable %>%
       dplyr::mutate(ModSim = "Actual") %>% 
       dplyr::left_join(mskeyrun::focalSpecies, by = c("species" = "LongName")) %>%
       dplyr::rename(Code = SPECIES_ITIS,
@@ -85,8 +85,7 @@ create_lw_table <- function(overwrite=F){
                     WLb = beta) %>% 
       dplyr::select(ModSim,Code,Name,WLa,WLb,sigma) %>%
       dplyr::distinct() 
-                          
-    realBiolPar <- paramTable
+                
     
     usethis::use_data(realBiolPar,overwrite = overwrite)
     
