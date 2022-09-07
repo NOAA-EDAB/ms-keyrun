@@ -56,4 +56,5 @@ Suggests:
   rgdal,
   ggthemes,
   FSA,
-  ecodata
+  ecodata,
+  flextable
