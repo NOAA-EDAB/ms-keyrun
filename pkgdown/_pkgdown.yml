@@ -28,10 +28,13 @@ reference:
   - surveyIndexHB
   - surveyIndexHBAll
   - realBiolPar
+  - realSurveyLennumcomp
 - title: "Commerical fishing data products"
   desc: "Extracted from Commercial fishery database "
 - contents:
   - AllSpeciesProportions 
+  - realFisheryLencomp
+  - realFisheryAgecomp
   - catchIndex
 - title: "Hydra specific data products"
   desc: "For use in Hydra estimation model"
@@ -43,3 +46,4 @@ reference:
   - mskeyrun
   - focalSpecies
   - fleets
+  
