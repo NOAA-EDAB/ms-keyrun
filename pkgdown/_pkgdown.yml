@@ -21,15 +21,20 @@ reference:
 - title: "Survey data products"
   desc: "Extracted from Bottom trawl surveys "
 - contents:
+  - surveyIndex
+  - surveyIndexAll
   - surveyIndexA4
   - surveyIndexA4All
   - surveyIndexHB
   - surveyIndexHBAll
+  - realSurveyLennumcomp
 - title: "Commerical fishing data products"
   desc: "Extracted from Commercial fishery database "
 - contents:
   - AllSpeciesProportions 
   - realFisheryLencomp
+  - realFisheryAgecomp
+  - catchIndex
 - title: "Hydra specific data products"
   desc: "For use in Hydra estimation model"
 - contents:
@@ -40,3 +45,4 @@ reference:
   - mskeyrun
   - focalSpecies
   - fleets
+  
