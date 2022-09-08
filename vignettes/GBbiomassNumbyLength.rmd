@@ -1,0 +1,85 @@
+---
+title: "Biomass and Abundance by length"
+output:
+  html_document:
+    code_fold: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, functions, echo = F}
+catHeader <- function(text = "", level = 3) {
+  cat(paste0("\n\n", 
+               paste(rep("#", level), collapse = ""), 
+               " ", text, "\n"))
+}
+```
+
+The length based multispecies model (Hydra) requires annual indices of biomass and abundance by species size class. The NEFSC spring and fall [bottom trawl surveys](https://noaa-edab.github.io/tech-doc/) collect the information required to obtain estimates of these indices
+
+Each tow/haul during the bottom trawl survey collects the total weight of each fish species caught. A sample of the haul is then taken and each fish in this sample is identified, lengthed (to the nearest cm) and weighed. 
+
+The R package [`survdat`](https://noaa-edab.github.io/survdat/) is used to read in the survey data and provide estimates of swept area biomass and abundance on the Georges Bank footprint. The survey strata that define [Georges Bank](https://noaa-edab.github.io/ms-keyrun/articles/GBSurveySet.html) are 1090, 1130:1210, 1230, 1250, 3460, 3480, 3490, 3520:3550.
+
+
+``` {r, echo = T}
+source(here::here("data-raw/R/create_real_survey_lennumcomp.r"))
+suppressMessages(out <- create_real_survey_lennumcomp(convertKGtoMT=T))
+
+
+```
+
+## Spring Biomass: length-frequency plots {.tabset}
+
+```{r biomassS, results = "asis", echo = FALSE}
+for(i in seq_along(out$plistBS)){
+    tmp <- out$plistBS[[i]]
+    # As you want to use tabset level here has to be lower than 
+    # parent level (ie, parent is 2, so here you have to use 3)
+    catHeader(tmp[[2]], 3)
+    lapply(tmp[1], print)
+}
+```
+
+
+## Fall Biomass: length-frequency plots {.tabset}
+
+```{r biomassF, results = "asis", echo = FALSE}
+for(i in seq_along(out$plistBF)){
+    tmp <- out$plistBF[[i]]
+    # As you want to use tabset level here has to be lower than
+    # parent level (ie, parent is 2, so here you have to use 3)
+    catHeader(tmp[[2]], 3)
+    lapply(tmp[1], print)
+}
+```
+
+## Spring Abundance: length-frequency plots {.tabset}
+
+```{r abundS, results = "asis", echo = FALSE}
+for(i in seq_along(out$plistAS)){
+    tmp <- out$plistAS[[i]]
+    # As you want to use tabset level here has to be lower than 
+    # parent level (ie, parent is 2, so here you have to use 3)
+    catHeader(tmp[[2]], 3)
+    lapply(tmp[1], print)
+}
+```
+
+
+## Fall Abundance: length-frequency plots {.tabset}
+
+```{r abundF, results = "asis", echo = FALSE}
+for(i in seq_along(out$plistAF)){
+    tmp <- out$plistAF[[i]]
+    # As you want to use tabset level here has to be lower than
+    # parent level (ie, parent is 2, so here you have to use 3)
+    catHeader(tmp[[2]], 3)
+    lapply(tmp[1], print)
+}
+```
+
+

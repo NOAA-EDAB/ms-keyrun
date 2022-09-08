@@ -15,21 +15,31 @@ reference:
   - simSurveyIndex
   - simSurveyAgecomp
   - simSurveyLencomp
+  - simSurveyAgeLencomp
   - simSurveyWtatAge
   - simSurveyDietcomp
   - simSurveyBottemp
+  - simBiolPar
+  - simPerCapCons
+  - simStartPars
 - title: "Survey data products"
   desc: "Extracted from Bottom trawl surveys "
 - contents:
+  - surveyIndex
+  - surveyIndexAll
   - surveyIndexA4
   - surveyIndexA4All
   - surveyIndexHB
   - surveyIndexHBAll
+  - realBiolPar
+  - realSurveyLennumcomp
 - title: "Commerical fishing data products"
   desc: "Extracted from Commercial fishery database "
 - contents:
   - AllSpeciesProportions 
   - realFisheryLencomp
+  - realFisheryAgecomp
+  - catchIndex
 - title: "Hydra specific data products"
   desc: "For use in Hydra estimation model"
 - contents:
@@ -40,3 +50,4 @@ reference:
   - mskeyrun
   - focalSpecies
   - fleets
+  
