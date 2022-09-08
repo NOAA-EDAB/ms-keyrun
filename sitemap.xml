@@ -25,7 +25,13 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBLengthWeight.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBSurveySet.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBbiomassNumbyLength.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/NMFS_JIRA_2020-06-15T_0_11_28-0400.html</loc>
@@ -58,6 +64,9 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/catchAtLengthProportions.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/catchIndex.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/fleets.html</loc>
   </url>
   <url>
@@ -70,7 +79,19 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/mskeyrun.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/realBiolPar.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/realFisheryAgecomp.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/realSurveyLennumcomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simBiolPar.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simCatchIndex.html</loc>
@@ -86,6 +107,15 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFocalSpecies.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simPerCapCons.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simStartPars.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyAgeLencomp.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyAgecomp.html</loc>
@@ -106,10 +136,16 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyWtatAge.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndex.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexA4.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexA4All.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexAll.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexHB.html</loc>
