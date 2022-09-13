@@ -1,0 +1,97 @@
+---
+title: "Focal Species stock area definitions"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(magrittr)
+library(mskeyrun)
+source(here::here("data-raw/R/capitalize_first_letter.R"))
+
+```
+
+
+## Focal species
+
+```{r focalSpTable, echo = F, eval =T}
+
+mskeyrun::focalSpecies %>%
+  dplyr::select(LongName,SCIENTIFIC_NAME,SPECIES_ITIS) %>%
+  dplyr::filter(!(LongName == "Pollock")) %>%
+  dplyr::rename(Common_Name = LongName) %>%
+  dplyr::mutate(SCIENTIFIC_NAME = capitalize_first_letter(SCIENTIFIC_NAME)) %>% 
+  dplyr::distinct() %>%
+  flextable::flextable() %>%
+  flextable::autofit()
+
+```
+
+
+
+##  Stock areas 
+
+Numbered Statistical areas define the stock area used in an assessment. Overlayed in red denotes the statistical areas used to 
+pull catch data for the Georges Bank region.
+
+
+```{r stocks, echo = F, eval = T}
+options(warn = -1)
+crs <- 4326
+coast <- sf::st_read(here::here("data-raw/gis/NES_LME_coast.shp"), quiet = T) %>%
+  sf::st_transform(.,crs=crs)
+
+suppressMessages(sf::sf_use_s2(FALSE))
+
+statareas <- NEFSCspatial::Statistical_Areas_2010
+centroids <- sf::st_coordinates(sf::st_centroid(statareas))
+statareas <- cbind(statareas,centroids)
+
+# GB footprint
+GB <-  sf::st_read(here::here("data-raw/gis/GB_SOE_strata.shp"),quiet=T) %>%
+    sf::st_transform(.,crs=crs) 
+
+species <- data.frame(itis = c("172909","172414","161722","164744","172905","172905","164712","160617","564145","164791","164791","164499"),stock = c(NA,NA,NA,NA,"GB","SNEMA",NA,NA,NA,"North","South",NA))
+```
+
+### Atlantic cod
+
+```{r acod, echo = F}
+
+```
+
+### Atlantic Herring
+```{r aherring, echo = F }
+```
+
+### Atlantic Mackerel
+```{r, echo = F}
+```
+
+### Haddock
+```{r, echo = F}
+```
+
+### Goosefish
+```{r, echo = F}
+```
+
+### Winter flounder
+```{r, echo = F}
+```
+
+### Yellowtail flounder
+```{r, echo = F}
+```
+
+### Silver hake
+```{r, echo = F}
+```
+
+### Spiny dogfish
+```{r, echo = F}
+```
+
+### Winter skate
+```{r, echo = F}
+```
