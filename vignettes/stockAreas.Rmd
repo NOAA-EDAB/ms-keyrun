@@ -8,15 +8,15 @@ knitr::opts_chunk$set(echo = TRUE)
 library(magrittr)
 library(mskeyrun)
 source(here::here("data-raw/R/capitalize_first_letter.R"))
+source(here::here("data-raw/R/plot_stock_areas.R"))
 
 ```
 
 
 ## Focal species
 
-```{r focalSpTable, echo = F, eval =T}
-
-mskeyrun::focalSpecies %>%
+```{r focalSpTab, echo = F, eval=T}
+focalSpecies %>%
   dplyr::select(LongName,SCIENTIFIC_NAME,SPECIES_ITIS) %>%
   dplyr::filter(!(LongName == "Pollock")) %>%
   dplyr::rename(Common_Name = LongName) %>%
@@ -36,6 +36,7 @@ pull catch data for the Georges Bank region.
 
 
 ```{r stocks, echo = F, eval = T}
+
 options(warn = -1)
 crs <- 4326
 coast <- sf::st_read(here::here("data-raw/gis/NES_LME_coast.shp"), quiet = T) %>%
@@ -43,7 +44,8 @@ coast <- sf::st_read(here::here("data-raw/gis/NES_LME_coast.shp"), quiet = T) %>
 
 suppressMessages(sf::sf_use_s2(FALSE))
 
-statareas <- NEFSCspatial::Statistical_Areas_2010
+statareas <- NEFSCspatial::Statistical_Areas_2010  %>%
+  sf::st_transform(.,crs=crs)
 centroids <- sf::st_coordinates(sf::st_centroid(statareas))
 statareas <- cbind(statareas,centroids)
 
@@ -57,41 +59,120 @@ species <- data.frame(itis = c("172909","172414","161722","164744","172905","172
 ### Atlantic cod
 
 ```{r acod, echo = F}
-
+itis <- 164712
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
+  
 ```
 
 ### Atlantic Herring
 ```{r aherring, echo = F }
+itis <- 161722
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
 ```
 
 ### Atlantic Mackerel
-```{r, echo = F}
+```{r amackerel, echo = F}
+itis <- 172414
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
 ```
 
 ### Haddock
-```{r, echo = F}
+```{r hadd, echo = F}
+itis <- 164744
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
 ```
 
 ### Goosefish
-```{r, echo = F}
+```{r goose, echo = F}
+itis <- 164499
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
 ```
 
 ### Winter flounder
-```{r, echo = F}
+
+
+Winter Flounder comprises two stocks; a Georges Bank stock (Eastern portion of Georges Bank) and a Southen New England stock. The boundary between the two lies through the center of Georges Bank (longitudanally)
+
+```{r winfl, echo = F}
+itis <- 172905
+speciesRules <- mscatch::get_species_object(itis,stock = "GB")
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+
+speciesRulesSNEMA <- mscatch::get_species_object(itis,stock = "SNEMA")
+areasSNEMA <- statareas %>%
+  dplyr::filter(Id %in% speciesRulesSNEMA$statStockArea)
+
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea,
+                      addAreas = areasSNEMA)
+print(p)
 ```
 
 ### Yellowtail flounder
-```{r, echo = F}
+```{r ytfl, echo = F}
+itis <- 172909
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
 ```
 
 ### Silver hake
-```{r, echo = F}
+
+Silver Hake comprises two stocks; a northern and southern stock. The boundary between the two lies through the center of Georges Bank (latitudinally)
+
+```{r silhake, echo = F}
+itis <- 164791
+speciesRules <- mscatch::get_species_object(itis,stock = "North")
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+# Additional stock area
+speciesRulesS <- mscatch::get_species_object(itis,stock = "South")
+
+areasN <- statareas %>% 
+    dplyr::filter(Id %in% speciesRules$statStockArea)
+areasS <- statareas %>% 
+    dplyr::filter(Id %in% speciesRulesS$statStockArea)
+p <- p +
+  ggplot2::geom_sf(data= areasN,col="black",fill="lightgrey",alpha = 0.5) +
+  ggplot2::geom_sf(data= areasS,col="black",fill="lightgrey",alpha = 0.2) + 
+  ggplot2::geom_text(data=areasS,ggplot2::aes(x=X,y=Y,label=Id),size=2)
+  
+
+print(p)
 ```
 
 ### Spiny dogfish
-```{r, echo = F}
+```{r spindog, echo = F}
+itis <- 160617
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
 ```
 
 ### Winter skate
-```{r, echo = F}
+```{r winskate, echo = F}
+itis <- 564145
+speciesRules <- mscatch::get_species_object(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+print(p)
+
+options(warn = 0)
+
 ```
