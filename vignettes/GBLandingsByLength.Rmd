@@ -1,7 +1,5 @@
 ---
 title: "Landings by Length for Georges Bank"
-author: Andy Beet
-date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   bookdown::html_document2:
     code_fold: hide
@@ -18,77 +16,31 @@ library(mskeyrun)
 options(warn=-1)
 ```
 
-## Goal
+Landings of fish are not recorded by length. Samples of the landed fish are taken through time by port samplers at the request of the assessment scientist. The size of the samples (the number of fish sampled) and the frequency of the samples change through time for several reasons. As a result some species are more heavily sampled than others. In addition some species are more heavily sampled during certain times of the year. In many cases the lengthed fish are assigned a market category, for example, Large, Small, Jumbo. Other times they are not and are simple considered Unclassified
 
-The ultimate goal is to create a data set that contains total annual biomass divided into size classes based on length for each of the [focal species](https://noaa-edab.github.io/ms-keyrun/reference/focalSpecies.html) and for each fleet that targets them. The resulting table will have a format similar to:
+For many stock assessment models and multispecies models the catch is often required as a composition of lengths. Due to the nature of the sampling program, length samples are not always available at the level the model requires. In this case there are several options. One of them being to "borrow" length samples from adjacent time periods. This assumes that fish caught from one time period to the next have similar size (length) distributions.
 
-```{r tabformat, echo=F,eval=T}
+## Expanding catch to a composition of lengths
 
-df <- data.frame(Fleet = c(1,1,1,1,1,1),
-           Area=c(1,1,1,1,1,1),
-           Year =c(1964,1965,1966,1964,1965,1966),
-           Species=c(1,1,1,2,2,2),
-           Biomass=c(222,345,343,2137,678,346),
-           sizeclass1 = c(0,0,0,0,0,0),
-           sizeclass2 = c(0.05,0.05,0.05,0.05,0.05,0.05),
-           sizeclass3 = c(0.25,0.25,0.25,0.25,.25,.25),
-           sizeclass4 = c(0.5,0.5,0.5,0.5,.5,.5),
-           sizeclass5 = c(.25,.25,.25,.25,.25,.25))
+For each of the [focal species](stockAreas.html#focal) the annual catch (measured in metric tons) is expanded to a composition of length. The result being that the sum of the catch over all lengths in a given year (or any other time interval) will equal the total catch for that year (or equivalent time interval). Fish are measured in 1 cm increments.
 
- df %>%  kableExtra::kbl() %>%
-  kableExtra::kable_styling("hover", full_width = F)
 
+* Commercial fisheries landings were pulled using R package [`comlandr`](https://github.com/NOAA-EDAB/comlandr)
+
+* The length data were pulled from the `stockeff.mv_cf_len` table
+
+* The R package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to expand the annual catch data. The methods are explained there. 
+
+
+For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings and discard data are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated for each LENGTH (1 cm bins) category by YEAR and [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html). This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html)
+
+```{r lencomp,echo=T,eval=TRUE}
+mskeyrun::realFisheryLencomp %>%
+  dplyr::filter(Code == 164712) %>%
+  head(.,10) %>%
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=c("Code","year"), big.mark = "" , digits=0 )
 ```
-
-Columns with the format `sizeclassx` represent the xth size class. A size class is defined by a range of lengths (cm) and its width is dependent on the species. Size classes were based on life history traits. For the focal species, the widths of each size class are defined in the following table (subject to change):
-
-```{r hydrabins, echo=F,eval=T,width = "50%", }
-specnames <- c("SPINY DOGFISH","WINTER SKATE","ATLANTIC HERRING", "ATLANTIC COD","HADDOCK","YELLOWTAIL FLOUNDER","WINTER FLOUNDER","ATLANTIC MACKEREL", "SILVER HAKE","GOOSEFISH") 
-
-tab <- hydradata::hydraDataList$binwidth %>% 
-  dplyr::mutate(COMMON_NAME =  specnames )
-itis <- mscatch::speciesLookupTable %>%
-  dplyr::rename(COMMON_NAME = COMMON_NAME.y) %>%
-  dplyr::filter(COMMON_NAME %in% unique(tab$COMMON_NAME)) %>%
-  dplyr::select(COMMON_NAME,SPECIES_ITIS) %>% 
-  dplyr::rename(species_itis = SPECIES_ITIS) %>%
-  dplyr::distinct()
-
-tab <- tab %>% 
-  dplyr::left_join(.,itis,by=c("COMMON_NAME")) %>% 
-  dplyr::select(-COMMON_NAME)
-row.names(tab) <- specnames
-
-
-tab %>%  kableExtra::kbl() %>%
-  kableExtra::kable_styling("hover", full_width = F)
-
-```
-
-For example, the first size class for SPINY DOGFISH is [0-20] cm, the second class is (20-40] cm, ..., the 5 size class is (80-110] cm.
-
-## Data and methods
-
-Commercial fisheries landings were pulled using R package [`comlandr`](https://github.com/NOAA-EDAB/comlandr)
-
-The length data were pulled from the `stockeff.mv_cf_len` table
-
-The package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to facilitate these data pulls.
-
-For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings and discard data are aggregated based on the availability of length samples. Biomass is then estimated for each LENGTH (1 cm bins) category by YEAR and \link{https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html}{fleet}. This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html)
-
-Detailed methods can be found in the [`mscatch`](https://noaa-edab.github.io/mscatch/) package
-
-
-## Hydra fleets
-
-The [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html) definitions for the Hydra model are defined in the table:
-
-```{r hydrafleet, echo=T, eval=T}
-mskeyrun::fleets %>%  kableExtra::kbl() %>%
-  kableExtra::kable_styling("hover", full_width = F)
-```
-
 
 
 
