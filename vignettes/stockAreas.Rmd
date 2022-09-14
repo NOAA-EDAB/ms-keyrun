@@ -15,7 +15,7 @@ source(here::here("data-raw/R/plot_stock_areas.R"))
 ```
 
 
-## Focal species
+## Focal species {#focal}
 
 ```{r , echo = F, eval=T}
 focalSpecies %>%
