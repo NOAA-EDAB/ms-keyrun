@@ -1,6 +1,8 @@
 ---
 title: "Focal Species stock area definitions"
-output: github_document
+output:
+  html_document:
+    code_fold: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +17,7 @@ source(here::here("data-raw/R/plot_stock_areas.R"))
 
 ## Focal species
 
-```{r focalSpTab, echo = F, eval=T}
+```{r , echo = F, eval=T}
 focalSpecies %>%
   dplyr::select(LongName,SCIENTIFIC_NAME,SPECIES_ITIS) %>%
   dplyr::filter(!(LongName == "Pollock")) %>%
@@ -24,15 +26,15 @@ focalSpecies %>%
   dplyr::distinct() %>%
   flextable::flextable() %>%
   flextable::autofit()
-
 ```
 
 
 
 ##  Stock areas 
 
-Numbered Statistical areas define the stock area used in an assessment. Overlayed in red denotes the statistical areas used to 
-pull catch data for the Georges Bank region.
+Numbered Statistical areas define the stock area used in an assessment. Overlaid in red denotes the statistical areas used to pull catch data for the Georges Bank region.
+
+Length sample data are also pulled from the GB region. For stocks that are transient on Georges Bank (Herring, Mackerel, Spiny dogfish, Winter skate, Goosefish) length samples are used from the whole shelf.
 
 
 ```{r stocks, echo = F, eval = T}
@@ -139,19 +141,14 @@ Silver Hake comprises two stocks; a northern and southern stock. The boundary be
 itis <- 164791
 speciesRules <- mscatch::get_species_object(itis,stock = "North")
 speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
-p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
+
 # Additional stock area
 speciesRulesS <- mscatch::get_species_object(itis,stock = "South")
-
-areasN <- statareas %>% 
-    dplyr::filter(Id %in% speciesRules$statStockArea)
 areasS <- statareas %>% 
     dplyr::filter(Id %in% speciesRulesS$statStockArea)
-p <- p +
-  ggplot2::geom_sf(data= areasN,col="black",fill="lightgrey",alpha = 0.5) +
-  ggplot2::geom_sf(data= areasS,col="black",fill="lightgrey",alpha = 0.2) + 
-  ggplot2::geom_text(data=areasS,ggplot2::aes(x=X,y=Y,label=Id),size=2)
-  
+
+p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea,addAreas = areasS)
+
 
 print(p)
 ```
