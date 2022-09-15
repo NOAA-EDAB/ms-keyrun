@@ -6,21 +6,16 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE,
+                      message = FALSE,
+                      warning = FALSE)
 
 library(dplyr)
 library(ggplot2)
 library(ggiraph)
+library(here)
 ```
 
-
-```{r, functions, echo = F}
-catHeader <- function(text = "", level = 3) {
-  cat(paste0("\n\n", 
-               paste(rep("#", level), collapse = ""), 
-               " ", text, "\n"))
-}
-```
 
 The length based multispecies model (Hydra) uses diet composition information to set up predator prey interactions, and fits to survey indices of diet composition by species size class. The NEFSC spring and fall [bottom trawl surveys](https://noaa-edab.github.io/tech-doc/) collect the information required to obtain estimates of these indices.
 
@@ -36,15 +31,19 @@ where $t$ represents an individual bottom trawl tow, $N_{jts}$ is the number of 
 
 $$\overline{w_{ijts}} = \frac{\sum_{k=1}^{N_{jts}} \overline{w_{ijtsk}}}{N_{jts}}$$ 
 
-
+The `mskeyrun::surveyDietcomp` dataset was created using `create_real_dietcomp()` in `ms-keyrun/data-raw`. 
 
 ```{r}
 
-#split survdiet to species then make a plot list
-# test with dogfish
-dogfish <- survdiet %>% dplyr::filter(Name=="Spiny_dogfish", variable=="relmsw")
+survdiet <- mskeyrun::surveyDietcomp
 
-p1 <-   ggplot(dogfish, aes(year, value, fill=prey)) +
+#split survdiet to species then make a plot list
+
+tmp <- survdiet %>% dplyr::filter(variable=="relmsw")
+
+plist2 = lapply(split(tmp, tmp$Name), function(d) {
+  #p1 <- 
+   ggplot(d, aes(year, value, fill=prey)) +
    geom_bar(stat = "identity") + #
    ylab("Percent in Diet") +
    xlab("Year") +
@@ -57,24 +56,95 @@ p1 <-   ggplot(dogfish, aes(year, value, fill=prey)) +
          ) +
     geom_bar_interactive(stat = "identity", aes(tooltip = prey, data_id = prey))
 
-ggiraph(code = print(p1), height=14)  
+})
+
+
+#ggiraph(code = print(p1), height=14)  
 
 ```
+
+We visualize diets below. Hover over a bar to see which prey species is represented. In this visualization, color coding is only consisten within, not across, predators.
 
 ## Annual survey diet composition by species {.tabset}
 
-```{r biomassS, results = "asis", echo = FALSE}
+```{r dietcomps, results = "asis", echo = FALSE}
 
-ggiraph(code = print(p1), height=14)  
+# see https://github.com/rstudio/rmarkdown/issues/1877 for this template
+# to make an interactive plot in an "asis" code chunk
+# but I needed to add this to make it work
+knitr::opts_knit$set(output.dir = here())
 
-for(i in seq_along(out$plistBS)){
-    tmp <- out$plistBS[[i]]
-    # As you want to use tabset level here has to be lower than 
-    # parent level (ie, parent is 2, so here you have to use 3)
-    catHeader(tmp[[2]], 3)
-    lapply(tmp[1], print)
-}
+contents <- purrr::map(names(plist2), ~ {knitr::knit_expand(text = c(
+  "### {{name}}\n",
+  "```{r}",
+  "ggiraph(code = print(plist2${{name}}), height=14)",
+  "```\n"
+), name = .x)})
+res = knitr::knit_child(text = unlist(contents), quiet = TRUE)
+cat(res, sep = "\n")
+
+# for not interactive plot this is the way
+# preds <- unique(tmp$Name)
+# 
+# for(i in 1:length(preds)) {
+#   cat("  \n###",  preds[i],"  \n")
+#   print(plist2[preds[i]]) 
+#   cat("  \n")
+# }
+
 ```
+
+## {-}
+
+## Species interactions
+
+In this visualization, the 10 mskeyrun focal species have the same color across predator plots, and all other prey species are gray. Define colors:
+
+```{r preycol}
+#from http://medialab.github.io/iwanthue/ using 10 categories, colorblind friendly
+
+preycol <- c(  #make object preycol by combining this list of hex codes
+  "#007e32",
+  "#000266",
+  "#d4c434",
+  "#692e00",
+  "#96bd77",
+  "#388eff",
+  "#c24914",
+  "#8afcdc",
+  "#ffadfe",
+  "#cdff94")
+
+preycolcode <- data.frame(prey=names(plist2),
+                          preycol=c(preycol)) %>%
+  filter(!is.na(prey))
+```
+
+
+## Proportion of diets that are mskeyrun focal species {.tabset}
+
+```{r}
+
+plist3 = lapply(split(tmp, tmp$Name), function(d) {
+  #p1 <- 
+   ggplot(d, aes(year, value, fill=prey)) +
+   geom_bar(stat = "identity") + #
+   ylab("Percent in Diet") +
+   xlab("Year") +
+   facet_wrap("season", nrow=4) +
+   theme_bw() +
+   viridis::scale_fill_viridis(discrete = TRUE) +
+   theme(legend.position = "none"
+         #legend.position="bottom",
+         #legend.text=element_text(size=5)
+         ) +
+    geom_bar_interactive(stat = "identity", aes(tooltip = prey, data_id = prey))
+
+})
+```
+
+
+## {-}
 
 ## Diet composition by predator length
 

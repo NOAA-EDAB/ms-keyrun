@@ -50,7 +50,7 @@ create_real_lendietcomp <- function(focalspp, survstrat, saveToData = T){
   load(url("https://github.com/Laurels1/Condition/raw/master/data/allfh.RData"))
   
   survdietraw <- allfh %>%
-    dplyr::filter(pdscinam %in% focalspp$SCIENTIFIC_NAME,
+    dplyr::filter(pdscinam %in% unique(focalspp$SCIENTIFIC_NAME),
                   stratum %in% survstrat,
                   pynam != 'BLOWN', 
                   pynam != 'PRESERVED',
@@ -555,12 +555,12 @@ create_real_lendietcomp <- function(focalspp, survstrat, saveToData = T){
                                     variable %in% c("cv") ~ "unitless",
                                     TRUE ~ as.character("NA")))
   
-  SurveyLenDietcomp <- survdietlen
+  surveyLenDietcomp <- survdietlen
   
   if (saveToData) {
     
-    usethis::use_data(SurveyLenDietcomp, overwrite = TRUE)
+    usethis::use_data(surveyLenDietcomp, overwrite = TRUE)
   }
   
-  return(SurveyLenDietcomp)  
+  return(surveyLenDietcomp)  
 }

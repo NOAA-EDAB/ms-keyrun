@@ -48,7 +48,7 @@ create_real_dietcomp <- function(focalspp, survstrat, saveToData = T){
   
   ## Filter out only good stomachs for strata and species
   allsum_raw <- allfh %>%
-    dplyr::filter(pdscinam %in% focalspp$SCIENTIFIC_NAME,
+    dplyr::filter(pdscinam %in% unique(focalspp$SCIENTIFIC_NAME),
                   stratum %in% survstrat,
                   pynam != 'BLOWN', 
                   pynam != 'PRESERVED',
@@ -541,13 +541,13 @@ create_real_dietcomp <- function(focalspp, survstrat, saveToData = T){
                                     variable %in% c("cv") ~ "unitless",
                                     TRUE ~ as.character("NA")))
   
-  SurveyDietcomp <- survdiet
+  surveyDietcomp <- survdiet
   
   if (saveToData) {
     
-    usethis::use_data(SurveyDietcomp, overwrite = TRUE)
+    usethis::use_data(surveyDietcomp, overwrite = TRUE)
   }
   
-  return(SurveyDietcomp)
+  return(surveyDietcomp)
   
 }
