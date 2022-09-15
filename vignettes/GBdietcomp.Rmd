@@ -1,0 +1,82 @@
+---
+title: "Georges Bank Diet Composition"
+output:
+  html_document:
+    code_fold: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dplyr)
+library(ggplot2)
+library(ggiraph)
+```
+
+
+```{r, functions, echo = F}
+catHeader <- function(text = "", level = 3) {
+  cat(paste0("\n\n", 
+               paste(rep("#", level), collapse = ""), 
+               " ", text, "\n"))
+}
+```
+
+The length based multispecies model (Hydra) uses diet composition information to set up predator prey interactions, and fits to survey indices of diet composition by species size class. The NEFSC spring and fall [bottom trawl surveys](https://noaa-edab.github.io/tech-doc/) collect the information required to obtain estimates of these indices.
+
+NEFSC bottom-trawl sampling encompasses about 293,000 square km of continental shelf from Cape Hatteras, NC, to Nova Scotia, Canada in depths from 8-400 m. Food habits sampling has been conducted since 1973. Stomachs are collected at sea by NEFSC, and have been primarily analyzed at sea since 1981. Total stomach volume is estimated, each prey item is identified and sorted to the lowest possible taxonomic level, and the proportion of each prey item is estimated. Detailed methods are described in Link and Almeida (2000).  
+
+Prey composition percent by weight as shown in Figure 1 \ref{fig:NEFSCdecade} was calculated using a weighted mean ($\overline{w_{ijs}}$) (Link and Almeida, 2000) to estimate mean weight of prey $i$ in predator $j$ for statistical group $s$. Note: Prey volumes are used as proxies for prey weight. It may be calculated as
+
+
+$$\overline{w_{ijs}} = \frac{\sum_{t=1}^{N_{ts}} N_{jts}\overline{w_{ijts}}}{N_{ts}}$$
+
+
+where $t$ represents an individual bottom trawl tow, $N_{jts}$ is the number of predator $j$ stomachs in tow $t$ for statistical group $s$, $N_{ts}$ is the number of tows in statistical group $s$, and 
+
+$$\overline{w_{ijts}} = \frac{\sum_{k=1}^{N_{jts}} \overline{w_{ijtsk}}}{N_{jts}}$$ 
+
+
+
+```{r}
+
+#split survdiet to species then make a plot list
+# test with dogfish
+dogfish <- survdiet %>% dplyr::filter(Name=="Spiny_dogfish", variable=="relmsw")
+
+p1 <-   ggplot(dogfish, aes(year, value, fill=prey)) +
+   geom_bar(stat = "identity") + #
+   ylab("Percent in Diet") +
+   xlab("Year") +
+   facet_wrap("season", nrow=4) +
+   theme_bw() +
+   viridis::scale_fill_viridis(discrete = TRUE) +
+   theme(legend.position = "none"
+         #legend.position="bottom",
+         #legend.text=element_text(size=5)
+         ) +
+    geom_bar_interactive(stat = "identity", aes(tooltip = prey, data_id = prey))
+
+ggiraph(code = print(p1), height=14)  
+
+```
+
+## Annual survey diet composition by species {.tabset}
+
+```{r biomassS, results = "asis", echo = FALSE}
+
+ggiraph(code = print(p1), height=14)  
+
+for(i in seq_along(out$plistBS)){
+    tmp <- out$plistBS[[i]]
+    # As you want to use tabset level here has to be lower than 
+    # parent level (ie, parent is 2, so here you have to use 3)
+    catHeader(tmp[[2]], 3)
+    lapply(tmp[1], print)
+}
+```
+
+## Diet composition by predator length
+
+This is not intended as an end product. It is an interim product for input into `hydradata` and other model specific dataset processing code to aggregate meansw at length into length or age specific predator groups. The variances calculated here are meaningless. 
+
