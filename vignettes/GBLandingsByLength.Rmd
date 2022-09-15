@@ -1,5 +1,5 @@
 ---
-title: "Landings by Length for Georges Bank"
+title: "Landings by Length"
 output:
   bookdown::html_document2:
     code_fold: hide
@@ -13,6 +13,7 @@ link-citations: yes
 knitr::opts_chunk$set(echo = TRUE)
 library(magrittr)
 library(mskeyrun)
+source(here::here("data-raw/R/create_species_rules_table.r"))
 options(warn=-1)
 ```
 
@@ -22,19 +23,22 @@ For many stock assessment models and multispecies models the catch is often requ
 
 ## Expanding catch to a composition of lengths
 
-For each of the [focal species](stockAreas.html#focal) the annual catch (measured in metric tons) is expanded to a composition of length. The result being that the sum of the catch over all lengths in a given year (or any other time interval) will equal the total catch for that year (or equivalent time interval). Fish are measured in 1 cm increments.
+Hydra, the multispecies length based model, is the only model that requires this type of data. Currently Hydra incorporates three distinct fleets, a demersal fleet, a pelagic fleet, and a fixed gear fleet. This data product categorizes catch by these three fleet types.
 
+The annual catch (measured in metric tons) for each of the [focal species](stockAreas.html#focal) is expanded to a composition of length. The result being that the sum of the catch over all lengths in a given year (or any other time interval) will equal the total catch for that year (or equivalent time interval). Fish are measured in 1 cm increments.
 
 * Commercial fisheries landings were pulled using R package [`comlandr`](https://github.com/NOAA-EDAB/comlandr)
 
-* The length data were pulled from the `stockeff.mv_cf_len` table
+* The length data were pulled from the commercial fisheries database, specifically the `stockeff.mv_cf_len` table
 
-* The R package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to expand the annual catch data. The methods are explained there. 
+* The R package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to expand the annual catch data. The methods are explained there. [Species specific rules](#rules) are used this expansion to account for life history traits.
 
 
-For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings and discard data are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated for each LENGTH (1 cm bins) category by YEAR and [fleet](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html). This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html)
+## Species rules {#rules}
 
-```{r lencomp,echo=T,eval=TRUE}
+For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings data and discard data (not currently incorporated) are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated for each LENGTH (1 cm bins) category for a specified time interval, market category, and gear type. The expanded catch is then aggregated to annual time steps and [fleets](https://noaa-edab.github.io/ms-keyrun/GBFleetDecisions.html). This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html). A sample of the output for Atlantic cod is shown below.
+
+```{r lencomp,echo=F,eval=TRUE}
 mskeyrun::realFisheryLencomp %>%
   dplyr::filter(Code == 164712) %>%
   head(.,10) %>%
@@ -43,7 +47,38 @@ mskeyrun::realFisheryLencomp %>%
 ```
 
 
+### Fleet/Gear Types
 
+NEGEAR2 codes observed in the catch data are attributed to one of three fleets. The designation "all" implies all other gear codes. Note that some species are not caught by all three fleets.
 
-## References
+```{r speciesgear, echo = F, eval=T}
+tab <- create_species_rules_table1("gearCodes","Fleet","Negear2")
+tab
 
+```
+### Market Codes
+
+In a similar fashion to fleets, the market codes obseved in the catch data are relabelled according to assessment scientist recommendations. The designation "all" implies all other market codes
+
+```{r speciesmarket, echo = F, eval=T}
+tab <- create_species_rules_table1("marketCodes","Relablled","Market Codes")
+tab
+
+```
+### Additional preferences
+
+Additional decision points were considered for each species in accordance with stock scientist recommendations. The following table outlines these decision points:
+
+*   `temporalAggregation` = The time scale that catch is expanded to lengths. Quarterly, by semester or annual time scales.
+*   `howAggregate` = The method for treating catch (at above time scales) that have missing associated length samples. *Note: not all stock scientists borrow length samples from other sampled times. This will be addressed at a later date*
+*   `LengthWeightData` = The data source for obtaining length and weight data. This data is used to fit length-weight relationships at the level defined by `LengthWeightRelationship`.
+*   `LengthWeightRelationship` = The time scale used to fit length-weight relationships. *Note: some stock scientists fit length-weight relationships for each semester in each year. Some fit over a specified time range of survey data. These modifications will be addressed at a later date.*
+*   `AgeData` = The data source for obtaining age data. Note that some species do not have age data available and subsequently age based stock assessments are not carried out.
+*   `AgeLengthKey` = The time scale used to calculate the Age length key. **Note: some stock scientists use year and quarter, some also incorporate gear type. These modifications will be addressed at a later date. **
+*   `maxAge` = The approximate observed maximum age of the species. This is used in the construction of the age length key.
+
+```{r speciesprefs, echo = F, eval=T}
+tab <- create_species_rules_table2()
+tab
+
+```
