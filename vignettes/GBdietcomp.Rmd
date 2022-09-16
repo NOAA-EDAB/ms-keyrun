@@ -63,7 +63,7 @@ plist2 = lapply(split(tmp, tmp$Name), function(d) {
 
 ```
 
-We visualize diets below. Hover over a bar to see which prey species is represented. In this visualization, color coding is only consisten within, not across, predators.
+We visualize full diet compositions below. Hover over a bar to see which prey species is represented. In this visualization, color coding is only consistent within, not across, predators.
 
 ## Annual survey diet composition by species {.tabset}
 
@@ -115,32 +115,62 @@ preycol <- c(  #make object preycol by combining this list of hex codes
   "#ffadfe",
   "#cdff94")
 
-preycolcode <- data.frame(prey=names(plist2),
-                          preycol=c(preycol)) %>%
-  filter(!is.na(prey))
+names(preycol) <- as.factor(names(plist2))
+
 ```
 
 
-## Proportion of diets that are mskeyrun focal species {.tabset}
-
 ```{r}
 
-plist3 = lapply(split(tmp, tmp$Name), function(d) {
+focalprey <- mskeyrun::focalSpecies %>%
+  dplyr::filter(modelName != "Pollock") %>% # not using in these models
+  dplyr::select(-NESPP3) %>%
+  dplyr::mutate(Name = modelName) %>%
+  dplyr::distinct() %>%
+  dplyr::select(SCIENTIFIC_NAME, SPECIES_ITIS, Name)
+
+tmpcol <- tmp %>%
+  dplyr::left_join(focalprey, by=c("prey" = "SCIENTIFIC_NAME")) %>%
+  dplyr::rename(preyName = Name.y,
+                Name = Name.x) 
+
+preycolsel <- preycol[names(preycol) %in% tmpcol$preyName] 
+#names(preycolsel) <- toupper(names(preycolsel))
+
+plist3 = lapply(split(tmpcol, tmpcol$Name), function(d) {
   #p1 <- 
-   ggplot(d, aes(year, value, fill=prey)) +
+   ggplot(d, aes(year, value, fill=preyName)) +
    geom_bar(stat = "identity") + #
    ylab("Percent in Diet") +
    xlab("Year") +
    facet_wrap("season", nrow=4) +
    theme_bw() +
-   viridis::scale_fill_viridis(discrete = TRUE) +
-   theme(legend.position = "none"
-         #legend.position="bottom",
-         #legend.text=element_text(size=5)
-         ) +
-    geom_bar_interactive(stat = "identity", aes(tooltip = prey, data_id = prey))
+   scale_fill_manual(values=preycolsel) +
+   #viridis::scale_fill_viridis(discrete = TRUE) +
+   theme(#legend.position = "none"
+         legend.position="right",
+         legend.text=element_text(size=5)
+         ) #+
+    #geom_bar_interactive(stat = "identity", aes(tooltip = prey, data_id = prey))
 
 })
+```
+
+## Proportion of diets that are mskeyrun focal species {.tabset}
+
+```{r dietcompsprey, results = "asis", echo = FALSE}
+
+knitr::opts_knit$set(output.dir = here())
+
+contents <- purrr::map(names(plist3), ~ {knitr::knit_expand(text = c(
+  "### {{name}}\n",
+  "```{r}",
+  "ggiraph(code = print(plist3${{name}}), height=14)",
+  "```\n"
+), name = .x)})
+res = knitr::knit_child(text = unlist(contents), quiet = TRUE)
+cat(res, sep = "\n")
+
 ```
 
 
@@ -148,5 +178,7 @@ plist3 = lapply(split(tmp, tmp$Name), function(d) {
 
 ## Diet composition by predator length
 
-This is not intended as an end product. It is an interim product for input into `hydradata` and other model specific dataset processing code to aggregate meansw at length into length or age specific predator groups. The variances calculated here are meaningless. 
+The dataset `mskeyrun::surveyLenDietcomp` is not intended as an end product. It is an interim product for input into `hydradata` and other model specific dataset processing code to aggregate `meansw` at length into length or age specific predator groups. The variances calculated here are meaningless as many are based on a single tow when splitting predators to 1 m length bins. 
+
+You have been warned. 
 
