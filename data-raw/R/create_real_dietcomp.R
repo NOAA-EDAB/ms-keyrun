@@ -552,6 +552,9 @@ create_real_dietcomp <- function(focalspp, survstrat, saveToData = T){
     filter(variable != "totwt", 
            variable != "nstom") 
   
+  # correct prey scientific names for mskeyrun species
+  eachprey$prey[eachprey$prey == "PLEURONECTES AMERICANUS"] <- "PSEUDOPLEURONECTES AMERICANUS"
+  eachprey$prey[eachprey$prey == "PLEURONECTES FERRUGINUS"] <- "LIMANDA FERRUGINEA"
  
   survdietfin <- bind_rows(eachprey, allprey)
   

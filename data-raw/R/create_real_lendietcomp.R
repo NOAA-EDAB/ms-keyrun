@@ -555,6 +555,11 @@ create_real_lendietcomp <- function(focalspp, survstrat, saveToData = T){
                                     variable %in% c("cv") ~ "unitless",
                                     TRUE ~ as.character("NA")))
   
+  # correct prey scientific names for mskeyrun species
+  survdietlen$prey[survdietlen$prey == "PLEURONECTES AMERICANUS"] <- "PSEUDOPLEURONECTES AMERICANUS"
+  survdietlen$prey[survdietlen$prey == "PLEURONECTES FERRUGINUS"] <- "LIMANDA FERRUGINEA"
+  
+  
   surveyLenDietcomp <- survdietlen
   
   if (saveToData) {
