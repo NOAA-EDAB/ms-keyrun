@@ -33,6 +33,8 @@ reference:
   - surveyIndexHBAll
   - realBiolPar
   - realSurveyLennumcomp
+  - surveyDietcomp
+  - surveyLenDietcomp
 - title: "Commerical fishing data products"
   desc: "Extracted from Commercial fishery database "
 - contents:
