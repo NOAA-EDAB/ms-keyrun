@@ -26,12 +26,12 @@
 #'\item{prey}{Common name for prey item}
 #'\item{variable}{mean prey item weight in year/species/season (meansw),
 #'                variance of meansw (variance),
+#'                number of tows in year/species/season/prey (num_tows),
 #'                cv of meansw (cv),
 #'                confidence interval for mean prey weight in diet (ci),
 #'                total prey weight in year/species/season (totwt),
 #'                percent of prey item in diet in year/species/season (relmsw),
 #'                confidence interval for percent prey in diet (relci),
-#'                number of tows in year/species/season (num_tows),
 #'                number of stomachs in year/species/season (nstom)}
 #'\item{value}{value of the variable}
 #'\item{units}{units of the variable; grams for meansw, variance, ci, totwt,
@@ -537,11 +537,25 @@ create_real_dietcomp <- function(focalspp, survstrat, saveToData = T){
                         values_to = "value") %>%
     dplyr::mutate(units = case_when(variable %in% c("meansw", "variance","totwt","ci") ~ "grams", 
                                     variable %in% c("relmsw", "relci") ~ "percent",
-                                    variable %in% c("num_tows","nstom") ~ "numbers",
+                                    variable %in% c("num_tows","nstom") ~ "number",
                                     variable %in% c("cv") ~ "unitless",
                                     TRUE ~ as.character("NA")))
   
-  surveyDietcomp <- survdiet
+  # reclassify variables that apply to pred not each prey
+  allprey <- survdiet %>%
+     dplyr::filter(variable %in% c("totwt", "nstom")) %>%
+     dplyr::mutate(prey = "ALL") %>%
+     dplyr::distinct()
+  
+  # remove duplicates and bind in reclassified pred variables
+  eachprey <- survdiet %>%
+    filter(variable != "totwt", 
+           variable != "nstom") 
+  
+ 
+  survdietfin <- bind_rows(eachprey, allprey)
+  
+  surveyDietcomp <- survdietfin
   
   if (saveToData) {
     

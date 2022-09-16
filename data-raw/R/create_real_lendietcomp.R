@@ -25,15 +25,15 @@
 #'\item{season}{season diet data collected}
 #'\item{pdlen}{predator length bin (1 cm)}
 #'\item{prey}{Common name for prey item}
-#'\item{variable}{mean prey item weight in year/species/season (meansw),
+#'\item{variable}{mean prey item weight in year/species/season/pdlen (meansw),
 #'                variance of meansw (variance),
+#'                number of tows in year/species/season/prey/pdlen (num_tows),
 #'                cv of meansw (cv),
 #'                confidence interval for mean prey weight in diet (ci),
-#'                total prey weight in year/species/season (totwt),
-#'                percent of prey item in diet in year/species/season (relmsw),
+#'                total prey weight in year/species/season/pdlen (totwt),
+#'                percent of prey item in diet in year/species/season/pdlen (relmsw),
 #'                confidence interval for percent prey in diet (relci),
-#'                number of tows in year/species/season (num_tows),
-#'                number of stomachs in year/species/season (nstom)}
+#'                number of stomachs in year/species/season/pdlen (nstom)}
 #'\item{value}{value of the variable}
 #'\item{units}{units of the variable; grams for meansw, variance, ci, totwt,
 #'             percent for relmsw, relci, numbers for num_tows, nstom, unitless cv}
@@ -551,7 +551,7 @@ create_real_lendietcomp <- function(focalspp, survstrat, saveToData = T){
                         values_to = "value") %>%
     dplyr::mutate(units = case_when(variable %in% c("meansw", "variance","totwt","ci") ~ "grams", 
                                     variable %in% c("relmsw", "relci") ~ "percent",
-                                    variable %in% c("num_tows","nstom") ~ "numbers",
+                                    variable %in% c("num_tows","nstom") ~ "number",
                                     variable %in% c("cv") ~ "unitless",
                                     TRUE ~ as.character("NA")))
   
