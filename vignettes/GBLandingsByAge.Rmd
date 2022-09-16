@@ -1,0 +1,44 @@
+---
+title: "Landings by Age"
+output:
+  bookdown::html_document2:
+    code_fold: hide
+    number_sections: false
+csl: apa-annotated-bibliography.csl
+bibliography: references.bib
+link-citations: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(magrittr)
+library(mskeyrun)
+options(warn=-1)
+```
+
+
+Any Statistical catch at age model will require input data in the form of numbers of fish over a range of ages. This data is obtained in a three step process:
+
+*   The catch is first [expanded](https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.rmd) to a composition of lengths
+
+*   An [age length key](https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html#additional-preferences) is estimated using the expanding catch and age-length data. The method follows that of @gerritsen_simple_2006. The source of the [age-length data](https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html#additional-preferences) is often up to the discretion of the assessment scientist and is species dependent. 
+
+*   The numbers of fish at age is then calculated using the age-length key, the expanded catch and the length-weight relationship. This is explained in [`mscatch`])(https://noaa-edab.github.io/mscatch/articles/ageExpansion.html) 
+
+For the mskeyrun project the final data product is aggregated (over quarter or semester) to annual numbers. This data set is exported in the package as [realFisheryAgecomp](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryAgecomp.html). A sample of the output for Atlantic cod is shown below.
+
+
+
+```{r agecomp,echo=F,eval=TRUE}
+mskeyrun::realFisheryAgecomp %>%
+  dplyr::filter(Code == 164499,
+                year == 2000) %>%
+  dplyr::arrange(fishery,age) %>%
+  head(.,10) %>%
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=c("Code","year"), big.mark = "" , digits=0 )
+```
+
+
+## References
+
