@@ -57,4 +57,5 @@ Suggests:
   ggthemes,
   FSA,
   ecodata,
-  flextable
+  flextable,
+  ggiraph
