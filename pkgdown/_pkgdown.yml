@@ -89,6 +89,8 @@ navbar:
      href: articles/GBLandingsByLength.html
    - text: Length Weight relationships
      href: articles/GBLengthWeight.html
+   - text: Survey Biomass and Abundance
+     href: articles/GBbiomassNumbyLength.html
 
 
 
