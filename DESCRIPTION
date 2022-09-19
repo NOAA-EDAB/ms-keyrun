@@ -27,7 +27,7 @@ Remotes:
   NOAA-EDAB/survdat,
   NOAA-EDAB/ecodata,
   r4atlantis/atlantisom,
-  NEFSC/NEFSCspatial
+  NEFSC/NEFSC-spatial
 VignetteBuilder: knitr
 Suggests:
   NEFSCspatial,
