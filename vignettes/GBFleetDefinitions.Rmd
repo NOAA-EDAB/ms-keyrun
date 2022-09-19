@@ -1,7 +1,5 @@
 ---
-title: "Fleet Definitions for Georges Bank"
-author: Andy Beet
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+title: "Analysis of Georges Bank catch by gear type"
 output:
   bookdown::html_document2:
     code_fold: hide
@@ -86,17 +84,17 @@ A dendrogram is then formed using the agglomerative hierarchical process. This p
 
 For each gear type the landings of each species are aggregated over time and then ordered from the most abundant to least abundant. To reduce the number of variables (species) in the analysis we only use species which comprise 90% of the total landings for each gear type.
 
-(Figure \@ref(fig:dendro1)) shows the result of this approach. Initial inspection indicates further "cleaning" of the data is required. 
-
 ```{r cluster1, echo=T,eval=F}
 clusterObj <- cluster_analysis_all_gears()
 plot(clusterObj,ask=T,which.plots=2,main="Complete gear list using 90% landing from each gear",xlab="")
 
 ```
 
-```{r dendro1,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas",eval=T,echo=F}
+```{r dendro1, out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas",eval=T,echo=F}
 knitr::include_graphics("figures/dendrogram1.png")
 ```
+
+
 Note: Low values of the agglomerative coefficient indicate tight clustering of gears types. Larger values indicate less well formed clusters.
 
 
@@ -112,7 +110,7 @@ plot(clusterObj$top,ask=T,which.plots=2,main="Gear types contributing to 99% of 
 ```
 
 
-```{r dendro2,out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings",eval=T,echo=F}
+```{r dendro2, out.width="100%",fig.cap="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings",eval=T,echo=F}
 knitr::include_graphics("figures/dendrogram2.png")
 
 ```

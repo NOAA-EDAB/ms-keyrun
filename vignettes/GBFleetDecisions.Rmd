@@ -1,7 +1,5 @@
 ---
-title: "Fleet Decisions for Georges Bank"
-author: Andy Beet
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+title: "Fleet Definitions for Georges Bank"
 output:
   bookdown::html_document2:
     code_fold: hide
@@ -163,4 +161,12 @@ Predominantly Silver Hake, White Hake, Butterfish, Short fin, and long fin squid
 
 <sup>1,2</sup> 7 - HAUL SEINE (perch, alewife, cod, winter flounder, lobster)
 
+## Data
 
+The resulting data set is in the data package as `fleets`. Since the current length based model, Hydra, includes three fleets, the fleet designations are reduced further to map to the requirements of the Hydra model.
+
+```{r hydrafleet, echo=T, eval=T}
+mskeyrun::fleets %>%
+  flextable::flextable()
+
+```

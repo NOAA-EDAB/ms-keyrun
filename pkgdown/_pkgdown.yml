@@ -33,6 +33,8 @@ reference:
   - surveyIndexHBAll
   - realBiolPar
   - realSurveyLennumcomp
+  - surveyDietcomp
+  - surveyLenDietcomp
 - title: "Commerical fishing data products"
   desc: "Extracted from Commercial fishery database "
 - contents:
@@ -50,4 +52,51 @@ reference:
   - mskeyrun
   - focalSpecies
   - fleets
+  
+navbar:
+ components:
+  articles:
+   text: Articles
+   menu:
+   - text: Data Needs
+   - text: Project outline
+     href: articles/DataNeeds.html
+   - text: Dataset Dimensions
+     href: articles/DatasetDimensions.html
+   - text: Keyrun Species, Environment, Data Formats
+     href: articles/SpeciesEnvDat.html
+   - text: Age, Length, Diet
+     href: articles/CompsDat.html
+   - text: --------
+   - text: Georges Bank
+   - text: GB Survey Footprint
+     href: articles/GBSurveySet.html
+   - text: Allocate Landings to GB
+     href: articles/allocateLandingsEPU.html
+   - text: Stock areas
+     href: articles/stockAreas.html
+   - text: --------
+   - text: Simulated Data
+   - text: Generating Simulated Data
+     href: articles/SimData.html
+   - text: --------
+   - text: Assigning Fleets
+   - text: Analysis of catch by gear
+     href: articles/GBFleetDefinitions.html
+   - text: Fleet Definitions
+     href: articles/GBFleetDecisions.html
+   - text: --------
+   - text: Length & Age Based Data
+   - text: Landings by Length
+     href: articles/GBLandingsByLength.html
+   - text: Length Weight relationships
+     href: articles/GBLengthWeight.html
+   - text: Survey Biomass and Abundance
+     href: articles/GBbiomassNumbyLength.html
+
+
+
+
+
+  
   
