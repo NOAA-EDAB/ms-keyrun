@@ -22,6 +22,9 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDefinitions.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByAge.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html</loc>
   </url>
   <url>
@@ -32,6 +35,9 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBbiomassNumbyLength.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBdietcomp.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/NMFS_JIRA_2020-06-15T_0_11_28-0400.html</loc>
@@ -50,6 +56,9 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/mskeyrun.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/stockAreas.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/authors.html</loc>
@@ -136,6 +145,9 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyWtatAge.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyDietcomp.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndex.html</loc>
   </url>
   <url>
@@ -152,5 +164,8 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyIndexHBAll.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyLenDietcomp.html</loc>
   </url>
 </urlset>

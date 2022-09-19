@@ -7,15 +7,18 @@ articles:
   DatasetDimensions: DatasetDimensions.html
   GBFleetDecisions: GBFleetDecisions.html
   GBFleetDefinitions: GBFleetDefinitions.html
+  GBLandingsByAge: GBLandingsByAge.html
   GBLandingsByLength: GBLandingsByLength.html
   GBLengthWeight: GBLengthWeight.html
   GBSurveySet: GBSurveySet.html
   GBbiomassNumbyLength: GBbiomassNumbyLength.html
+  GBdietcomp: GBdietcomp.html
   SimData: SimData.html
   SpeciesEnvDat: SpeciesEnvDat.html
   allocateLandingsEPU: allocateLandingsEPU.html
   mskeyrun: mskeyrun.html
-last_built: 2022-09-08T14:27Z
+  stockAreas: stockAreas.html
+last_built: 2022-09-19T17:40Z
 urls:
   reference: https://noaa-edab.github.io/ms-keyrun/reference
   article: https://noaa-edab.github.io/ms-keyrun/articles
