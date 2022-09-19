@@ -63,7 +63,7 @@ species <- data.frame(itis = c("172909","172414","161722","164744","172905","172
 ```{r acod, echo = F}
 itis <- 164712
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
   
@@ -73,7 +73,7 @@ print(p)
 ```{r aherring, echo = F }
 itis <- 161722
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
 ```
@@ -82,7 +82,7 @@ print(p)
 ```{r amackerel, echo = F}
 itis <- 172414
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
 ```
@@ -91,7 +91,7 @@ print(p)
 ```{r hadd, echo = F}
 itis <- 164744
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
 ```
@@ -100,7 +100,7 @@ print(p)
 ```{r goose, echo = F}
 itis <- 164499
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
 ```
@@ -113,7 +113,7 @@ Winter Flounder comprises two stocks; a Georges Bank stock (Eastern portion of G
 ```{r winfl, echo = F}
 itis <- 172905
 speciesRules <- mscatch::get_species_object(itis,stock = "GB")
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 
 speciesRulesSNEMA <- mscatch::get_species_object(itis,stock = "SNEMA")
 areasSNEMA <- statareas %>%
@@ -128,7 +128,7 @@ print(p)
 ```{r ytfl, echo = F}
 itis <- 172909
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
 ```
@@ -140,7 +140,7 @@ Silver Hake comprises two stocks; a northern and southern stock. The boundary be
 ```{r silhake, echo = F}
 itis <- 164791
 speciesRules <- mscatch::get_species_object(itis,stock = "North")
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 
 # Additional stock area
 speciesRulesS <- mscatch::get_species_object(itis,stock = "South")
@@ -157,7 +157,7 @@ print(p)
 ```{r spindog, echo = F}
 itis <- 160617
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
 ```
@@ -166,7 +166,7 @@ print(p)
 ```{r winskate, echo = F}
 itis <- 564145
 speciesRules <- mscatch::get_species_object(itis,stock = NA)
-speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis,stock = NA)
+speciesKeyrun <- mscatch::get_species_object_mskeyrun(itis)
 p <- plot_stock_areas(coast,statareas,GB,speciesRules$statStockArea,speciesKeyrun$statStockArea)
 print(p)
 
