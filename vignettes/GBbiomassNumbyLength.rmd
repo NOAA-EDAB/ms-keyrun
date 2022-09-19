@@ -29,7 +29,6 @@ The R package [`survdat`](https://noaa-edab.github.io/survdat/) is used to read 
 source(here::here("data-raw/R/create_real_survey_lennumcomp.r"))
 suppressMessages(out <- create_real_survey_lennumcomp(convertKGtoMT=T))
 
-
 ```
 
 ## Spring Biomass: length-frequency plots {.tabset}
