@@ -31,7 +31,7 @@ For the mskeyrun project the final data product is aggregated (over quarter or s
 
 ```{r agecomp,echo=F,eval=TRUE}
 mskeyrun::realFisheryAgecomp %>%
-  dplyr::filter(Code == 164499,
+  dplyr::filter(Code == 172414,
                 year == 2000) %>%
   dplyr::arrange(fishery,age) %>%
   head(.,10) %>%
