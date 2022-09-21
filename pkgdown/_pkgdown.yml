@@ -89,14 +89,17 @@ navbar:
      href: articles/GBFleetDecisions.html
    - text: --------
    - text: Length & Age Based Data
+   - text: Data Sources
+     href: articles/GBLandingLengthDataSources.html
    - text: Landings by Length
      href: articles/GBLandingsByLength.html
-   - text: Length Weight relationships
+   - text: Landings by Age
+     href: articles/GBLandingsByAge.html
+   - text: Length Weight Relationships
      href: articles/GBLengthWeight.html
    - text: Survey Biomass and Abundance
      href: articles/GBbiomassNumbyLength.html
-   - text: Landings by Age
-     href: articles/GBLandingsByAge.html
+
 
 
 

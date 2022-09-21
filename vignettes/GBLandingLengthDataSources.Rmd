@@ -13,13 +13,15 @@ All length and landings data were pulled from the NEFSC commerical fisheries dat
 * sampleData_itis_GB - for landings data
 * sampleLengths_itis_GB - for length data
 
+where `itis` is the [species](stockAreas.html#focal) specific itis code
+
 ```{r echo = T, eval = F}
 channel <- dbutils::connect_to_database("server","user")
-test_data_pull_hydra_GB(channel)
+test_mscatch_data_pull_hydra_GB(channel)
 
 ```
 
-The footprint used to pull the landings and length data were the statistical areas 521, 522, 523, 524, 525, 526, 538, 551, 552, 561, 562, 537 which comprise Georges Bank.
+The footprint used to pull the landings and length data were the statistical areas 521, 522, 523, 524, 525, 526, 538, 551, 552, 561, 562, 537 which comprise [Georges Bank](GBFleetDefinitions.html#spatial-extent).
 
 Herring and winter Skate were handled differently due to data availability.
 
@@ -42,6 +44,23 @@ No skate species are recorded in the NEFSC commercial fisheries database. All sp
 get_skate_data()
 format_skate_data()
 ```
+
+## Landings by length and age {#function}
+
+The [landing by length](reference/realFisheryLencomp.html) and the [landings by age](reference/realFisheryAgecomp.html) data were created using the function
+
+```{r echo = T, eval = F}
+channel <- dbutils::connect_to_database("server","user")
+make_species_datasets_for_mskeyrun(channel)
+```
+
+For each species in turn and according to their [specific rules](GBLandingsByLength.html#rules):
+
+* Landings and length data are used to aggregate the landings. During this stage diagnostic plots and a log file of decisions are created.
+* Length-weight data are pulled from the survey database for fitting length-weight relationships
+* The landings are then expanded to length compositions from which `mskeyrun::realFisheryLencomp` is created
+* Age length data is pulled from both the survey database and the commercial database and used to create age-length keys
+* Numbers at age are calculated based on previous steps from which `mskeyrun::realFisheryAgecomp` is created
 
 
 

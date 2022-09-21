@@ -23,10 +23,15 @@ Any Statistical catch at age model will require input data in the form of number
 
 *   An [age length key](https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html#additional-preferences) is estimated using the expanding catch and age-length data. The method follows that of @gerritsen_simple_2006. The source of the [age-length data](https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html#additional-preferences) is often up to the discretion of the assessment scientist and is species dependent. 
 
-*   The numbers of fish at age is then calculated using the age-length key, the expanded catch and the length-weight relationship. This is explained in [`mscatch`])(https://noaa-edab.github.io/mscatch/articles/ageExpansion.html) 
+*   The numbers of fish at age is then calculated using the age-length key, the expanded catch and the length-weight relationship. This is explained in [`mscatch`](https://noaa-edab.github.io/mscatch/articles/ageExpansion.html) 
 
-For the mskeyrun project the final data product is aggregated (over quarter or semester) to annual numbers. This data set is exported in the package as [realFisheryAgecomp](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryAgecomp.html). A sample of the output for Atlantic cod is shown below.
+For the mskeyrun project the final data product is aggregated (over quarter or semester) to annual numbers. This data set is exported in the package as [realFisheryAgecomp](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryAgecomp.html) using the function:
 
+```{r lencomp, echo = T,eval = F}
+create_real_fishery_ageomp()
+```
+
+A sample of the output for Atlantic cod is shown below.
 
 
 ```{r agecomp,echo=F,eval=TRUE}

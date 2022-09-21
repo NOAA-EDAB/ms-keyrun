@@ -31,12 +31,18 @@ The annual catch (measured in metric tons) for each of the [focal species](stock
 
 * The length data were pulled from the commercial fisheries database, specifically the `stockeff.mv_cf_len` table
 
-* The R package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to expand the annual catch data. The methods are explained there. [Species specific rules](#rules) are used in the expansion to account for life history traits.
+* The R package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to expand the annual catch data. Detailed methods are explained there. [Species specific rules](#rules) are used in the expansion to account for life history traits. See [Data sources](GBLandingLengthDataSources.html#function) for more information
 
 
 ## Species rules {#rules}
 
-For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings data and discard data (not currently incorporated) are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated for each LENGTH (1 cm bins) category for a specified time interval, market category, and gear type. The expanded catch is then aggregated to annual time steps and [fleets](https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html). This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html). A sample of the output for Atlantic cod is shown below.
+For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings data and discard data (not currently incorporated) are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated for each LENGTH (1 cm bins) category for a specified time interval, market category, and gear type. The expanded catch is then aggregated to annual time steps and [fleets](https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html). This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html) using the function: 
+
+```{r lencomp, echo = T,eval = F}
+create_real_fishery_lencomp()
+```
+
+A sample of the output for Atlantic cod is shown below.
 
 ```{r lencomp,echo=F,eval=TRUE}
 mskeyrun::realFisheryLencomp %>%
