@@ -27,8 +27,8 @@ Any Statistical catch at age model will require input data in the form of number
 
 For the mskeyrun project the final data product is aggregated (over quarter or semester) to annual numbers. This data set is exported in the package as [realFisheryAgecomp](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryAgecomp.html) using the function:
 
-```{r lencomp, echo = T,eval = F}
-create_real_fishery_ageomp()
+```{r agecompcreate, echo = T,eval = F}
+create_real_fishery_agecomp()
 ```
 
 A sample of the output for Atlantic cod is shown below.

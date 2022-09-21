@@ -38,7 +38,7 @@ The annual catch (measured in metric tons) for each of the [focal species](stock
 
 For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings data and discard data (not currently incorporated) are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated for each LENGTH (1 cm bins) category for a specified time interval, market category, and gear type. The expanded catch is then aggregated to annual time steps and [fleets](https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html). This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html) using the function: 
 
-```{r lencomp, echo = T,eval = F}
+```{r lencompcreate, echo = T,eval = F}
 create_real_fishery_lencomp()
 ```
 

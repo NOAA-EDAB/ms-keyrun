@@ -38,7 +38,7 @@ format_herring_data()
 
 ## Winter Skate
 
-No skate species are recorded in the NEFSC commercial fisheries database. All species are recorded as an unclassified skate. The package `comlandr` calculates the proportions of skate species in the surveys as applied them to the commercial landings to obtain estimates of winter skate. The lengths for winter skate were pulled from the bottom trawl survey. 
+No skate species are recorded in the NEFSC commercial fisheries database. All species are recorded as an unclassified skate. The package `comlandr` calculates the proportions of skate species in the surveys and applies them to the commercial landings to obtain estimates of winter skate. The lengths for winter skate were pulled from the bottom trawl survey. 
 
 ```{sql wslengths, echo = T, eval = F}
 get_skate_data()
@@ -47,7 +47,7 @@ format_skate_data()
 
 ## Landings by length and age {#function}
 
-The [landing by length](reference/realFisheryLencomp.html) and the [landings by age](reference/realFisheryAgecomp.html) data were created using the function
+The [landing by length](../reference/realFisheryLencomp.html) and the [landings by age](../reference/realFisheryAgecomp.html) data were created using the function
 
 ```{r echo = T, eval = F}
 channel <- dbutils::connect_to_database("server","user")
