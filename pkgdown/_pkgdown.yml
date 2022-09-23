@@ -34,7 +34,6 @@ reference:
   - realBiolPar
   - realSurveyLennumcomp
   - surveyDietcomp
-  - surveyLenDietcomp
 - title: "Commerical fishing data products"
   desc: "Extracted from Commercial fishery database "
 - contents:
@@ -46,6 +45,9 @@ reference:
   desc: "For use in Hydra estimation model"
 - contents:
   - catchAtLengthProportions
+  - surveyLenSampN
+  - surveyLenDietcomp
+  - fisheryLenSampN
 - title: "Miscellaneous data products"
   desc: " "
 - contents:
@@ -75,6 +77,8 @@ navbar:
      href: articles/allocateLandingsEPU.html
    - text: Stock areas
      href: articles/stockAreas.html
+   - text: Focal species diets on GB
+     href: articles/GBdietcomp.html
    - text: --------
    - text: Simulated Data
    - text: Generating Simulated Data
@@ -87,12 +91,17 @@ navbar:
      href: articles/GBFleetDecisions.html
    - text: --------
    - text: Length & Age Based Data
+   - text: Data Sources
+     href: articles/GBLandingLengthDataSources.html
    - text: Landings by Length
      href: articles/GBLandingsByLength.html
-   - text: Length Weight relationships
+   - text: Landings by Age
+     href: articles/GBLandingsByAge.html
+   - text: Length Weight Relationships
      href: articles/GBLengthWeight.html
    - text: Survey Biomass and Abundance
      href: articles/GBbiomassNumbyLength.html
+
 
 
 

@@ -1,0 +1,66 @@
+---
+title: "Landings and Length data sources"
+output: html_document
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+All length and landings data were pulled from the NEFSC commerical fisheries database. Specifically the  stockeff.mv_cf_len and mv_cf_landings (since `comlandr` doesn't currently pull data in format required for mscatch. Ultimately the data will be pulled using the `comlandr` package). The data were saved as rda files in the `data` folder as:
+
+* sampleData_itis_GB - for landings data
+* sampleLengths_itis_GB - for length data
+
+where `itis` is the [species](stockAreas.html#focal) specific itis code
+
+```{r echo = T, eval = F}
+channel <- dbutils::connect_to_database("server","user")
+test_mscatch_data_pull_hydra_GB(channel)
+
+```
+
+The footprint used to pull the landings and length data were the statistical areas 521, 522, 523, 524, 525, 526, 538, 551, 552, 561, 562, 537 which comprise [Georges Bank](GBFleetDefinitions.html#spatial-extent).
+
+Herring and winter Skate were handled differently due to data availability.
+
+Note that discards are not included in the sampleData (with the exception of Herring). This will be included at a later date.
+
+## Herring
+
+Herring data is poorly represented in NEFSC fisheries database so all landings and length data were pulled from the state of Maine. In the state of Maine database catch is reported in metric tons. This was converted to lbs to align with NEFSC commercial fisheries data base. Fish lengths are reported in mm. These were converted to cm to align with the NEFSC survey database
+
+```{r, echo = T, eval = F}
+get_herring_data()
+format_herring_data()
+```
+
+## Winter Skate
+
+No skate species are recorded in the NEFSC commercial fisheries database. All species are recorded as an unclassified skate. The package `comlandr` calculates the proportions of skate species in the surveys and applies them to the commercial landings to obtain estimates of winter skate. The lengths for winter skate were pulled from the bottom trawl survey. 
+
+```{sql wslengths, echo = T, eval = F}
+get_skate_data()
+format_skate_data()
+```
+
+## Landings by length and age {#function}
+
+The [landing by length](../reference/realFisheryLencomp.html) and the [landings by age](../reference/realFisheryAgecomp.html) data were created using the function
+
+```{r echo = T, eval = F}
+channel <- dbutils::connect_to_database("server","user")
+make_species_datasets_for_mskeyrun(channel)
+```
+
+For each species in turn and according to their [specific rules](GBLandingsByLength.html#rules):
+
+* Landings and length data are used to aggregate the landings. During this stage diagnostic plots and a log file of decisions are created.
+* Length-weight data are pulled from the survey database for fitting length-weight relationships
+* The landings are then expanded to length compositions from which `mskeyrun::realFisheryLencomp` is created
+* Age length data is pulled from both the survey database and the commercial database and used to create age-length keys
+* Numbers at age are calculated based on previous steps from which `mskeyrun::realFisheryAgecomp` is created
+
+
+
