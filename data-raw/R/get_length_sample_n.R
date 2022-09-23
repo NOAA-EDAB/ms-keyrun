@@ -25,7 +25,7 @@ get_length_sample_n <- function(overwrite=T){
     dplyr::filter(SVSPP %in% svspps) %>%
     dplyr::filter(STRATUM %in% GBStrata) %>%
     dplyr::group_by(YEAR, SEASON, SVVESSEL, SVSPP) %>%
-    dplyr::summarise(lensampsize = sum(NUMLEN)) %>%
+    dplyr::summarise(lensampsize = sum(NUMLEN, na.rm = TRUE)) %>%
     dplyr::left_join(species)
   
   surveyLenSampN <- newData
