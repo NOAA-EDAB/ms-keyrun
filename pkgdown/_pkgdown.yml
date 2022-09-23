@@ -77,6 +77,8 @@ navbar:
      href: articles/allocateLandingsEPU.html
    - text: Stock areas
      href: articles/stockAreas.html
+   - text: Focal species diets on GB
+     href: articles/GBdietcomp.html
    - text: --------
    - text: Simulated Data
    - text: Generating Simulated Data

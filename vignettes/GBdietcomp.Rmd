@@ -178,7 +178,7 @@ cat(res, sep = "\n")
 
 ## Diet composition by predator length
 
-The dataset `mskeyrun::surveyLenDietcomp` is not intended as an end product. It is an interim product for input into `hydradata` and other model specific dataset processing code to aggregate `meansw` at length into length or age specific predator groups. The variances calculated here are meaningless as many are based on a single tow when splitting predators to 1 m length bins. 
+The dataset `mskeyrun::surveyLenDietcomp` is not intended as an end product. It is an interim product for input into `hydradata` and other model specific dataset processing code to aggregate `meansw` at length into length or age specific predator groups. The variances calculated here are meaningless as many are based on a single tow when splitting predators to 1 cm length bins. 
 
 You have been warned. 
 
