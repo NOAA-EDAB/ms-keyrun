@@ -14,7 +14,7 @@ spp <- as.numeric(unique(mskeyrun::focalSpecies$NESPP3))
 #Landings
 landIndex <- landings$comland[NESPP3 %in% spp, .(value = sum(SPPLIVMT)),
                               by = c('NESPP3', 'YEAR')]
-landIndex[, variable := 'commerical landings']
+landIndex[, variable := 'commercial landings']
 landIndex[, units    := 'metric tons']
 
 #Discards
