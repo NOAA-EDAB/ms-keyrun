@@ -77,6 +77,9 @@
     <li>
       <a href="../articles/stockAreas.html">Stock areas</a>
     </li>
+    <li>
+      <a href="../articles/GBdietcomp.html">Focal species diets on GB</a>
+    </li>
     <li class="divider">
     </li>
 <li class="dropdown-header">Simulated Data</li>
@@ -96,10 +99,16 @@
     </li>
 <li class="dropdown-header">Length &amp; Age Based Data</li>
     <li>
+      <a href="../articles/GBLandingLengthDataSources.html">Data Sources</a>
+    </li>
+    <li>
       <a href="../articles/GBLandingsByLength.html">Landings by Length</a>
     </li>
     <li>
-      <a href="../articles/GBLengthWeight.html">Length Weight relationships</a>
+      <a href="../articles/GBLandingsByAge.html">Landings by Age</a>
+    </li>
+    <li>
+      <a href="../articles/GBLengthWeight.html">Length Weight Relationships</a>
     </li>
     <li>
       <a href="../articles/GBbiomassNumbyLength.html">Survey Biomass and Abundance</a>
@@ -151,7 +160,7 @@
 <div class="section level2">
 <h2 id="table-of-coefficients">Table of coefficients<a class="anchor" aria-label="anchor" href="#table-of-coefficients"></a>
 </h2>
-<template id="e9d5c23c-a31e-4dff-8e94-f69bc3745708"><style>
+<template id="9a3ccaaa-9d6c-4137-beaf-64bb902827aa"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -161,6 +170,10 @@
   border-width: 0;
   display: table;
   border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
 }
 .tabwid_left table{
   margin-left:0;
@@ -188,86 +201,82 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-5923ed7c{}.cl-59171098{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-591bca48{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-591bca52{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-591bec6c{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec76{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec80{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec81{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec8a{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec8b{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec8c{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec94{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec95{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec96{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec97{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec9e{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bec9f{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591beca0{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591beca8{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591beca9{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becb2{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becb3{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becb4{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becb5{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becbc{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becbd{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becbe{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becc6{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becc7{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becc8{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becd0{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becd1{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becd2{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becd3{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becda{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591becdb{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bece4{width:109.8pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bece5{width:70.1pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bece6{width:66.4pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-591bece7{width:72.5pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-5923ed7c">
+<style>.cl-0739a224{}.cl-07290aae{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-07300598{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-073005ac{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-07302ac8{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302ad2{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302ad3{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302ad4{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302adc{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302add{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302ae6{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302ae7{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302af0{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302af1{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302afa{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302afb{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302afc{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b04{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b05{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b06{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b0e{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b0f{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b10{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b11{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b18{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b19{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b1a{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b1b{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b22{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b23{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b2c{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b2d{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b2e{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b36{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b40{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b41{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b42{width:1.525in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b4a{width:0.973in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b4b{width:0.922in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-07302b4c{width:1.007in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-0739a224">
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-591bec6c"><p class="cl-591bca48"><span class="cl-59171098">species</span></p></td>
-<td class="cl-591bec76"><p class="cl-591bca52"><span class="cl-59171098">alpha</span></p></td>
-<td class="cl-591bec80"><p class="cl-591bca52"><span class="cl-59171098">beta</span></p></td>
-<td class="cl-591bec81"><p class="cl-591bca52"><span class="cl-59171098">sigma</span></p></td>
+<td class="cl-07302ac8"><p class="cl-07300598"><span class="cl-07290aae">species</span></p></td>
+<td class="cl-07302ad2"><p class="cl-073005ac"><span class="cl-07290aae">alpha</span></p></td>
+<td class="cl-07302ad3"><p class="cl-073005ac"><span class="cl-07290aae">beta</span></p></td>
+<td class="cl-07302ad4"><p class="cl-073005ac"><span class="cl-07290aae">sigma</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591bec8a"><p class="cl-591bca48"><span class="cl-59171098">Goosefish</span></p></td>
-<td class="cl-591bec8b"><p class="cl-591bca52"><span class="cl-59171098">2.050e-02</span></p></td>
-<td class="cl-591bec8c"><p class="cl-591bca52"><span class="cl-59171098">2.933227</span></p></td>
-<td class="cl-591bec94"><p class="cl-591bca52"><span class="cl-59171098">0.1776597</span></p></td>
+<td class="cl-07302adc"><p class="cl-07300598"><span class="cl-07290aae">Goosefish</span></p></td>
+<td class="cl-07302add"><p class="cl-073005ac"><span class="cl-07290aae">2.050e-02</span></p></td>
+<td class="cl-07302ae6"><p class="cl-073005ac"><span class="cl-07290aae">2.933227</span></p></td>
+<td class="cl-07302ae7"><p class="cl-073005ac"><span class="cl-07290aae">0.1776597</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591bec95"><p class="cl-591bca48"><span class="cl-59171098">Atlantic cod</span></p></td>
-<td class="cl-591bec96"><p class="cl-591bca52"><span class="cl-59171098">6.857e-03</span></p></td>
-<td class="cl-591bec97"><p class="cl-591bca52"><span class="cl-59171098">3.091336</span></p></td>
-<td class="cl-591bec9e"><p class="cl-591bca52"><span class="cl-59171098">0.1341488</span></p></td>
+<td class="cl-07302af0"><p class="cl-07300598"><span class="cl-07290aae">Atlantic cod</span></p></td>
+<td class="cl-07302af1"><p class="cl-073005ac"><span class="cl-07290aae">6.857e-03</span></p></td>
+<td class="cl-07302afa"><p class="cl-073005ac"><span class="cl-07290aae">3.091336</span></p></td>
+<td class="cl-07302afb"><p class="cl-073005ac"><span class="cl-07290aae">0.1341488</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591bec9f"><p class="cl-591bca48"><span class="cl-59171098">Winter flounder</span></p></td>
-<td class="cl-591beca0"><p class="cl-591bca52"><span class="cl-59171098">9.108e-03</span></p></td>
-<td class="cl-591beca8"><p class="cl-591bca52"><span class="cl-59171098">3.082983</span></p></td>
-<td class="cl-591beca9"><p class="cl-591bca52"><span class="cl-59171098">0.1321759</span></p></td>
+<td class="cl-07302afc"><p class="cl-07300598"><span class="cl-07290aae">Winter flounder</span></p></td>
+<td class="cl-07302b04"><p class="cl-073005ac"><span class="cl-07290aae">9.108e-03</span></p></td>
+<td class="cl-07302b05"><p class="cl-073005ac"><span class="cl-07290aae">3.082983</span></p></td>
+<td class="cl-07302b06"><p class="cl-073005ac"><span class="cl-07290aae">0.1321759</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591bec9f"><p class="cl-591bca48"><span class="cl-59171098">Yellowtail flounder</span></p></td>
-<td class="cl-591beca0"><p class="cl-591bca52"><span class="cl-59171098">5.820e-03</span></p></td>
-<td class="cl-591beca8"><p class="cl-591bca52"><span class="cl-59171098">3.109776</span></p></td>
-<td class="cl-591beca9"><p class="cl-591bca52"><span class="cl-59171098">0.1423130</span></p></td>
+<td class="cl-07302afc"><p class="cl-07300598"><span class="cl-07290aae">Yellowtail flounder</span></p></td>
+<td class="cl-07302b04"><p class="cl-073005ac"><span class="cl-07290aae">5.820e-03</span></p></td>
+<td class="cl-07302b05"><p class="cl-073005ac"><span class="cl-07290aae">3.109776</span></p></td>
+<td class="cl-07302b06"><p class="cl-073005ac"><span class="cl-07290aae">0.1423130</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591bec95"><p class="cl-591bca48"><span class="cl-59171098">Haddock</span></p></td>
-<td class="cl-591bec96"><p class="cl-591bca52"><span class="cl-59171098">7.592e-03</span></p></td>
-<td class="cl-591bec97"><p class="cl-591bca52"><span class="cl-59171098">3.068170</span></p></td>
-<td class="cl-591bec9e"><p class="cl-591bca52"><span class="cl-59171098">0.1157960</span></p></td>
+<td class="cl-07302af0"><p class="cl-07300598"><span class="cl-07290aae">Haddock</span></p></td>
+<td class="cl-07302af1"><p class="cl-073005ac"><span class="cl-07290aae">7.592e-03</span></p></td>
+<td class="cl-07302afa"><p class="cl-073005ac"><span class="cl-07290aae">3.068170</span></p></td>
+<td class="cl-07302afb"><p class="cl-073005ac"><span class="cl-07290aae">0.1157960</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591becb2"><p class="cl-591bca48"><span class="cl-59171098">Atlantic herring</span></p></td>
-<td class="cl-591becb3"><p class="cl-591bca52"><span class="cl-59171098">6.963e-03</span></p></td>
-<td class="cl-591becb4"><p class="cl-591bca52"><span class="cl-59171098">3.081596</span></p></td>
-<td class="cl-591becb5"><p class="cl-591bca52"><span class="cl-59171098">0.1469714</span></p></td>
+<td class="cl-07302b0e"><p class="cl-07300598"><span class="cl-07290aae">Atlantic herring</span></p></td>
+<td class="cl-07302b0f"><p class="cl-073005ac"><span class="cl-07290aae">6.963e-03</span></p></td>
+<td class="cl-07302b10"><p class="cl-073005ac"><span class="cl-07290aae">3.081596</span></p></td>
+<td class="cl-07302b11"><p class="cl-073005ac"><span class="cl-07290aae">0.1469714</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591becbc"><p class="cl-591bca48"><span class="cl-59171098">Atlantic mackerel</span></p></td>
-<td class="cl-591becbd"><p class="cl-591bca52"><span class="cl-59171098">3.102e-03</span></p></td>
-<td class="cl-591becbe"><p class="cl-591bca52"><span class="cl-59171098">3.321004</span></p></td>
-<td class="cl-591becc6"><p class="cl-591bca52"><span class="cl-59171098">0.1194443</span></p></td>
+<td class="cl-07302b18"><p class="cl-07300598"><span class="cl-07290aae">Atlantic mackerel</span></p></td>
+<td class="cl-07302b19"><p class="cl-073005ac"><span class="cl-07290aae">3.102e-03</span></p></td>
+<td class="cl-07302b1a"><p class="cl-073005ac"><span class="cl-07290aae">3.321004</span></p></td>
+<td class="cl-07302b1b"><p class="cl-073005ac"><span class="cl-07290aae">0.1194443</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591becc7"><p class="cl-591bca48"><span class="cl-59171098">Spiny dogfish</span></p></td>
-<td class="cl-591becc8"><p class="cl-591bca52"><span class="cl-59171098">2.187e-03</span></p></td>
-<td class="cl-591becd0"><p class="cl-591bca52"><span class="cl-59171098">3.139626</span></p></td>
-<td class="cl-591becd1"><p class="cl-591bca52"><span class="cl-59171098">0.1351552</span></p></td>
+<td class="cl-07302b22"><p class="cl-07300598"><span class="cl-07290aae">Spiny dogfish</span></p></td>
+<td class="cl-07302b23"><p class="cl-073005ac"><span class="cl-07290aae">2.187e-03</span></p></td>
+<td class="cl-07302b2c"><p class="cl-073005ac"><span class="cl-07290aae">3.139626</span></p></td>
+<td class="cl-07302b2d"><p class="cl-073005ac"><span class="cl-07290aae">0.1351552</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591becd2"><p class="cl-591bca48"><span class="cl-59171098">Winter skate</span></p></td>
-<td class="cl-591becd3"><p class="cl-591bca52"><span class="cl-59171098">2.447e-03</span></p></td>
-<td class="cl-591becda"><p class="cl-591bca52"><span class="cl-59171098">3.265525</span></p></td>
-<td class="cl-591becdb"><p class="cl-591bca52"><span class="cl-59171098">0.1298105</span></p></td>
+<td class="cl-07302b2e"><p class="cl-07300598"><span class="cl-07290aae">Winter skate</span></p></td>
+<td class="cl-07302b36"><p class="cl-073005ac"><span class="cl-07290aae">2.447e-03</span></p></td>
+<td class="cl-07302b40"><p class="cl-073005ac"><span class="cl-07290aae">3.265525</span></p></td>
+<td class="cl-07302b41"><p class="cl-073005ac"><span class="cl-07290aae">0.1298105</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-591bece4"><p class="cl-591bca48"><span class="cl-59171098">Silver hake</span></p></td>
-<td class="cl-591bece5"><p class="cl-591bca52"><span class="cl-59171098">4.217e-03</span></p></td>
-<td class="cl-591bece6"><p class="cl-591bca52"><span class="cl-59171098">3.129475</span></p></td>
-<td class="cl-591bece7"><p class="cl-591bca52"><span class="cl-59171098">0.1738018</span></p></td>
+<td class="cl-07302b42"><p class="cl-07300598"><span class="cl-07290aae">Silver hake</span></p></td>
+<td class="cl-07302b4a"><p class="cl-073005ac"><span class="cl-07290aae">4.217e-03</span></p></td>
+<td class="cl-07302b4b"><p class="cl-073005ac"><span class="cl-07290aae">3.129475</span></p></td>
+<td class="cl-07302b4c"><p class="cl-073005ac"><span class="cl-07290aae">0.1738018</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="8ace9bc3-a322-4c0f-bcd4-6afc452097eb"></div>
+</div></template><div class="flextable-shadow-host" id="e0b31ed9-d04c-4794-b370-09466a872ecd"></div>
 <script>
-var dest = document.getElementById("8ace9bc3-a322-4c0f-bcd4-6afc452097eb");
-var template = document.getElementById("e9d5c23c-a31e-4dff-8e94-f69bc3745708");
+var dest = document.getElementById("e0b31ed9-d04c-4794-b370-09466a872ecd");
+var template = document.getElementById("9a3ccaaa-9d6c-4137-beaf-64bb902827aa");
 var caption = template.content.querySelector("caption");
-if(caption) {
-  caption.style.cssText = caption.style.cssText+"display:block;";
-  dest.parentNode.insertBefore(caption, dest.previousSibling);
-}
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);

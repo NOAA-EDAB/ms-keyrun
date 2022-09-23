@@ -77,6 +77,9 @@
     <li>
       <a href="../articles/stockAreas.html">Stock areas</a>
     </li>
+    <li>
+      <a href="../articles/GBdietcomp.html">Focal species diets on GB</a>
+    </li>
     <li class="divider">
     </li>
 <li class="dropdown-header">Simulated Data</li>
@@ -96,10 +99,16 @@
     </li>
 <li class="dropdown-header">Length &amp; Age Based Data</li>
     <li>
+      <a href="../articles/GBLandingLengthDataSources.html">Data Sources</a>
+    </li>
+    <li>
       <a href="../articles/GBLandingsByLength.html">Landings by Length</a>
     </li>
     <li>
-      <a href="../articles/GBLengthWeight.html">Length Weight relationships</a>
+      <a href="../articles/GBLandingsByAge.html">Landings by Age</a>
+    </li>
+    <li>
+      <a href="../articles/GBLengthWeight.html">Length Weight Relationships</a>
     </li>
     <li>
       <a href="../articles/GBbiomassNumbyLength.html">Survey Biomass and Abundance</a>
@@ -143,10 +152,13 @@
 <ul>
 <li><p>The catch is first <a href="https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.rmd">expanded</a> to a composition of lengths</p></li>
 <li><p>An <a href="https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html#additional-preferences">age length key</a> is estimated using the expanding catch and age-length data. The method follows that of <span class="citation">Gerritsen et al. (<a href="#ref-gerritsen_simple_2006" role="doc-biblioref">2006</a>)</span>. The source of the <a href="https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByLength.html#additional-preferences">age-length data</a> is often up to the discretion of the assessment scientist and is species dependent.</p></li>
-<li><p>The numbers of fish at age is then calculated using the age-length key, the expanded catch and the length-weight relationship. This is explained in [<code>mscatch</code>])(<a href="https://noaa-edab.github.io/mscatch/articles/ageExpansion.html" class="external-link uri">https://noaa-edab.github.io/mscatch/articles/ageExpansion.html</a>)</p></li>
+<li><p>The numbers of fish at age is then calculated using the age-length key, the expanded catch and the length-weight relationship. This is explained in <a href="https://noaa-edab.github.io/mscatch/articles/ageExpansion.html" class="external-link"><code>mscatch</code></a></p></li>
 </ul>
-<p>For the mskeyrun project the final data product is aggregated (over quarter or semester) to annual numbers. This data set is exported in the package as <a href="https://noaa-edab.github.io/ms-keyrun/reference/realFisheryAgecomp.html">realFisheryAgecomp</a>. A sample of the output for Atlantic cod is shown below.</p>
-<template id="4d782952-9bcb-4c35-be42-74a1171aed3a"><style>
+<p>For the mskeyrun project the final data product is aggregated (over quarter or semester) to annual numbers. This data set is exported in the package as <a href="https://noaa-edab.github.io/ms-keyrun/reference/realFisheryAgecomp.html">realFisheryAgecomp</a> using the function:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">create_real_fishery_agecomp</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>A sample of the output for Atlantic cod is shown below.</p>
+<template id="583fb6a3-29a8-4b83-81a9-798cb6a81dd4"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -156,6 +168,10 @@
   border-width: 0;
   display: table;
   border-color: transparent;
+  caption-side: top;
+}
+.tabwid-caption-bottom table{
+  caption-side: bottom;
 }
 .tabwid_left table{
   margin-left:0;
@@ -183,141 +199,137 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-4e84673e{}.cl-4e77df78{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-4e7cdb04{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4e7cdb0e{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-4e7cfb70{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4e7cfb7a{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4e7cfb7b{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4e7cfb84{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4e7cfb85{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-4e7cfb86{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-4e84673e">
+<style>.cl-fc433506{}.cl-fc35a65c{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-fc3ae0ae{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-fc3ae0b8{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-fc3b0048{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fc3b0052{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fc3b005c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fc3b005d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fc3b005e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-fc3b0066{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-fc433506">
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb70"><p class="cl-4e7cdb04"><span class="cl-4e77df78">ModSim</span></p></td>
-<td class="cl-4e7cfb7a"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">year</span></p></td>
-<td class="cl-4e7cfb7a"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">Code</span></p></td>
-<td class="cl-4e7cfb70"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Name</span></p></td>
-<td class="cl-4e7cfb70"><p class="cl-4e7cdb04"><span class="cl-4e77df78">fishery</span></p></td>
-<td class="cl-4e7cfb7a"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">age</span></p></td>
-<td class="cl-4e7cfb70"><p class="cl-4e7cdb04"><span class="cl-4e77df78">variable</span></p></td>
-<td class="cl-4e7cfb7a"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">value</span></p></td>
-<td class="cl-4e7cfb70"><p class="cl-4e7cdb04"><span class="cl-4e77df78">units</span></p></td>
+<td class="cl-fc3b0048"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">ModSim</span></p></td>
+<td class="cl-fc3b0052"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">year</span></p></td>
+<td class="cl-fc3b0052"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">Code</span></p></td>
+<td class="cl-fc3b0048"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Name</span></p></td>
+<td class="cl-fc3b0048"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">fishery</span></p></td>
+<td class="cl-fc3b0052"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">age</span></p></td>
+<td class="cl-fc3b0048"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">variable</span></p></td>
+<td class="cl-fc3b0052"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">value</span></p></td>
+<td class="cl-fc3b0048"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">units</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">0</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">0</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">0</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2,019,706</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">1</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">0</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">1</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">115,872,713</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">13,499,915</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">758,008,995</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">3</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">428,974,050</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">3</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">503,789,181</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">4</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">1,356,213,350</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">4</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">607,503,097</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">5</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">493,975,743</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">5</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">187,471,202</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">6</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">184,051,767</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">6</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">56,686,197</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">7</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">119,271,353</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">7</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">8,554,546</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">8</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb84"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">89,361,047</span></p></td>
-<td class="cl-4e7cfb7b"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">8</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b005d"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">0</span></p></td>
+<td class="cl-fc3b005c"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-4e7cfb85"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Actual</span></p></td>
-<td class="cl-4e7cfb86"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">2000</span></p></td>
-<td class="cl-4e7cfb86"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">164499</span></p></td>
-<td class="cl-4e7cfb85"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Goosefish</span></p></td>
-<td class="cl-4e7cfb85"><p class="cl-4e7cdb04"><span class="cl-4e77df78">demersal</span></p></td>
-<td class="cl-4e7cfb86"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">9</span></p></td>
-<td class="cl-4e7cfb85"><p class="cl-4e7cdb04"><span class="cl-4e77df78">Natage</span></p></td>
-<td class="cl-4e7cfb86"><p class="cl-4e7cdb0e"><span class="cl-4e77df78">9,315,507</span></p></td>
-<td class="cl-4e7cfb85"><p class="cl-4e7cdb04"><span class="cl-4e77df78">number</span></p></td>
+<td class="cl-fc3b005e"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Actual</span></p></td>
+<td class="cl-fc3b0066"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">2000</span></p></td>
+<td class="cl-fc3b0066"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">172414</span></p></td>
+<td class="cl-fc3b005e"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Atlantic mackerel</span></p></td>
+<td class="cl-fc3b005e"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">demersal</span></p></td>
+<td class="cl-fc3b0066"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">9</span></p></td>
+<td class="cl-fc3b005e"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">Natage</span></p></td>
+<td class="cl-fc3b0066"><p class="cl-fc3ae0b8"><span class="cl-fc35a65c">1,208,939</span></p></td>
+<td class="cl-fc3b005e"><p class="cl-fc3ae0ae"><span class="cl-fc35a65c">number</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="7298af89-2623-47ee-ac37-a0443d9b6eaa"></div>
+</div></template><div class="flextable-shadow-host" id="860fe9eb-875a-45f7-b6bd-8d6d63adda6e"></div>
 <script>
-var dest = document.getElementById("7298af89-2623-47ee-ac37-a0443d9b6eaa");
-var template = document.getElementById("4d782952-9bcb-4c35-be42-74a1171aed3a");
+var dest = document.getElementById("860fe9eb-875a-45f7-b6bd-8d6d63adda6e");
+var template = document.getElementById("583fb6a3-29a8-4b83-81a9-798cb6a81dd4");
 var caption = template.content.querySelector("caption");
-if(caption) {
-  caption.style.cssText = caption.style.cssText+"display:block;";
-  dest.parentNode.insertBefore(caption, dest.previousSibling);
-}
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;
 fantome.appendChild(templateContent);

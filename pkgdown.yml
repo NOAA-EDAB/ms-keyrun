@@ -7,6 +7,7 @@ articles:
   DatasetDimensions: DatasetDimensions.html
   GBFleetDecisions: GBFleetDecisions.html
   GBFleetDefinitions: GBFleetDefinitions.html
+  GBLandingLengthDataSources: GBLandingLengthDataSources.html
   GBLandingsByAge: GBLandingsByAge.html
   GBLandingsByLength: GBLandingsByLength.html
   GBLengthWeight: GBLengthWeight.html
@@ -18,7 +19,7 @@ articles:
   allocateLandingsEPU: allocateLandingsEPU.html
   mskeyrun: mskeyrun.html
   stockAreas: stockAreas.html
-last_built: 2022-09-19T17:40Z
+last_built: 2022-09-23T19:49Z
 urls:
   reference: https://noaa-edab.github.io/ms-keyrun/reference
   article: https://noaa-edab.github.io/ms-keyrun/articles

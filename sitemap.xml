@@ -22,6 +22,9 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDefinitions.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBLandingLengthDataSources.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/articles/GBLandingsByAge.html</loc>
   </url>
   <url>
@@ -74,6 +77,9 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/catchIndex.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/fisheryLenSampN.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/fleets.html</loc>
@@ -167,5 +173,8 @@
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyLenDietcomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/surveyLenSampN.html</loc>
   </url>
 </urlset>
