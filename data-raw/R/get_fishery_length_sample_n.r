@@ -25,12 +25,14 @@ get_fishery_length_sample_n <- function(overwrite=F) {
 
     sptab <- db %>%
       dplyr::group_by(YEAR) %>%
-      dplyr::summarise(lensampsize = as.double(sum(NUMLEN)),.groups = "drop") %>%
+      dplyr::summarise(lensampsize = as.double(sum(NUMLEN)),
+                       ntrips = length(unique(tripid)),
+                       .groups = "drop") %>%
       dplyr::mutate(YEAR= as.double(YEAR),
                     SPECIES_ITIS = as.double(tab$SPECIES_ITIS),
                     SVSPP = tab$SVSPP,
                     LongName = tab$LongName) %>%
-      dplyr::select(YEAR,SVSPP,lensampsize,SPECIES_ITIS,LongName)
+      dplyr::select(YEAR,SVSPP,lensampsize,ntrips,SPECIES_ITIS,LongName)
 
     maintab <- rbind(maintab,sptab)
 
