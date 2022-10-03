@@ -5,13 +5,13 @@
 \alias{surveyLenSampN}
 \title{Survey sampled number of lengths for input into hydra model}
 \format{
-An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 1102 rows and 7 columns.
+An object of class \code{grouped_df} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 1031 rows and 7 columns.
 }
 \usage{
 surveyLenSampN
 }
 \description{
-Number of fish measured by year, season, vessel, species
+Number of fish measured and N tows by year, season, species
 for mskeyrun focal species
 }
 \details{
@@ -20,9 +20,9 @@ for mskeyrun focal species
 \describe{
 \item{YEAR}{year diet data collected}
 \item{SEASON}{season diet data collected}
-\item{SVVESSEL}{survey vessel}
 \item{SVSPP}{SVSPP code for species}
 \item{lensampsize}{number of fish measured for length}
+\item{ntows}{number of tows where fish were measured for length}
 \item{SPECIES_ITIS}{SPECIES_ITIS code for species}
 \item{LongName}{Common name for species}
 
