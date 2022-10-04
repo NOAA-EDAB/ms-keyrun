@@ -1,8 +1,11 @@
 ---
 title: "NEFSC multispecies model keyrun project"
-output: html_document
-csl: apa-annotated-bibliography.csl
+output:
+  html_document: default
+  pdf_document: default
+csl: "apa-annotated-bibliography.csl"
 bibliography: references.bib
+urlcolor: blue
 ---
 
  <!-- ADD LINKS BELOW, note, using the RMD link syntax will open the presentation in the same tab, which is annoying. Use the html with the "_blank" to fix that behavior -->
@@ -113,11 +116,26 @@ For the October 2022 review, three models are presented:
 
 ### Multispecies surplus production model (MSSPM)
 
-The reviewed model is based on the simulation model MS-PROD [@gamble_analyzing_2009], implemented in C++. This model has previously been used in simulation analyses addressing aggregate fish production and marine mammal interactions in the Northeast US and on Georges Bank [@gaichas_assembly_2012; @smith_simulations_2015]. 
+The reviewed model is based on the simulation model MS-PROD [@gamble_analyzing_2009], implemented in C++. MS-PROD has previously been used in simulation analyses addressing aggregate fish production and marine mammal interactions in the Northeast US and on Georges Bank [@gaichas_assembly_2012; @smith_simulations_2015]. 
 
 ### Multispecies length-structured model (Hydra)
 
-The reviewed model is based on the simulation model Hydra [@gaichas_combining_2017], implemented in ADMB [@fournier_ad_2012]. This model has previously been used to support EBFM analyses for the New England Fishery Management Council. 
+The reviewed model is based on the simulation model Hydra [@gaichas_combining_2017], implemented in ADMB [@fournier_ad_2012]. Hydra's structure  is derived from the length-based multispecies simulation model, LeMANS [@hall_length-based_2006; @rochet_does_2011], with additional options for growth, and recruitment functional forms and more detailed fishing fleets. Hydra simulations have previously been used to support EBFM analyses for the New England Fishery Management Council, and were reviewed in 2018 as part of an [Ecosystem Based Management Strategy Review for Georges Bank](https://www.fisheries.noaa.gov/resource/peer-reviewed-research/ecosystem-based-fisheries-management-strategy-review-georges-bank). 
+
+A key feature of Hydra that differentiates it from LeMANS and other length-based models is its treatment of length information. Attempting to balance model complexity and run time with available data and adequately modeling length-based processes, Hydra applies an equal number of length bins to all modeled species. The modeler specifies the overall number of bins (5 in the original simulation model), and the size in cm spanned by each bin for each species. The original Hydra simulation model used narrower length bins for smaller fish sizes and a length bin spanning a wider range of sizes for larger fish to efficiently represent changes size selectivity of predators and fisheries. The estimation model uses equal width bins equally dividing each species' maximum observed length into the overall number of bins. 
+
+For this review, the simulation model code was forked and an objective function added, with modifications to the data section to accommodate new data inputs and to the parameter section to estimate fishery and survey selectivity and catchability. As an estimation model, Hydra can be fitted to multiple data streams. Currently the objective function comprises the following components, catch (by species for each fleet), size composition of the catch (by species for each fleet), survey abundance index (by species for each survey), survey size composition (by species for each survey), survey diet composition (stomach weight by predator size bin for each predator species and survey), and recruitment (annual deviations from mean recruitment by species). A detailed description of the objective function equations is available [here](https://drive.google.com/drive/folders/1Cx4J1hToM2WgfUQjH_9rC7Hg81tTuIxU). 
+
+Hydra input files were developed directly from `mskeyrun` datasets by modifying functions in Andy Beet's `hydradata` R package. The function `create_Rdata_mskeyrun.R` ([code](https://github.com/thefaylab/hydradata/blob/master/data-raw/create_RData_mskeyrun.R)) allows the user to specify whether datasets should be constructed from Atlantis-simulated or real Georges Bank data, and the number of length bins to use for composition data, then creates an R data object. This data object is then used to create data and parameter input files using the function `hydradata::create_datpin_files()`. 
+
+Hydra output visualizations were developed to evaluate model fits with different settings and input datasets. 
+
+All model code, data processing, and visualization is available online: 
+
+* Hydra model estimation version code  https://github.com/thefaylab/hydra_sim  
+* Hydra estimation model data file generation https://github.com/thefaylab/hydradata  
+* Hydra model diagnostics https://github.com/thefaylab/hydra_diag  
+
 
 ### Full food web model (RPath)
 
