@@ -1,19 +1,73 @@
 ---
 title: "NEFSC multispecies model keyrun project"
 output: html_document
+csl: apa-annotated-bibliography.csl
+bibliography: references.bib
 ---
 
  <!-- ADD LINKS BELOW, note, using the RMD link syntax will open the presentation in the same tab, which is annoying. Use the html with the "_blank" to fix that behavior -->
 
-These pages document decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Methods documentation and eventually draft manuscripts will be found here too. The target date for model keyrun reviews is October 2021, with all modeling results and documentation submitted by 1 September 2021.
+These pages document decisions made regarding datasets and modeling for multispecies model keyruns for Georges Bank, USA. Methods documentation and eventually draft manuscripts will be found here too. The target date for initial model keyrun reviews is October 2022.
 
-Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html). 
+Model "keyruns" are defined as "standardized model runs updated with recent data, producing agreed output." The ICES group WGSAM regularly reviews multispecies model keyruns using criteria found [here](https://ices-eg.github.io/wg_WGSAM/ReviewCriteria.html) [@ices_working_2019]. 
 
-# Data needs
+# Project overview
+
+The overall goal of the MS-Keyrun project is to have multispecies modeling datasets and tools technically reviewed, and to receive recommendations for further development and testing prior to consideration for use by management bodies. This is of interest to both regional fishery management councils in the Northeast US.
+
+## Objectives 
+
+MS-Keyrun model development and testing objectives are based on general ecosystem based management questions as well as specific discussions regarding EBFM development in New England. We will use this as an opportunity to address questions about the effects of management on the broader ecosystem, and about performance of assessment tools. 
+
+*  EBFM Objective 1: what happens with all the species in the region under a certain management regime?   
+      + Apply a full system model to assess "side effects" of target species management 
+      + Ability to implement fishing and biological scenarios 
+      + Hypothesis testing and MSE framework desirable 
+*  EBFM Objective 2: how well do multispecies models perform for assessment? 
+      + Consider alternative model structures 
+          + Biomass dynamics 
+          + Size structured
+          + Age structured 
+      + Evaluate data availability for each structure
+      + Evaluate estimation performance of each structure
+      + Evaluate uncertainty and sensitivity
+      + Evaluate feasibility of developing and using multi-model inference
+      
+## Place-based approach
+
+The project currently implements several place-based multispecies assessment models and one food web model. "Place-based" means a common spatial footprint based on ecological production, which contrasts with the current species-based management system of stock-defined spatial footprints that differ by stock and species. (See <a href="stockAreas.html"> stock area comparisons </a>.) Therefore, the input data for this project differs from the input data for most current stock assessments, and the results of these multispecies assessments are not directly comparable with current single species assessments. However, similar processes can be applied to evaluate these models.
+
+## Review process
+
+While the models applied here have been published in some form, all were updated to include estimation capability, and other changes were made. Therefore, we seek a general review of these models. The U.S. National Research Council has guidelines for using models to support environmental regulation [@national_research_council_models_2007] which have been adapted by ICES WGSAM. Reviews of relatively new models fall under the "constructed model review" category [@nrc_chapter_2007].This means that for each model, reviews should evaluate:  
+
+*  Spatial and temporal resolution  
+*  Algorithm choices  
+*  Assumptions (scientific basis, computational infrastructure; adequacy of conceptual model)  
+*  Data availability/software tools  
+*  Quality assurance/quality control (code testing)  
+*  Test scenarios  
+*  Corroboration with observations  
+*  Uncertainty/sensitivity analysis  
+*  Peer review (previous)  
+
+## Common attributes across models
+
+A common dataset for 10 Georges Bank species has been developed, as well as a simulated dataset for model performance testing. This `mskeyrun` data package holds both datasets. All modeling teams used these datasets. Group decisions on data are also documented below.
+
+**Years:** 1968-2019
+
+**Area:** Georges Bank (defined below)
+
+**Species:**  Atlantic cod, Atlantic herring, Atlantic mackerel, Goosefish, Haddock, Silver hake, Spiny dogfish, Winter flounder, Winter skate, and Yellowtail flounder 
+
+Decisions leading to this temporal, spatial, and species resolution are documented in the sections below. 
+
+### Data needs
 
 <a href="DataNeeds.html"> Decisions with meeting notes - 3 June 2020 </a>
 
-## Dataset dimensions
+#### Dataset dimensions
 
 <a href="DatasetDimensions.html"> Year, season, area decisions - 8 July 2020 </a>
 
@@ -27,26 +81,52 @@ Model "keyruns" are defined as "standardized model runs updated with recent data
 
 <a href="CompsDat.html"> Age, length, and diet composition decisions - 3 September 2020 </a>
 
-* <a href="GBLandingsByLength.html"> Landings by length for Hydra model</a>
+* <a href="GBLandingsByLength.html"> Landings by length for Hydra model</a> 
 
+#### Dataset source and methods documentation
 
-
-## Dataset source and methods documentation
 <a href="GBSurveySet.html" > Which Georges Bank survey footprint - 4 November 2020 </a>
 
-## Dataset descriptions and links
+Georges Bank data were derived from Northeast Fisheries Science Center (NEFSC) databases using R packages developed to improve efficiency and reproducibility. R packages [survdat](), [comlandr](), and [mscatch]() were used to retrieve and aggregate data to be saved in mskeyrun. 
+
+#### Simulated dataset methods
+
+The simulated dataset is based on output of the Norwegian and Barents Sea (NOBA) Atlantis model [@hansen_set-up_2016; @hansen_sensitivity_2019]. Atlantis is an end-to-end spatial ecosystem model capable of including climate effects, seasonal migration, food web, and fishery interactions [@audzijonyte_atlantis_2019].  The simulated dataset contains comparable survey, fishery, and composition data as the Georges Bank dataset, but the time series span 80 simulation years and include 11 species. This dataset was used for initial model development, code quality testing, and model skill assessment by the modeling teams. Details of the dataset are available in the link. 
 
 <a href="SimData.html" > Initial simulated data for testing - 1 April 2021 </a>
 
+### Dataset structure
+
+The data package `mskeyrun` was developed in R [@Rcite]. Individual data products include survey indices, survey length and age compositions, survey diet compositions, fishery indices, fishery length and age compositions, and additional biological parameters (length-weight). All `mskeyrun` datasets are listed here: 
+
+https://noaa-edab.github.io/ms-keyrun/reference/index.html 
+
 # Models
+
+For the October 2022 review, three models are presented:
+
+1. Multispecies surplus production model (MSSPM)
+1. Multispecies length-structured model (Hydra)
+1. Full food web model (RPath)
 
 ## Model documentation
 
-## Model results
+### Multispecies surplus production model (MSSPM)
+
+The reviewed model is based on the simulation model MS-PROD [@gamble_analyzing_2009], implemented in C++. This model has previously been used in simulation analyses addressing aggregate fish production and marine mammal interactions in the Northeast US and on Georges Bank [@gaichas_assembly_2012; @smith_simulations_2015]. 
+
+### Multispecies length-structured model (Hydra)
+
+The reviewed model is based on the simulation model Hydra [@gaichas_combining_2017], implemented in ADMB [@fournier_ad_2012]. This model has previously been used to support EBFM analyses for the New England Fishery Management Council. 
+
+### Full food web model (RPath)
+
+The reviewed model is based on a Georges Bank parameterization of Rpath [@lucey_conducting_2020], a food web model implemented in R [@Rcite]. Rpath includes formal capability for MSE [@lucey_evaluating_2021], making it an ideal tool for the objectives of this project. Previous food web modeling efforts in the Northeast US included Georges Bank [@link_documentation_2006; @link_northeast_2008], but evaluated food web structure and response to perturbations at a more aggregated taxonomic level. 
 
 # Results
 
-## Individual model keyrun results
+## Individual model results
 
-## Overall keyrun results
+## Overall results
 
+# References

@@ -157,6 +157,8 @@ unlink(here("docs/config"), recursive = TRUE)
 
 ### Write to model input files
 
+Our goal was to have a reproducible process for all aspects of data generation through model inputs. This section gives examples of how input datasets were built. Now that the simulated data is included in the `mskeyrun` data package, data inputs are derived from those sources.
+
 #### Multispecies surplus production model (MSSPM)
 
 Example input files are in the `model-input-files` directory. First we write the fairly simple biomass and catch inputs for the multispecies surplus production model MSSPM from our census survey outputs. 
