@@ -1,4 +1,4 @@
-#' Length comps
+#' Length abundance and biomass by length
 #'
 #'Read and format output from mscatch to mskeyrun
 #'
@@ -32,16 +32,19 @@ create_real_fishery_lencomp <- function(convertKGtoMT=T,outPath=NULL) {
 
   for (it in itis) {
     # expandedLandings in kgs
-    fileNm <- here::here("data-raw/data/",paste0("expandedLandings",it,".rds"))
-
-    if(file.exists(fileNm)) {
+    fileNmAge <- here::here("data-raw/data/",paste0("numbersatAge",it,".rds"))
+    fileNmLen <- here::here("data-raw/data/",paste0("expandedLandings",it,".rds"))
+    
+    if(file.exists(fileNmAge)) {
+      noAge <-  F
       message(paste0("Reading itis = ",it))
-      speciesData <- readRDS(fileNm)
+      speciesDataAge <- readRDS(fileNmAge)
     } else {
-      message(paste0("Couldn't find itis = ",it))
-      next
+      noAge <-  T
+      message(paste0("Couldn't find Age data for itis = ",it,". Reading in length data only"))
+      speciesDataLen <- readRDS(fileNmLen)
     }
-
+    
     name <- mscatch::speciesLookupTable %>%
       dplyr::filter(SPECIES_ITIS == it) %>%
       dplyr::pull(COMMON_NAME.y) %>%
@@ -49,20 +52,38 @@ create_real_fishery_lencomp <- function(convertKGtoMT=T,outPath=NULL) {
       abutils::capitalize_first_letter()
     ## process data
     #ModSim        year Code  Name         fishery lenbin variable value units
-    speciesFormat <- speciesData %>%
-      dplyr::group_by(YEAR,NEGEAR,LENGTH,species_itis) %>%
-      dplyr::summarise(value = sum(weight)/scalar,.groups="drop") %>%
-      dplyr::rename(year=YEAR,Code=species_itis,fishery=NEGEAR,lenbin = LENGTH) %>%
-      dplyr::mutate(Name = name,
-                    ModSim = "Actual",
-                    variable = "biomass",
-                    units=unitsLabel) %>%
-      dplyr::select(ModSim,year,Code,Name,fishery,lenbin,variable,value,units)
-
-
+    if (noAge) {
+      speciesFormat <- speciesDataLen %>%
+        dplyr::group_by(YEAR,NEGEAR,LENGTH,species_itis) %>%
+        dplyr::summarise(value = sum(weight)/scalar,.groups="drop") %>%
+        dplyr::rename(year=YEAR,Code=species_itis,fishery=NEGEAR,lenbin = LENGTH) %>%
+        dplyr::mutate(Name = name,
+                      ModSim = "Actual",
+                      variable = "biomass",
+                      units=unitsLabel) %>%
+        dplyr::select(ModSim,year,Code,Name,fishery,lenbin,variable,value,units)
+      
+    } else { # when ages and lengths are present
+      speciesFormat <- speciesDataAge %>%
+        dplyr::group_by(YEAR,NEGEAR,LENGTH,species_itis) %>%
+        dplyr::summarise(biomass = sum(weight)/scalar,
+                         abundance = sum(numbers),
+                         .groups="drop") %>%
+        dplyr::rename(year=YEAR,Code=species_itis,fishery=NEGEAR,lenbin = LENGTH) %>%
+        dplyr::mutate(Name = name,
+                      ModSim = "Actual") %>%
+        tidyr::pivot_longer(.,cols=c(biomass,abundance),
+                            names_to = "variable",
+                            values_to = "value") %>%
+        dplyr::mutate(units = dplyr::case_when(variable == "biomass" ~ unitsLabel,
+                                               variable == "abundance" ~ "numbers")) %>%
+        dplyr::select(ModSim,year,Code,Name,fishery,lenbin,variable,value,units)
+    }
+    
+    
     realFisheryLencomp <- rbind(realFisheryLencomp,speciesFormat)
-
-
+    
+    
   }
   realFisheryLencomp <- realFisheryLencomp %>%
     dplyr::mutate(Code = as.double(Code))
