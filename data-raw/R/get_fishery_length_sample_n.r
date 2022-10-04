@@ -15,8 +15,8 @@ get_fishery_length_sample_n <- function(overwrite=F) {
 
     # herring and skates data came from maine and survey respectively
     # These datasets are not exported with mscatch
-    db <- eval(rlang::parse_expr(paste0("mscatch::sampleLengths_",species,"_GB")))
-
+    db <- eval(rlang::parse_expr(paste0("mscatch::GB_Lengths_Only_",species)))
+    
     tab <- mskeyrun::focalSpecies %>%
       dplyr::select(SPECIES_ITIS,SVSPP,LongName) %>%
       dplyr::filter(SPECIES_ITIS == species) %>%
