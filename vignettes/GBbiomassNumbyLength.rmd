@@ -33,7 +33,7 @@ suppressMessages(out <- create_real_survey_lennumcomp(convertKGtoMT=T))
 
 ## Spring Biomass: length-frequency plots {.tabset}
 
-```{r biomassS, results = "asis", echo = FALSE}
+```{r biomassS, results = "asis", echo = FALSE, fig.height=8}
 for(i in seq_along(out$plistBS)){
     tmp <- out$plistBS[[i]]
     # As you want to use tabset level here has to be lower than 
@@ -46,7 +46,7 @@ for(i in seq_along(out$plistBS)){
 
 ## Fall Biomass: length-frequency plots {.tabset}
 
-```{r biomassF, results = "asis", echo = FALSE}
+```{r biomassF, results = "asis", echo = FALSE, fig.height=8}
 for(i in seq_along(out$plistBF)){
     tmp <- out$plistBF[[i]]
     # As you want to use tabset level here has to be lower than
@@ -58,7 +58,7 @@ for(i in seq_along(out$plistBF)){
 
 ## Spring Abundance: length-frequency plots {.tabset}
 
-```{r abundS, results = "asis", echo = FALSE}
+```{r abundS, results = "asis", echo = FALSE, fig.height=8}
 for(i in seq_along(out$plistAS)){
     tmp <- out$plistAS[[i]]
     # As you want to use tabset level here has to be lower than 
@@ -71,7 +71,7 @@ for(i in seq_along(out$plistAS)){
 
 ## Fall Abundance: length-frequency plots {.tabset}
 
-```{r abundF, results = "asis", echo = FALSE}
+```{r abundF, results = "asis", echo = FALSE, fig.height=8}
 for(i in seq_along(out$plistAF)){
     tmp <- out$plistAF[[i]]
     # As you want to use tabset level here has to be lower than
