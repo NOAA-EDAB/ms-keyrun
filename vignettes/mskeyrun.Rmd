@@ -90,7 +90,7 @@ Decisions leading to this temporal, spatial, and species resolution are document
 
 <a href="GBSurveySet.html" > Which Georges Bank survey footprint - 4 November 2020 </a>
 
-Georges Bank data were derived from Northeast Fisheries Science Center (NEFSC) databases using R packages developed to improve efficiency and reproducibility. R packages [survdat](), [comlandr](), and [mscatch]() were used to retrieve and aggregate data to be saved in mskeyrun. 
+Georges Bank data were derived from Northeast Fisheries Science Center (NEFSC) databases using R packages developed to improve efficiency and reproducibility. R packages [survdat](https://noaa-edab.github.io/survdat/), [comlandr](https://noaa-edab.github.io/comlandr/index.html), and [mscatch](https://noaa-edab.github.io/mscatch/) were used to retrieve and aggregate data to be saved in mskeyrun. 
 
 #### Simulated dataset methods
 
