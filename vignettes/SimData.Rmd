@@ -160,7 +160,7 @@ unlink(here("docs/config"), recursive = TRUE)
 
 #### Plotting functions
 
-A collection of functions used previously that may be harvested and modified for diagnostics or visualizations in the ms-keyrun and ICES WGSAM skill assessment projects. These functions assume you are using `atlantisom` output datasets but they could be generalized. 
+A collection of functions used previously that may be harvested and modified for diagnostics or visualizations in the ms-keyrun and ICES WGSAM skill assessment projects. 
 
 ```{r plotfuns}
 
@@ -268,46 +268,46 @@ totNageplot <- function(dat, anndat){
 
 #### Read in the "data" to check with plots
 
-Each object is a list of lists with the survey or fishery names being the first list element and the data being the first element (a dataframe) under the name (this is because we can generate multiple replicates but we only have one saved here).
+The `mskeyrun` simulated data objects are all dataframes.
 
 ```{r}
 
-source(here("data-raw/simulated-data/config/NOBA_sacc38Config.R"))
+# source(here("data-raw/simulated-data/config/NOBA_sacc38Config.R"))
+# 
+# NOBAom_ms <- readRDS(file.path(d.name, paste0(scenario.name, "omlist_ss.rds")))
+# 
+# fitstartyr <- 40
+# fitendyr <- 120  #used 120 for sacc38
 
-NOBAom_ms <- readRDS(file.path(d.name, paste0(scenario.name, "omlist_ss.rds")))
-
-fitstartyr <- 40
-fitendyr <- 120  #used 120 for sacc38
-
-#Number of years of data to pull
-nyears <- NOBAom_ms$runpar$nyears
-total_sample <- NOBAom_ms$runpar$tstop/NOBAom_ms$runpar$outputstep
-stepperyr <- if(NOBAom_ms$runpar$outputstepunit=="days") 365/NOBAom_ms$runpar$toutinc
-
-atlantis_full <- c(0:total_sample)  
-mod_burnin <- fitstartyr*stepperyr+1
-fit_nyears <- fitendyr-fitstartyr
-fit_ntimes <- fit_nyears*stepperyr
-fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
-#fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
-fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
-fittimes.days <- fittimes*73
+# #Number of years of data to pull
+# nyears <- NOBAom_ms$runpar$nyears
+# total_sample <- NOBAom_ms$runpar$tstop/NOBAom_ms$runpar$outputstep
+# stepperyr <- if(NOBAom_ms$runpar$outputstepunit=="days") 365/NOBAom_ms$runpar$toutinc
+# 
+# atlantis_full <- c(0:total_sample)  
+# mod_burnin <- fitstartyr*stepperyr+1
+# fit_nyears <- fitendyr-fitstartyr
+# fit_ntimes <- fit_nyears*stepperyr
+# fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
+# #fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
+# fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
+# fittimes.days <- fittimes*73
 
 
-survObsBiom <- atlantisom::read_savedsurvs(d.name, 'survB')
-age_comp_data <- atlantisom::read_savedsurvs(d.name, 'survAge') #not using in assessment
-len_comp_data <- atlantisom::read_savedsurvs(d.name, 'survLen')
+survObsBiom <- mskeyrun::simSurveyIndex #atlantisom::read_savedsurvs(d.name, 'survB')
+age_comp_data <- mskeyrun::simSurveyAgeLencomp #atlantisom::read_savedsurvs(d.name, 'survAge') #not using in assessment
+len_comp_data <- mskeyrun::simSurveyLencomp #atlantisom::read_savedsurvs(d.name, 'survLen')
 #wtage <- atlantisom::read_savedsurvs(d.name, 'survWtage')  #not using in assessment
-annage_comp_data <- atlantisom::read_savedsurvs(d.name, 'survAnnAge')
-annage_wtage <- atlantisom::read_savedsurvs(d.name, 'survAnnWtage')
+annage_comp_data <- mskeyrun::simSurveyAgecomp #atlantisom::read_savedsurvs(d.name, 'survAnnAge')
+annage_wtage <- mskeyrun::simSurveyWtatAge #atlantisom::read_savedsurvs(d.name, 'survAnnWtage')
 
 #all_diets <- atlantisom::read_savedsurvs(d.name, 'survDiet') #not using in assessment
 
-catchbio_ss <- atlantisom::read_savedfisheries(d.name, 'Catch')
-catchlen_ss <- atlantisom::read_savedfisheries(d.name, "catchLen")
-fish_age_comp <- atlantisom::read_savedfisheries(d.name, "catchAge")
-fish_annage_comp <- atlantisom::read_savedfisheries(d.name, 'catchAnnAge')
-fish_annage_wtage <- atlantisom::read_savedfisheries(d.name, 'catchAnnWtage')
+catchbio_ss <- mskeyrun::simCatchIndex #atlantisom::read_savedfisheries(d.name, 'Catch')
+catchlen_ss <- mskeyrun::simFisheryLencomp #atlantisom::read_savedfisheries(d.name, "catchLen")
+#fish_age_comp <- #atlantisom::read_savedfisheries(d.name, "catchAge")
+fish_annage_comp <- mskeyrun::simFisheryAgecomp #atlantisom::read_savedfisheries(d.name, 'catchAnnAge')
+fish_annage_wtage <- mskeyrun::simFisheryWtatAge #atlantisom::read_savedfisheries(d.name, 'catchAnnWtage')
 
 ```
 
