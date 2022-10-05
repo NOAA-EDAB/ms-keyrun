@@ -7,7 +7,7 @@
 #' \describe{
 #'\item{NESPP3}{Northeast Species Identification code (see \code{focalSpecies})}
 #'\item{YEAR}{year landed}
-#'\item{variable}{commercial landings}
+#'\item{variable}{commercial landings or commercial discards}
 #'\item{value}{value of the variable}
 #'\item{units}{units of the variable}
 #'
