@@ -1,5 +1,8 @@
 url: https://noaa-edab.github.io/ms-keyrun/
 
+template:
+ bootstrap: 5
+
 deploy:
   install_metadata: true
 
