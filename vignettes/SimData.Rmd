@@ -44,7 +44,7 @@ lname <- data.frame(Name= c("Long_rough_dab",
                                  "North_atl_cod",
                                  "Polar_cod",
                                  "Capelin"),
-                    Long.Name = c("Long rogh dab",
+                    Long.Name = c("Long rough dab",
                                  "Greenland halibut",
                                  "Mackerel",
                                  "Haddock",
@@ -83,7 +83,7 @@ knitr::kable(spptable, col.names = c("Model name", "Full name", "Latin name"))
 ```
 
 
-## Generating a census dataset (February 2021)
+## Generating a dataset
 
 ### Configuration files specified once
 
@@ -160,9 +160,7 @@ unlink(here("docs/config"), recursive = TRUE)
 
 #### Plotting functions
 
-A collection of functions used previosuly that may be harvested and modified for diagnostics or visualizations in the ms-keyrun and ICES WGSAM skill assessment projects.
-
-These functions assume you are using `atlantisom` output datasets but they could be generalized. 
+A collection of functions used previously that may be harvested and modified for diagnostics or visualizations in the ms-keyrun and ICES WGSAM skill assessment projects. These functions assume you are using `atlantisom` output datasets but they could be generalized. 
 
 ```{r plotfuns}
 
@@ -492,16 +490,62 @@ Our goal was to have a reproducible process for all aspects of data generation t
 
 #### Multispecies surplus production model (MSSPM)
 
-[To be added]
-
+[*To be added*]
 
 #### Length-structured multispecies model (Hydra)
 
-Hydra input files were developed directly from `mskeyrun` datasets by modifying functions in the [`hydradata` R package](). The function `create_Rdata_mskeyrun.R` ([code](https://github.com/thefaylab/hydradata/blob/master/data-raw/create_RData_mskeyrun.R)) allows the user to specify whether datasets should be constructed from Atlantis-simulated or real Georges Bank data, and the number of length bins to use for composition data, then creates an R data object. This data object is then used to create data and parameter input files using the function `hydradata::create_datpin_files()`. 
+Hydra input files were developed directly from `mskeyrun` datasets by modifying functions in the [`hydradata` R package](https://github.com/thefaylab/hydradata). The function `create_Rdata_mskeyrun.R` ([code](https://github.com/thefaylab/hydradata/blob/master/data-raw/create_RData_mskeyrun.R)) allows the user to specify whether datasets should be constructed from Atlantis-simulated or real Georges Bank data, and the number of length bins to use for composition data, then creates an R data object. This data object is then used to create data and parameter input files using the function `hydradata::create_datpin_files()`. 
 
 For example, this process creates the simulated dataset with 5 length bins:
 
+The `create_RData_mskeyrun.R` file was sourced, and `create_RData_mskeyrun("sim", nlenbin = 5)` was run to make a new `hydraDataList_msk.rda` file in the package. Then the package is built locally, R is restarted, and the following code block is run to produce input files.
 
+```{r, writedatfile5, eval=FALSE}
+
+library(here)
+library(hydradata)
+inputs <- setup_default_inputs()
+inputs$outDir <- here()
+
+inputs$outputFilename <- "hydra_sim_NOBA_5bin_0comp" 
+
+# tpl code removes 0 so replace in data
+nbins <- hydraDataList_msk$Nsizebins
+hydraDataList_msk$observedCatchSize[,7:(6+nbins)][hydraDataList_msk$observedCatchSize[,7:(6+nbins)]==0] <- 1e-4
+hydraDataList_msk$observedSurvSize[,6:(5+nbins)][hydraDataList_msk$observedSurvSize[,6:(5+nbins)]==0] <- 1e-4
+
+hydraDataList_5bin_0comp <- create_datpin_files(inputs,hydraDataList_msk)
+
+# this saves the specific hydralist object, so we could saveRDS it to a diagnostics folder?
+# advantage of rds format is we can assign it when reading it in to diagnostics scripts
+saveRDS(hydraDataList_5bin_0comp, file.path(here("inputRdatalists/hydraDataList_5bin_0comp.rds")))
+
+```
+
+Run `create_RData_mskeyrun("sim", nlenbin = 10)` in `hydradata`, rebuild package, restart R, then...
+
+```{r, writedatfile10, eval=FALSE}
+
+library(here)
+library(hydradata)
+inputs <- setup_default_inputs()
+inputs$outDir <- here()
+
+inputs$outputFilename <- "hydra_sim_NOBA_10bin_0comp" 
+
+# tpl code removes 0 so replace in data
+nbins <- hydraDataList_msk$Nsizebins
+hydraDataList_msk$observedCatchSize[,7:(6+nbins)][hydraDataList_msk$observedCatchSize[,7:(6+nbins)]==0] <- 1e-4
+hydraDataList_msk$observedSurvSize[,6:(5+nbins)][hydraDataList_msk$observedSurvSize[,6:(5+nbins)]==0] <- 1e-4
+
+
+hydraDataList_10bin_0comp <- create_datpin_files(inputs,hydraDataList_msk)
+
+# this saves the specific hydralist object, so we could saveRDS it to a diagnostics folder?
+# advantage of rds format is we can assign it when reading it in to diagnostics scripts
+saveRDS(hydraDataList_10bin_0comp, file.path(here("inputRdatalists/hydraDataList_10bin_0comp.rds")))
+
+```
 
 
 #### Age structured multispecies statistical catch at age model (MSSCAA)
