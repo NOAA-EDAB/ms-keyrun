@@ -155,6 +155,19 @@ NOBAom_ms_diet <- om_diet(config = here("simulated-data/config", "NOBA2config.R"
 unlink(here("docs/config"), recursive = TRUE)
 ```
 
+### Create mskeyrun simulated data
+
+Scripts in `ms-keyrun/data-raw` show the process of making mskeyun datasets from `atlantisom` output generated above. Atlantis outputs and `atlantisom` outputs produced above are local to Sarah's computer for this code to run, as they are too large for github. However, the scripts are linked here to show the process. Overall this script creates all datasets using functions specific to each data type:
+
+```{r, code = readLines(here("data-raw/build_simdata.R")), eval=F}
+```
+
+For example, `create_sim_survey_index()` takes the saved `atlantisom` output plus user specifications for fit start and end years to produce the dataset `mskeyrun::simSurveyIndex`:
+
+```{r, code = readLines(here("data-raw/R/create_sim_survey_index.R")), eval=F}
+```
+
+All functions are in this mskeyrun repository folder: https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R 
 
 ### Visualize simulated data
 
@@ -167,16 +180,19 @@ A collection of functions used previously that may be harvested and modified for
 # plot biomass time series facet wrapped by species
 plotB <- function(dat, truedat=NULL){
   
+    svbio <- dat %>% filter(variable=="biomass")
+    svcv <- dat %>% filter(variable=="cv")
+  
     ggplot() +
-    geom_line(data=dat, aes(x=time/stepperyr,y=atoutput, color="Survey Biomass"), 
+    geom_line(data=svbio, aes(x=year,y=value, color="Survey Biomass"), 
               alpha = 10/10) +
     {if(!is.null(truedat)) geom_line(data=truedat, aes(x=time/365,y=atoutput, color="True B"), alpha = 3/10)} + 
     theme_tufte() +
     theme(legend.position = "top") +
     xlab("model year") +
     ylab("tons") +
-    labs(colour=scenario.name) +
-    facet_wrap(~species, scales="free") 
+    labs(colour=dat$ModSim) +
+    facet_wrap(~Name, scales="free") 
   
 }
 
@@ -184,16 +200,19 @@ plotB <- function(dat, truedat=NULL){
 # also note different time (days) from model timestep in all other output
 plotC <- function(dat, truedat=NULL){
   
+    ctbio <- dat %>% filter(variable=="catch")
+    ctcv <- dat %>% filter(variable=="cv")
+  
     ggplot() +
-    geom_line(data=dat, aes(x=time/365,y=atoutput, color="Catch biomass"), 
+    geom_line(data=ctbio, aes(x=year,y=value, color="Catch biomass"), 
               alpha = 10/10) +
     {if(!is.null(truedat)) geom_line(data=truedat, aes(x=time/365,y=atoutput, color="True Catch"), alpha = 3/10)} + 
     theme_tufte() +
     theme(legend.position = "top") +
     xlab("model year") +
     ylab("tons") +
-    labs(colour=scenario.name) +
-    facet_wrap(~species, scales="free") 
+    labs(colour=dat$ModSim) +
+    facet_wrap(~Name, scales="free") 
   
 }
 
@@ -205,8 +224,8 @@ plotC <- function(dat, truedat=NULL){
 plotlen <- function(dat, effN=1, truedat=NULL){
   
   cols <- c("Census Lcomp"="#00BFC4","Sample Lcomp"="#F8766D")  
-  ggplot(mapping=aes(x=upper.bins)) +
-    {if(is.null(truedat)) geom_bar(data=dat, aes(weight = atoutput/effN))} +
+  ggplot(mapping=aes(x=lenbin)) +
+    {if(is.null(truedat)) geom_bar(data=dat, aes(weight = value/effN))} +
     {if(!is.null(truedat)) geom_bar(data=dat, aes(weight = censuslen/totlen, fill="Census Lcomp"), alpha = 5/10)} +
     {if(!is.null(truedat)) geom_bar(data=dat, aes(weight = atoutput/effN, fill="Sample Lcomp"), alpha = 5/10)} +
     theme_tufte() +
@@ -215,55 +234,39 @@ plotlen <- function(dat, effN=1, truedat=NULL){
     {if(is.null(truedat)) ylab("number")} +
     {if(!is.null(truedat)) ylab("proportion")} +
     scale_colour_manual(name="", values=cols) +
-    labs(subtitle = paste(scenario.name,
-                          dat$species)) +
-    facet_wrap(~time, ncol=6, scales="free_y")
+    labs(subtitle = paste(dat$ModSim,
+                          dat$Name)) +
+    facet_wrap(~year, ncol=6, scales="free_y")
 
 }
 
 # plot numbers at age by timestep (one species)
 Natageplot <- function(dat, effN=1, truedat=NULL){
   ggplot() +
-    geom_point(data=dat, aes(x=agecl, y=atoutput/effN, color="Est Comp")) +
+    geom_point(data=dat, aes(x=age, y=value/effN, color="Est Comp")) +
     {if(!is.null(truedat)) geom_line(data=dat, aes(x=agecl, y=numAtAge/totN, color="True Comp"))} + 
     theme_tufte() +
     theme(legend.position = "bottom") +    
-    xlab("age/agecl") +
+    xlab("age") +
     {if(is.null(truedat)) ylab("number")} +
     {if(!is.null(truedat)) ylab("proportion")} +
-    labs(subtitle = paste(scenario.name,
-                          dat$species)) + 
-    facet_wrap(~time, ncol=6, scales="free_y")
+    labs(subtitle = paste(dat$ModSim,
+                          dat$Name)) + 
+    facet_wrap(~year, ncol=6, scales="free_y")
 }
 
 # plot weight at age time series facet wrapped by species
 wageplot <- function(dat, truedat=NULL){
-  ggplot(dat, aes(time/stepperyr, atoutput)) +
-    geom_line(aes(colour = factor(agecl))) +
+  ggplot(dat, aes(year, value)) +
+    geom_line(aes(colour = factor(age))) +
     theme_tufte() +
     theme(legend.position = "bottom") +
     xlab("model year") +
     ylab("average individual weight (g)") +
-    labs(subtitle = paste0(scenario.name)) +
-    facet_wrap(c("species"), scales="free_y")
+    labs(subtitle = paste0(dat$ModSim)) +
+    facet_wrap(c("Name"), scales="free_y")
 }
   
-# compare N at age and C at age between standard and ANNAGE outputs
-totNageplot <- function(dat, anndat){
-  
-    ggplot() +
-    geom_line(data=dat, aes(x=time/stepperyr,y=totN, color="Tot N cohorts"), 
-              alpha = 5/10) +
-    geom_line(data=anndat, aes(x=time/stepperyr,y=totN, color="Tot N annage"), alpha = 5/10) + 
-    theme_tufte() +
-    theme(legend.position = "top") +
-    xlab("model year") +
-    ylab("N") +
-    labs(colour=scenario.name) +
-    facet_wrap(~species, scales="free") 
-  
-}
-
 ```
 
 #### Read in the "data" to check with plots
@@ -272,30 +275,8 @@ The `mskeyrun` simulated data objects are all dataframes.
 
 ```{r}
 
-# source(here("data-raw/simulated-data/config/NOBA_sacc38Config.R"))
-# 
-# NOBAom_ms <- readRDS(file.path(d.name, paste0(scenario.name, "omlist_ss.rds")))
-# 
-# fitstartyr <- 40
-# fitendyr <- 120  #used 120 for sacc38
-
-# #Number of years of data to pull
-# nyears <- NOBAom_ms$runpar$nyears
-# total_sample <- NOBAom_ms$runpar$tstop/NOBAom_ms$runpar$outputstep
-# stepperyr <- if(NOBAom_ms$runpar$outputstepunit=="days") 365/NOBAom_ms$runpar$toutinc
-# 
-# atlantis_full <- c(0:total_sample)  
-# mod_burnin <- fitstartyr*stepperyr+1
-# fit_nyears <- fitendyr-fitstartyr
-# fit_ntimes <- fit_nyears*stepperyr
-# fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
-# #fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
-# fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
-# fittimes.days <- fittimes*73
-
-
 survObsBiom <- mskeyrun::simSurveyIndex #atlantisom::read_savedsurvs(d.name, 'survB')
-age_comp_data <- mskeyrun::simSurveyAgeLencomp #atlantisom::read_savedsurvs(d.name, 'survAge') #not using in assessment
+#age_comp_data <- mskeyrun::simSurveyAgeLencomp #atlantisom::read_savedsurvs(d.name, 'survAge') #not using in assessment
 len_comp_data <- mskeyrun::simSurveyLencomp #atlantisom::read_savedsurvs(d.name, 'survLen')
 #wtage <- atlantisom::read_savedsurvs(d.name, 'survWtage')  #not using in assessment
 annage_comp_data <- mskeyrun::simSurveyAgecomp #atlantisom::read_savedsurvs(d.name, 'survAnnAge')
@@ -314,7 +295,7 @@ fish_annage_wtage <- mskeyrun::simFisheryWtatAge #atlantisom::read_savedfisherie
 
 ### Visualize survey outputs {.tabset}
 
-We filter the full datasets using the times defined above. These plots represent the selected time series for the survey biomass index and weight at age, and a subset for length and age composition.
+These plots represent the full `mskeyrun` simulated time series for the survey biomass index and weight at age, and a subset for length and age composition.
 
 #### Survey biomass index
 ```{r, results="asis"}
@@ -327,10 +308,10 @@ We filter the full datasets using the times defined above. These plots represent
 # }
 
 # plots survey only
- for(s in names(survObsBiom)){
+ for(s in unique(survObsBiom$survey)){
    cat("  \n##### ",  s,"  \n")
-   print(plotB(survObsBiom[[s]][[1]] %>%
-                 filter((time %in% fittimes))))
+   print(plotB(survObsBiom %>%
+                 filter((survey %in% s))))
    cat("  \n")
  }
 
@@ -339,11 +320,11 @@ We filter the full datasets using the times defined above. These plots represent
 #### Survey length composition
 ```{r lencomp-1, results="asis", message=FALSE, warning=FALSE}
 
-# not the full time series, just first 24 yrs
-for(s in names(len_comp_data)){
+# not the full time series, just 24 yrs after catches start in year 55
+for(s in unique(len_comp_data$survey)){
   cat("  \n##### ",  s,"  \n")
-  lcompsub <- as.data.frame(len_comp_data[[s]][[1]]) %>% filter(time %in% c(200:320)) %>%
-    group_by(species) %>%
+  lcompsub <- len_comp_data %>% filter(survey %in% s) %>% filter(year %in% c(55:78)) %>%
+    group_by(Name) %>%
     group_map(~ plotlen(.x), keep = TRUE)
   
   for(i in 1:length(lcompsub)) {
@@ -357,10 +338,10 @@ for(s in names(len_comp_data)){
 #### Survey age composition (annual ages)
 ```{r plot-annagecomp, results="asis", message=FALSE, warning=FALSE}
 
-for(s in names(annage_comp_data)){
+for(s in unique(annage_comp_data$survey)){
   cat("  \n##### ",  s,"  \n")
-  acompsub <- as.data.frame(annage_comp_data[[s]][[1]]) %>% filter(time %in% c(200:320)) %>%
-    group_by(species) %>%
+  acompsub <- annage_comp_data %>% filter(survey %in% s) %>% filter(year %in% c(55:78)) %>%
+    group_by(Name) %>%
     #left_join(., trueNage) %>%
     group_map(~ Natageplot(.x), keep = TRUE) # plots only sampled age comp
     #group_map(~ Natageplot(.x, effN = 100000, truedat = 1), keep = TRUE) # plots merged true age comp
@@ -375,51 +356,32 @@ for(s in names(annage_comp_data)){
 #### Survey iterpolated weight at age (annual ages) 
 ```{r plot-annwtage, fig.height=10, results='asis'}
 
-for(s in names(annage_wtage)){
+for(s in unique(annage_wtage$survey)){
   cat("  \n##### ",  s,"  \n")
-  print(wageplot(annage_wtage[[s]][[1]] %>%
-                 filter((time %in% fittimes))))
+  print(wageplot(annage_wtage %>%
+                 filter((survey %in% s))))
   cat("  \n")
 }
 ```
 
-#### Survey age class (Atlantis agecl--check against full survey age comp)
-```{r, results="asis", message=FALSE, warning=FALSE}
-
-for(s in names(age_comp_data)){
-  cat("  \n##### ",  s,"  \n")
-  acompsub <- as.data.frame(age_comp_data[[s]][[1]]) %>% filter(time %in% c(200:320)) %>%
-    group_by(species) %>%
-    #left_join(., trueNagecl) %>%
-    group_map(~ Natageplot(.x), keep = TRUE) # plots only sampled age comp
-    #group_map(~ Natageplot(.x, effN = 100000, truedat = 1), keep = TRUE) # plots merged true age comp
-
-  for(i in 1:length(acompsub)) {
-    print(acompsub[[i]])
-  }
-  cat("  \n")
-}
-
-```
 
 ### {-}
 
 ### Visualize fishery data {.tabset}
 
-These plots represent the selected time series for fishery catch and weight at age, and a subset for length and age composition. Fishery lengths and ages are sampled 5x per year from this model, while the surveys above sample 1x per year. 
+These plots represent the the full `mskeyrun` simulated time series for fishery catch and weight at age, and a subset for length and age composition. 
 
 #### Fishery catch time series
 ```{r catchind-1, results="asis", message=FALSE, warning=FALSE}
 # observed catch only
-plotC(catchbio_ss$census[[1]] %>%
-        filter(time %in% fittimes.days))
+plotC(catchbio_ss)
 ```
 
 #### Fishery length composition
 ```{r, results="asis", message=FALSE, warning=FALSE}
 
-lcompsub <- as.data.frame(catchlen_ss$census[[1]]) %>% filter(time %in% c(291:320)) %>%
-  group_by(species) %>%
+lcompsub <- catchlen_ss %>% filter(year %in% c(55:78)) %>%
+  group_by(Name) %>%
   group_map(~ plotlen(.x), keep = TRUE)
 
 for(i in 1:length(lcompsub)) {
@@ -431,8 +393,8 @@ for(i in 1:length(lcompsub)) {
 #### Fishery catch at age (annual ages)
 ```{r plot-catchagecomp, results='asis'}
 
-acompsub <- as.data.frame(fish_annage_comp$census[[1]]) %>% filter(time %in% c(291:320)) %>%
-  group_by(species) %>%
+acompsub <- fish_annage_comp %>% filter(year %in% c(55:78)) %>%
+  group_by(Name) %>%
   #left_join(., trueCAA) %>%
   group_map(~ Natageplot(.x), keep = TRUE) # plots only sampled age comp
   #group_map(~ Natageplot(.x, effN = 200, truedat = 1), keep = TRUE) # plots merged true age comp
@@ -446,43 +408,12 @@ for(i in 1:length(acompsub)) {
 #### Fishery interpolated weight at age (annual ages)
 ```{r, fig.height=10}
 
-wageplot(fish_annage_wtage$census[[1]] %>%
-                 filter((time %in% fittimes)))
-
-```
-
-#### Fishery catch at age class (Atlantis agecl--check against full age comp)
-```{r, message=FALSE, warning=FALSE}
-
-acompsub <- as.data.frame(fish_age_comp$census[[1]]) %>% filter(time %in% c(291:320)) %>%
-  group_by(species) %>%
-  #left_join(., trueCAAcl) %>%
-  group_map(~ Natageplot(.x), keep = TRUE) # plots only sampled age comp
-  #group_map(~ Natageplot(.x, effN = 200, truedat = 1), keep = TRUE) # plots merged true age comp
-
-
-for(i in 1:length(acompsub)) {
-  print(acompsub[[i]])
-}
+wageplot(fish_annage_wtage)
 
 ```
 
 ### {-}
 
-
-### Create mskeyrun simulated data
-
-Scripts in `ms-keyrun/data-raw` show the process of making mskeyun datasets from `atlantisom` output generated above. Atlantis outputs and `atlantisom` outputs produced above are local to Sarah's computer for this code to run, as they are too large for github. However, the scripts are linked here to show the process. Overall this script creates all datasets using functions specific to each data type:
-
-```{r, code = readLines(here("data-raw/build_simdata.R")), eval=F}
-```
-
-For example, `create_sim_survey_index()` takes the saved `atlantisom` output plus user specifications for fit start and end years to produce the dataset `mskeyrun::simSurveyIndex`:
-
-```{r, code = readLines(here("data-raw/R/create_sim_survey_index.R")), eval=F}
-```
-
-All functions are in this mskeyrun repository folder: https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R 
 
 ### Write to model input files
 
