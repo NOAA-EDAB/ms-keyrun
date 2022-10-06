@@ -5,6 +5,7 @@ output:
   pdf_document: default
 csl: "apa-annotated-bibliography.csl"
 bibliography: references.bib
+link-citations: yes
 urlcolor: blue
 ---
 
