@@ -52,10 +52,10 @@ towarea <- 0.0384
     
 GBsurvstrata  <- c(1090, 1130:1210, 1230, 1250, 3460, 3480, 3490, 3520:3550)
     
-GBarea <- FishStatsUtils::northwest_atlantic_grid %>%
-      dplyr::filter(stratum_number %in% GBsurvstrata) %>%
-      dplyr::summarise(area = sum(Area_in_survey_km2)) %>%
-      as.double()
+GBarea <- 55055.24 #FishStatsUtils::northwest_atlantic_grid %>%
+      #dplyr::filter(stratum_number %in% GBsurvstrata) %>%
+      #dplyr::summarise(area = sum(Area_in_survey_km2)) %>%
+      #as.double()
 
 survbio <- survindex.all %>%
       dplyr::filter(variable %in% c("strat.biomass", "biomass.var")) %>%
