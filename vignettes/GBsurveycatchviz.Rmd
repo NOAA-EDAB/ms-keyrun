@@ -109,7 +109,7 @@ Discard rates (discarded/kept weight) are estimated from fishery observer data f
 
 *Discard mortality rates have not yet been applied*
 
-```{r catch, results = "asis", echo = FALSE}
+```{r catch, results = "asis"}
 
     fleetdef <- focalspp %>%
       dplyr::select(-NESPP3) %>% 
