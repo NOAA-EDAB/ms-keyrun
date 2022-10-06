@@ -24,8 +24,9 @@ get_length_sample_n <- function(overwrite=T){
   newData <- survdatLWpull$survdat %>% 
     dplyr::filter(SVSPP %in% svspps) %>%
     dplyr::filter(STRATUM %in% GBStrata) %>%
-    dplyr::group_by(YEAR, SEASON, SVVESSEL, SVSPP) %>%
-    dplyr::summarise(lensampsize = sum(NUMLEN, na.rm = TRUE)) %>%
+    dplyr::group_by(YEAR, SEASON, SVSPP) %>%
+    dplyr::summarise(lensampsize = sum(NUMLEN, na.rm = TRUE),
+                     ntows = length(unique(STATION))) %>%
     dplyr::left_join(species)
   
   surveyLenSampN <- newData
@@ -39,6 +40,12 @@ get_length_sample_n <- function(overwrite=T){
 # # visualize
 # library(ggplot2)
 # ggplot2::ggplot(surveyLenSampN, aes(x=YEAR, y=lensampsize, colour = SEASON)) + 
+#   geom_line()+ 
+#   facet_wrap(~LongName, scales = "free_y")+
+#   theme_bw()
+
+# library(ggplot2)
+# ggplot2::ggplot(surveyLenSampN, aes(x=YEAR, y=ntows, colour = SEASON)) + 
 #   geom_line()+ 
 #   facet_wrap(~LongName, scales = "free_y")+
 #   theme_bw()
