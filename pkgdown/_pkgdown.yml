@@ -1,5 +1,8 @@
 url: https://noaa-edab.github.io/ms-keyrun/
 
+template:
+ bootstrap: 5
+
 deploy:
   install_metadata: true
 
@@ -77,6 +80,8 @@ navbar:
      href: articles/allocateLandingsEPU.html
    - text: Stock areas
      href: articles/stockAreas.html
+   - text: Focal species biomass and catch on GB
+     href: articles/GBsurveycatchviz.html
    - text: Focal species diets on GB
      href: articles/GBdietcomp.html
    - text: --------
