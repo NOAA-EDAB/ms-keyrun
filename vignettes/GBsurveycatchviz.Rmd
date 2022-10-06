@@ -101,11 +101,13 @@ plotB <- function(dat, truedat=NULL){
 
 ## Fishery dependent catch 
 
-Stuff about where this comes from
+Commercial landings and discards information is compiled with the R package [`comlandr`](https://noaa-edab.github.io/comlandr/index.html). 
 
-Separate discards and landings
+Landings are proportioned from fishery statistical areas to Georges Bank using the proportion of landings within and outside Georges Bank from high resolution fishery data (see <a href="allocateLandingsEPU.html"> Allocate landings to EPU</a>). 
 
-Temporary total catch here
+Discard rates (discarded/kept weight) are estimated from fishery observer data for each species and gear for years with observer information. Prior years discard rates are based on the average across years with observer information for each species and gear. The annual discard rate is multiplied by the Georges Bank landings time series to estimate the discards time series.
+
+*Discard mortality rates have not yet been applied*
 
 ```{r catch, results = "asis", echo = FALSE}
 
@@ -151,9 +153,10 @@ plotC <- function(dat, truedat=NULL){
   
     ctbio <- dat %>% filter(variable=="catch")
     ctcv <- dat %>% filter(variable=="cv")
+    landdisc <- dat %>% filter(variable %in% c("commercial landings", "commercial discards"))
   
     ggplot() +
-    geom_line(data=ctbio, aes(x=year,y=value, color="Catch biomass"), 
+    geom_line(data=landdisc, aes(x=year,y=value, colour=variable), 
               alpha = 10/10) +
     {if(!is.null(truedat)) geom_line(data=truedat, aes(x=time/365,y=atoutput, color="True Catch"), alpha = 3/10)} + 
     theme_tufte() +
