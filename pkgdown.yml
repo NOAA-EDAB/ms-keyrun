@@ -14,12 +14,14 @@ articles:
   GBSurveySet: GBSurveySet.html
   GBbiomassNumbyLength: GBbiomassNumbyLength.html
   GBdietcomp: GBdietcomp.html
+  GBsurveycatchviz: GBsurveycatchviz.html
   SimData: SimData.html
+  SimData_archive: SimData_archive.html
   SpeciesEnvDat: SpeciesEnvDat.html
   allocateLandingsEPU: allocateLandingsEPU.html
   mskeyrun: mskeyrun.html
   stockAreas: stockAreas.html
-last_built: 2022-10-06T01:16Z
+last_built: 2022-10-06T01:43Z
 urls:
   reference: https://noaa-edab.github.io/ms-keyrun/reference
   article: https://noaa-edab.github.io/ms-keyrun/articles
