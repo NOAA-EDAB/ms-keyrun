@@ -33,11 +33,15 @@ The annual catch (measured in metric tons) for each of the [focal species](stock
 
 * The R package [`mscatch`](https://noaa-edab.github.io/mscatch/) is used to expand the annual catch data. Detailed methods are explained there. [Species specific rules](#rules) are used in the expansion to account for life history traits. See [Data sources](GBLandingLengthDataSources.html#function) for more information
 
+* Two data sets of expanded catch are produced:
+  * One where length samples are borrowed to fill in years/season/market code with missing length samples, [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html)
+  * Another where length samples remain missing. In this cases the landings can not be partitioned into landings at length. For length based models this will represent missing data. [`realFisheryLencompRaw`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencompRaw.html)
 
 ## Species rules {#rules}
 
-For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings data and discard data (not currently incorporated) are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated for each LENGTH (1 cm bins) category for a specified time interval, market category, and gear type. The expanded catch is then aggregated to annual time steps and [fleets](https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html). This data set is exported in the package as [`realFisheryLencomp`](https://noaa-edab.github.io/ms-keyrun/reference/realFisheryLencomp.html) using the function: 
+For each species, a set of rules are applied (similar to the approach taken in a stock assessment), to determine how the landings data and discard data (not currently incorporated) are aggregated based on the availability of length samples. Biomass (metric tons) is then estimated at each LENGTH (1 cm bins) category for a specified time interval, market category, and gear type. The expanded catch is then aggregated to annual time steps and [fleets](https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html). 
 
+To create the data set WITH borrowed length samples:
 ```{r lencompcreate, echo = T,eval = F}
 create_real_fishery_lencomp()
 ```
@@ -46,6 +50,23 @@ A sample of the output for Atlantic cod is shown below.
 
 ```{r lencomp,echo=F,eval=TRUE}
 mskeyrun::realFisheryLencomp %>%
+  dplyr::filter(Code == 164712) %>%
+  head(.,10) %>%
+  flextable::flextable() %>% 
+  flextable::colformat_num(j=c("Code","year"), big.mark = "" , digits=0 )
+```
+
+
+
+To create the data set WITHOUT borrowed length samples:
+```{r lencompcreateRaw, echo = T,eval = F}
+create_real_fishery_lencomp_raw()
+```
+
+A sample of the output for Atlantic cod is shown below.
+
+```{r lencompRaw,echo=F,eval=TRUE}
+mskeyrun::realFisheryLencompRaw %>%
   dplyr::filter(Code == 164712) %>%
   head(.,10) %>%
   flextable::flextable() %>% 
