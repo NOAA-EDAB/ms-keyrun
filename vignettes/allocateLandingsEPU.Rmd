@@ -4,10 +4,10 @@ author: Andy Beet
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   bookdown::html_document2:
-    code_fold: hide
     number_sections: false
 csl: apa-annotated-bibliography.csl
 bibliography: references.bib
+link-citations: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -93,7 +93,7 @@ The shape file shown in Figure \@ref(fig:GBfootstat) is supplied to the `offshor
 The [top ranked species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies) of interest are shown below. Each panel depicts the proportion of landings (for each species) in Georges Bank relative to the statistical area.
 
 
-```{r calc_props_st, eval=T,echo = F, fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area"}
+```{r calcpropsst, eval=T,echo = F, fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area", fig.height=8}
 source(here::here("data-raw/R","plot_landings_proportions.r"))
 plot_landings_proportions(species="rows")
 
@@ -101,7 +101,7 @@ plot_landings_proportions(species="rows")
 
 The total landings of each species by stat area is shown below. This should ideally be compared to landings from [comlandr](https://github.com/NOAA-EDAB/comlandr). We should also determine how landings on the Canadian side of the Hague line should be handled
 
-```{r calc_lands,  eval=T, echo = F,fig.align='center',fig.cap="Total landings by statistical area"}
+```{r calclands,  eval=T, echo = F,fig.align='center',fig.cap="Total landings by statistical area", fig.height=8}
 source(here::here("data-raw/R","plot_landings.r"))
 plot_landings()
 

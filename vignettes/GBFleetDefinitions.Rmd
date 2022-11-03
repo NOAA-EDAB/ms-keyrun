@@ -2,7 +2,7 @@
 title: "Analysis of Georges Bank catch by gear type"
 output:
   bookdown::html_document2:
-    code_fold: hide
+    code_folding: "hide"
     number_sections: false
 csl: apa-annotated-bibliography.csl
 bibliography: references.bib
@@ -122,11 +122,10 @@ knitr::include_graphics("figures/dendrogram2.png")
 Time series of species caught by each gear type. To reduce the number of panels in each figure, species caught < 30% of the time are not displayed. For example reporting of landings started in 1964 (56 years ago). So any species that have reported landings in fewer that 17 years are not displayed.
 
 
-```{r plotGearTop, echo=T,eval=F}
+```{r plotGearTop, echo=F, eval=F}
 for (gear in clusteObj$topGears) {
   explore_landings_by_gear(channel,data=gearData$data,gearCode=gear,filterYrs=0.30,saveToFile=T)
 }
-
 ```
 
 
