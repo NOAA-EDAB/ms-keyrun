@@ -93,7 +93,7 @@
 
 
 
-<script src="GBFleetDecisions_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="GBFleetDecisions_files/tabwid-1.1.0/tabwid.css" rel="stylesheet">
+<link href="GBFleetDecisions_files/tabwid-1.1.0/tabwid.css" rel="stylesheet">
 <link href="GBFleetDecisions_files/tabwid-1.1.0/scrool.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
@@ -106,82 +106,130 @@
 
     
     
-<p>The fleets designations were made after an exploratory <a href="https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html">cluster analysis</a> study</p>
+<p>The fleets designations were made after an exploratory <a href="https://noaa-edab.github.io/ms-keyrun/GBFleetDefinitions.html">cluster
+analysis</a> study</p>
 <p>Note:</p>
 <p><sup>1</sup> indicates a gear code &lt; 1% of total landings</p>
 <p><sup>1,2</sup> indicates a gear code &lt; 0.1% of total landings</p>
-<p>All other gear codes make up the majority (99%) of the landings. For these gear codes each species contribution to the total landings (aggregated over time) are shown as percentages</p>
+<p>All other gear codes make up the majority (99%) of the landings. For
+these gear codes each species contribution to the total landings
+(aggregated over time) are shown as percentages</p>
 <p>Species of interest are <strong>bolded</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gearData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span>file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/data"</span>,<span class="st">"timeSeriesSpeciesByGear.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">gearData</span><span class="op">$</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">NEGEAR2</span><span class="op">==</span><span class="va">gearCode</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="demersal-large-mesh-3">Demersal (large mesh &gt; 3")<a class="anchor" aria-label="anchor" href="#demersal-large-mesh-3"></a>
+<h2 id="demersal-large-mesh-3">Demersal (large mesh &gt; 3”)<a class="anchor" aria-label="anchor" href="#demersal-large-mesh-3"></a>
 </h2>
-<p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%), <strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%), <strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs</p>
-<p><sup>1</sup> 16 - DANISH SEINE (<strong>cod</strong>, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, plaice, <strong>silver hake</strong>) - 5,194,870 lbs</p>
-<p><sup>1</sup> 36 - SCOTTISH SEINE (<strong>silver hake</strong>, <strong>cod</strong>, plaice, witch fl, <strong>yellowtail flounder</strong>, <strong>winter fl</strong>, red hake) - 4,521,702 lbs</p>
-<p><sup>1</sup> 35 - BEAM TRAWL (summer flounder, <strong>winter flounder</strong>, <strong>yellowtail flounder</strong>) - 927,806 lbs</p>
-<p><sup>1</sup> 32 - FYKE NET (<strong>winter fl</strong>, windowpane fl, <strong>dogfish</strong>, <strong>skates</strong>) - 1,602 lb</p>
+<p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%),
+<strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%),
+<strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%),
+loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019
+lbs</p>
+<p><sup>1</sup> 16 - DANISH SEINE (<strong>cod</strong>, witch fl,
+<strong>yellowtail flounder</strong>, <strong>winter fl</strong>,
+plaice, <strong>silver hake</strong>) - 5,194,870 lbs</p>
+<p><sup>1</sup> 36 - SCOTTISH SEINE (<strong>silver hake</strong>,
+<strong>cod</strong>, plaice, witch fl, <strong>yellowtail
+flounder</strong>, <strong>winter fl</strong>, red hake) - 4,521,702
+lbs</p>
+<p><sup>1</sup> 35 - BEAM TRAWL (summer flounder, <strong>winter
+flounder</strong>, <strong>yellowtail flounder</strong>) - 927,806
+lbs</p>
+<p><sup>1</sup> 32 - FYKE NET (<strong>winter fl</strong>, windowpane
+fl, <strong>dogfish</strong>, <strong>skates</strong>) - 1,602 lb</p>
 </div>
 <div class="section level2">
-<h2 id="demersal-small-mesh-3">Demersal (small mesh &lt;= 3")<a class="anchor" aria-label="anchor" href="#demersal-small-mesh-3"></a>
+<h2 id="demersal-small-mesh-3">Demersal (small mesh &lt;= 3”)<a class="anchor" aria-label="anchor" href="#demersal-small-mesh-3"></a>
 </h2>
-<p>Predominantly Silver Hake, White Hake, Butterfish, Short fin, and long fin squid</p>
-<p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%), <strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%), <strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%), loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019 lbs</p>
+<p>Predominantly Silver Hake, White Hake, Butterfish, Short fin, and
+long fin squid</p>
+<p>05 - OTTER TRAWL, BOTTOM (<strong>cod</strong> (16%),
+<strong>yellowtail fl</strong> (15%), <strong>haddock</strong> (12%),
+<strong>silver hake</strong> (10%), <strong>winter fl</strong> (8%),
+loligo (6%) + 33% other bottom) - Large and small mesh - 7,323,551,019
+lbs</p>
 </div>
 <div class="section level2">
 <h2 id="fixed-gear">Fixed Gear<a class="anchor" aria-label="anchor" href="#fixed-gear"></a>
 </h2>
-<p>10 - GILL NET, FIXED (<strong>dogfish</strong> (22%), <strong>cod</strong> (22%), <strong>goosefish</strong> (20%), <strong>winter skate/skates</strong> (21%), pollock (6%)) - 417,501,765 lbs</p>
-<p>01 - LONGLINE, BOTTOM (<strong>cod</strong> (40%), <strong>dogfish</strong> (21%), tilefish (20%), <strong>haddock</strong> (9%) + pollock , white hake) - 234,755,227 lbs</p>
-<p>02 - HANDLINE (<strong>cod</strong>(42%), scup (15%), tuna (13%), <strong>spiny dogfish</strong>(6%), <strong>mackerel</strong> (5%)) -72,859,422 lbs</p>
-<p><sup>1</sup> 50 - GILL NET (angler, bluefish, <strong>skate</strong>, <strong>dogfish</strong>) - 789,780 lbs</p>
-<p><sup>1</sup> 52 - GILL NET (skate, angler, <strong>haddock</strong>, swordfish, <strong>mackerel</strong>, <strong>cod</strong> ) - 367,823 lbs</p>
+<p>10 - GILL NET, FIXED (<strong>dogfish</strong> (22%),
+<strong>cod</strong> (22%), <strong>goosefish</strong> (20%),
+<strong>winter skate/skates</strong> (21%), pollock (6%)) - 417,501,765
+lbs</p>
+<p>01 - LONGLINE, BOTTOM (<strong>cod</strong> (40%),
+<strong>dogfish</strong> (21%), tilefish (20%), <strong>haddock</strong>
+(9%) + pollock , white hake) - 234,755,227 lbs</p>
+<p>02 - HANDLINE (<strong>cod</strong>(42%), scup (15%), tuna (13%),
+<strong>spiny dogfish</strong>(6%), <strong>mackerel</strong> (5%))
+-72,859,422 lbs</p>
+<p><sup>1</sup> 50 - GILL NET (angler, bluefish, <strong>skate</strong>,
+<strong>dogfish</strong>) - 789,780 lbs</p>
+<p><sup>1</sup> 52 - GILL NET (skate, angler, <strong>haddock</strong>,
+swordfish, <strong>mackerel</strong>, <strong>cod</strong> ) - 367,823
+lbs</p>
 </div>
 <div class="section level2">
 <h2 id="trap">Trap<a class="anchor" aria-label="anchor" href="#trap"></a>
 </h2>
-<p>14 - POUND NET (loligo (35%) , scup (20%), <strong>mackerel</strong> (20%), many other &lt; 5%) - 39,571,508 lbs</p>
-<p><sup>1</sup> 26 - WEIR (loligo, <strong>mackerel</strong>, scup) - 3,094,066 lbs</p>
-<p><sup>1</sup> 8 - FLOATING TRAP (<strong>mackerel</strong>, scup, loligo, tuna) - 1,850,040 lbs</p>
+<p>14 - POUND NET (loligo (35%) , scup (20%), <strong>mackerel</strong>
+(20%), many other &lt; 5%) - 39,571,508 lbs</p>
+<p><sup>1</sup> 26 - WEIR (loligo, <strong>mackerel</strong>, scup) -
+3,094,066 lbs</p>
+<p><sup>1</sup> 8 - FLOATING TRAP (<strong>mackerel</strong>, scup,
+loligo, tuna) - 1,850,040 lbs</p>
 </div>
 <div class="section level2">
 <h2 id="pelagic">Pelagic<a class="anchor" aria-label="anchor" href="#pelagic"></a>
 </h2>
-<p>17 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (7%), <strong>Herring</strong> (91%)) - 598,176,314 lbs</p>
-<p>37 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (11%) , <strong>Herring</strong> (88%)) - 367,414,353 lbs</p>
-<p>12 - PURSE SEINE (1970’s menhaden (40%), Tuna (34%), <strong>Herring</strong> (5%)) - 41,291,228 lbs</p>
+<p>17 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (7%),
+<strong>Herring</strong> (91%)) - 598,176,314 lbs</p>
+<p>37 - MIDWATER OTTER TRAWL (<strong>Mackerel</strong> (11%) ,
+<strong>Herring</strong> (88%)) - 367,414,353 lbs</p>
+<p>12 - PURSE SEINE (1970’s menhaden (40%), Tuna (34%),
+<strong>Herring</strong> (5%)) - 41,291,228 lbs</p>
 </div>
 <div class="section level2">
 <h2 id="scallop">Scallop<a class="anchor" aria-label="anchor" href="#scallop"></a>
 </h2>
-<p>13 - DREDGE, SCALLOP (scallop (88%) (<strong>Goosefish</strong> , <strong>yellowtail</strong>, bottom fish)) - 733,761,209 lbs</p>
+<p>13 - DREDGE, SCALLOP (scallop (88%) (<strong>Goosefish</strong> ,
+<strong>yellowtail</strong>, bottom fish)) - 733,761,209 lbs</p>
 </div>
 <div class="section level2">
 <h2 id="surf-clam">Surf clam<a class="anchor" aria-label="anchor" href="#surf-clam"></a>
 </h2>
-<p>40 - DREDGE (surfclam (56%), ocean quahog(43%) ) - 425,058,521 lbs</p>
+<p>40 - DREDGE (surfclam (56%), ocean quahog(43%) ) - 425,058,521
+lbs</p>
 </div>
 <div class="section level2">
 <h2 id="other-shellfish">Other shellfish<a class="anchor" aria-label="anchor" href="#other-shellfish"></a>
 </h2>
-<p>38 - DREDGE (mussel(40%), sea scallop(30%), clam+quahog (17%) + bottom fish) - 48,683,622 lbs</p>
-<p><sup>1</sup> 25 - RAKES (quahog, soft clam, mussels, crab, oysters) - 13,153,618 lbs</p>
-<p><sup>1</sup> 41 - TONGS AND GRABS (quahog, soft clam, surf clam) - 232,351 lbs</p>
-<p><sup>1</sup> 22 - HOES/FORK (soft clam, oysters, bay scallop) - 217,491 lbs</p>
+<p>38 - DREDGE (mussel(40%), sea scallop(30%), clam+quahog (17%) +
+bottom fish) - 48,683,622 lbs</p>
+<p><sup>1</sup> 25 - RAKES (quahog, soft clam, mussels, crab, oysters) -
+13,153,618 lbs</p>
+<p><sup>1</sup> 41 - TONGS AND GRABS (quahog, soft clam, surf clam) -
+232,351 lbs</p>
+<p><sup>1</sup> 22 - HOES/FORK (soft clam, oysters, bay scallop) -
+217,491 lbs</p>
 </div>
 <div class="section level2">
 <h2 id="lobstercrab">Lobster/Crab<a class="anchor" aria-label="anchor" href="#lobstercrab"></a>
 </h2>
-<p>20 - POT/TRAP (lobster(53%) + crab(46%), bottom fish &lt; 1%) - 340,059,280 lbs</p>
-<p>18 - POTS + TRAPS (crab (20%), lobster (20%), whelk (10%), snails (10%), hagfish (20%) + bottom fish (20%)) - 79,123,496 lbs</p>
+<p>20 - POT/TRAP (lobster(53%) + crab(46%), bottom fish &lt; 1%) -
+340,059,280 lbs</p>
+<p>18 - POTS + TRAPS (crab (20%), lobster (20%), whelk (10%), snails
+(10%), hagfish (20%) + bottom fish (20%)) - 79,123,496 lbs</p>
 <p>30 - POTS + TRAPS (crab (&gt;99%)) - 68,329,188 lbs</p>
-<p>21 - POT/TRAP (Lobster (88%), crab (10%) + bottom fish) - 39,633,570 lbs</p>
-<p><sup>1</sup> 23 - BY HAND (soft clam, crab, quahog, oysters, clam) - 1,665,727 lbs</p>
-<p><sup>1</sup> 33 - DIVING GEAR (lobster, sea urch, squid) - 878,986 lbs</p>
+<p>21 - POT/TRAP (Lobster (88%), crab (10%) + bottom fish) - 39,633,570
+lbs</p>
+<p><sup>1</sup> 23 - BY HAND (soft clam, crab, quahog, oysters, clam) -
+1,665,727 lbs</p>
+<p><sup>1</sup> 33 - DIVING GEAR (lobster, sea urch, squid) - 878,986
+lbs</p>
 <p><sup>1</sup> 15 - TRAWL (lobster, 1972,1974) - 21,437 lbs</p>
-<p><sup>1</sup> 19 - POTS + TRAPS (rock crab, lobster, 2004) - 23525 lbs</p>
+<p><sup>1</sup> 19 - POTS + TRAPS (rock crab, lobster, 2004) - 23525
+lbs</p>
 <p><sup>1</sup> 53 - TRAMMEL NET (lobster , 2012) - 193 lbs</p>
 </div>
 <div class="section level2">
@@ -189,7 +237,8 @@
 </h2>
 <p><sup>1</sup> 3 - HARPOONS (Tuna, swordfish)</p>
 <p><sup>1</sup> 11 - GILL NET, DRIFT (swordfish, tuna, shark )</p>
-<p><sup>1</sup> 6 - TROLL LINE (Tuna, sea herring, striped bass, bluefish)</p>
+<p><sup>1</sup> 6 - TROLL LINE (Tuna, sea herring, striped bass,
+bluefish)</p>
 <p><sup>1</sup> 4 - LONGLINE (swordfish, tunas, tilefish)</p>
 </div>
 <div class="section level2">
@@ -197,23 +246,29 @@
 </h2>
 <p><sup>1</sup> 28 - DREDGE (southern flounder, 1989-1997)</p>
 <p><sup>1</sup> 27 - BOX TRAP (cod, angler, lobster, 2004)</p>
-<p><sup>1</sup> 99 - UNKNOWN (silver hake, oysters, lobster, quahog, sea herring, angler, mussels )</p>
+<p><sup>1</sup> 99 - UNKNOWN (silver hake, oysters, lobster, quahog, sea
+herring, angler, mussels )</p>
 <p><sup>1,2</sup> 44 - WEEDWHACKER, SEAWEED (whelks, 2016)</p>
 <p><sup>1,2</sup> 31 - LIFT NET (lobster, 2002)</p>
 <p><sup>1,2</sup> 34 - CAST NETS (quahog, surf clam, skate, plaice )</p>
 <p><sup>1,2</sup> 81 - SUCTION PUMP ()</p>
 <p><sup>1,2</sup> 45 - TRAWL, SHRIMP (crustacean, 2017)</p>
-<p><sup>1,2</sup> 9 - DIP NET (alewife, yellow flounder, scallop, soft clam)</p>
-<p><sup>1,2</sup> 7 - HAUL SEINE (perch, alewife, cod, winter flounder, lobster)</p>
+<p><sup>1,2</sup> 9 - DIP NET (alewife, yellow flounder, scallop, soft
+clam)</p>
+<p><sup>1,2</sup> 7 - HAUL SEINE (perch, alewife, cod, winter flounder,
+lobster)</p>
 </div>
 <div class="section level2">
 <h2 id="data">Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h2>
-<p>The resulting data set is in the data package as <code>fleets</code>. Since the current length based model, Hydra, includes three fleets, the fleet designations are reduced further to map to the requirements of the Hydra model.</p>
+<p>The resulting data set is in the data package as <code>fleets</code>.
+Since the current length based model, Hydra, includes three fleets, the
+fleet designations are reduced further to map to the requirements of the
+Hydra model.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/fleets.html">fleets</a></span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">flextable</span><span class="fu">::</span><span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html" class="external-link">flextable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<template id="9ed7ac0a-c15d-4c58-973f-fe3434de78f2"><style>
+<template id="94588f91-21a3-4a2d-b9d4-62714fb10b69"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -254,245 +309,245 @@ background-color: transparent;
 }
 </style>
 <div class="tabwid">
-<style>.cl-340db7d4{}.cl-33fef532{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-34061c7c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-34063d42{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-34063d4c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-34063d56{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table class="table cl-340db7d4">
+<style>.cl-17fc1dd6{}.cl-17ef7522{font-family:'Helvetica';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-17f48706{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-17f4a8da{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-17f4a8e4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-17f4a8e5{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table class="table cl-17fc1dd6">
 <thead><tr style="overflow-wrap:break-word;">
-<td class="cl-34063d42"><p class="cl-34061c7c"><span class="cl-33fef532">fleetName</span></p></td>
-<td class="cl-34063d42"><p class="cl-34061c7c"><span class="cl-33fef532">NEGEAR2</span></p></td>
-<td class="cl-34063d42"><p class="cl-34061c7c"><span class="cl-33fef532">hydraFleets</span></p></td>
+<td class="cl-17f4a8da"><p class="cl-17f48706"><span class="cl-17ef7522">fleetName</span></p></td>
+<td class="cl-17f4a8da"><p class="cl-17f48706"><span class="cl-17ef7522">NEGEAR2</span></p></td>
+<td class="cl-17f4a8da"><p class="cl-17f48706"><span class="cl-17ef7522">hydraFleets</span></p></td>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">05</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">05</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">16</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">16</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">32</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">32</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">35</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">35</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">36</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">36</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">01</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">01</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">02</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">02</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">10</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">10</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">50</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">50</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">52</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">52</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">traps</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">08</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">traps</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">08</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">traps</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">14</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">traps</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">14</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">traps</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">26</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">traps</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">26</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">pelagic</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">12</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">pelagic</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">pelagic</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">12</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">pelagic</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">pelagic</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">17</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">pelagic</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">pelagic</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">17</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">pelagic</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">pelagic</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">37</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">pelagic</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">pelagic</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">37</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">pelagic</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">scallop</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">13</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">scallop</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">13</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">surfcalm</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">40</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">surfcalm</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">40</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">otherShellfish</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">22</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">otherShellfish</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">22</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">otherShellfish</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">25</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">otherShellfish</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">25</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">otherShellfish</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">38</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">otherShellfish</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">38</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">otherShellfish</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">41</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">demersal</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">otherShellfish</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">41</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">demersal</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">20</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">20</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">18</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">18</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">30</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">30</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">21</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">21</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">23</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">23</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">33</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">33</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">15</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">15</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">19</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">19</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">lobsterCrab</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">53</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">lobsterCrab</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">53</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">hms</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">03</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">hms</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">03</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">hms</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">04</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">hms</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">04</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">hms</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">06</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">hms</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">06</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">hms</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">11</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">fixedGear</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">hms</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">11</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">fixedGear</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">28</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">28</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">27</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">27</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">99</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">99</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">44</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">44</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">31</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">31</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">34</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">34</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">81</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">81</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">45</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">45</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">09</span></p></td>
-<td class="cl-34063d4c"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">09</span></p></td>
+<td class="cl-17f4a8e4"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-34063d56"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
-<td class="cl-34063d56"><p class="cl-34061c7c"><span class="cl-33fef532">07</span></p></td>
-<td class="cl-34063d56"><p class="cl-34061c7c"><span class="cl-33fef532">other</span></p></td>
+<td class="cl-17f4a8e5"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
+<td class="cl-17f4a8e5"><p class="cl-17f48706"><span class="cl-17ef7522">07</span></p></td>
+<td class="cl-17f4a8e5"><p class="cl-17f48706"><span class="cl-17ef7522">other</span></p></td>
 </tr>
 </tbody>
 </table>
-</div></template><div class="flextable-shadow-host" id="7c217e04-ebac-4298-a2c3-37f65e2af318"></div>
+</div></template><div class="flextable-shadow-host" id="c4ca55df-3ed1-46e3-9541-2054e829e38b"></div>
 <script>
-var dest = document.getElementById("7c217e04-ebac-4298-a2c3-37f65e2af318");
-var template = document.getElementById("9ed7ac0a-c15d-4c58-973f-fe3434de78f2");
+var dest = document.getElementById("c4ca55df-3ed1-46e3-9541-2054e829e38b");
+var template = document.getElementById("94588f91-21a3-4a2d-b9d4-62714fb10b69");
 var caption = template.content.querySelector("caption");
 var fantome = dest.attachShadow({mode: 'open'});
 var templateContent = template.content;

@@ -93,12 +93,14 @@
 
 
 
-<script src="SimData_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Generating Simulated Data</h1>
-                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah
+Gaichas</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/SimData.Rmd" class="external-link"><code>vignettes/SimData.Rmd</code></a></small>
       <div class="d-none name"><code>SimData.Rmd</code></div>
@@ -109,14 +111,40 @@
 <div class="section level2">
 <h2 id="simulating-input-data-from-an-ecosystem-model">Simulating input data from an ecosystem model<a class="anchor" aria-label="anchor" href="#simulating-input-data-from-an-ecosystem-model"></a>
 </h2>
-<p>Here we use existing <a href="https://github.com/Atlantis-Ecosystem-Model/Atlantis_example_and_instructions" class="external-link">Atlantis</a> ecosystem model output to generate input datasets for a variety of simpler population models, so that the performance of these models can be evaluated against known (simulated) ecosystem dynamics. Atlantis is an end-to-end spatial ecosystem model capable of including climate effects, seasonal migration, food web, and fishery interactions <span class="citation">(Audzijonyte et al., 2019)</span>.</p>
-<p>We extract simulated data using the R package <a href="https://github.com/r4atlantis/atlantisom" class="external-link"><code>atlantisom</code></a>. The purpose of <code>atlantisom</code> is to use existing Atlantis model output to generate input datasets for a variety of models, so that the performance of these models can be evaluated against known (simulated) ecosystem dynamics. The process is briefly described <a href="https://sgaichas.github.io/poseidon-dev/atlantisom_landingpage.html" class="external-link">here</a>. Atlantis models can be run using different climate forcing, fishing, and other scenarios. Users of <code>atlantisom</code> specify fishery independent and fishery dependent sampling in space and time, as well as species-specific catchability, selectivty, and other observation processes for any Atlantis scenario. Internally consistent multispecies and ecosystem datasets with known observation error characteristics are <code>atlantisom</code> outputs, for use in individual model performance testing, comparing performance of alternative models, and performance testing of model ensembles against “true” Atlantis outputs.</p>
-<p>The simulated dataset is based on output of the Norwegian and Barents Sea (NOBA) Atlantis model <span class="citation">(Hansen et al., 2016, 2019)</span>. The simulated dataset contains comparable survey, fishery, and composition data as the Georges Bank dataset, but the time series span 80 simulation years and include 11 species. This dataset was used for initial model development, code quality testing, and model skill assessment by the modeling teams. Details of the dataset including construction and basic attributes are below.</p>
+<p>Here we use existing <a href="https://github.com/Atlantis-Ecosystem-Model/Atlantis_example_and_instructions" class="external-link">Atlantis</a>
+ecosystem model output to generate input datasets for a variety of
+simpler population models, so that the performance of these models can
+be evaluated against known (simulated) ecosystem dynamics. Atlantis is
+an end-to-end spatial ecosystem model capable of including climate
+effects, seasonal migration, food web, and fishery interactions <span class="citation">(Audzijonyte et al., 2019)</span>.</p>
+<p>We extract simulated data using the R package <a href="https://github.com/r4atlantis/atlantisom" class="external-link"><code>atlantisom</code></a>.
+The purpose of <code>atlantisom</code> is to use existing Atlantis model
+output to generate input datasets for a variety of models, so that the
+performance of these models can be evaluated against known (simulated)
+ecosystem dynamics. The process is briefly described <a href="https://sgaichas.github.io/poseidon-dev/atlantisom_landingpage.html" class="external-link">here</a>.
+Atlantis models can be run using different climate forcing, fishing, and
+other scenarios. Users of <code>atlantisom</code> specify fishery
+independent and fishery dependent sampling in space and time, as well as
+species-specific catchability, selectivty, and other observation
+processes for any Atlantis scenario. Internally consistent multispecies
+and ecosystem datasets with known observation error characteristics are
+<code>atlantisom</code> outputs, for use in individual model performance
+testing, comparing performance of alternative models, and performance
+testing of model ensembles against “true” Atlantis outputs.</p>
+<p>The simulated dataset is based on output of the Norwegian and Barents
+Sea (NOBA) Atlantis model <span class="citation">(Hansen et al., 2019,
+2016)</span>. The simulated dataset contains comparable survey, fishery,
+and composition data as the Georges Bank dataset, but the time series
+span 80 simulation years and include 11 species. This dataset was used
+for initial model development, code quality testing, and model skill
+assessment by the modeling teams. Details of the dataset including
+construction and basic attributes are below.</p>
 </div>
 <div class="section level2">
 <h2 id="species-in-the-ms-keyrun-dataset">Species in the ms-keyrun dataset<a class="anchor" aria-label="anchor" href="#species-in-the-ms-keyrun-dataset"></a>
 </h2>
-<p>Our initial species selection includes 11 single species groups from the Atlantis NOBA model.</p>
+<p>Our initial species selection includes 11 single species groups from
+the Atlantis NOBA model.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Name<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Long_rough_dab"</span>,</span>
 <span>                                 <span class="st">"Green_halibut"</span>,</span>
@@ -165,6 +193,11 @@
 <span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">spptable</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Model name"</span>, <span class="st">"Full name"</span>, <span class="st">"Latin name"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="18%">
+<col width="42%">
+<col width="38%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Model name</th>
 <th align="left">Full name</th>
@@ -235,7 +268,8 @@
 <div class="section level3">
 <h3 id="configuration-files-specified-once">Configuration files specified once<a class="anchor" aria-label="anchor" href="#configuration-files-specified-once"></a>
 </h3>
-<p><code>NOBA2config.R</code> specifies location and names of files needed for atlantisom to initialize:</p>
+<p><code>NOBA2config.R</code> specifies location and names of files
+needed for atlantisom to initialize:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">d.name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/atlantisoutput"</span>,<span class="st">"NOBA_sacc_38"</span><span class="op">)</span></span>
 <span><span class="va">functional.groups.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_groups_v04.csv"</span></span>
@@ -249,7 +283,8 @@
 <span><span class="va">catch.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_runresults_01Catch.txt"</span></span>
 <span><span class="va">annage</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
 <span><span class="va">fisheries.file</span> <span class="op">&lt;-</span> <span class="st">"NoBAFisheries.csv"</span></span></code></pre></div>
-<p><code>omdimensions.R</code> standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):</p>
+<p><code>omdimensions.R</code> standardizes timesteps, etc. (this is
+part of atlantisom and should not need to be changed by the user):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#survey species inherited from omlist_ss</span></span>
 <span><span class="va">survspp</span> <span class="op">&lt;-</span> <span class="va">omlist_ss</span><span class="op">$</span><span class="va">species_ss</span></span>
@@ -284,7 +319,10 @@
 <div class="section level3">
 <h3 id="change-these-survey-and-fishery-config-files">Change these survey and fishery config files<a class="anchor" aria-label="anchor" href="#change-these-survey-and-fishery-config-files"></a>
 </h3>
-<p><code>mssurvey_spring.R</code> and <code>mssurvey_fall.R</code> configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):</p>
+<p><code>mssurvey_spring.R</code> and <code>mssurvey_fall.R</code>
+configure the fishery independent surveys (in this census test, surveys
+sample all model polygons in all years and have efficiency of 1 for all
+species, with no size selectivity):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Default survey configuration here has a range of efficiencies and selectivities</span></span>
 <span><span class="co"># To emulate a range of species in a single multispecies survey</span></span>
@@ -493,7 +531,15 @@
 <div class="section level3">
 <h3 id="run-atlantisom-and-save-outputs">Run atlantisom and save outputs<a class="anchor" aria-label="anchor" href="#run-atlantisom-and-save-outputs"></a>
 </h3>
-<p>True datasets are generated as follows, using <code>atlantisom</code> wrapper functions <code>om_init</code> to assemble initial true atlantis data, <code>om_species</code> to subset true data for desired species, <code>om_index</code> to generate survey biomass and total catch biomass indices, <code>om_comps</code> to generate age and length compositions and average weight at age from surveys and fisheries, and <code>om_diet</code> to generate diet from surveys. Outputs are saved to the <code>atlantisoutput</code> folder (not kept on github due to size):</p>
+<p>True datasets are generated as follows, using <code>atlantisom</code>
+wrapper functions <code>om_init</code> to assemble initial true atlantis
+data, <code>om_species</code> to subset true data for desired species,
+<code>om_index</code> to generate survey biomass and total catch biomass
+indices, <code>om_comps</code> to generate age and length compositions
+and average weight at age from surveys and fisheries, and
+<code>om_diet</code> to generate diet from surveys. Outputs are saved to
+the <code>atlantisoutput</code> folder (not kept on github due to
+size):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">NOBAom</span> <span class="op">&lt;-</span> <span class="fu">om_init</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/NOBA_sacc38Config.R"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -534,7 +580,13 @@
 <div class="section level3">
 <h3 id="create-mskeyrun-simulated-data">Create mskeyrun simulated data<a class="anchor" aria-label="anchor" href="#create-mskeyrun-simulated-data"></a>
 </h3>
-<p>Scripts in <code>ms-keyrun/data-raw</code> show the process of making mskeyun datasets from <code>atlantisom</code> output generated above. Atlantis outputs and <code>atlantisom</code> outputs produced above are local to Sarah’s computer for this code to run, as they are too large for github. However, the scripts are linked here to show the process. Overall this script creates all datasets using functions specific to each data type:</p>
+<p>Scripts in <code>ms-keyrun/data-raw</code> show the process of making
+mskeyun datasets from <code>atlantisom</code> output generated above.
+Atlantis outputs and <code>atlantisom</code> outputs produced above are
+local to Sarah’s computer for this code to run, as they are too large
+for github. However, the scripts are linked here to show the process.
+Overall this script creates all datasets using functions specific to
+each data type:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Sarah's notes for building simulated dataset</span></span>
 <span><span class="co">#' </span></span>
@@ -584,7 +636,10 @@
 <span><span class="fu">create_sim_percapconsumption</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">create_sim_startpars</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span></code></pre></div>
-<p>For example, <code>create_sim_survey_index()</code> takes the saved <code>atlantisom</code> output plus user specifications for fit start and end years to produce the dataset <code><a href="../reference/simSurveyIndex.html">mskeyrun::simSurveyIndex</a></code>:</p>
+<p>For example, <code>create_sim_survey_index()</code> takes the saved
+<code>atlantisom</code> output plus user specifications for fit start
+and end years to produce the dataset
+<code><a href="../reference/simSurveyIndex.html">mskeyrun::simSurveyIndex</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Read in survey data save as rda</span></span>
 <span><span class="co">#' </span></span>
@@ -701,7 +756,9 @@
 <div class="section level4">
 <h4 id="plotting-functions">Plotting functions<a class="anchor" aria-label="anchor" href="#plotting-functions"></a>
 </h4>
-<p>A collection of functions used previously that may be harvested and modified for diagnostics or visualizations in the ms-keyrun and ICES WGSAM skill assessment projects.</p>
+<p>A collection of functions used previously that may be harvested and
+modified for diagnostics or visualizations in the ms-keyrun and ICES
+WGSAM skill assessment projects.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot biomass time series facet wrapped by species</span></span>
 <span><span class="va">plotB</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">truedat</span><span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">{</span></span>
@@ -796,7 +853,8 @@
 <div class="section level4">
 <h4 id="read-in-the-data-to-check-with-plots">Read in the “data” to check with plots<a class="anchor" aria-label="anchor" href="#read-in-the-data-to-check-with-plots"></a>
 </h4>
-<p>The <code>mskeyrun</code> simulated data objects are all dataframes.</p>
+<p>The <code>mskeyrun</code> simulated data objects are all
+dataframes.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">survObsBiom</span> <span class="op">&lt;-</span> <span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/simSurveyIndex.html">simSurveyIndex</a></span> <span class="co">#atlantisom::read_savedsurvs(d.name, 'survB')</span></span>
 <span><span class="co">#age_comp_data &lt;- mskeyrun::simSurveyAgeLencomp #atlantisom::read_savedsurvs(d.name, 'survAge') #not using in assessment</span></span>
@@ -815,9 +873,11 @@
 </div>
 </div>
 <div class="section level3 tabset">
-<h3 id="visualize-survey-outputs">Visualize survey outputs<a class="anchor" aria-label="anchor" href="#visualize-survey-outputs"></a>
+<h3 class="tabset" id="visualize-survey-outputs">Visualize survey outputs<a class="anchor" aria-label="anchor" href="#visualize-survey-outputs"></a>
 </h3>
-<p>These plots represent the full <code>mskeyrun</code> simulated time series for the survey biomass index and weight at age, and a subset for length and age composition.</p>
+<p>These plots represent the full <code>mskeyrun</code> simulated time
+series for the survey biomass index and weight at age, and a subset for
+length and age composition.</p>
 
 
 
@@ -933,12 +993,14 @@
 </div>
 </div>
 <div class="section level3 unnumbered">
-<h3 id="section"></h3>
+<h3 class="unnumbered" id="section"></h3>
 </div>
 <div class="section level3 tabset">
-<h3 id="visualize-fishery-data">Visualize fishery data<a class="anchor" aria-label="anchor" href="#visualize-fishery-data"></a>
+<h3 class="tabset" id="visualize-fishery-data">Visualize fishery data<a class="anchor" aria-label="anchor" href="#visualize-fishery-data"></a>
 </h3>
-<p>These plots represent the the full <code>mskeyrun</code> simulated time series for fishery catch and weight at age, and a subset for length and age composition.</p>
+<p>These plots represent the the full <code>mskeyrun</code> simulated
+time series for fishery catch and weight at age, and a subset for length
+and age composition.</p>
 
 
 
@@ -992,12 +1054,15 @@
 </div>
 </div>
 <div class="section level3 unnumbered">
-<h3 id="section-1"></h3>
+<h3 class="unnumbered" id="section-1"></h3>
 </div>
 <div class="section level3">
 <h3 id="write-to-model-input-files">Write to model input files<a class="anchor" aria-label="anchor" href="#write-to-model-input-files"></a>
 </h3>
-<p>Our goal was to have a reproducible process for all aspects of data generation through model inputs. The simulated data is included in the <code>mskeyrun</code> data package, data inputs are derived from those sources.</p>
+<p>Our goal was to have a reproducible process for all aspects of data
+generation through model inputs. The simulated data is included in the
+<code>mskeyrun</code> data package, data inputs are derived from those
+sources.</p>
 <div class="section level4">
 <h4 id="multispecies-surplus-production-model-msspm">Multispecies surplus production model (MSSPM)<a class="anchor" aria-label="anchor" href="#multispecies-surplus-production-model-msspm"></a>
 </h4>
@@ -1006,9 +1071,21 @@
 <div class="section level4">
 <h4 id="length-structured-multispecies-model-hydra">Length-structured multispecies model (Hydra)<a class="anchor" aria-label="anchor" href="#length-structured-multispecies-model-hydra"></a>
 </h4>
-<p>Hydra input files were developed directly from <code>mskeyrun</code> datasets by modifying functions in the <a href="https://github.com/thefaylab/hydradata" class="external-link"><code>hydradata</code> R package</a>. The function <code>create_Rdata_mskeyrun.R</code> (<a href="https://github.com/thefaylab/hydradata/blob/master/data-raw/create_RData_mskeyrun.R" class="external-link">code</a>) allows the user to specify whether datasets should be constructed from Atlantis-simulated or real Georges Bank data, and the number of length bins to use for composition data, then creates an R data object. This data object is then used to create data and parameter input files using the function <code><a href="https://rdrr.io/pkg/hydradata/man/create_datpin_files.html" class="external-link">hydradata::create_datpin_files()</a></code>.</p>
-<p>For example, this process creates the simulated dataset with 5 length bins:</p>
-<p>The <code>create_RData_mskeyrun.R</code> file was sourced, and <code>create_RData_mskeyrun("sim", nlenbin = 5)</code> was run to make a new <code>hydraDataList_msk.rda</code> file in the package. Then the package is built locally, R is restarted, and the following code block is run to produce input files.</p>
+<p>Hydra input files were developed directly from <code>mskeyrun</code>
+datasets by modifying functions in the <a href="https://github.com/thefaylab/hydradata" class="external-link"><code>hydradata</code> R
+package</a>. The function <code>create_Rdata_mskeyrun.R</code> (<a href="https://github.com/thefaylab/hydradata/blob/master/data-raw/create_RData_mskeyrun.R" class="external-link">code</a>)
+allows the user to specify whether datasets should be constructed from
+Atlantis-simulated or real Georges Bank data, and the number of length
+bins to use for composition data, then creates an R data object. This
+data object is then used to create data and parameter input files using
+the function <code><a href="https://rdrr.io/pkg/hydradata/man/create_datpin_files.html" class="external-link">hydradata::create_datpin_files()</a></code>.</p>
+<p>For example, this process creates the simulated dataset with 5 length
+bins:</p>
+<p>The <code>create_RData_mskeyrun.R</code> file was sourced, and
+<code>create_RData_mskeyrun("sim", nlenbin = 5)</code> was run to make a
+new <code>hydraDataList_msk.rda</code> file in the package. Then the
+package is built locally, R is restarted, and the following code block
+is run to produce input files.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">hydradata</span><span class="op">)</span></span>
@@ -1027,7 +1104,8 @@
 <span><span class="co"># this saves the specific hydralist object, so we could saveRDS it to a diagnostics folder?</span></span>
 <span><span class="co"># advantage of rds format is we can assign it when reading it in to diagnostics scripts</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">hydraDataList_5bin_0comp</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inputRdatalists/hydraDataList_5bin_0comp.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Run <code>create_RData_mskeyrun("sim", nlenbin = 10)</code> in <code>hydradata</code>, rebuild package, restart R, then…</p>
+<p>Run <code>create_RData_mskeyrun("sim", nlenbin = 10)</code> in
+<code>hydradata</code>, rebuild package, restart R, then…</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">hydradata</span><span class="op">)</span></span>
@@ -1049,25 +1127,39 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">hydraDataList_10bin_0comp</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inputRdatalists/hydraDataList_10bin_0comp.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="age-structured-multispecies-statistical-catch-at-age-model-msscaa">Age structured multispecies statistical catch at age model (MSSCAA)<a class="anchor" aria-label="anchor" href="#age-structured-multispecies-statistical-catch-at-age-model-msscaa"></a>
+<h4 id="age-structured-multispecies-statistical-catch-at-age-model-msscaa">Age structured multispecies statistical catch at age model
+(MSSCAA)<a class="anchor" aria-label="anchor" href="#age-structured-multispecies-statistical-catch-at-age-model-msscaa"></a>
 </h4>
-<p>Work in progress <a href="https://github.com/thefaylab/MS-SCAA/blob/master/simulated-data/Atlantis2MSCAA.Rmd" class="external-link">here</a> but not finished for October 2022 review.</p>
+<p>Work in progress <a href="https://github.com/thefaylab/MS-SCAA/blob/master/simulated-data/Atlantis2MSCAA.Rmd" class="external-link">here</a>
+but not finished for October 2022 review.</p>
 </div>
 </div>
 </div>
 <div class="section level2 unnumbered">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references">
-<div id="ref-audzijonyte_atlantis_2019">
-<p>Audzijonyte, A., Pethybridge, H., Porobic, J., Gorton, R., Kaplan, I., &amp; Fulton, E. A. (2019). Atlantis: A spatially explicit end-to-end marine ecosystem model with dynamically integrated physics, ecology and socio-economic modules. <em>Methods in Ecology and Evolution</em>, <em>10</em>(10), 1814–1819. <a href="https://doi.org/10.1111/2041-210X.13272" class="external-link">https://doi.org/10.1111/2041-210X.13272</a><br>
-_eprint: https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.13272</p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-audzijonyte_atlantis_2019" class="csl-entry">
+Audzijonyte, A., Pethybridge, H., Porobic, J., Gorton, R., Kaplan, I.,
+&amp; Fulton, E. A. (2019). Atlantis: <span>A</span> spatially explicit
+end-to-end marine ecosystem model with dynamically integrated physics,
+ecology and socio-economic modules. <em>Methods in Ecology and
+Evolution</em>, <em>10</em>(10), 1814–1819. <a href="https://doi.org/10.1111/2041-210X.13272" class="external-link">https://doi.org/10.1111/2041-210X.13272</a><div class="csl-block">_eprint:
+https://besjournals.onlinelibrary.wiley.com/doi/pdf/10.1111/2041-210X.13272</div>
 </div>
-<div id="ref-hansen_sensitivity_2019">
-<p>Hansen, C., Drinkwater, K. F., Jähkel, A., Fulton, E. A., Gorton, R., &amp; Skern-Mauritzen, M. (2019). Sensitivity of the Norwegian and Barents Sea Atlantis end-to-end ecosystem model to parameter perturbations of key species. <em>PLOS ONE</em>, <em>14</em>(2), e0210419. <a href="https://doi.org/10.1371/journal.pone.0210419" class="external-link">https://doi.org/10.1371/journal.pone.0210419</a></p>
+<div id="ref-hansen_sensitivity_2019" class="csl-entry">
+Hansen, C., Drinkwater, K. F., Jähkel, A., Fulton, E. A., Gorton, R.,
+&amp; Skern-Mauritzen, M. (2019). Sensitivity of the
+<span>Norwegian</span> and <span>Barents</span> <span>Sea</span>
+<span>Atlantis</span> end-to-end ecosystem model to parameter
+perturbations of key species. <em>PLOS ONE</em>, <em>14</em>(2),
+e0210419. <a href="https://doi.org/10.1371/journal.pone.0210419" class="external-link">https://doi.org/10.1371/journal.pone.0210419</a>
 </div>
-<div id="ref-hansen_set-up_2016">
-<p>Hansen, C., Skern-Mauritzen, M., Meeren, G. van der, Jähkel, A., &amp; Drinkwater, K. F. (2016). <em>Set-up of the Nordic and Barents Seas (NoBa) Atlantis model</em>. Havforskningsinstituttet. <a href="https://imr.brage.unit.no/imr-xmlui/bitstream/handle/11250/2408609/FoH_2-2016.pdf?sequence=1&amp;isAllowed=y" class="external-link">https://imr.brage.unit.no/imr-xmlui/bitstream/handle/11250/2408609/FoH_2-2016.pdf?sequence=1&amp;isAllowed=y</a></p>
+<div id="ref-hansen_set-up_2016" class="csl-entry">
+Hansen, C., Skern-Mauritzen, M., Meeren, G. van der, Jähkel, A., &amp;
+Drinkwater, K. F. (2016). <em>Set-up of the <span>Nordic</span> and
+<span>Barents</span> <span>Seas</span> (<span>NoBa</span>)
+<span>Atlantis</span> model</em>. Havforskningsinstituttet. <a href="https://imr.brage.unit.no/imr-xmlui/bitstream/handle/11250/2408609/FoH_2-2016.pdf?sequence=1&amp;isAllowed=y" class="external-link">https://imr.brage.unit.no/imr-xmlui/bitstream/handle/11250/2408609/FoH_2-2016.pdf?sequence=1&amp;isAllowed=y</a>
 </div>
 </div>
 </div>

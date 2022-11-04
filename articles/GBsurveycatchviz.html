@@ -93,7 +93,8 @@
 
 
 
-<script src="GBsurveycatchviz_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Georges Bank Survey Biomass and Catch Data</h1>
             
@@ -104,13 +105,30 @@
 
     
     
-<p>All models use a fishery independent index of biomass and a catch time series. This document visualizes these basic assessment inputs.</p>
+<p>All models use a fishery independent index of biomass and a catch
+time series. This document visualizes these basic assessment inputs.</p>
 <div class="section level2">
 <h2 id="fishery-independent-survey-indices">Fishery independent survey indices<a class="anchor" aria-label="anchor" href="#fishery-independent-survey-indices"></a>
 </h2>
-<p>The NEFSC spring and fall <a href="https://noaa-edab.github.io/tech-doc/" class="external-link">bottom trawl surveys</a> collect the information required to obtain estimates of survey biomass and abundance. R package <a href="https://noaa-edab.github.io/survdat/" class="external-link"><code>survdat</code></a> was used to pull and compile the survey data time series. NEFSC bottom-trawl sampling encompasses about 293,000 square km of continental shelf from Cape Hatteras, NC, to Nova Scotia, Canada in depths from 8-400 m.</p>
-<p>Multiple survey datasets are provided in the <code>mskeyrun</code> package; all were created using <code>create_survey_index()</code> in <code>ms-keyrun/data-raw</code>. Datasets for the 10 Georges Bank focal species are <code><a href="../reference/surveyIndex.html">mskeyrun::surveyIndex</a></code> (all survey years 1968-2019 converted to survey vessel R/V Albatross units for years surveyed by R/V Henry Bigelow 2009-2019), and unconverted separate indices for Albatross years (<code><a href="../reference/surveyIndexA4.html">mskeyrun::surveyIndexA4</a></code>) and Bigelow years (<code><a href="../reference/surveyIndexHB.html">mskeyrun::surveyIndexHB</a></code>). Datasets for food web modeling include all surveyed species for combined and separate surveys. These datasets have the same names with the suffix -All appended (e.g. <code><a href="../reference/surveyIndexAll.html">mskeyrun::surveyIndexAll</a></code>)</p>
-<p>Here we visualize survey indices from the <code><a href="../reference/surveyIndex.html">mskeyrun::surveyIndex</a></code> dataset.</p>
+<p>The NEFSC spring and fall <a href="https://noaa-edab.github.io/tech-doc/" class="external-link">bottom trawl surveys</a>
+collect the information required to obtain estimates of survey biomass
+and abundance. R package <a href="https://noaa-edab.github.io/survdat/" class="external-link"><code>survdat</code></a> was
+used to pull and compile the survey data time series. NEFSC bottom-trawl
+sampling encompasses about 293,000 square km of continental shelf from
+Cape Hatteras, NC, to Nova Scotia, Canada in depths from 8-400 m.</p>
+<p>Multiple survey datasets are provided in the <code>mskeyrun</code>
+package; all were created using <code>create_survey_index()</code> in
+<code>ms-keyrun/data-raw</code>. Datasets for the 10 Georges Bank focal
+species are <code><a href="../reference/surveyIndex.html">mskeyrun::surveyIndex</a></code> (all survey years
+1968-2019 converted to survey vessel R/V Albatross units for years
+surveyed by R/V Henry Bigelow 2009-2019), and unconverted separate
+indices for Albatross years (<code><a href="../reference/surveyIndexA4.html">mskeyrun::surveyIndexA4</a></code>) and
+Bigelow years (<code><a href="../reference/surveyIndexHB.html">mskeyrun::surveyIndexHB</a></code>). Datasets for food
+web modeling include all surveyed species for combined and separate
+surveys. These datasets have the same names with the suffix -All
+appended (e.g. <code><a href="../reference/surveyIndexAll.html">mskeyrun::surveyIndexAll</a></code>)</p>
+<p>Here we visualize survey indices from the
+<code><a href="../reference/surveyIndex.html">mskeyrun::surveyIndex</a></code> dataset.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modyears</span> <span class="op">&lt;-</span> <span class="fl">1968</span><span class="op">:</span><span class="fl">2019</span>  <span class="co"># 1968 agreed for project, testing with shorter dataset</span></span>
 <span>  </span>
@@ -189,9 +207,18 @@
 <div class="section level2">
 <h2 id="fishery-dependent-catch">Fishery dependent catch<a class="anchor" aria-label="anchor" href="#fishery-dependent-catch"></a>
 </h2>
-<p>Commercial landings and discards information is compiled with the R package <a href="https://noaa-edab.github.io/comlandr/index.html" class="external-link"><code>comlandr</code></a>.</p>
-<p>Landings are proportioned from fishery statistical areas to Georges Bank using the proportion of landings within and outside Georges Bank from high resolution fishery data (see <a href="allocateLandingsEPU.html"> Allocate landings to EPU</a>).</p>
-<p>Discard rates (discarded/kept weight) are estimated from fishery observer data for each species and gear for years with observer information. Prior years discard rates are based on the average across years with observer information for each species and gear. The annual discard rate is multiplied by the Georges Bank landings time series to estimate the discards time series.</p>
+<p>Commercial landings and discards information is compiled with the R
+package <a href="https://noaa-edab.github.io/comlandr/index.html" class="external-link"><code>comlandr</code></a>.</p>
+<p>Landings are proportioned from fishery statistical areas to Georges
+Bank using the proportion of landings within and outside Georges Bank
+from high resolution fishery data (see
+<a href="allocateLandingsEPU.html"> Allocate landings to EPU</a>).</p>
+<p>Discard rates (discarded/kept weight) are estimated from fishery
+observer data for each species and gear for years with observer
+information. Prior years discard rates are based on the average across
+years with observer information for each species and gear. The annual
+discard rate is multiplied by the Georges Bank landings time series to
+estimate the discards time series.</p>
 <p><em>Discard mortality rates have not yet been applied</em></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>    <span class="va">fleetdef</span> <span class="op">&lt;-</span> <span class="va">focalspp</span> <span class="op">%&gt;%</span></span>

@@ -93,7 +93,8 @@
 
 
 
-<script src="GBLandingLengthDataSources_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Landings and Length data sources</h1>
             
@@ -104,7 +105,12 @@
 
     
     
-<p>All length and landings data were pulled from the NEFSC commerical fisheries database. Specifically the stockeff.mv_cf_len and mv_cf_landings (since <code>comlandr</code> doesn’t currently pull data in format required for mscatch. Ultimately the data will be pulled using the <code>comlandr</code> package). The data were saved as rda files in the <code>data</code> folder as:</p>
+<p>All length and landings data were pulled from the NEFSC commerical
+fisheries database. Specifically the stockeff.mv_cf_len and
+mv_cf_landings (since <code>comlandr</code> doesn’t currently pull data
+in format required for mscatch. Ultimately the data will be pulled using
+the <code>comlandr</code> package). The data were saved as rda files in
+the <code>data</code> folder as:</p>
 <ul>
 <li>sampleData_itis_GB - for landings data</li>
 <li>sampleLengths_itis_GB - for length data</li>
@@ -113,13 +119,22 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">channel</span> <span class="op">&lt;-</span> <span class="fu">dbutils</span><span class="fu">::</span><span class="fu"><a href="https://andybeet.github.io/dbutils/reference/connect_to_database.html" class="external-link">connect_to_database</a></span><span class="op">(</span><span class="st">"server"</span>,<span class="st">"user"</span><span class="op">)</span></span>
 <span><span class="fu">test_mscatch_data_pull_hydra_GB</span><span class="op">(</span><span class="va">channel</span><span class="op">)</span></span></code></pre></div>
-<p>The footprint used to pull the landings and length data were the statistical areas 521, 522, 523, 524, 525, 526, 538, 551, 552, 561, 562, 537 which comprise <a href="GBFleetDefinitions.html#spatial-extent">Georges Bank</a>.</p>
-<p>Herring and winter Skate were handled differently due to data availability.</p>
-<p>Note that discards are not included in the sampleData (with the exception of Herring). This will be included at a later date.</p>
+<p>The footprint used to pull the landings and length data were the
+statistical areas 521, 522, 523, 524, 525, 526, 538, 551, 552, 561, 562,
+537 which comprise <a href="GBFleetDefinitions.html#spatial-extent">Georges Bank</a>.</p>
+<p>Herring and winter Skate were handled differently due to data
+availability.</p>
+<p>Note that discards are not included in the sampleData (with the
+exception of Herring). This will be included at a later date.</p>
 <div class="section level2">
 <h2 id="herring">Herring<a class="anchor" aria-label="anchor" href="#herring"></a>
 </h2>
-<p>Herring data is poorly represented in NEFSC fisheries database so all landings and length data were pulled from the state of Maine. In the state of Maine database catch is reported in metric tons. This was converted to lbs to align with NEFSC commercial fisheries data base. Fish lengths are reported in mm. These were converted to cm to align with the NEFSC survey database</p>
+<p>Herring data is poorly represented in NEFSC fisheries database so all
+landings and length data were pulled from the state of Maine. In the
+state of Maine database catch is reported in metric tons. This was
+converted to lbs to align with NEFSC commercial fisheries data base.
+Fish lengths are reported in mm. These were converted to cm to align
+with the NEFSC survey database</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">get_herring_data</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu">format_herring_data</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -127,24 +142,37 @@
 <div class="section level2">
 <h2 id="winter-skate">Winter Skate<a class="anchor" aria-label="anchor" href="#winter-skate"></a>
 </h2>
-<p>No skate species are recorded in the NEFSC commercial fisheries database. All species are recorded as an unclassified skate. The package <code>comlandr</code> calculates the proportions of skate species in the surveys and applies them to the commercial landings to obtain estimates of winter skate. The lengths for winter skate were pulled from the bottom trawl survey.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1"></a>get_skate_data()</span>
-<span id="cb3-2"><a href="#cb3-2"></a>format_skate_data()</span></code></pre></div>
+<p>No skate species are recorded in the NEFSC commercial fisheries
+database. All species are recorded as an unclassified skate. The package
+<code>comlandr</code> calculates the proportions of skate species in the
+surveys and applies them to the commercial landings to obtain estimates
+of winter skate. The lengths for winter skate were pulled from the
+bottom trawl survey.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>get_skate_data()</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>format_skate_data()</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="function">Landings by length and age<a class="anchor" aria-label="anchor" href="#function"></a>
 </h2>
-<p>The <a href="../reference/realFisheryLencomp.html">landing by length</a> and the <a href="../reference/realFisheryAgecomp.html">landings by age</a> data were created using the function</p>
+<p>The <a href="../reference/realFisheryLencomp.html">landing by
+length</a> and the <a href="../reference/realFisheryAgecomp.html">landings by age</a> data
+were created using the function</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">channel</span> <span class="op">&lt;-</span> <span class="fu">dbutils</span><span class="fu">::</span><span class="fu"><a href="https://andybeet.github.io/dbutils/reference/connect_to_database.html" class="external-link">connect_to_database</a></span><span class="op">(</span><span class="st">"server"</span>,<span class="st">"user"</span><span class="op">)</span></span>
 <span><span class="fu">make_species_datasets_for_mskeyrun</span><span class="op">(</span><span class="va">channel</span><span class="op">)</span></span></code></pre></div>
 <p>For each species in turn and according to their <a href="GBLandingsByLength.html#rules">specific rules</a>:</p>
 <ul>
-<li>Landings and length data are used to aggregate the landings. During this stage diagnostic plots and a log file of decisions are created.</li>
-<li>Length-weight data are pulled from the survey database for fitting length-weight relationships</li>
-<li>The landings are then expanded to length compositions from which <code><a href="../reference/realFisheryLencomp.html">mskeyrun::realFisheryLencomp</a></code> is created</li>
-<li>Age length data is pulled from both the survey database and the commercial database and used to create age-length keys</li>
-<li>Numbers at age are calculated based on previous steps from which <code><a href="../reference/realFisheryAgecomp.html">mskeyrun::realFisheryAgecomp</a></code> is created</li>
+<li>Landings and length data are used to aggregate the landings. During
+this stage diagnostic plots and a log file of decisions are
+created.</li>
+<li>Length-weight data are pulled from the survey database for fitting
+length-weight relationships</li>
+<li>The landings are then expanded to length compositions from which
+<code><a href="../reference/realFisheryLencomp.html">mskeyrun::realFisheryLencomp</a></code> is created</li>
+<li>Age length data is pulled from both the survey database and the
+commercial database and used to create age-length keys</li>
+<li>Numbers at age are calculated based on previous steps from which
+<code><a href="../reference/realFisheryAgecomp.html">mskeyrun::realFisheryAgecomp</a></code> is created</li>
 </ul>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

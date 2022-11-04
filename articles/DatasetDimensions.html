@@ -93,12 +93,14 @@
 
 
 
-<script src="DatasetDimensions_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>MS Keyrun Dataset Dimensions</h1>
-                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah
+Gaichas</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/DatasetDimensions.Rmd" class="external-link"><code>vignettes/DatasetDimensions.Rmd</code></a></small>
       <div class="d-none name"><code>DatasetDimensions.Rmd</code></div>
@@ -112,27 +114,58 @@
 <div class="section level3">
 <h3 id="years-1968-2019">Years: 1968-2019<a class="anchor" aria-label="anchor" href="#years-1968-2019"></a>
 </h3>
-<p>All surveyed agreed to end with the complete year of data 2019 to be as up to date as possible. Start year is the earliest survey year where both spring and fall are available.</p>
+<p>All surveyed agreed to end with the complete year of data 2019 to be
+as up to date as possible. Start year is the earliest survey year where
+both spring and fall are available.</p>
 </div>
 <div class="section level3">
 <h3 id="seasons-annual-fisheries-seasonal-surveys">Seasons: Annual fisheries, Seasonal surveys<a class="anchor" aria-label="anchor" href="#seasons-annual-fisheries-seasonal-surveys"></a>
 </h3>
-<p>Pull annual data for fisheries, pull annual survey maintaining seasons as “spring”, “fall” etc. for each year. Many models use annual catch so further resolution is unnecessary; modelers can choose to fit seasonal survey indices separately or combine to a single annual value from seasonal (documenting methods).</p>
+<p>Pull annual data for fisheries, pull annual survey maintaining
+seasons as “spring”, “fall” etc. for each year. Many models use annual
+catch so further resolution is unnecessary; modelers can choose to fit
+seasonal survey indices separately or combine to a single annual value
+from seasonal (documenting methods).</p>
 </div>
 <div class="section level3">
 <h3 id="spatial-2-approaches-for-georges-bank">Spatial: 2 Approaches for Georges Bank<a class="anchor" aria-label="anchor" href="#spatial-2-approaches-for-georges-bank"></a>
 </h3>
-<p>Ideal: Define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using <a href="allocateLandingsEPU.html">ratios in spatially explicit VTR subset of catch data</a>. Work towards this ideal, comparing coverage of VTR data by species and different methods for scaling as part of data documentation. Consult with ADIOS team and assessment experts to see if results look reasonable.</p>
-<p>The ideal is time-consuming and cannot be started until mid-late September 2020 at the earliest.</p>
-<p>Interim: Define using fishery statistical areas (521-522, 525-526, 551-552, 561-562) and match survey data as much as possible to these. It is easier to map survey strata to larger fishery areas than the other way around; Sean can share code which may be modified by Gavin’s student to achieve this.</p>
-<p>The interim represents the upper bound of what catch would be by species for comparison to the ideal approach and can be implemented fairly quickly.</p>
+<p>Ideal: Define using Georges Bank EPU, scale fisheries catch for each
+species from stat areas to GB EPU footprint using <a href="allocateLandingsEPU.html">ratios in spatially explicit VTR subset
+of catch data</a>. Work towards this ideal, comparing coverage of VTR
+data by species and different methods for scaling as part of data
+documentation. Consult with ADIOS team and assessment experts to see if
+results look reasonable.</p>
+<p>The ideal is time-consuming and cannot be started until mid-late
+September 2020 at the earliest.</p>
+<p>Interim: Define using fishery statistical areas (521-522, 525-526,
+551-552, 561-562) and match survey data as much as possible to these. It
+is easier to map survey strata to larger fishery areas than the other
+way around; Sean can share code which may be modified by Gavin’s student
+to achieve this.</p>
+<p>The interim represents the upper bound of what catch would be by
+species for comparison to the ideal approach and can be implemented
+fairly quickly.</p>
 </div>
 <div class="section level3">
 <h3 id="other-notes">Other notes<a class="anchor" aria-label="anchor" href="#other-notes"></a>
 </h3>
-<p>By either spatial definition, inshore survey strata should not be relevant to Georges Bank, so the beginning and end years remain as above, and there should not be a need to combine inshore and offshore surveys using Conn method or VAST for Bigelow years.</p>
-<p>The group decided that the base dataset would pull survey data separately for the Albatross and Bigelow years without applying any conversion factors. These separate series can be used as indices in the structured models (MSCAA and Hydra).</p>
-<p>Methods for making a single survey time series from the two vessel survey time series (and for making annual indices from the seasonal surveys) would need to be discussed for the other models, and methods clearly documented. For example, the Georges Bank Rpath was calibrated to Bigelow data from 2013-2015; therefore if a single survey time series is needed, it makes sense to convert Albatross survey catches to Bigelow units using established conversion factors. We are putting off this discussion for now.</p>
+<p>By either spatial definition, inshore survey strata should not be
+relevant to Georges Bank, so the beginning and end years remain as
+above, and there should not be a need to combine inshore and offshore
+surveys using Conn method or VAST for Bigelow years.</p>
+<p>The group decided that the base dataset would pull survey data
+separately for the Albatross and Bigelow years without applying any
+conversion factors. These separate series can be used as indices in the
+structured models (MSCAA and Hydra).</p>
+<p>Methods for making a single survey time series from the two vessel
+survey time series (and for making annual indices from the seasonal
+surveys) would need to be discussed for the other models, and methods
+clearly documented. For example, the Georges Bank Rpath was calibrated
+to Bigelow data from 2013-2015; therefore if a single survey time series
+is needed, it makes sense to convert Albatross survey catches to Bigelow
+units using established conversion factors. We are putting off this
+discussion for now.</p>
 </div>
 </div>
 <div class="section level2">
@@ -141,7 +174,8 @@
 <div class="section level3">
 <h3 id="survey-conducted-week-of-june-15-2020-extended-to-3-july">Survey conducted week of June 15 2020, extended to 3 July<a class="anchor" aria-label="anchor" href="#survey-conducted-week-of-june-15-2020-extended-to-3-july"></a>
 </h3>
-<p><a href="https://forms.gle/Pq78yqwa5ueFi8Kq8" class="external-link">This is the survey form.</a></p>
+<p><a href="https://forms.gle/Pq78yqwa5ueFi8Kq8" class="external-link">This is the survey
+form.</a></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#survey link https://forms.gle/Pq78yqwa5ueFi8Kq8</span></span>
 <span><span class="co">#results https://docs.google.com/forms/d/1y78AdOeRp0ohGSDU5QP2d2UBCz--eP_5b5Tu79QO-N8/edit#responses</span></span>
@@ -199,16 +233,24 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Due to the availability of age data (if I am recalling correctly)</td>
+<td align="left">Due to the availability of age data (if I am recalling
+correctly)</td>
 </tr>
 <tr class="even">
-<td align="left">Current starting time for hydra. However bottom temp data not available until 1976.</td>
+<td align="left">Current starting time for hydra. However bottom temp
+data not available until 1976.</td>
 </tr>
 <tr class="odd">
-<td align="left">1967 is the first year with both a fall and spring bottom trawl survey. Commercial catch records should also be available for this time period. While the GB Rpath model is parameterized for 2013-2015, we will probably want to conduct some sort of hindcast. We will have to experiment with various time frames to figure out which works best.</td>
+<td align="left">1967 is the first year with both a fall and spring
+bottom trawl survey. Commercial catch records should also be available
+for this time period. While the GB Rpath model is parameterized for
+2013-2015, we will probably want to conduct some sort of hindcast. We
+will have to experiment with various time frames to figure out which
+works best.</td>
 </tr>
 <tr class="even">
-<td align="left">Earliest survey data we have for both spring and fall</td>
+<td align="left">Earliest survey data we have for both spring and
+fall</td>
 </tr>
 </tbody>
 </table>
@@ -224,10 +266,14 @@
 <td align="left">As recent as possible to maximize relevance.</td>
 </tr>
 <tr class="even">
-<td align="left">We should use as much data as possible so the most recent year that has complete data. Hydra currently uses data up to 2016</td>
+<td align="left">We should use as much data as possible so the most
+recent year that has complete data. Hydra currently uses data up to
+2016</td>
 </tr>
 <tr class="odd">
-<td align="left">This is the last full year of data available for Georges Bank. We want to run the model as close to contemporary times as possible.</td>
+<td align="left">This is the last full year of data available for
+Georges Bank. We want to run the model as close to contemporary times as
+possible.</td>
 </tr>
 <tr class="even">
 <td align="left">Use the latest full year of data available</td>
@@ -259,16 +305,23 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">because several of the species exhibit strong seasonal migrations. While the MS-SCAA model has an annual time step, the equations can account for the additional mortality from Jan-1 to the timing of the survey.</td>
+<td align="left">because several of the species exhibit strong seasonal
+migrations. While the MS-SCAA model has an annual time step, the
+equations can account for the additional mortality from Jan-1 to the
+timing of the survey.</td>
 </tr>
 <tr class="even">
 <td align="left">current aggregation level of Hydra</td>
 </tr>
 <tr class="odd">
-<td align="left">Currently the GB RPath model is parameterized using the fall bottom trawl survey. However, we may try and fit a seasonal pattern to the biomass pools.</td>
+<td align="left">Currently the GB RPath model is parameterized using the
+fall bottom trawl survey. However, we may try and fit a seasonal pattern
+to the biomass pools.</td>
 </tr>
 <tr class="even">
-<td align="left">While there are questions that can only be answered at a smaller spatial scale, the surveys are limited to seasonal. Individual data streams could be brought in at a finer resolution if needed.</td>
+<td align="left">While there are questions that can only be answered at
+a smaller spatial scale, the surveys are limited to seasonal. Individual
+data streams could be brought in at a finer resolution if needed.</td>
 </tr>
 </tbody>
 </table>
@@ -281,13 +334,16 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Annual catches are inputted into the ms-scaa model.</td>
+<td align="left">Annual catches are inputted into the ms-scaa
+model.</td>
 </tr>
 <tr class="even">
 <td align="left">Same as for survey</td>
 </tr>
 <tr class="odd">
-<td align="left">Rpath has a monthly time step. If we are able to generate a seasonal pattern of biomass it would make the most sense to attempt to force fishing that way as well.</td>
+<td align="left">Rpath has a monthly time step. If we are able to
+generate a seasonal pattern of biomass it would make the most sense to
+attempt to force fishing that way as well.</td>
 </tr>
 <tr class="even">
 <td align="left">To match the survey scale.</td>
@@ -313,16 +369,26 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">The spatial information associated with the trawl survey data is MUCH better than that associated with the fishery data (i.e. VTR) and for many trips area information is completely missing, so I would advise against trying to parse the fishery data to a finer resolution than NAFO stat areas.</td>
+<td align="left">The spatial information associated with the trawl
+survey data is MUCH better than that associated with the fishery data
+(i.e. VTR) and for many trips area information is completely missing, so
+I would advise against trying to parse the fishery data to a finer
+resolution than NAFO stat areas.</td>
 </tr>
 <tr class="even">
-<td align="left"># 2 is ideal choice but i don’t believe it is possible (with sufficient confidence) to aggregate all data into this footprint. Hydra fisheries effort data is aggregated to #4</td>
+<td align="left"># 2 is ideal choice but i don’t believe it is possible
+(with sufficient confidence) to aggregate all data into this footprint.
+Hydra fisheries effort data is aggregated to #4</td>
 </tr>
 <tr class="odd">
-<td align="left">The GB Rpath model is based of the EPU and designed to be used for that spatial footprint. Will need to discuss further the best ways to associate commercial landings to that footprint.</td>
+<td align="left">The GB Rpath model is based of the EPU and designed to
+be used for that spatial footprint. Will need to discuss further the
+best ways to associate commercial landings to that footprint.</td>
 </tr>
 <tr class="even">
-<td align="left">If we feel that the EPUs are a valid construct and that future work (and SOEs) will use them then it makes sense to utilize them here as well.</td>
+<td align="left">If we feel that the EPUs are a valid construct and that
+future work (and SOEs) will use them then it makes sense to utilize them
+here as well.</td>
 </tr>
 </tbody>
 </table>
@@ -331,7 +397,8 @@
 <div class="section level2">
 <h2 id="meeting-minutes">Meeting minutes<a class="anchor" aria-label="anchor" href="#meeting-minutes"></a>
 </h2>
-<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq" class="external-link">Click here!</a></p>
+<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq" class="external-link">Click
+here!</a></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

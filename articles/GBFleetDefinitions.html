@@ -93,10 +93,10 @@
 
 
 
-<script src="GBFleetDefinitions_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="GBFleetDefinitions_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="GBFleetDefinitions_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="GBFleetDefinitions_files/datatables-binding-0.25/datatables.js"></script><link href="GBFleetDefinitions_files/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="GBFleetDefinitions_files/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="GBFleetDefinitions_files/dt-core-1.11.3/js/jquery.dataTables.min.js"></script><link href="GBFleetDefinitions_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="GBFleetDefinitions_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="GBFleetDefinitions_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="GBFleetDefinitions_files/datatables-binding-0.26/datatables.js"></script><link href="GBFleetDefinitions_files/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="GBFleetDefinitions_files/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="GBFleetDefinitions_files/dt-core-1.12.1/js/jquery.dataTables.min.js"></script><link href="GBFleetDefinitions_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
 <script src="GBFleetDefinitions_files/crosstalk-1.2.0/js/crosstalk.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Analysis of Georges Bank catch by gear type</h1>
@@ -111,7 +111,8 @@
 <div class="section level2">
 <h2 id="spatial-extent">Spatial Extent<a class="anchor" aria-label="anchor" href="#spatial-extent"></a>
 </h2>
-<p>Statistical areas are used to define the Georges Bank footprint for pulling the landings data by gear</p>
+<p>Statistical areas are used to define the Georges Bank footprint for
+pulling the landings data by gear</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">crs</span> <span class="op">&lt;-</span> <span class="fl">4326</span></span>
 <span><span class="co"># read in coastline and GB shape file</span></span>
@@ -134,53 +135,95 @@
 <div class="section level2">
 <h2 id="gear-types">Gear Types<a class="anchor" aria-label="anchor" href="#gear-types"></a>
 </h2>
-<p>There are a total of 52 unique NEGEAR2 codes (found in the cfdbs.gear table). However on Georges Bank not all of these fishing gears are used. A subset of 45 gear types are used. All gear codes:</p>
-<div id="htmlwidget-fe3b15c44473187cbe67" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fe3b15c44473187cbe67">{"x":{"filter":"none","vertical":false,"data":[["-1","-1","-1","-1","-1","-1","-1","-1","01","02","02","03","03","03","03","04","05","05","05","05","05","05","05","05","05","05","06","06","06","06","06","06","06","06","07","07","08","09","09","09","10","10","10","10","10","10","11","11","11","11","11","11","11","11","12","12","12","12","12","13","13","14","14","14","14","15","16","17","18","18","18","18","18","18","18","19","20","20","20","20","20","20","20","20","21","21","21","21","21","21","21","21","22","22","22","22","23","23","24","25","25","26","27","28","28","29","30","30","31","32","32","32","32","32","33","33","33","33","34","35","35","35","35","36","37","38","38","38","38","38","38","38","38","39","40","41","41","41","41","41","42","43","44","45","50","51","52","53","81","99"],[null,null,null,null,"SIDE TRAWL","STERN TRAWL","TRAWL, OTTER, MIDWATER","TRAWL, OTTER, MIDWATER","LONGLINE, BOTTOM","HANDLINE","HANDLINE,AUTO JIG","HARPOON,OTHER/NK SPECIES","HARPOON,SWORDFISH","HARPOON,TURTLE","SPEARS","LONGLINE, PELAGIC","TRAWL,OTTER,BOTTOM,FISH","TRAWL,OTTER,BOTTOM,CRAB","TRAWL,OTTER,BOTTOM,SCALLOP","TRAWL,OTTER,BOTTOM,TWIN","TRAWL,OTTER,BOTTOM,RUHLE","TRAWL,OTTER,BOTTOM,LOBSTER","TRAWL,OTTER,BOTTOM PAIRED","TRAWL,OTTER,BOTTOM,HADDOCK SEPARATOR","TRAWL,OTTER,BOTTOM,SHRIMP","TRAWL,OTTER,BOTTOM,OTHER/NK SPECIES","TROLL LINE, OTHER/NK SPECIES","TROLL LINE, TUNA","TROT LINE WITH BAIT","POWER TROLL SALMON","POWER TROLL TUNA","POWER TROLL OTHER/NK SPECIES","TROLL &amp; HANDLINE, COMBINED","TROLL LINE, GREEN-STICK","HAUL SEINE, BEACH, COMMON","HAUL SEINE, LONG","FLOATING TRAP","DIP NET, COMMON","DIP NET, DROP NET","DIP NET, PUSH NET","GILL NET, FIXED OR ANCHORED,SINK, OTHER/NK SPECIES","GILL NET,SET /STAKE, SEA BASS","GILL NET,STAKE,OTHER","GILL NET,SET, SALMON","GILL NET,SET, CRAB","GILL NET,ANCHORED-FLOATING, FISH","GILL NET,DRIFT, OTHER/NK SPECIES","GILL NET,DRIFT, SEA BASS","GILL NET,DRIFT, SHAD","GILL NET,DRIFT, SALMON","GILL NET,DRIFT, BARRACUDA","GILL NET,DRIFT, LARGE PELAGIC","GILL NET,DRIFT-FLOATING, FISH","GILL NET,DRIFT-SINK, FISH","PURSE SEINE, OTHER/NK SPECIES","PURSE SEINE, HERRING","PURSE SEINE, MACKEREL","PURSE SEINE, MENHADEN","PURSE SEINE, TUNA","DREDGE, SCALLOP,BAY","DREDGE, SCALLOP,SEA","POUND NET, OTHER/NK SPECIES","POUND NET, CRAB","POUND NET, FISH","POUND NET, HORSESHOE CRAB","TRAWL,OTTER,BOTTOM,LG MESH BELLY PANEL","DANISH SEINE","TRAWL,OTTER,MIDWATER PAIRED","POTS + TRAPS,OTHER/NK SPECIES","POTS + TRAPS,FISH","POTS + TRAPS,EEL","POTS + TRAPS,CONCH","POTS + TRAPS,OCTOPUS","POTS + TRAPS,TURTLE","POTS + TRAPS, HAGFISH","POTS + TRAPS,SHRIMP","POT/TRAP, LOBSTER OFFSH NK","POT/TRAP, LOBSTER OFFSH WOOD","POT/TRAP, LOBSTER OFFSH WIRE","POT/TRAP, LOBSTER OFFSH WD/WR","POT/TRAP, LOBSTER OFFSH WD/NET","POT/TRAP, LOBSTER OFFSH WR/NET","POT/TRAP, LOBSTER OFFSH PLASTIC","POT/TRAP, LOBSTER OFFSH CONICAL","POT/TRAP, LOBSTER INSH NK","POT/TRAP, LOBSTER INSH WOOD","POT/TRAP, LOBSTER INSH WIRE","POT/TRAP, LOBSTER INSH WD/WR","POT/TRAP, LOBSTER INSH WD/NET","POT/TRAP, LOBSTER INSH WR/NET","POT/TRAP, LOBSTER INSH PLASTIC","POT/TRAP, LOBSTER INSH CONICAL","HOES","FORKS","SHOVELS","PICKS","BY HAND, OTHER/NK SPECIES","BY HAND, OYSTERS","STOP SEINE","RAKES, OTHER/NK SPECIES","RAKES, OYSTER","WEIR","BOX TRAP","DREDGE, OYSTER COMMON","DREDGE, OYSTER SUCTION","BAG NET","POTS + TRAPS,CRAB OTHER","POTS + TRAPS,BLUE CRAB","LIFT NET","FYKE NET, OTHER/NK SPECIES","FYKE NET, CRAB","FYKE NET, FISH","FYKE NET, TURTLE","HOOP NET","DIVING GEAR","DIVING GEAR, SCALLOP","DIVING GEAR, URCHIN","DIVING GEAR,SUCTION PUMP,HAND","CAST NETS","BEAM TRAWL, OTHER/NK SPECIES","BEAM TRAWL, SHRIMP","BEAM TRAWL,SCALLOP","BEAM TRAWL,FISH","SCOTTISH SEINE","TRAWL,OTTER,MIDWATER","SCRAPES","DREDGE, OTHER/NK SPECIES","DREDGE, CLAM","DREDGE, CRAB","DREDGE, CONCH","DREDGE, MUSSEL","DREDGE, CLAM, HYDRAULIC","DREDGE, URCHIN","STOP NET","DREDGE, SURF CLAM + OCEAN QUAHO","TONGS AND GRABS, OTHER/NK SPECIES","TONGS AND GRABS, CLAM","TONGS AND GRABS, OYSTER","TONGS AND GRABS, CLAM,PATEN","TONGS AND GRABS,OYSTER,PATEN","HOOKS","KNIFE, SEAWEED","WEEDWHACKER, SEAWEED","TRAWL,SHRIMP,TWINNED","GILL NET,RUNAROUND","GILL NET,GREAT LAKES","GILL NET,OTHER","TRAMMEL NET","SUCTION PUMP","UNKNOWN"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>NEGEAR2<\/th>\n      <th>GEARNM<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"order":[[0,"asc"]],"columnDefs":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<p>There are a total of 52 unique NEGEAR2 codes (found in the cfdbs.gear
+table). However on Georges Bank not all of these fishing gears are used.
+A subset of 45 gear types are used. All gear codes:</p>
+<div id="htmlwidget-28ae6b7f09a99e830449" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-28ae6b7f09a99e830449">{"x":{"filter":"none","vertical":false,"data":[["-1","-1","-1","-1","-1","-1","-1","-1","01","02","02","03","03","03","03","04","05","05","05","05","05","05","05","05","05","05","06","06","06","06","06","06","06","06","07","07","08","09","09","09","10","10","10","10","10","10","11","11","11","11","11","11","11","11","12","12","12","12","12","13","13","14","14","14","14","15","16","17","18","18","18","18","18","18","18","19","20","20","20","20","20","20","20","20","21","21","21","21","21","21","21","21","22","22","22","22","23","23","24","25","25","26","27","28","28","29","30","30","31","32","32","32","32","32","33","33","33","33","34","35","35","35","35","36","37","38","38","38","38","38","38","38","38","39","40","41","41","41","41","41","42","43","44","45","50","51","52","53","81","99"],[null,null,null,null,"SIDE TRAWL","STERN TRAWL","TRAWL, OTTER, MIDWATER","TRAWL, OTTER, MIDWATER","LONGLINE, BOTTOM","HANDLINE","HANDLINE,AUTO JIG","HARPOON,OTHER/NK SPECIES","HARPOON,SWORDFISH","HARPOON,TURTLE","SPEARS","LONGLINE, PELAGIC","TRAWL,OTTER,BOTTOM,FISH","TRAWL,OTTER,BOTTOM,CRAB","TRAWL,OTTER,BOTTOM,SCALLOP","TRAWL,OTTER,BOTTOM,TWIN","TRAWL,OTTER,BOTTOM,RUHLE","TRAWL,OTTER,BOTTOM,LOBSTER","TRAWL,OTTER,BOTTOM PAIRED","TRAWL,OTTER,BOTTOM,HADDOCK SEPARATOR","TRAWL,OTTER,BOTTOM,SHRIMP","TRAWL,OTTER,BOTTOM,OTHER/NK SPECIES","TROLL LINE, OTHER/NK SPECIES","TROLL LINE, TUNA","TROT LINE WITH BAIT","POWER TROLL SALMON","POWER TROLL TUNA","POWER TROLL OTHER/NK SPECIES","TROLL &amp; HANDLINE, COMBINED","TROLL LINE, GREEN-STICK","HAUL SEINE, BEACH, COMMON","HAUL SEINE, LONG","FLOATING TRAP","DIP NET, COMMON","DIP NET, DROP NET","DIP NET, PUSH NET","GILL NET, FIXED OR ANCHORED,SINK, OTHER/NK SPECIES","GILL NET,SET /STAKE, SEA BASS","GILL NET,STAKE,OTHER","GILL NET,SET, SALMON","GILL NET,SET, CRAB","GILL NET,ANCHORED-FLOATING, FISH","GILL NET,DRIFT, OTHER/NK SPECIES","GILL NET,DRIFT, SEA BASS","GILL NET,DRIFT, SHAD","GILL NET,DRIFT, SALMON","GILL NET,DRIFT, BARRACUDA","GILL NET,DRIFT, LARGE PELAGIC","GILL NET,DRIFT-FLOATING, FISH","GILL NET,DRIFT-SINK, FISH","PURSE SEINE, OTHER/NK SPECIES","PURSE SEINE, HERRING","PURSE SEINE, MACKEREL","PURSE SEINE, MENHADEN","PURSE SEINE, TUNA","DREDGE, SCALLOP,BAY","DREDGE, SCALLOP,SEA","POUND NET, OTHER/NK SPECIES","POUND NET, CRAB","POUND NET, FISH","POUND NET, HORSESHOE CRAB","TRAWL,OTTER,BOTTOM,LG MESH BELLY PANEL","DANISH SEINE","TRAWL,OTTER,MIDWATER PAIRED","POTS + TRAPS,OTHER/NK SPECIES","POTS + TRAPS,FISH","POTS + TRAPS,EEL","POTS + TRAPS,CONCH","POTS + TRAPS,OCTOPUS","POTS + TRAPS,TURTLE","POTS + TRAPS, HAGFISH","POTS + TRAPS,SHRIMP","POT/TRAP, LOBSTER OFFSH NK","POT/TRAP, LOBSTER OFFSH WOOD","POT/TRAP, LOBSTER OFFSH WIRE","POT/TRAP, LOBSTER OFFSH WD/WR","POT/TRAP, LOBSTER OFFSH WD/NET","POT/TRAP, LOBSTER OFFSH WR/NET","POT/TRAP, LOBSTER OFFSH PLASTIC","POT/TRAP, LOBSTER OFFSH CONICAL","POT/TRAP, LOBSTER INSH NK","POT/TRAP, LOBSTER INSH WOOD","POT/TRAP, LOBSTER INSH WIRE","POT/TRAP, LOBSTER INSH WD/WR","POT/TRAP, LOBSTER INSH WD/NET","POT/TRAP, LOBSTER INSH WR/NET","POT/TRAP, LOBSTER INSH PLASTIC","POT/TRAP, LOBSTER INSH CONICAL","HOES","FORKS","SHOVELS","PICKS","BY HAND, OTHER/NK SPECIES","BY HAND, OYSTERS","STOP SEINE","RAKES, OTHER/NK SPECIES","RAKES, OYSTER","WEIR","BOX TRAP","DREDGE, OYSTER COMMON","DREDGE, OYSTER SUCTION","BAG NET","POTS + TRAPS,CRAB OTHER","POTS + TRAPS,BLUE CRAB","LIFT NET","FYKE NET, OTHER/NK SPECIES","FYKE NET, CRAB","FYKE NET, FISH","FYKE NET, TURTLE","HOOP NET","DIVING GEAR","DIVING GEAR, SCALLOP","DIVING GEAR, URCHIN","DIVING GEAR,SUCTION PUMP,HAND","CAST NETS","BEAM TRAWL, OTHER/NK SPECIES","BEAM TRAWL, SHRIMP","BEAM TRAWL,SCALLOP","BEAM TRAWL,FISH","SCOTTISH SEINE","TRAWL,OTTER,MIDWATER","SCRAPES","DREDGE, OTHER/NK SPECIES","DREDGE, CLAM","DREDGE, CRAB","DREDGE, CONCH","DREDGE, MUSSEL","DREDGE, CLAM, HYDRAULIC","DREDGE, URCHIN","STOP NET","DREDGE, SURF CLAM + OCEAN QUAHO","TONGS AND GRABS, OTHER/NK SPECIES","TONGS AND GRABS, CLAM","TONGS AND GRABS, OYSTER","TONGS AND GRABS, CLAM,PATEN","TONGS AND GRABS,OYSTER,PATEN","HOOKS","KNIFE, SEAWEED","WEEDWHACKER, SEAWEED","TRAWL,SHRIMP,TWINNED","GILL NET,RUNAROUND","GILL NET,GREAT LAKES","GILL NET,OTHER","TRAMMEL NET","SUCTION PUMP","UNKNOWN"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>NEGEAR2<\/th>\n      <th>GEARNM<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"order":[[0,"asc"]],"columnDefs":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="aggregating-gear-types">Aggregating Gear Types<a class="anchor" aria-label="anchor" href="#aggregating-gear-types"></a>
 </h2>
-<p>Each gear type is designed to target particular species. Some gear types may catch predominantly one species (eg. Lobsters traps) where others may catch multiple species (bottom trawls). We aim to aggregate the gear types into fleets using similarities in the catch among the gear types. To achieve this we will adopt an agglomerative hierarchical, nearest neighbor clustering method (<span class="citation">Manly (<a href="#ref-manly2017" role="doc-biblioref">2017</a>)</span>) using euclidean distance as the measure of distance between groups. In this approach all gear types begin in separate groups. Groups that are similar (similar catch, defined by a distance measure) are then merged until at some distance all gear types belong to a single group. The variables used to determine the grouping are the species caught, measured by landings (in lbs)</p>
+<p>Each gear type is designed to target particular species. Some gear
+types may catch predominantly one species (eg. Lobsters traps) where
+others may catch multiple species (bottom trawls). We aim to aggregate
+the gear types into fleets using similarities in the catch among the
+gear types. To achieve this we will adopt an agglomerative hierarchical,
+nearest neighbor clustering method (<span class="citation">Manly (<a href="#ref-manly2017" role="doc-biblioref">2017</a>)</span>) using
+euclidean distance as the measure of distance between groups. In this
+approach all gear types begin in separate groups. Groups that are
+similar (similar catch, defined by a distance measure) are then merged
+until at some distance all gear types belong to a single group. The
+variables used to determine the grouping are the species caught,
+measured by landings (in lbs)</p>
 <p>Landings data, by gear type, are pulled from the database.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">channel</span> <span class="op">&lt;-</span> <span class="fu">dbutils</span><span class="fu">::</span><span class="fu"><a href="https://andybeet.github.io/dbutils/reference/connect_to_database.html" class="external-link">connect_to_database</a></span><span class="op">(</span><span class="st">"server"</span>,<span class="st">"id"</span><span class="op">)</span></span>
 <span><span class="fu">get_landings_by_data</span><span class="op">(</span><span class="va">channel</span>,percentLanded<span class="op">=</span><span class="fl">0.90</span>,area<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">cfdbs</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/cfdbs/man/EPUs.html" class="external-link">EPUs</a></span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="st">"GB"</span><span class="op">]</span><span class="op">]</span>,<span class="fl">537</span><span class="op">)</span>,outDir<span class="op">=</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The resulting data are then formatted as a data frame (or matrix) where each gear type is represented in a row and each species in a column. Each cell being the landings of the species by the gear type. Note: There will be many zeros in the data frame representing gear types that do not catch a particular species.</p>
-<p>The variables are often standardized so that all of the variables are equally important in determining distances. We standardize each variable to have zero mean and unit variance. At this point pairwise distances between all gear types are calculated using the Euclidean distance function</p>
-<p><span class="math display">\[d_{i,j} = \left( \sum_{k=1}^p(x_{i,k}-x_{j,k})^2 \right) ^{1/2} \]</span> where <span class="math inline">\(x_{i,k}\)</span> is the landings of species <span class="math inline">\(k\)</span> by gear type <span class="math inline">\(i\)</span> and <span class="math inline">\(x_{j,k}\)</span> is the landings of species <span class="math inline">\(k\)</span> by gear type <span class="math inline">\(j\)</span>. <span class="math inline">\(d_{i,j}\)</span> is the measure of distance between gear type <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span></p>
-<p>A dendrogram is then formed using the agglomerative hierarchical process. This process is carried out using the statistical package <a href=""><code>cluster</code></a> (<span class="citation">Maechler et al. (<a href="#ref-cluster211" role="doc-biblioref">2021</a>)</span>) in R.</p>
+<p>The resulting data are then formatted as a data frame (or matrix)
+where each gear type is represented in a row and each species in a
+column. Each cell being the landings of the species by the gear type.
+Note: There will be many zeros in the data frame representing gear types
+that do not catch a particular species.</p>
+<p>The variables are often standardized so that all of the variables are
+equally important in determining distances. We standardize each variable
+to have zero mean and unit variance. At this point pairwise distances
+between all gear types are calculated using the Euclidean distance
+function</p>
+<p><span class="math display">\[d_{i,j} = \left(
+\sum_{k=1}^p(x_{i,k}-x_{j,k})^2 \right) ^{1/2} \]</span> where <span class="math inline">\(x_{i,k}\)</span> is the landings of species <span class="math inline">\(k\)</span> by gear type <span class="math inline">\(i\)</span> and <span class="math inline">\(x_{j,k}\)</span> is the landings of species <span class="math inline">\(k\)</span> by gear type <span class="math inline">\(j\)</span>. <span class="math inline">\(d_{i,j}\)</span> is the measure of distance
+between gear type <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span></p>
+<p>A dendrogram is then formed using the agglomerative hierarchical
+process. This process is carried out using the statistical package <a href=""><code>cluster</code></a> (<span class="citation">Maechler et al.
+(<a href="#ref-cluster211" role="doc-biblioref">2021</a>)</span>) in
+R.</p>
 <div class="section level3">
 <h3 id="approach-use-all-gear-types">Approach: Use all gear types<a class="anchor" aria-label="anchor" href="#approach-use-all-gear-types"></a>
 </h3>
-<p>For each gear type the landings of each species are aggregated over time and then ordered from the most abundant to least abundant. To reduce the number of variables (species) in the analysis we only use species which comprise 90% of the total landings for each gear type.</p>
+<p>For each gear type the landings of each species are aggregated over
+time and then ordered from the most abundant to least abundant. To
+reduce the number of variables (species) in the analysis we only use
+species which comprise 90% of the total landings for each gear type.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis_all_gears</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Complete gear list using 90% landing from each gear"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram1.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas" width="100%"><p class="caption">
-The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on all gear types used in the Georges Bank Ecological Production unit as defined by statistical areas
+The dendrogram obtained from a nearest-neighbor, hierarchical cluster
+analysis on all gear types used in the Georges Bank Ecological
+Production unit as defined by statistical areas
 </p>
 </div>
-<p>Note: Low values of the agglomerative coefficient indicate tight clustering of gears types. Larger values indicate less well formed clusters.</p>
+<p>Note: Low values of the agglomerative coefficient indicate tight
+clustering of gears types. Larger values indicate less well formed
+clusters.</p>
 </div>
 <div class="section level3">
 <h3 id="approach-use-gears-responsible-for-most-landings">Approach: Use gears responsible for most landings<a class="anchor" aria-label="anchor" href="#approach-use-gears-responsible-for-most-landings"></a>
 </h3>
-<p>Total landings, aggregated over time, are ordered by gear type. The gear types that contribute to 99% of total landings are selected and used in the cluster analysis</p>
+<p>Total landings, aggregated over time, are ordered by gear type. The
+gear types that contribute to 99% of total landings are selected and
+used in the cluster analysis</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_analysis_filter_gears</span><span class="op">(</span>filterByLandings<span class="op">=</span><span class="fl">.99</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span><span class="op">$</span><span class="va">top</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Gear types contributing to 99% of total landings"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram2.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings" width="100%"><p class="caption">
-The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on their contribution to 99% of landings
+The dendrogram obtained from a nearest-neighbor, hierarchical cluster
+analysis on a subset of gear types in the Georges Bank Ecological
+Production unit as defined by statistical areas. Gear types were
+selected based on their contribution to 99% of landings
 </p>
 </div>
 </div>
 <div class="section level3 tabset tabset-pills">
-<h3 id="species-landings-by-gear">Species landings by gear<a class="anchor" aria-label="anchor" href="#species-landings-by-gear"></a>
+<h3 class="tabset tabset-pills" id="species-landings-by-gear">Species landings by gear<a class="anchor" aria-label="anchor" href="#species-landings-by-gear"></a>
 </h3>
-<p>Time series of species caught by each gear type. To reduce the number of panels in each figure, species caught &lt; 30% of the time are not displayed. For example reporting of landings started in 1964 (56 years ago). So any species that have reported landings in fewer that 17 years are not displayed.</p>
+<p>Time series of species caught by each gear type. To reduce the number
+of panels in each figure, species caught &lt; 30% of the time are not
+displayed. For example reporting of landings started in 1964 (56 years
+ago). So any species that have reported landings in fewer that 17 years
+are not displayed.</p>
 
 
 
@@ -390,35 +433,62 @@ The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis o
 <div class="section level3">
 <h3 id="gears-that-make-up-1-landings">Gears that make up &lt; 1% landings<a class="anchor" aria-label="anchor" href="#gears-that-make-up-1-landings"></a>
 </h3>
-<p>The remaining gears (not contributing to 99% of the landings) were used in a cluster analysis to determine how similar these gears are to each other, since 100% of landings should be accounted for.</p>
+<p>The remaining gears (not contributing to 99% of the landings) were
+used in a cluster analysis to determine how similar these gears are to
+each other, since 100% of landings should be accounted for.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span><span class="op">$</span><span class="va">bottom</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"Gear types contributing &lt; 1% of total landings"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram3.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on not contributing to top 99% of landings" width="100%"><p class="caption">
-The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. Gear types were selected based on not contributing to top 99% of landings
+The dendrogram obtained from a nearest-neighbor, hierarchical cluster
+analysis on a subset of gear types in the Georges Bank Ecological
+Production unit as defined by statistical areas. Gear types were
+selected based on not contributing to top 99% of landings
 </p>
 </div>
 </div>
 <div class="section level3">
 <h3 id="approach-select-gear-types-that-catch-species-of-interest">Approach: Select gear types that catch species of interest<a class="anchor" aria-label="anchor" href="#approach-select-gear-types-that-catch-species-of-interest"></a>
 </h3>
-<p>All gear types which catch any amount of the <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies">Species</a> of interest are used in the cluster analysis. The hope was the set of gear types in which to begin the cluster analysis would be substantially less. The number of gears eliminated = 10. It is apparent that species of interest are caught across a broad class of gear types.</p>
+<p>All gear types which catch any amount of the <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies">Species</a>
+of interest are used in the cluster analysis. The hope was the set of
+gear types in which to begin the cluster analysis would be substantially
+less. The number of gears eliminated = 10. It is apparent that species
+of interest are caught across a broad class of gear types.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#focalSpecies &lt;- readRDS(here::here("data-raw/data","focalspecies.rds"))</span></span>
 <span><span class="va">clusterObj</span> <span class="op">&lt;-</span> <span class="fu">cluster_by_focal_species</span><span class="op">(</span><span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/focalSpecies.html">focalSpecies</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">clusterObj</span>,ask<span class="op">=</span><span class="cn">T</span>,which.plots<span class="op">=</span><span class="fl">2</span>,main<span class="op">=</span><span class="st">"All gear types that land species of interest"</span>,xlab<span class="op">=</span><span class="st">""</span><span class="op">)</span></span></code></pre></div>
 <div class="figure">
 <img src="figures/dendrogram4.png" alt="The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. All gear types that landed species of interest were selected" width="100%"><p class="caption">
-The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis on a subset of gear types in the Georges Bank Ecological Production unit as defined by statistical areas. All gear types that landed species of interest were selected
+The dendrogram obtained from a nearest-neighbor, hierarchical cluster
+analysis on a subset of gear types in the Georges Bank Ecological
+Production unit as defined by statistical areas. All gear types that
+landed species of interest were selected
 </p>
 </div>
 </div>
 </div>
 <div class="section level2 tabset tabset-pills">
-<h2 id="bottom-trawls-smalllarge-mesh">Bottom trawls (small/large mesh)<a class="anchor" aria-label="anchor" href="#bottom-trawls-smalllarge-mesh"></a>
+<h2 class="tabset tabset-pills" id="bottom-trawls-smalllarge-mesh">Bottom trawls (small/large mesh)<a class="anchor" aria-label="anchor" href="#bottom-trawls-smalllarge-mesh"></a>
 </h2>
-<p>Over time (dates/references????) changes in regulations resulted in the requirement of fisherman to increase the mesh size in their nets. This allowed smaller fish to escape the nets. However there were, and still are, exemptions to this regulation allowing fishermen to fish with smaller meshed nets depending on the time of the year and the area they fish. However all of the associated landings are flagged as using the same gear type code. Since the change in regulations dictate a change in the composition of species caught over time, this gear type needs to be investigated separately. The data base holds information based on the mesh size of the otter trawl nets for NEGEAR code = 5 (from 1982 onward).</p>
-<p>Below are plots of species caught in the otter trawl (making up 96% of the total catch from 1964 to 2020) by mesh size (in inches). Note that the figure begins in 1982. Any trip without a mesh size attributed is not displayed, this includes all trips prior to 1982. A lack of mesh size accounts for approximately 20% of landing post 1982 and approximately 50% of all landings</p>
+<p>Over time (dates/references????) changes in regulations resulted in
+the requirement of fisherman to increase the mesh size in their nets.
+This allowed smaller fish to escape the nets. However there were, and
+still are, exemptions to this regulation allowing fishermen to fish with
+smaller meshed nets depending on the time of the year and the area they
+fish. However all of the associated landings are flagged as using the
+same gear type code. Since the change in regulations dictate a change in
+the composition of species caught over time, this gear type needs to be
+investigated separately. The data base holds information based on the
+mesh size of the otter trawl nets for NEGEAR code = 5 (from 1982
+onward).</p>
+<p>Below are plots of species caught in the otter trawl (making up 96%
+of the total catch from 1964 to 2020) by mesh size (in inches). Note
+that the figure begins in 1982. Any trip without a mesh size attributed
+is not displayed, this includes all trips prior to 1982. A lack of mesh
+size accounts for approximately 20% of landing post 1982 and
+approximately 50% of all landings</p>
 
 
 <ul class="nav nav-pills" id="bottom-trawls-smalllarge-mesh" role="tablist">
@@ -442,15 +512,17 @@ The dendrogram obtained from a nearest-neighbor, hierarchical cluster analysis o
 <p>This exploratory study resulted in the following designation of <a href="https://noaa-edab.github.io/ms-keyrun/articles/GBFleetDecisions.html">Fleets</a></p>
 </div>
 <div class="section level2 unnumbered">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references">
-<div id="ref-cluster211">
-<p>Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., &amp; Hornik, K. (2021). <em>Cluster: Cluster analysis basics and extensions</em>. <a href="https://CRAN.R-project.org/package=cluster" class="external-link">https://CRAN.R-project.org/package=cluster</a><br>
-R package version 2.1.1 — For new features, see the ’Changelog’ file (in the package source)</p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-cluster211" class="csl-entry">
+Maechler, M., Rousseeuw, P., Struyf, A., Hubert, M., &amp; Hornik, K.
+(2021). <em>Cluster: Cluster analysis basics and extensions</em>. <a href="https://CRAN.R-project.org/package=cluster" class="external-link">https://CRAN.R-project.org/package=cluster</a><div class="csl-block">R package version 2.1.1 — For new features, see the
+’Changelog’ file (in the package source)</div>
 </div>
-<div id="ref-manly2017">
-<p>Manly, B. (2017). <em>Multivariate statistical methods</em> (Fourth edition). Chapman &amp; Hall.</p>
+<div id="ref-manly2017" class="csl-entry">
+Manly, B. F. J. (2017). <em>Multivariate statistical methods</em>
+(Fourth edition). Chapman &amp; Hall.
 </div>
 </div>
 </div>

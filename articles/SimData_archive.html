@@ -93,12 +93,14 @@
 
 
 
-<script src="SimData_archive_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Generating Simulated Data</h1>
-                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah
+Gaichas</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/SimData_archive.Rmd" class="external-link"><code>vignettes/SimData_archive.Rmd</code></a></small>
       <div class="d-none name"><code>SimData_archive.Rmd</code></div>
@@ -109,13 +111,33 @@
 <div class="section level2">
 <h2 id="simulating-input-data-from-an-ecosystem-model">Simulating input data from an ecosystem model<a class="anchor" aria-label="anchor" href="#simulating-input-data-from-an-ecosystem-model"></a>
 </h2>
-<p>Here we use existing <a href="https://github.com/Atlantis-Ecosystem-Model/Atlantis_example_and_instructions" class="external-link">Atlantis</a> ecosystem model output to generate input datasets for a variety of simpler population models, so that the performance of these models can be evaluated against known (simulated) ecosystem dynamics. Atlantis models simulate a wide range of physical and ecological processes, include a full food web, and can be run using different climate forcing, fishing, and other scenarios.</p>
-<p>We extract simulated data using the R package <a href="https://github.com/r4atlantis/atlantisom" class="external-link">atlantisom</a>. The purpose of atlantisom is to use existing Atlantis model output to generate input datasets for a variety of models, so that the performance of these models can be evaluated against known (simulated) ecosystem dynamics. Atlantis models can be run using different climate forcing, fishing, and other scenarios. Users of atlantisom will be able to specify fishery independent and fishery dependent sampling in space and time, as well as species-specific catchability, selectivty, and other observation processes for any Atlantis scenario. Internally consistent multispecies and ecosystem datasets with known observation error characteristics will be the atlantisom outputs, for use in individual model performance testing, comparing performance of alternative models, and performance testing of model ensembles against “true” Atlantis outputs.</p>
+<p>Here we use existing <a href="https://github.com/Atlantis-Ecosystem-Model/Atlantis_example_and_instructions" class="external-link">Atlantis</a>
+ecosystem model output to generate input datasets for a variety of
+simpler population models, so that the performance of these models can
+be evaluated against known (simulated) ecosystem dynamics. Atlantis
+models simulate a wide range of physical and ecological processes,
+include a full food web, and can be run using different climate forcing,
+fishing, and other scenarios.</p>
+<p>We extract simulated data using the R package <a href="https://github.com/r4atlantis/atlantisom" class="external-link">atlantisom</a>. The
+purpose of atlantisom is to use existing Atlantis model output to
+generate input datasets for a variety of models, so that the performance
+of these models can be evaluated against known (simulated) ecosystem
+dynamics. Atlantis models can be run using different climate forcing,
+fishing, and other scenarios. Users of atlantisom will be able to
+specify fishery independent and fishery dependent sampling in space and
+time, as well as species-specific catchability, selectivty, and other
+observation processes for any Atlantis scenario. Internally consistent
+multispecies and ecosystem datasets with known observation error
+characteristics will be the atlantisom outputs, for use in individual
+model performance testing, comparing performance of alternative models,
+and performance testing of model ensembles against “true” Atlantis
+outputs.</p>
 </div>
 <div class="section level2">
 <h2 id="species-in-the-ms-keyrun-dataset">Species in the ms-keyrun dataset<a class="anchor" aria-label="anchor" href="#species-in-the-ms-keyrun-dataset"></a>
 </h2>
-<p>Our initial species selection includes 11 single species groups from the Atlantis NOBA model.</p>
+<p>Our initial species selection includes 11 single species groups from
+the Atlantis NOBA model.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#fgs &lt;- load_fgs(here("simulated-data/atlantisoutput/NOBA_March_2020"), "nordic_groups_v04.csv")</span></span>
 <span></span>
@@ -166,6 +188,11 @@
 <span></span>
 <span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">spptable</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Model name"</span>, <span class="st">"Full name"</span>, <span class="st">"Latin name"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <table class="table">
+<colgroup>
+<col width="18%">
+<col width="42%">
+<col width="38%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">Model name</th>
 <th align="left">Full name</th>
@@ -229,7 +256,10 @@
 </tr>
 </tbody>
 </table>
-<p>Below we will double check survey census outputs against the true values, and then test some survey specifications that may be reasonable for multispecies model testing. Finally we will apply survey functions to the detailed diet data.</p>
+<p>Below we will double check survey census outputs against the true
+values, and then test some survey specifications that may be reasonable
+for multispecies model testing. Finally we will apply survey functions
+to the detailed diet data.</p>
 </div>
 <div class="section level2">
 <h2 id="generating-a-census-dataset-february-2021">Generating a census dataset (February 2021)<a class="anchor" aria-label="anchor" href="#generating-a-census-dataset-february-2021"></a>
@@ -237,7 +267,8 @@
 <div class="section level3">
 <h3 id="configuration-files-specified-once">Configuration files specified once<a class="anchor" aria-label="anchor" href="#configuration-files-specified-once"></a>
 </h3>
-<p><code>NOBA2config.R</code> specifies location and names of files needed for atlantisom to initialize:</p>
+<p><code>NOBA2config.R</code> specifies location and names of files
+needed for atlantisom to initialize:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">d.name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/atlantisoutput"</span>,<span class="st">"NOBA_march_2020"</span><span class="op">)</span></span>
 <span><span class="va">functional.groups.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_groups_v04.csv"</span></span>
@@ -251,7 +282,8 @@
 <span><span class="va">catch.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_runresults_01Catch.txt"</span></span>
 <span><span class="va">annage</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
 <span><span class="va">fisheries.file</span> <span class="op">&lt;-</span> <span class="st">"NoBAFisheries.csv"</span></span></code></pre></div>
-<p><code>omdimensions.R</code> standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):</p>
+<p><code>omdimensions.R</code> standardizes timesteps, etc. (this is
+part of atlantisom and should not need to be changed by the user):</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#survey species inherited from omlist_ss</span></span>
 <span><span class="va">survspp</span> <span class="op">&lt;-</span> <span class="va">omlist_ss</span><span class="op">$</span><span class="va">species_ss</span></span>
@@ -286,7 +318,10 @@
 <div class="section level3">
 <h3 id="change-these-survey-and-fishery-config-files">Change these survey and fishery config files<a class="anchor" aria-label="anchor" href="#change-these-survey-and-fishery-config-files"></a>
 </h3>
-<p><code>mssurvey_spring.R</code> and <code>mssurvey_fall.R</code> configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):</p>
+<p><code>mssurvey_spring.R</code> and <code>mssurvey_fall.R</code>
+configure the fishery independent surveys (in this census test, surveys
+sample all model polygons in all years and have efficiency of 1 for all
+species, with no size selectivity):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Default survey configuration here has a range of efficiencies and selectivities</span></span>
 <span><span class="co"># To emulate a range of species in a single multispecies survey</span></span>
@@ -495,7 +530,15 @@
 <div class="section level3">
 <h3 id="run-atlantisom-and-save-outputs">Run atlantisom and save outputs<a class="anchor" aria-label="anchor" href="#run-atlantisom-and-save-outputs"></a>
 </h3>
-<p>True datasets are generated as follows, using <code>atlantisom</code> wrapper functions <code>om_init</code> to assemble initial true atlantis data, <code>om_species</code> to subset true data for desired species, <code>om_index</code> to generate survey biomass and total catch biomass indices, <code>om_comps</code> to generate age and length compositions and average weight at age from surveys and fisheries, and <code>om_diet</code> to generate diet from surveys. Outputs are saved to the <code>atlantisoutput</code> folder (not kept on github due to size):</p>
+<p>True datasets are generated as follows, using <code>atlantisom</code>
+wrapper functions <code>om_init</code> to assemble initial true atlantis
+data, <code>om_species</code> to subset true data for desired species,
+<code>om_index</code> to generate survey biomass and total catch biomass
+indices, <code>om_comps</code> to generate age and length compositions
+and average weight at age from surveys and fisheries, and
+<code>om_diet</code> to generate diet from surveys. Outputs are saved to
+the <code>atlantisoutput</code> folder (not kept on github due to
+size):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">NOBAom</span> <span class="op">&lt;-</span> <span class="fu">om_init</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/NOBA2Config.R"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -536,11 +579,18 @@
 <div class="section level3">
 <h3 id="write-to-model-input-files">Write to model input files<a class="anchor" aria-label="anchor" href="#write-to-model-input-files"></a>
 </h3>
-<p>Our goal was to have a reproducible process for all aspects of data generation through model inputs. This section gives examples of how input datasets were built. Now that the simulated data is included in the <code>mskeyrun</code> data package, data inputs are derived from those sources.</p>
+<p>Our goal was to have a reproducible process for all aspects of data
+generation through model inputs. This section gives examples of how
+input datasets were built. Now that the simulated data is included in
+the <code>mskeyrun</code> data package, data inputs are derived from
+those sources.</p>
 <div class="section level4">
 <h4 id="multispecies-surplus-production-model-msspm">Multispecies surplus production model (MSSPM)<a class="anchor" aria-label="anchor" href="#multispecies-surplus-production-model-msspm"></a>
 </h4>
-<p>Example input files are in the <code>model-input-files</code> directory. First we write the fairly simple biomass and catch inputs for the multispecies surplus production model MSSPM from our census survey outputs.</p>
+<p>Example input files are in the <code>model-input-files</code>
+directory. First we write the fairly simple biomass and catch inputs for
+the multispecies surplus production model MSSPM from our census survey
+outputs.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">o.name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/msinput/msspm/"</span><span class="op">)</span></span>
 <span></span>
@@ -618,8 +668,13 @@
 <span>          <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/msinput/msspm/"</span><span class="op">)</span>,<span class="st">"README.txt"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>The MSSPM needs diet compostion information as well. Here we supply two survey time series of diet data, one census and a trial survey dataset with more typical survey coverage issues.</p>
-<p>Diet composition is by predator age class for each time (unit=time.days) and is a proportion (sums to 1 for each time). We get species diet composition by aggregating over age classes (weight diet composition at age by true biomass at age).</p>
+<p>The MSSPM needs diet compostion information as well. Here we supply
+two survey time series of diet data, one census and a trial survey
+dataset with more typical survey coverage issues.</p>
+<p>Diet composition is by predator age class for each time
+(unit=time.days) and is a proportion (sums to 1 for each time). We get
+species diet composition by aggregating over age classes (weight diet
+composition at age by true biomass at age).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/NOBA2Config.R"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -662,10 +717,21 @@
 <div class="section level4">
 <h4 id="length-structured-multispecies-model-hydra">Length-structured multispecies model (Hydra)<a class="anchor" aria-label="anchor" href="#length-structured-multispecies-model-hydra"></a>
 </h4>
-<p><strong>Note that this is the old method preserved here for history, and now Hydra inputs are coming directly from <code>mskeyrun</code>. Much of this code formed the basis for functions that build mskeyrun simulated data objects, now in <code>mskeyrun\data-raw\R</code></strong></p>
-<p>For the length-based model <a href="https://github.com/thefaylab/hydra_sim" class="external-link">hydra</a>, we can write .csv files to be used as input in the <a href="https://github.com/thefaylab/hydradata" class="external-link">hydradata</a> package, which writes .dat and .pin files.</p>
-<p>Hydra needs survey biomass time series, catch time series, survey length composition, fishery length composition, and diet composition data.</p>
-<p>Observations for biomass and catch are very similar to those created for MMSPM. Hydra inputs will need to be in the same species order for each dataset, so first we make a species file and some of the other input data that can come straight from Atlantis.</p>
+<p><strong>Note that this is the old method preserved here for history,
+and now Hydra inputs are coming directly from <code>mskeyrun</code>.
+Much of this code formed the basis for functions that build mskeyrun
+simulated data objects, now in
+<code>mskeyrun\data-raw\R</code></strong></p>
+<p>For the length-based model <a href="https://github.com/thefaylab/hydra_sim" class="external-link">hydra</a>, we can write
+.csv files to be used as input in the <a href="https://github.com/thefaylab/hydradata" class="external-link">hydradata</a> package,
+which writes .dat and .pin files.</p>
+<p>Hydra needs survey biomass time series, catch time series, survey
+length composition, fishery length composition, and diet composition
+data.</p>
+<p>Observations for biomass and catch are very similar to those created
+for MMSPM. Hydra inputs will need to be in the same species order for
+each dataset, so first we make a species file and some of the other
+input data that can come straight from Atlantis.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># foodweb and species file identify predators and prey; take from true atlantis diet comp</span></span>
 <span><span class="va">diettrue</span> <span class="op">&lt;-</span> <span class="fu">load_diet_comp</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/atlantisoutput/NOBA_march_2020"</span><span class="op">)</span>, </span>
@@ -790,34 +856,54 @@
 <span><span class="fu">write_csv</span><span class="op">(</span><span class="va">dummycovar</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"growth_covariates_NOBA.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu">write_csv</span><span class="op">(</span><span class="va">dummyeffort</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"observation_effort_NOBA.csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">write.csv</a></span><span class="op">(</span><span class="va">sexratio</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"sexratio_NOBA.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Decisions on size bins for hydra: keep 5 bins per species for now, build in flexibility to allocate size data to any number of bins with any definitions.</p>
-<p>Species specific bin width definitions are an input into the model, with more refined (smaller) bin sizes during rapid growth phases.</p>
-<p>Initially, we’ll directly transfer bin widths for GB and NOBA common species:</p>
+<p>Decisions on size bins for hydra: keep 5 bins per species for now,
+build in flexibility to allocate size data to any number of bins with
+any definitions.</p>
+<p>Species specific bin width definitions are an input into the model,
+with more refined (smaller) bin sizes during rapid growth phases.</p>
+<p>Initially, we’ll directly transfer bin widths for GB and NOBA common
+species:</p>
 <ul>
 <li>Aherring = <a href="https://www.hi.no/en/hi/temasider/species/herring" class="external-link">Norwegian_ssh</a>
 </li>
-<li>Acod = <a href="https://www.hi.no/en/hi/temasider/species/cod--northeast-arctic" class="external-link">North_atl_cod</a> (<em>but max size could be bigger in simulated data, may need to increase last bin</em>)</li>
-<li>haddock = <a href="https://www.hi.no/en/hi/temasider/species/haddock" class="external-link">Haddock</a> (<em>but max size could be bigger in simulated data, may need to increase last bin</em>)</li>
-<li>Amackerel = <a href="https://www.hi.no/en/hi/temasider/species/mackerel" class="external-link">Mackerel</a>. (<em>note, should mackerel have smaller bin widths for fast early growth?</em>)</li>
+<li>Acod = <a href="https://www.hi.no/en/hi/temasider/species/cod--northeast-arctic" class="external-link">North_atl_cod</a>
+(<em>but max size could be bigger in simulated data, may need to
+increase last bin</em>)</li>
+<li>haddock = <a href="https://www.hi.no/en/hi/temasider/species/haddock" class="external-link">Haddock</a>
+(<em>but max size could be bigger in simulated data, may need to
+increase last bin</em>)</li>
+<li>Amackerel = <a href="https://www.hi.no/en/hi/temasider/species/mackerel" class="external-link">Mackerel</a>.
+(<em>note, should mackerel have smaller bin widths for fast early
+growth?</em>)</li>
 </ul>
-<p>We will substitute bin widths from these similar taxa/size GB species for NOBA:</p>
+<p>We will substitute bin widths from these similar taxa/size GB species
+for NOBA:</p>
 <ul>
 <li>silverhake ~ <a href="https://www.hi.no/en/hi/temasider/species/blue-whiting" class="external-link">Blue_whiting</a><br>
 </li>
-<li>yellowtailfl ~ <a href="https://www.sciencedirect.com/science/article/abs/pii/S1385110196907972" class="external-link">Long_rough_dab</a> a.k.a. American plaice</li>
+<li>yellowtailfl ~ <a href="https://www.sciencedirect.com/science/article/abs/pii/S1385110196907972" class="external-link">Long_rough_dab</a>
+a.k.a. American plaice</li>
 </ul>
-<p>We will modify or subsitute bin widths for the rest of the NOBA species based on size:</p>
+<p>We will modify or subsitute bin widths for the rest of the NOBA
+species based on size:</p>
 <ul>
-<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/redfish/beaked-redfish-in-the-barents-and-norwegian-seas" class="external-link">Redfish</a> have a maximum size of 47 cm, use 5 x 10 cm bins<br>
+<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/redfish/beaked-redfish-in-the-barents-and-norwegian-seas" class="external-link">Redfish</a>
+have a maximum size of 47 cm, use 5 x 10 cm bins<br>
 </li>
-<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/northeast-arctic-saithe" class="external-link">Saithe</a> have a maximum size of 130 cm; use goosefish bins</li>
-<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/polar-cod" class="external-link">Polar_cod</a> have a maximum size of 25 cm; use 5 x 5 cm bins<br>
+<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/northeast-arctic-saithe" class="external-link">Saithe</a>
+have a maximum size of 130 cm; use goosefish bins</li>
+<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/polar-cod" class="external-link">Polar_cod</a>
+have a maximum size of 25 cm; use 5 x 5 cm bins<br>
 </li>
-<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/capelin-in-the-barents-sea" class="external-link">Capelin</a> are smaller than any GB modeled species, max size 21 cm; use 5 x 5 cm bins<br>
+<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/capelin-in-the-barents-sea" class="external-link">Capelin</a>
+are smaller than any GB modeled species, max size 21 cm; use 5 x 5 cm
+bins<br>
 </li>
-<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/greenland-halibut" class="external-link">Green_halibut</a> are large, max size 120 cm; use Acod bins</li>
+<li>NOBA <a href="https://www.hi.no/en/hi/temasider/species/greenland-halibut" class="external-link">Green_halibut</a>
+are large, max size 120 cm; use Acod bins</li>
 </ul>
-<p>Code to make sizebins csv for input; hardcoded based on these decisions.</p>
+<p>Code to make sizebins csv for input; hardcoded based on these
+decisions.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># for reference, GB hydra_sim size bins</span></span>
 <span><span class="co"># sizeclass1,sizeclass2,sizeclass3,sizeclass4,sizeclass5,commentField-notused</span></span>
@@ -851,9 +937,20 @@
 <span>  <span class="fu">mutate</span><span class="op">(</span><span class="st">'commentField-notused'</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">sizebinmat</span><span class="op">)</span><span class="op">)</span></span>
 <span>                        </span>
 <span><span class="fu">write_csv</span><span class="op">(</span><span class="va">sizebins</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"length_sizebins_NOBA.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>These decisions on matching species can carry through to other life history parameters, at least initially.</p>
-<p>Need to fit growth and maturity parameters from Atlantis output for input into hydra. Fit growth using code below, based on the package FSA <span class="citation">[@ogle-fsa-2021]</span>. The package provides multiple ways to get starting values for the R <code>nls</code> function for fitting nonlinear models. It was necessary to try several different methods for starting values to get at least one von Bertalannfy growth parameter set for each species. A scratch code block shows some of the experiments to get the fitting working that resulted in the function to fit for all surveys.</p>
-<p>Note that spring surveys don’t get mackerel at all (not in the model domain then). A full set of von B parameters could only be estimated for the first era of both versions of the fall survey tested here.</p>
+<p>These decisions on matching species can carry through to other life
+history parameters, at least initially.</p>
+<p>Need to fit growth and maturity parameters from Atlantis output for
+input into hydra. Fit growth using code below, based on the package FSA
+<span class="citation">[@ogle-fsa-2021]</span>. The package provides
+multiple ways to get starting values for the R <code>nls</code> function
+for fitting nonlinear models. It was necessary to try several different
+methods for starting values to get at least one von Bertalannfy growth
+parameter set for each species. A scratch code block shows some of the
+experiments to get the fitting working that resulted in the function to
+fit for all surveys.</p>
+<p>Note that spring surveys don’t get mackerel at all (not in the model
+domain then). A full set of von B parameters could only be estimated for
+the first era of both versions of the fall survey tested here.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sp_age</span> <span class="op">&lt;-</span> <span class="va">NOBAom_ms</span><span class="op">$</span><span class="va">funct.group_ss</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Name"</span>, <span class="st">"NumCohorts"</span>, <span class="st">"NumAgeClassSize"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">sp_age</span> <span class="op">&lt;-</span> <span class="va">sp_age</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -989,7 +1086,8 @@
 <span>  <span class="op">}</span></span>
 <span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>This code block has experiments with different fits and different ways to splice the length at age data.</p>
+<p>This code block has experiments with different fits and different
+ways to splice the length at age data.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="va">capelinvbgf</span> <span class="op">&lt;-</span> <span class="va">svlenage</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">species</span> <span class="op">==</span> <span class="st">"Capelin"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1200,7 +1298,13 @@
 <span>    <span class="va">vbout.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">vbout.2</span>, <span class="va">spe</span><span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>Generating length composition input data requires mapping numbers at length in the atlantisom 1 cm bin length output to our selected length bins, then summing the numbers at length in those bins for all species. The input required is a 4d array, indexed by survey, species, year, and sizebin. So each survey can be a separate csv with #species at the top of year rows and sizebin columns with n at length the values, scrolling down for each species.</p>
+<p>Generating length composition input data requires mapping numbers at
+length in the atlantisom 1 cm bin length output to our selected length
+bins, then summing the numbers at length in those bins for all species.
+The input required is a 4d array, indexed by survey, species, year, and
+sizebin. So each survey can be a separate csv with #species at the top
+of year rows and sizebin columns with n at length the values, scrolling
+down for each species.</p>
 <p>Arrange lengths into appropriate bins:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># rearrange into length bins and write length comp data csvs</span></span>
@@ -1230,9 +1334,19 @@
 <span>    <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/spread.html" class="external-link">spread</a></span><span class="op">(</span><span class="va">sizebin</span>, <span class="va">sumlen</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>    <span class="fu">write_csv</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"observation_lengths_NOBA_"</span>,<span class="va">s</span>,<span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>The first pass through with the current bins results in very few lengths in the smallest bin for most species. This suggests we need to change the binwidths and possibly the number of bins to optimize length fitting. Perhaps a larger first bin or don’t start it at 0?</p>
-<p><em>Consider a function to do this using species max size, the vonB k and the desired number of bins for more consistency and to easily change Nsizebins.</em></p>
-<p>This function is below, but with only 5 bins I don’t like how it works, allocating more smaller bins to the smallest sizes that we don’t observe and aggregating many lengths into one large bin. Therefore the simplest approach is to have equal sized bins (max observed length/desired number of bins). We will try this for the length comps.</p>
+<p>The first pass through with the current bins results in very few
+lengths in the smallest bin for most species. This suggests we need to
+change the binwidths and possibly the number of bins to optimize length
+fitting. Perhaps a larger first bin or don’t start it at 0?</p>
+<p><em>Consider a function to do this using species max size, the vonB k
+and the desired number of bins for more consistency and to easily change
+Nsizebins.</em></p>
+<p>This function is below, but with only 5 bins I don’t like how it
+works, allocating more smaller bins to the smallest sizes that we don’t
+observe and aggregating many lengths into one large bin. Therefore the
+simplest approach is to have equal sized bins (max observed
+length/desired number of bins). We will try this for the length
+comps.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># see e.g., https://www.sciencedirect.com/science/article/abs/pii/S0165783619303297</span></span>
 <span><span class="co"># estimated optimal bin size for VBGF estimation is 0.23 x Lmax ^0.6</span></span>
@@ -1350,8 +1464,14 @@
 <span>  <span class="fu">relocate</span><span class="op">(</span><span class="st">'commentField-notused'</span>, .after <span class="op">=</span> <span class="fu">last_col</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>                        </span>
 <span><span class="fu">write_csv</span><span class="op">(</span><span class="va">sizebins</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"length_sizebins_NOBA.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Reran the lendat code block above to make the survey-specific length input files with the new equal sized bins.</p>
-<p>Now write input files in Gavin’s format to have surveys together in one file. Note that this is just a test. The folder has two different survey and two different fishery configurations; they are not independent. Also, fishery catch is not currently separated into fleets. We wouldn’t use all of these in an input file. Also add fishery length comps:</p>
+<p>Reran the lendat code block above to make the survey-specific length
+input files with the new equal sized bins.</p>
+<p>Now write input files in Gavin’s format to have surveys together in
+one file. Note that this is just a test. The folder has two different
+survey and two different fishery configurations; they are not
+independent. Also, fishery catch is not currently separated into fleets.
+We wouldn’t use all of these in an input file. Also add fishery length
+comps:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">modbins</span> <span class="op">&lt;-</span> <span class="va">sizebins</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu">rename</span><span class="op">(</span>species <span class="op">=</span> <span class="va">`commentField-notused`</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -1412,8 +1532,23 @@
 <span>  <span class="va">allfishlenbin</span> <span class="op">&lt;-</span> <span class="fu">bind_rows</span><span class="op">(</span><span class="va">allfishlenbin</span>, <span class="va">fishlenbin</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">write_csv</span><span class="op">(</span><span class="va">allfishlenbin</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"observation_lengths_NOBA_allfisheries.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Stomach weights are needed as input to hydra. At present each species has a stomach weight for each size bin that is repeated for each year. We have total consumed weight for each predator age class at each timestep in the detailed diet atlantis output, so would need to map age classes to length bins, sum consumed weight by length bin and divide by total numbers in that length bin to get stomach weight.</p>
-<p>What we have saved so far is a diet comp in proportion that has had bias and observation error added to proportions. However, we need the stomach weight portion of the equation, which has the survey timing/area/efficiency/selectivity applied to true consumed weight. The hydra input is mean daily stomach weight in grams. From the Atlantis manual, “DetailedDietCheck.txt returns the total consumed biomass since the last output given for each cell (box and layer) of each age group of each functional group.” So daily per capita consumed biomass is this output, summed over prey for total consumption, divided by the numbers from the same survey design, divided by the output step <code>omlist_ss$runpar$outputstep</code>.</p>
+<p>Stomach weights are needed as input to hydra. At present each species
+has a stomach weight for each size bin that is repeated for each year.
+We have total consumed weight for each predator age class at each
+timestep in the detailed diet atlantis output, so would need to map age
+classes to length bins, sum consumed weight by length bin and divide by
+total numbers in that length bin to get stomach weight.</p>
+<p>What we have saved so far is a diet comp in proportion that has had
+bias and observation error added to proportions. However, we need the
+stomach weight portion of the equation, which has the survey
+timing/area/efficiency/selectivity applied to true consumed weight. The
+hydra input is mean daily stomach weight in grams. From the Atlantis
+manual, “DetailedDietCheck.txt returns the total consumed biomass since
+the last output given for each cell (box and layer) of each age group of
+each functional group.” So daily per capita consumed biomass is this
+output, summed over prey for total consumption, divided by the numbers
+from the same survey design, divided by the output step
+<code>omlist_ss$runpar$outputstep</code>.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># apply surveys to true total consumption (snipped from atlantosom om_diet.R and om_comps.R)</span></span>
 <span><span class="va">detaileddiet</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">d.name</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">scenario.name</span>, <span class="st">"detaileddiet.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -1500,7 +1635,9 @@
 <span><span class="co">#     dplyr::select(year, species, prey, totdietComp) %&gt;%</span></span>
 <span><span class="co">#     write_csv(paste0(o.name,"diet_",s,".csv"))</span></span>
 <span><span class="co"># }</span></span></code></pre></div>
-<p>We also plan to fit to time series of prey proportions for each predator size class. Gavin suggests an input format similar to those for survey lengths. Diet output from surveys is by predator agecl</p>
+<p>We also plan to fit to time series of prey proportions for each
+predator size class. Gavin suggests an input format similar to those for
+survey lengths. Diet output from surveys is by predator agecl</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># same file as for MSSPM, diet proportion by agecl</span></span>
 <span><span class="va">all_diets</span> <span class="op">&lt;-</span> <span class="fu">read_savedsurvs</span><span class="op">(</span><span class="va">d.name</span>, <span class="st">'survDiet'</span><span class="op">)</span></span>
@@ -1572,11 +1709,17 @@
 <span></span>
 <span></span>
 <span><span class="co"># </span></span></code></pre></div>
-<p>Do we need to fit recruitment? May just need average recriutment starting values, which I can get from atlantis. Maturity parameters are needed for SSB calculation and SSB-based recruitment. If we fit only to average recruitment with annual deviations, and don’t need SSB, maturity and recruitment inputs could be dummy parameters for now.</p>
+<p>Do we need to fit recruitment? May just need average recriutment
+starting values, which I can get from atlantis. Maturity parameters are
+needed for SSB calculation and SSB-based recruitment. If we fit only to
+average recruitment with annual deviations, and don’t need SSB, maturity
+and recruitment inputs could be dummy parameters for now.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># need 2-par maturity curve based on length, atlantis maturity ogive based on age group</span></span>
 <span><span class="co"># or just translate age at 50% maturity to length and call it good?</span></span></code></pre></div>
-<p>Survey and catch datasets for hydra from NOBA (same methods as MSSPM). Make this a function that takes output directory name and output names as arguments.</p>
+<p>Survey and catch datasets for hydra from NOBA (same methods as
+MSSPM). Make this a function that takes output directory name and output
+names as arguments.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">o.name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/msinput/hydra/"</span><span class="op">)</span></span>
 <span></span>
@@ -1654,7 +1797,12 @@
 <span>          <span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">meta</span><span class="op">)</span>, file<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/msinput/hydra/"</span><span class="op">)</span>,<span class="st">"README.txt"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Survey and catch datasets in Gavin’s suggested format (all surveys together, all fleets together). As above, note that this is just a test. The folder has two different survey and two different fishery configurations; they are not independent. Also, fishery catch is not currently separated into fleets. We wouldn’t use all of these in an input file.</p>
+<p>Survey and catch datasets in Gavin’s suggested format (all surveys
+together, all fleets together). As above, note that this is just a test.
+The folder has two different survey and two different fishery
+configurations; they are not independent. Also, fishery catch is not
+currently separated into fleets. We wouldn’t use all of these in an
+input file.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#read in survey biomass data</span></span>
 <span><span class="va">survObsBiom</span> <span class="op">&lt;-</span> <span class="fu">read_savedsurvs</span><span class="op">(</span><span class="va">d.name</span>, <span class="st">'survB'</span><span class="op">)</span> <span class="co">#reads in all surveys</span></span>
@@ -1717,8 +1865,14 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu">write_csv</span><span class="op">(</span><span class="va">allcatch</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"observation_catch_NOBA_allfisheries.csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Output temperature data from surveys using “Temp” variable in .nc file and the <code><a href="https://rdrr.io/pkg/atlantisom/man/load_nc_physics.html" class="external-link">atlantisom::load_nc_physics</a></code> function. A survey (timestep, polygons, possibly observation error) can then be applied to this output.</p>
-<p>We can get surface and bottom temp from Atlantis using the layers from each polygon, with layer 0 being the bottom and the maximum layer in the polygon being the surface (according to the <a href="https://confluence.csiro.au/display/Atlantis/Atlantis+NetCDF+Structure" class="external-link">Atlantis wiki/Atlantis output files/Atlantis NetCDF structure</a>.</p>
+<p>Output temperature data from surveys using “Temp” variable in .nc
+file and the <code><a href="https://rdrr.io/pkg/atlantisom/man/load_nc_physics.html" class="external-link">atlantisom::load_nc_physics</a></code> function. A survey
+(timestep, polygons, possibly observation error) can then be applied to
+this output.</p>
+<p>We can get surface and bottom temp from Atlantis using the layers
+from each polygon, with layer 0 being the bottom and the maximum layer
+in the polygon being the surface (according to the <a href="https://confluence.csiro.au/display/Atlantis/Atlantis+NetCDF+Structure" class="external-link">Atlantis
+wiki/Atlantis output files/Atlantis NetCDF structure</a>.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># taken from existing load_nc to explore</span></span>
 <span><span class="co"># file.nc &lt;- file.path(d.name, "outputnordic_runresults_01.nc")</span></span>
@@ -1829,7 +1983,8 @@
 <span>  <span class="fu">write_csv</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">o.name</span>,<span class="st">"observation_temperature_NOBA_"</span>,<span class="va">survey.name</span>,<span class="st">".csv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="age-structured-multispecies-statistical-catch-at-age-model-msscaa">Age structured multispecies statistical catch at age model (MSSCAA)<a class="anchor" aria-label="anchor" href="#age-structured-multispecies-statistical-catch-at-age-model-msscaa"></a>
+<h4 id="age-structured-multispecies-statistical-catch-at-age-model-msscaa">Age structured multispecies statistical catch at age model
+(MSSCAA)<a class="anchor" aria-label="anchor" href="#age-structured-multispecies-statistical-catch-at-age-model-msscaa"></a>
 </h4>
 </div>
 </div>

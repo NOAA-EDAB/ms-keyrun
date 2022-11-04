@@ -93,12 +93,14 @@
 
 
 
-<script src="CompsDat_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>MS Keyrun Age, Length, and Diet Composition Data Needs</h1>
-                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah
+Gaichas</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/CompsDat.Rmd" class="external-link"><code>vignettes/CompsDat.Rmd</code></a></small>
       <div class="d-none name"><code>CompsDat.Rmd</code></div>
@@ -130,8 +132,14 @@
 <div class="section level2">
 <h2 id="model-types">Model types<a class="anchor" aria-label="anchor" href="#model-types"></a>
 </h2>
-<p>Multispecies models will focus on 10 species: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate.</p>
-<p>Models will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species. Data needs by model type are summarized below.</p>
+<p>Multispecies models will focus on 10 species: Atlantic herring,
+Atlantic cod, goosefish, haddock, spiny dogfish, winter founder,
+yellowtail flounder, Atlantic mackerel, silver hake, and winter
+skate.</p>
+<p>Models will estimate population parameters based on fits to biomass,
+catch, and (if appropriate) size or age information, establish reference
+points, and evaluate status for the interacting species. Data needs by
+model type are summarized below.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">compdat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>ModType <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModType</span>,</span>
 <span>                      ModName <span class="op">=</span> <span class="va">responses</span><span class="op">$</span><span class="va">ModName</span>,</span>
@@ -148,18 +156,47 @@
 <div class="section level2">
 <h2 id="age-and-length-composition-data-needed">Age and length composition data needed<a class="anchor" aria-label="anchor" href="#age-and-length-composition-data-needed"></a>
 </h2>
-<p>Structured models need both survey numbers at length and age. The length structured model Hydra is currently set up with separate fishing fleets and would require fishery catch and discard data by fleet, while MSCAA is not set up by fleet. WHAM requires fleet specific catch and discards at age, so it makes sense to pull catch and landings numbers at length and age data by fleet to the extent possible, as well as for total catch.</p>
-<p>Therefore, fleet definitions are necessary to pull the fleet specific data.</p>
-<p>This data will also be needed for Rpath for age structured groups (TBD). Pulling data by individual age and 1cm length bins should allow us to aggregate to the appropriate age and length classes for Rpath and Hydra.</p>
-<p>Some decisions on how to deal with predators with poor or no age data (e.g. goosefish) will be needed for age strutured models.</p>
+<p>Structured models need both survey numbers at length and age. The
+length structured model Hydra is currently set up with separate fishing
+fleets and would require fishery catch and discard data by fleet, while
+MSCAA is not set up by fleet. WHAM requires fleet specific catch and
+discards at age, so it makes sense to pull catch and landings numbers at
+length and age data by fleet to the extent possible, as well as for
+total catch.</p>
+<p>Therefore, fleet definitions are necessary to pull the fleet specific
+data.</p>
+<p>This data will also be needed for Rpath for age structured groups
+(TBD). Pulling data by individual age and 1cm length bins should allow
+us to aggregate to the appropriate age and length classes for Rpath and
+Hydra.</p>
+<p>Some decisions on how to deal with predators with poor or no age data
+(e.g. goosefish) will be needed for age strutured models.</p>
 </div>
 <div class="section level2">
 <h2 id="diet-composition-data-needed">Diet composition data needed<a class="anchor" aria-label="anchor" href="#diet-composition-data-needed"></a>
 </h2>
-<p>All multispecies models require some form of diet composition matrix (in the form of % of each other modeled species observed in the diet). The diet composition has already been pulled for Rpath <a href="https://github.com/NOAA-EDAB/GBRpath/blob/master/GBRpath_diet_pull.R" class="external-link">code</a>, and is highly abstracted based on diet data for Hydra (matrix of 0 and 1 to indicate whether predation can happen). Biomass dynamic model interaction matrices are currently input parameters, so should be compared with diet data pulls for Rpath diet compositions for consistency. Methods used to estimate the biomass dynamics interaction parameters, whether within the model framework or outside the model, are needed for documentation.</p>
-<p>Structured models require annual predator mean total stomach weight and gastric evaluatin rates. Pulling the diet data by predator size class will be needed for strucured models and Rpath. Prey size information is also needed to estimate prey size ratios for predators (whether estimated within the model framework or outside the model).</p>
-<p>Predator size classes will need to align Rpath age structure groupings as well as Hydra size class groups, and map to ages for age structured models.</p>
-<p>Estimates of consumption rates are critical for the performance of these models. It may be useful to have time series of biomass consumed, which can be estimated from diet data combined with predator biomass estimates.</p>
+<p>All multispecies models require some form of diet composition matrix
+(in the form of % of each other modeled species observed in the diet).
+The diet composition has already been pulled for Rpath <a href="https://github.com/NOAA-EDAB/GBRpath/blob/master/GBRpath_diet_pull.R" class="external-link">code</a>,
+and is highly abstracted based on diet data for Hydra (matrix of 0 and 1
+to indicate whether predation can happen). Biomass dynamic model
+interaction matrices are currently input parameters, so should be
+compared with diet data pulls for Rpath diet compositions for
+consistency. Methods used to estimate the biomass dynamics interaction
+parameters, whether within the model framework or outside the model, are
+needed for documentation.</p>
+<p>Structured models require annual predator mean total stomach weight
+and gastric evaluatin rates. Pulling the diet data by predator size
+class will be needed for strucured models and Rpath. Prey size
+information is also needed to estimate prey size ratios for predators
+(whether estimated within the model framework or outside the model).</p>
+<p>Predator size classes will need to align Rpath age structure
+groupings as well as Hydra size class groups, and map to ages for age
+structured models.</p>
+<p>Estimates of consumption rates are critical for the performance of
+these models. It may be useful to have time series of biomass consumed,
+which can be estimated from diet data combined with predator biomass
+estimates.</p>
 </div>
 <div class="section level2">
 <h2 id="full-survey-results">Full survey results<a class="anchor" aria-label="anchor" href="#full-survey-results"></a>
@@ -167,7 +204,8 @@
 <div class="section level3">
 <h3 id="survey-conducted-august-27-september-2-2020">Survey conducted August 27-September 2 2020<a class="anchor" aria-label="anchor" href="#survey-conducted-august-27-september-2-2020"></a>
 </h3>
-<p><a href="https://forms.gle/5PkpTiCvXEgda2it6" class="external-link">This is the survey form.</a></p>
+<p><a href="https://forms.gle/5PkpTiCvXEgda2it6" class="external-link">This is the survey
+form.</a></p>
 <p>We had 4 responses.</p>
 </div>
 <div class="section level3">
@@ -200,10 +238,12 @@
 <td align="left">n/a</td>
 </tr>
 <tr class="odd">
-<td align="left">The SCAA model currently has one fishing fleet, but may want to consider possible expansion</td>
+<td align="left">The SCAA model currently has one fishing fleet, but may
+want to consider possible expansion</td>
 </tr>
 <tr class="even">
-<td align="left">Survey/fleet landings can be in numbers or weight. Either way, weight-at-age is required.</td>
+<td align="left">Survey/fleet landings can be in numbers or weight.
+Either way, weight-at-age is required.</td>
 </tr>
 </tbody>
 </table>
@@ -216,7 +256,10 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">The boxes checked above are not needed or the simulation model to run. They will be needed for the estimation part. However they would be useful - prior to estimation- to help calibrate the simulation model.</td>
+<td align="left">The boxes checked above are not needed or the
+simulation model to run. They will be needed for the estimation part.
+However they would be useful - prior to estimation- to help calibrate
+the simulation model.</td>
 </tr>
 <tr class="even">
 <td align="left">n/a</td>
@@ -225,7 +268,8 @@
 <td align="left">Need catch-at-length to obtain catch-at-age</td>
 </tr>
 <tr class="even">
-<td align="left">Length data are not used but weight-at-age is required</td>
+<td align="left">Length data are not used but weight-at-age is
+required</td>
 </tr>
 </tbody>
 </table>
@@ -254,16 +298,23 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">Most of this info would be synthesized outsize of the model (maybe with some intermediate analyses) with the results used in the model. Would also be needed for documentation to explain how we arrive at values used in the model</td>
+<td align="left">Most of this info would be synthesized outsize of the
+model (maybe with some intermediate analyses) with the results used in
+the model. Would also be needed for documentation to explain how we
+arrive at values used in the model</td>
 </tr>
 <tr class="even">
 <td align="left">n/a</td>
 </tr>
 <tr class="odd">
-<td align="left">Big challenges are the ageing issues surrounding the elasmobranchs and monkfish</td>
+<td align="left">Big challenges are the ageing issues surrounding the
+elasmobranchs and monkfish</td>
 </tr>
 <tr class="even">
-<td align="left">WHAM could include some of these as covariates on M, q, recruitment, or maturity/fecundity in a single species assessment. In many cases would be appropriate to multiply by prey/predator numbers or biomass.</td>
+<td align="left">WHAM could include some of these as covariates on M, q,
+recruitment, or maturity/fecundity in a single species assessment. In
+many cases would be appropriate to multiply by prey/predator numbers or
+biomass.</td>
 </tr>
 </tbody>
 </table>
@@ -280,7 +331,11 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">All of this data will inform us of the community structure/ foodweb. We should try to keep the same set of feeding relationships/ links across models. All steps from obtaining this data to its use in the models should be documented. ps. i think i checked everything!</td>
+<td align="left">All of this data will inform us of the community
+structure/ foodweb. We should try to keep the same set of feeding
+relationships/ links across models. All steps from obtaining this data
+to its use in the models should be documented. ps. i think i checked
+everything!</td>
 </tr>
 <tr class="even">
 <td align="left">n/a</td>
@@ -298,7 +353,8 @@
 <div class="section level2">
 <h2 id="meeting-minutes-2-september-2020">Meeting minutes, 2 September 2020<a class="anchor" aria-label="anchor" href="#meeting-minutes-2-september-2020"></a>
 </h2>
-<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.7xrj7zm307ft" class="external-link">Click here!</a></p>
+<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.7xrj7zm307ft" class="external-link">Click
+here!</a></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

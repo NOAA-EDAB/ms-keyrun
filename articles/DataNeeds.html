@@ -93,12 +93,14 @@
 
 
 
-<script src="DataNeeds_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>MS Keyrun Data Needs</h1>
-                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah
+Gaichas</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/DataNeeds.Rmd" class="external-link"><code>vignettes/DataNeeds.Rmd</code></a></small>
       <div class="d-none name"><code>DataNeeds.Rmd</code></div>
@@ -109,54 +111,83 @@
 <div class="section level2">
 <h2 id="decisions-from-meeting-june-3-2020">Decisions from meeting June 3 2020<a class="anchor" aria-label="anchor" href="#decisions-from-meeting-june-3-2020"></a>
 </h2>
-<p>Notes were taken on the <a href="https://www.st.nmfs.noaa.gov/jira/secure/RapidBoard.jspa?rapidView=384&amp;projectKey=KEYRUN" class="external-link">KEYRUN Kanban board</a> under the epic <a href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-4" class="external-link">KEYRUN-4</a> (a password is required to access these sites, but current information is copied below).</p>
+<p>Notes were taken on the <a href="https://www.st.nmfs.noaa.gov/jira/secure/RapidBoard.jspa?rapidView=384&amp;projectKey=KEYRUN" class="external-link">KEYRUN
+Kanban board</a> under the epic <a href="https://www.st.nmfs.noaa.gov/jira/browse/KEYRUN-4" class="external-link">KEYRUN-4</a> (a
+password is required to access these sites, but current information is
+copied below).</p>
 </div>
 <div class="section level2">
-<h2 id="objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models">Objective: Develop a common input dataset for use in all keyrun models<a class="anchor" aria-label="anchor" href="#objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models"></a>
+<h2 id="objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models">Objective: Develop a common input dataset for use in all keyrun
+models<a class="anchor" aria-label="anchor" href="#objective-develop-a-common-input-dataset-for-use-in-all-keyrun-models"></a>
 </h2>
-<p>The purpose of the June 3 meeting was to describe the decisions and components required to develop the common input dataset for the project.</p>
+<p>The purpose of the June 3 meeting was to describe the decisions and
+components required to develop the common input dataset for the
+project.</p>
 <div class="section level3">
 <h3 id="epic-description">Epic description<a class="anchor" aria-label="anchor" href="#epic-description"></a>
 </h3>
 <p>(This text copied from KEYRUN-4 Description and lightly edited)</p>
-<p>Below is a list of potential stories under this Epic with links to other Epics. Numbers indicate order tasks need to be done (priority) established at the June 3 2020 meeting.</p>
+<p>Below is a list of potential stories under this Epic with links to
+other Epics. Numbers indicate order tasks need to be done (priority)
+established at the June 3 2020 meeting.</p>
 <p>TODO: Add each story. Add done condition for each story.</p>
 <ol style="list-style-type: decimal">
-<li><p>Document decisions on all stories below (maybe rmd) and document as we go for all datasets, Jira not searchable so establish decision document and documentation elsewhere (pull comment from done column? plugins may be available by license)</p></li>
-<li><p>Establish temporal and spatial dimensions for data (years, seasons, areas).</p></li>
+<li><p>Document decisions on all stories below (maybe rmd) and document
+as we go for all datasets, Jira not searchable so establish decision
+document and documentation elsewhere (pull comment from done column?
+plugins may be available by license)</p></li>
+<li><p>Establish temporal and spatial dimensions for data (years,
+seasons, areas).</p></li>
 </ol>
-<p>define Georges Bank for survey and fisheries which will not match, could use habitat model</p>
+<p>define Georges Bank for survey and fisheries which will not match,
+could use habitat model</p>
 <ol start="2" style="list-style-type: decimal">
-<li><p>Establish species lists (Rpath KEYRUN-2 larger list than multispecies models KEYRUN-1 and KEYRUN-3)</p></li>
+<li><p>Establish species lists (Rpath KEYRUN-2 larger list than
+multispecies models KEYRUN-1 and KEYRUN-3)</p></li>
 <li><p>Define environmental data needed for each model</p></li>
 <li><p>Establish dataset standards (See e.g. condition work)</p></li>
 <li><p>Biomass index data from surveys for all models:</p></li>
-<li><p>Establish common definitions of fleets: applies to all catch data, discard data, and composition data.</p></li>
+<li><p>Establish common definitions of fleets: applies to all catch
+data, discard data, and composition data.</p></li>
 <li>
 <p>Catch (landings) data for all models:</p>
 <p>Rpath in KEYRUN-2</p>
 <p>Hydra and MSCAA in KEYRUN-1</p>
 <p>All other tested models in KEYRUN-3</p>
 </li>
-<li><p>Discard data for all models, needs methods discussion/decision (check: Andy)</p></li>
-<li><p>Length composition data from surveys and fisheries for Hydra in KEYRUN-1 (check: Andy)</p></li>
-<li><p>Age composition data from surveys and fisheries for MSCAA in KEYRUN-1</p></li>
-<li><p>Define which diet and or consumption data from surveys and fisheries for all models</p></li>
-<li><p>Define which life history data from surveys and/or fisheries for all models (e.g. maturity, weight at age, maximum age for mortality estimation, etc)</p></li>
+<li><p>Discard data for all models, needs methods discussion/decision
+(check: Andy)</p></li>
+<li><p>Length composition data from surveys and fisheries for Hydra in
+KEYRUN-1 (check: Andy)</p></li>
+<li><p>Age composition data from surveys and fisheries for MSCAA in
+KEYRUN-1</p></li>
+<li><p>Define which diet and or consumption data from surveys and
+fisheries for all models</p></li>
+<li><p>Define which life history data from surveys and/or fisheries for
+all models (e.g. maturity, weight at age, maximum age for mortality
+estimation, etc)</p></li>
 </ol>
 </div>
 <div class="section level3">
 <h3 id="additional-meeting-notes">Additional meeting notes<a class="anchor" aria-label="anchor" href="#additional-meeting-notes"></a>
 </h3>
 <p>Progress on catch data:</p>
-<p>Notes on mscatch and comlands. comlands in a package now. dataset from comland is input to mscatch which combines with observer data length samples, for each quarter/yr for species, gear, can assign length samples to each of those landings bins. done and tested. Discards not yet accounted for, difficult and needs decisions. mostly documented, decision process for filling blanks documented in log file. Canadian landings for GB may be needed.</p>
-<p>there is a comdisc as well, computes discard to kept ratio. add to subtasks under discard story</p>
-<p>Identify done criteria, meet them, then run by key stock assessment folks.</p>
+<p>Notes on mscatch and comlands. comlands in a package now. dataset
+from comland is input to mscatch which combines with observer data
+length samples, for each quarter/yr for species, gear, can assign length
+samples to each of those landings bins. done and tested. Discards not
+yet accounted for, difficult and needs decisions. mostly documented,
+decision process for filling blanks documented in log file. Canadian
+landings for GB may be needed.</p>
+<p>there is a comdisc as well, computes discard to kept ratio. add to
+subtasks under discard story</p>
+<p>Identify done criteria, meet them, then run by key stock assessment
+folks.</p>
 </div>
 <div class="section level3">
 <h3 id="progress">Progress<a class="anchor" aria-label="anchor" href="#progress"></a>
 </h3>
-<p>Stories have been added to the board as of 06 October, 2022:</p>
+<p>Stories have been added to the board as of 04 November, 2022:</p>
 
     
         <title>NMFS JIRA</title>

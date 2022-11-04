@@ -93,12 +93,13 @@
 
 
 
-<script src="allocateLandingsEPU_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Allocate landings to Georges Bank EPU</h1>
                         <h4 data-toc-skip class="author">Andy Beet</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/allocateLandingsEPU.Rmd" class="external-link"><code>vignettes/allocateLandingsEPU.Rmd</code></a></small>
       <div class="d-none name"><code>allocateLandingsEPU.Rmd</code></div>
@@ -107,9 +108,12 @@
     
     
 <div class="section level2">
-<h2 id="spatial-approaches-for-georges-bank-option-1">Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option 1</a><a class="anchor" aria-label="anchor" href="#spatial-approaches-for-georges-bank-option-1"></a>
+<h2 id="spatial-approaches-for-georges-bank-option-1">Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option
+1</a><a class="anchor" aria-label="anchor" href="#spatial-approaches-for-georges-bank-option-1"></a>
 </h2>
-<p>The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is defined as the set of survey strata that are at 50% within the 10 min square definition of the EPU.</p>
+<p>The spatial footprint for the Georges Bank EPU (Ecological Production
+Unit) is defined as the set of survey strata that are at 50% within the
+10 min square definition of the EPU.</p>
 <div class="figure" style="text-align: center">
 <img src="allocateLandingsEPU_files/figure-html/GBfoot-1.png" alt="Georges Bank EPU" width="700"><p class="caption">
 Georges Bank EPU
@@ -121,41 +125,71 @@ Georges Bank EPU
 Statistical areas intersected by Georges Bank EPU
 </p>
 </div>
-<p>Fishing data are available by statistical area. The statistical areas surrounding Georges Bank EPU (521, 522, 525, 526, 537, 538, 551, 552, 561, 562) contain catch from Georges Bank and its neighboring EPUs. This data needs to be partitioned and catch allocated to the Georges Bank EPU.</p>
+<p>Fishing data are available by statistical area. The statistical areas
+surrounding Georges Bank EPU (521, 522, 525, 526, 537, 538, 551, 552,
+561, 562) contain catch from Georges Bank and its neighboring EPUs. This
+data needs to be partitioned and catch allocated to the Georges Bank
+EPU.</p>
 </div>
 <div class="section level2">
 <h2 id="method-for-partitioning-catch-data">Method for partitioning catch data<a class="anchor" aria-label="anchor" href="#method-for-partitioning-catch-data"></a>
 </h2>
-<p>Methods found in <span class="citation">(Benjamin, S et al., <a href="#ref-benjamins2018" role="doc-biblioref">2018</a>; DePiper, <a href="#ref-depiper2014" role="doc-biblioref">2014</a>)</span> and the <a href="https://github.com/dcorvi/offshoreWind" class="external-link"><code>offshoreWind</code></a> package are briefly summarized below. It is necessary to run the package from the <code>mars</code> server.</p>
+<p>Methods found in <span class="citation">(<a href="#ref-benjamins2018" role="doc-biblioref">Benjamin, S et al., 2018</a>; <a href="#ref-depiper2014" role="doc-biblioref">DePiper, 2014</a>)</span>
+and the <a href="https://github.com/dcorvi/offshoreWind" class="external-link"><code>offshoreWind</code></a>
+package are briefly summarized below. It is necessary to run the package
+from the <code>mars</code> server.</p>
 <ul>
-<li><p>VTR data are joined with observer data (since observer data is considered reliable). A duration model is fitted to characterize a spatial footprint (rather than a single point location) associated with a trip (<span class="citation">DePiper (<a href="#ref-depiper2014" role="doc-biblioref">2014</a>)</span>). Gear type and trip length (which includes multiple hauls) influence the spatial precision.</p></li>
-<li><p>The duration model is then broadly applied to all VTR data. The result being a set of maps (or rasters). Each map/raster depicts the spatial probability of fishing for a trip.</p></li>
-<li><p>The <code>offshoreWind</code> package then uses these rasters combined to determine the landings assigned to any spatial footprint supplied. This is achieved by calculating the overlap of the rasters with the user supplied spatial footprint.</p></li>
+<li><p>VTR data are joined with observer data (since observer data is
+considered reliable). A duration model is fitted to characterize a
+spatial footprint (rather than a single point location) associated with
+a trip (<span class="citation">DePiper (<a href="#ref-depiper2014" role="doc-biblioref">2014</a>)</span>). Gear type and trip length (which
+includes multiple hauls) influence the spatial precision.</p></li>
+<li><p>The duration model is then broadly applied to all VTR data. The
+result being a set of maps (or rasters). Each map/raster depicts the
+spatial probability of fishing for a trip.</p></li>
+<li><p>The <code>offshoreWind</code> package then uses these rasters
+combined to determine the landings assigned to any spatial footprint
+supplied. This is achieved by calculating the overlap of the rasters
+with the user supplied spatial footprint.</p></li>
 </ul>
-<p>The shape file shown in Figure @ref(fig:GBfootstat) is supplied to the <code>offshoreWind</code> package and the landings with each statistical area (for each year) are then allocated to each portion of a statistical area (within Georges Bank and outside Georges Bank). The proportion of landings attributed to Georges Bank are then calculated and displayed below.</p>
-<p>The <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies">top ranked species</a> of interest are shown below. Each panel depicts the proportion of landings (for each species) in Georges Bank relative to the statistical area.</p>
+<p>The shape file shown in Figure @ref(fig:GBfootstat) is supplied to
+the <code>offshoreWind</code> package and the landings with each
+statistical area (for each year) are then allocated to each portion of a
+statistical area (within Georges Bank and outside Georges Bank). The
+proportion of landings attributed to Georges Bank are then calculated
+and displayed below.</p>
+<p>The <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies">top
+ranked species</a> of interest are shown below. Each panel depicts the
+proportion of landings (for each species) in Georges Bank relative to
+the statistical area.</p>
 <div class="figure" style="text-align: center">
 <img src="allocateLandingsEPU_files/figure-html/calcpropsst-1.png" alt="Proportion of landings in GB relative to statistical area" width="700"><p class="caption">
 Proportion of landings in GB relative to statistical area
 </p>
 </div>
-<p>The total landings of each species by stat area is shown below. This should ideally be compared to landings from <a href="https://github.com/NOAA-EDAB/comlandr" class="external-link">comlandr</a>. We should also determine how landings on the Canadian side of the Hague line should be handled</p>
+<p>The total landings of each species by stat area is shown below. This
+should ideally be compared to landings from <a href="https://github.com/NOAA-EDAB/comlandr" class="external-link">comlandr</a>. We should
+also determine how landings on the Canadian side of the Hague line
+should be handled</p>
 <div class="figure" style="text-align: center">
 <img src="allocateLandingsEPU_files/figure-html/calclands-1.png" alt="Total landings by statistical area" width="700"><p class="caption">
 Total landings by statistical area
 </p>
 </div>
-<p>The majority of landings (for a species) occurs in statistical areas where the proportion allocated to Georges Bank is fairly constant.</p>
+<p>The majority of landings (for a species) occurs in statistical areas
+where the proportion allocated to Georges Bank is fairly constant.</p>
 </div>
 <div class="section level2 unnumbered">
-<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references">
-<div id="ref-benjamins2018">
-<p>Benjamin, S, Lee, Min-Yang, &amp; DePiper, G. (2018). <em>Visualizing fishing data as rasters</em>.</p>
+<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="ref-benjamins2018" class="csl-entry">
+Benjamin, S, Lee, Min-Yang, &amp; DePiper, G. (2018). <em>Visualizing
+fishing data as rasters</em>.
 </div>
-<div id="ref-depiper2014">
-<p>DePiper, G. (2014). <em>Statistically assessing the precision of self-reported vtr fishing locations</em>. 22.</p>
+<div id="ref-depiper2014" class="csl-entry">
+DePiper, G. S. (2014). <em>Statistically Assessing the Precision of
+Self-reported VTR Fishing Locations</em>. 22.
 </div>
 </div>
 </div>

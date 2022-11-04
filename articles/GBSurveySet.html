@@ -93,12 +93,13 @@
 
 
 
-<script src="GBSurveySet_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>MS Keyrun - GB survey footprint</h1>
                         <h4 data-toc-skip class="author">Sean Lucey</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/GBSurveySet.Rmd" class="external-link"><code>vignettes/GBSurveySet.Rmd</code></a></small>
       <div class="d-none name"><code>GBSurveySet.Rmd</code></div>
@@ -112,13 +113,32 @@
 <div class="section level3">
 <h3 id="spatial-2-approaches-for-georges-bank">Spatial: 2 Approaches for Georges Bank<a class="anchor" aria-label="anchor" href="#spatial-2-approaches-for-georges-bank"></a>
 </h3>
-<p>During the June/July survey <a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank"> (Year, season, area decisions - 8 July 2020) </a> there were two approaches proposed for the spatial footprint of Georges Bank. The ideal footprint would be to define using Georges Bank EPU, scale fisheries catch for each species from stat areas to GB EPU footprint using ratios in spatially explicit VTR subset of catch data.</p>
-<p>While work is ongoing towards segregating the fisheries dependent data, there is a decision to make about how to use the fisheries independent survey. The current definition of the EPU is based on ten-minute squares which does not fit with the survey design. This leaves several options of how to use the survey data. The first set of options is to use the survey design and assign survey strata to Georges Bank. The second set of options is to ignore the survey design and either post-stratify or take a simple average within the EPU.</p>
+<p>During the June/July survey
+<a href="https://noaa-edab.github.io/ms-keyrun/DatasetDimensions.html" target="_blank">
+(Year, season, area decisions - 8 July 2020) </a> there were two
+approaches proposed for the spatial footprint of Georges Bank. The ideal
+footprint would be to define using Georges Bank EPU, scale fisheries
+catch for each species from stat areas to GB EPU footprint using ratios
+in spatially explicit VTR subset of catch data.</p>
+<p>While work is ongoing towards segregating the fisheries dependent
+data, there is a decision to make about how to use the fisheries
+independent survey. The current definition of the EPU is based on
+ten-minute squares which does not fit with the survey design. This
+leaves several options of how to use the survey data. The first set of
+options is to use the survey design and assign survey strata to Georges
+Bank. The second set of options is to ignore the survey design and
+either post-stratify or take a simple average within the EPU.</p>
 </div>
 <div class="section level3">
 <h3 id="opt1">Option 1 - use survey design<a class="anchor" aria-label="anchor" href="#opt1"></a>
 </h3>
-<p>The NEFSC bottom trawl survey uses a stratified random design. The rationale behind a stratified random design is to minimize variance. The figure below shows the full range of strata with the Georges Bank EPU overlaid in red. As you will notice, some of the survey strata extend beyond the EPU boundary. There are several ways that this can be accounted for. The simplest option is to include all strata that are partially within the EPU boundary.</p>
+<p>The NEFSC bottom trawl survey uses a stratified random design. The
+rationale behind a stratified random design is to minimize variance. The
+figure below shows the full range of strata with the Georges Bank EPU
+overlaid in red. As you will notice, some of the survey strata extend
+beyond the EPU boundary. There are several ways that this can be
+accounted for. The simplest option is to include all strata that are
+partially within the EPU boundary.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coast</span> <span class="op">&lt;-</span> <span class="fu">readOGR</span><span class="op">(</span>dsn<span class="op">=</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/gis"</span><span class="op">)</span>, layer<span class="op">=</span><span class="st">'NES_LME_coast'</span>, verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span><span class="va">coast</span> <span class="op">&lt;-</span> <span class="fu">spTransform</span><span class="op">(</span><span class="va">coast</span>, <span class="fu">CRS</span><span class="op">(</span><span class="st">'+init=epsg:4326'</span><span class="op">)</span><span class="op">)</span></span>
@@ -157,7 +177,11 @@
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span><span class="st">'bottomright'</span>, legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'Survey Strata'</span>, <span class="st">'Georges Bank EPU'</span><span class="op">)</span>, </span>
 <span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'black'</span>, <span class="st">'red'</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fl">1</span>, lwd <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GBSurveySet_files/figure-html/Survey_map-1.png" width="700"></p>
-<p>Another option is to include only those strata that are at least 50% within the EPU boundary by area. This was the preferred method of the Northeast IEA program for their State of the Ecosystem report. The map below shows the strata that were included. The medium blue color represents Georges Bank.</p>
+<p>Another option is to include only those strata that are at least 50%
+within the EPU boundary by area. This was the preferred method of the
+Northeast IEA program for their State of the Ecosystem report. The map
+below shows the strata that were included. The medium blue color
+represents Georges Bank.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">opar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3.5</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">77</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">35</span>, <span class="fl">45</span><span class="op">)</span>, xlab <span class="op">=</span> <span class="st">''</span>, ylab <span class="op">=</span> <span class="st">''</span>, axes <span class="op">=</span> <span class="cn">F</span>,</span>
@@ -186,12 +210,19 @@
 <span>       col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span><span class="op">)</span>, <span class="st">'#D65f00'</span><span class="op">)</span>, lty <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>, lwd <span class="op">=</span> <span class="fl">3</span>, </span>
 <span>       x.intersp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="op">-</span><span class="fl">0.5</span>, <span class="fl">4</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GBSurveySet_files/figure-html/SOE-1.png" width="700"></p>
-<p>The difference between these two options would be the inclusion of strata 01100, 01110, and 01120 in the southwest corner of the EPU.</p>
+<p>The difference between these two options would be the inclusion of
+strata 01100, 01110, and 01120 in the southwest corner of the EPU.</p>
 </div>
 <div class="section level3">
 <h3 id="option-2---ignore-survey-design">Option 2 - ignore survey design<a class="anchor" aria-label="anchor" href="#option-2---ignore-survey-design"></a>
 </h3>
-<p>Ignoring the survey design leaves us with two options: a straight mean of the EPU or a post-stratified design. The first option creates large variances which make it difficult to conduct any kind of statistical testing. Other previous work by EDAB stratified Georges Bank into large strata based on whether the area was considered open access or withing a closed area, inside or outside of US waters, and the shelf break.</p>
+<p>Ignoring the survey design leaves us with two options: a straight
+mean of the EPU or a post-stratified design. The first option creates
+large variances which make it difficult to conduct any kind of
+statistical testing. Other previous work by EDAB stratified Georges Bank
+into large strata based on whether the area was considered open access
+or withing a closed area, inside or outside of US waters, and the shelf
+break.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">opar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par</a></span><span class="op">(</span>mar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3.5</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, xlim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">72</span>, <span class="op">-</span><span class="fl">65</span><span class="op">)</span>, ylim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">38</span>, <span class="fl">43</span><span class="op">)</span>, xlab <span class="op">=</span> <span class="st">''</span>, ylab <span class="op">=</span> <span class="st">''</span>, axes <span class="op">=</span> <span class="cn">F</span>,</span>
@@ -215,7 +246,12 @@
 <div class="section level2">
 <h2 id="testing-the-options">Testing the options<a class="anchor" aria-label="anchor" href="#testing-the-options"></a>
 </h2>
-<p>To see if there was an noticeable difference between the three options outlined above (All - Any strata that is at least partially within the GB EPU boundary, SOE - strata set used by the State of the Ecosystem report, and EPU - post-stratified EPU) biomass indices were calculated for the top 11 species that will be included in the MS Keyrun project.</p>
+<p>To see if there was an noticeable difference between the three
+options outlined above (All - Any strata that is at least partially
+within the GB EPU boundary, SOE - strata set used by the State of the
+Ecosystem report, and EPU - post-stratified EPU) biomass indices were
+calculated for the top 11 species that will be included in the MS Keyrun
+project.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span>; <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span>; <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://rgdal.r-forge.r-project.org" class="external-link">rgdal</a></span><span class="op">)</span><span class="co">#; library(Survdat);</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>; <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/NOAA-EDAB/survdat" class="external-link">survdat</a></span><span class="op">)</span></span>
@@ -290,7 +326,12 @@
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">survey.plot</span><span class="op">)</span></span></code></pre></div>
 <p><img src="GBSurveySet_files/figure-html/test-1.png" width="700"></p>
-<p>As you can see, all three spatial footprints give similar trends with only minimal differences in the magnitudes. Therefore it was decided at a working group meeting on 11/4/2020 to use the survey strata set from the State of the Ecosystem report. This accomplishes two goals. First it stays consistent with the survey design of the survey. Second it is consistent with other ecosystem products coming out of the Center.</p>
+<p>As you can see, all three spatial footprints give similar trends with
+only minimal differences in the magnitudes. Therefore it was decided at
+a working group meeting on 11/4/2020 to use the survey strata set from
+the State of the Ecosystem report. This accomplishes two goals. First it
+stays consistent with the survey design of the survey. Second it is
+consistent with other ecosystem products coming out of the Center.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -93,7 +93,8 @@
 
 
 
-<script src="GBbiomassNumbyLength_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+
+<div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Biomass and Abundance by length</h1>
             
@@ -104,9 +105,21 @@
 
     
     
-<p>The length based multispecies model (Hydra) requires annual indices of biomass and abundance by species size class. The NEFSC spring and fall <a href="https://noaa-edab.github.io/tech-doc/" class="external-link">bottom trawl surveys</a> collect the information required to obtain estimates of these indices</p>
-<p>Each tow/haul during the bottom trawl survey collects the total weight of each fish species caught. A sample of the haul is then taken and each fish in this sample is identified, lengthed (to the nearest cm) and weighed.</p>
-<p>The R package <a href="https://noaa-edab.github.io/survdat/" class="external-link"><code>survdat</code></a> is used to read in the survey data and provide estimates of swept area biomass and abundance on the Georges Bank footprint. The survey strata that define <a href="https://noaa-edab.github.io/ms-keyrun/articles/GBSurveySet.html">Georges Bank</a> are 1090, 1130:1210, 1230, 1250, 3460, 3480, 3490, 3520:3550.</p>
+<p>The length based multispecies model (Hydra) requires annual indices
+of biomass and abundance by species size class. The NEFSC spring and
+fall <a href="https://noaa-edab.github.io/tech-doc/" class="external-link">bottom trawl
+surveys</a> collect the information required to obtain estimates of
+these indices</p>
+<p>Each tow/haul during the bottom trawl survey collects the total
+weight of each fish species caught. A sample of the haul is then taken
+and each fish in this sample is identified, lengthed (to the nearest cm)
+and weighed.</p>
+<p>The R package <a href="https://noaa-edab.github.io/survdat/" class="external-link"><code>survdat</code></a> is
+used to read in the survey data and provide estimates of swept area
+biomass and abundance on the Georges Bank footprint. The survey strata
+that define <a href="https://noaa-edab.github.io/ms-keyrun/articles/GBSurveySet.html">Georges
+Bank</a> are 1090, 1130:1210, 1230, 1250, 3460, 3480, 3490,
+3520:3550.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/R/create_real_survey_lennumcomp.r"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">create_real_survey_lennumcomp</span><span class="op">(</span>convertKGtoMT<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -127,7 +140,7 @@
 <span><span class="co">##  [91] 3523 3524 3525 3526 3527 3528 3529 3530 3531 3532 3533 3534 3535 3536 3537</span></span>
 <span><span class="co">## [106] 3538 3539 3540 3541 3542 3543 3544 3545 3546 3547 3548 3549 3550</span></span></code></pre>
 <div class="section level2 tabset">
-<h2 id="spring-biomass-length-frequency-plots">Spring Biomass: length-frequency plots<a class="anchor" aria-label="anchor" href="#spring-biomass-length-frequency-plots"></a>
+<h2 class="tabset" id="spring-biomass-length-frequency-plots">Spring Biomass: length-frequency plots<a class="anchor" aria-label="anchor" href="#spring-biomass-length-frequency-plots"></a>
 </h2>
 
 
@@ -195,7 +208,7 @@
 </div>
 </div>
 <div class="section level2 tabset">
-<h2 id="fall-biomass-length-frequency-plots">Fall Biomass: length-frequency plots<a class="anchor" aria-label="anchor" href="#fall-biomass-length-frequency-plots"></a>
+<h2 class="tabset" id="fall-biomass-length-frequency-plots">Fall Biomass: length-frequency plots<a class="anchor" aria-label="anchor" href="#fall-biomass-length-frequency-plots"></a>
 </h2>
 
 
@@ -263,7 +276,7 @@
 </div>
 </div>
 <div class="section level2 tabset">
-<h2 id="spring-abundance-length-frequency-plots">Spring Abundance: length-frequency plots<a class="anchor" aria-label="anchor" href="#spring-abundance-length-frequency-plots"></a>
+<h2 class="tabset" id="spring-abundance-length-frequency-plots">Spring Abundance: length-frequency plots<a class="anchor" aria-label="anchor" href="#spring-abundance-length-frequency-plots"></a>
 </h2>
 
 
@@ -331,7 +344,7 @@
 </div>
 </div>
 <div class="section level2 tabset">
-<h2 id="fall-abundance-length-frequency-plots">Fall Abundance: length-frequency plots<a class="anchor" aria-label="anchor" href="#fall-abundance-length-frequency-plots"></a>
+<h2 class="tabset" id="fall-abundance-length-frequency-plots">Fall Abundance: length-frequency plots<a class="anchor" aria-label="anchor" href="#fall-abundance-length-frequency-plots"></a>
 </h2>
 
 

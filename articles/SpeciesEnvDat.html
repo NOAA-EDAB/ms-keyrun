@@ -93,16 +93,17 @@
 
 
 
-<script src="SpeciesEnvDat_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="SpeciesEnvDat_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="SpeciesEnvDat_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
-<script src="SpeciesEnvDat_files/datatables-binding-0.25/datatables.js"></script><link href="SpeciesEnvDat_files/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet">
-<link href="SpeciesEnvDat_files/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet">
-<script src="SpeciesEnvDat_files/dt-core-1.11.3/js/jquery.dataTables.min.js"></script><link href="SpeciesEnvDat_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="SpeciesEnvDat_files/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="SpeciesEnvDat_files/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet">
+<script src="SpeciesEnvDat_files/datatables-binding-0.26/datatables.js"></script><link href="SpeciesEnvDat_files/dt-core-1.12.1/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="SpeciesEnvDat_files/dt-core-1.12.1/css/jquery.dataTables.extra.css" rel="stylesheet">
+<script src="SpeciesEnvDat_files/dt-core-1.12.1/js/jquery.dataTables.min.js"></script><link href="SpeciesEnvDat_files/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
 <script src="SpeciesEnvDat_files/crosstalk-1.2.0/js/crosstalk.min.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>MS Keyrun Species, Environment, Data Formats</h1>
-                        <h4 data-toc-skip class="author">Sarah Gaichas</h4>
+                        <h4 data-toc-skip class="author">Sarah
+Gaichas</h4>
             
-            <h4 data-toc-skip class="date">06 October, 2022</h4>
+            <h4 data-toc-skip class="date">04 November, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/SpeciesEnvDat.Rmd" class="external-link"><code>vignettes/SpeciesEnvDat.Rmd</code></a></small>
       <div class="d-none name"><code>SpeciesEnvDat.Rmd</code></div>
@@ -113,7 +114,8 @@
 <div class="section level2">
 <h2 id="species-lists">Species lists<a class="anchor" aria-label="anchor" href="#species-lists"></a>
 </h2>
-<p>(We first pull species lists from the Rpath model and load the survey results.)</p>
+<p>(We first pull species lists from the Rpath model and load the survey
+results.)</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Sean's file from https://github.com/NOAA-EDAB/GBRpath/blob/master/data/SOE_species_list.RData</span></span>
 <span><span class="co"># loads the RData as object "species"</span></span>
@@ -155,9 +157,17 @@
 <div class="section level3">
 <h3 id="focalSpecies">Multispecies models (focal species)<a class="anchor" aria-label="anchor" href="#focalSpecies"></a>
 </h3>
-<p>Multispecies models focus on a subset of interacting species. They will estimate population parameters based on fits to biomass, catch, and (if appropriate) size or age information, establish reference points, and evaluate status for the interacting species.</p>
-<p>Decision: Use the top ranked 10 species in the table below: Atlantic herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter skate. Rationale: These species occupy Georges Bank while pollock is found more in the neighboring Gulf of Maine.</p>
-<p>These species received &gt;2 vote for inclusion in MS-Keyrun multispecies models:</p>
+<p>Multispecies models focus on a subset of interacting species. They
+will estimate population parameters based on fits to biomass, catch, and
+(if appropriate) size or age information, establish reference points,
+and evaluate status for the interacting species.</p>
+<p>Decision: Use the top ranked 10 species in the table below: Atlantic
+herring, Atlantic cod, goosefish, haddock, spiny dogfish, winter
+founder, yellowtail flounder, Atlantic mackerel, silver hake, and winter
+skate. Rationale: These species occupy Georges Bank while pollock is
+found more in the neighboring Gulf of Maine.</p>
+<p>These species received &gt;2 vote for inclusion in MS-Keyrun
+multispecies models:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># each row is a response with a comma delimited list of species</span></span>
 <span><span class="co"># string split each row to species</span></span>
@@ -249,30 +259,46 @@
 </tr>
 </tbody>
 </table>
-<p>Species modeled by all compared multispecies models could include all of these, or could be limited to a subset.</p>
+<p>Species modeled by all compared multispecies models could include all
+of these, or could be limited to a subset.</p>
 </div>
 <div class="section level3">
 <h3 id="food-web-model-focal-rest-of-system">Food web model (focal + rest of system)<a class="anchor" aria-label="anchor" href="#food-web-model-focal-rest-of-system"></a>
 </h3>
-<p>The food web model is intended to examine wider ecosystem responses to management measures applied to a subset of interacting species. It will estimate predator-prey interaction and other parameters based on fits to biomass, catch, and diet information. This model should track general trends (if not interannual variability) for focal species and produce reasonable reactions by their predators and prey.</p>
-<p>Current species groups in the GB Rpath model (all retained for MS-Keyrun):</p>
+<p>The food web model is intended to examine wider ecosystem responses
+to management measures applied to a subset of interacting species. It
+will estimate predator-prey interaction and other parameters based on
+fits to biomass, catch, and diet information. This model should track
+general trends (if not interannual variability) for focal species and
+produce reasonable reactions by their predators and prey.</p>
+<p>Current species groups in the GB Rpath model (all retained for
+MS-Keyrun):</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">datatable</span><span class="op">(</span><span class="va">rpathlist</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>          options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">25</span>, </span>
 <span>                         order <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">'asc'</span><span class="op">)</span><span class="op">)</span></span>
 <span>          <span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="htmlwidget-0ec788b56e62e79b2518" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-0ec788b56e62e79b2518">{"x":{"filter":"none","vertical":false,"data":[["Redfish","AmLobster","AmPlaice","AmShad","Cod","AtlCroaker","AtlHalibut","AtlHerring","AtlMackerel","Barndoor","BlackSeaBass","Bluefish","Butterfish","RedCrab","Fourspot","Goosefish","Haddock","LittleSkate","Loligo","Illex","NShrimp","OceanPout","OffHake","Pollock","RedDrum","RedHake","Scup","AtlScallop","SilverHake","SmoothDogfish","SpinyDogfish","StripedBass","SummerFlounder","Weakfish","WhiteHake","Windowpane","WinterFlounder","WinterSkate","WitchFlounder","YTFlounder","SouthernDemersals","OtherDemersals","OtherPelagics","Mesopelagics","Sharks","Megabenthos","Macrobenthos","Freshwater","OtherFlatfish","OtherShrimps","Rays","SmPelagics","OtherCephalopods","LargePelagics","Fauna","OtherSkates","SmFlatfishes","Turtles","Tilefish","Sturgeon","SmallPelagics","Clams","HMS","RiverHerring"],["ACADIAN REDFISH","AMERICAN LOBSTER","AMERICAN PLAICE","AMERICAN SHAD","ATLANTIC COD","ATLANTIC CROAKER","ATLANTIC HALIBUT","ATLANTIC HERRING","ATLANTIC MACKEREL","BARNDOOR SKATE","BLACK SEA BASS","BLUEFISH","BUTTERFISH","CRAB,RED DEEPSEA","FOURSPOT FLOUNDER","GOOSEFISH","HADDOCK","LITTLE SKATE","LONGFIN SQUID","NORTHERN SHORTFIN SQUID","NORTHERN SHRIMP","OCEAN POUT","OFFSHORE HAKE","POLLOCK","RED DRUM","RED HAKE","SCUP","SEA SCALLOP","SILVER HAKE","SMOOTH DOGFISH","SPINY DOGFISH","STRIPED BASS","SUMMER FLOUNDER","WEAKFISH","WHITE HAKE","WINDOWPANE","WINTER FLOUNDER","WINTER SKATE","WITCH FLOUNDER","YELLOWTAIL FLOUNDER",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["SEBASTES FASCIATUS","HOMARUS AMERICANUS","HIPPOGLOSSOIDES PLATESSOIDES","ALOSA SAPIDISSIMA","GADUS MORHUA","MICROPOGONIAS UNDULATUS","HIPPOGLOSSUS HIPPOGLOSSUS","CLUPEA HARENGUS","SCOMBER SCOMBRUS","DIPTURUS LAEVIS","CENTROPRISTIS STRIATA","POMATOMUS SALTATRIX","PEPRILUS TRIACANTHUS","CHACEON QUINQUEDENS","PARALICHTHYS OBLONGUS","LOPHIUS AMERICANUS","MELANOGRAMMUS AEGLEFINUS","LEUCORAJA ERINACEA","LOLIGO PEALEII","ILLEX ILLECEBROSUS","PANDALUS BOREALIS","ZOARCES AMERICANUS","MERLUCCIUS ALBIDUS","POLLACHIUS VIRENS","SCIAENOPS OCELLATUS","UROPHYCIS CHUSS","STENOTOMUS CHRYSOPS","PLACOPECTEN MAGELLANICUS","MERLUCCIUS BILINEARIS","MUSTELUS CANIS","SQUALUS ACANTHIAS","MORONE SAXATILIS","PARALICHTHYS DENTATUS","CYNOSCION REGALIS","UROPHYCIS TENUIS","SCOPHTHALMUS AQUOSUS","PSEUDOPLEURONECTES AMERICANUS ","LEUCORAJA OCELLATA","GLYPTOCEPHALUS CYNOGLOSSUS","LIMANDA FERRUGINEA ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[155,301,102,35,73,136,101,32,121,22,141,135,131,310,104,197,74,26,503,502,306,193,69,75,654,77,143,401,72,13,15,139,103,145,76,108,106,23,107,105,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,256,142,75,64,51,48,42,38,30,28,20,20,18,16,15,13,11,11,7,4,3,2,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>RPATH<\/th>\n      <th>COMNAME<\/th>\n      <th>SCINAME<\/th>\n      <th>SVSPP<\/th>\n      <th>Nspp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"order":[[0,"asc"]],"columnDefs":[{"className":"dt-right","targets":[3,4]}],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-a9fc753d72cb5bb0bf1a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a9fc753d72cb5bb0bf1a">{"x":{"filter":"none","vertical":false,"data":[["Redfish","AmLobster","AmPlaice","AmShad","Cod","AtlCroaker","AtlHalibut","AtlHerring","AtlMackerel","Barndoor","BlackSeaBass","Bluefish","Butterfish","RedCrab","Fourspot","Goosefish","Haddock","LittleSkate","Loligo","Illex","NShrimp","OceanPout","OffHake","Pollock","RedDrum","RedHake","Scup","AtlScallop","SilverHake","SmoothDogfish","SpinyDogfish","StripedBass","SummerFlounder","Weakfish","WhiteHake","Windowpane","WinterFlounder","WinterSkate","WitchFlounder","YTFlounder","SouthernDemersals","OtherDemersals","OtherPelagics","Mesopelagics","Sharks","Megabenthos","Macrobenthos","Freshwater","OtherFlatfish","OtherShrimps","Rays","SmPelagics","OtherCephalopods","LargePelagics","Fauna","OtherSkates","SmFlatfishes","Turtles","Tilefish","Sturgeon","SmallPelagics","Clams","HMS","RiverHerring"],["ACADIAN REDFISH","AMERICAN LOBSTER","AMERICAN PLAICE","AMERICAN SHAD","ATLANTIC COD","ATLANTIC CROAKER","ATLANTIC HALIBUT","ATLANTIC HERRING","ATLANTIC MACKEREL","BARNDOOR SKATE","BLACK SEA BASS","BLUEFISH","BUTTERFISH","CRAB,RED DEEPSEA","FOURSPOT FLOUNDER","GOOSEFISH","HADDOCK","LITTLE SKATE","LONGFIN SQUID","NORTHERN SHORTFIN SQUID","NORTHERN SHRIMP","OCEAN POUT","OFFSHORE HAKE","POLLOCK","RED DRUM","RED HAKE","SCUP","SEA SCALLOP","SILVER HAKE","SMOOTH DOGFISH","SPINY DOGFISH","STRIPED BASS","SUMMER FLOUNDER","WEAKFISH","WHITE HAKE","WINDOWPANE","WINTER FLOUNDER","WINTER SKATE","WITCH FLOUNDER","YELLOWTAIL FLOUNDER",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],["SEBASTES FASCIATUS","HOMARUS AMERICANUS","HIPPOGLOSSOIDES PLATESSOIDES","ALOSA SAPIDISSIMA","GADUS MORHUA","MICROPOGONIAS UNDULATUS","HIPPOGLOSSUS HIPPOGLOSSUS","CLUPEA HARENGUS","SCOMBER SCOMBRUS","DIPTURUS LAEVIS","CENTROPRISTIS STRIATA","POMATOMUS SALTATRIX","PEPRILUS TRIACANTHUS","CHACEON QUINQUEDENS","PARALICHTHYS OBLONGUS","LOPHIUS AMERICANUS","MELANOGRAMMUS AEGLEFINUS","LEUCORAJA ERINACEA","LOLIGO PEALEII","ILLEX ILLECEBROSUS","PANDALUS BOREALIS","ZOARCES AMERICANUS","MERLUCCIUS ALBIDUS","POLLACHIUS VIRENS","SCIAENOPS OCELLATUS","UROPHYCIS CHUSS","STENOTOMUS CHRYSOPS","PLACOPECTEN MAGELLANICUS","MERLUCCIUS BILINEARIS","MUSTELUS CANIS","SQUALUS ACANTHIAS","MORONE SAXATILIS","PARALICHTHYS DENTATUS","CYNOSCION REGALIS","UROPHYCIS TENUIS","SCOPHTHALMUS AQUOSUS","PSEUDOPLEURONECTES AMERICANUS ","LEUCORAJA OCELLATA","GLYPTOCEPHALUS CYNOGLOSSUS","LIMANDA FERRUGINEA ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[155,301,102,35,73,136,101,32,121,22,141,135,131,310,104,197,74,26,503,502,306,193,69,75,654,77,143,401,72,13,15,139,103,145,76,108,106,23,107,105,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,256,142,75,64,51,48,42,38,30,28,20,20,18,16,15,13,11,11,7,4,3,2,2,2]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>RPATH<\/th>\n      <th>COMNAME<\/th>\n      <th>SCINAME<\/th>\n      <th>SVSPP<\/th>\n      <th>Nspp<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"order":[[0,"asc"]],"columnDefs":[{"className":"dt-right","targets":[3,4]}],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div class="section level2">
 <h2 id="envrionmental-data">Envrionmental data<a class="anchor" aria-label="anchor" href="#envrionmental-data"></a>
 </h2>
-<p>Hydra, the length-based multispecies model, already incorporates a time series of Georges Bank bottom temperature as a covariate in simulation mode to force changes in growth, maturity, and recruitment. For MS-Keyrun, we can explore fitting the parameters governing the influence of this covariate.</p>
-<p>Rpath can be directly forced by a primary production time series, and temperature-based mediation functions can be included (but it is unclear whether parameters can be fit for these functions).</p>
-<p>Two mulispecies models are not currently set up to incorporate environmental data: MSCAA, MSSPM/Kraken</p>
-<p>The WHAM model can potentially incorporate any environmental time series that can influence recruitment or mortality.</p>
-<p>These environmental time series received &gt;1 vote for inclusion in MS-Keyrun multispecies and Rpath models:</p>
+<p>Hydra, the length-based multispecies model, already incorporates a
+time series of Georges Bank bottom temperature as a covariate in
+simulation mode to force changes in growth, maturity, and recruitment.
+For MS-Keyrun, we can explore fitting the parameters governing the
+influence of this covariate.</p>
+<p>Rpath can be directly forced by a primary production time series, and
+temperature-based mediation functions can be included (but it is unclear
+whether parameters can be fit for these functions).</p>
+<p>Two mulispecies models are not currently set up to incorporate
+environmental data: MSCAA, MSSPM/Kraken</p>
+<p>The WHAM model can potentially incorporate any environmental time
+series that can influence recruitment or mortality.</p>
+<p>These environmental time series received &gt;1 vote for inclusion in
+MS-Keyrun multispecies and Rpath models:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># each row is a response with a comma delimited list of environmental data</span></span>
 <span><span class="co"># string split each row to dataset name</span></span>
@@ -343,8 +369,11 @@
 </tr>
 </tbody>
 </table>
-<p>Decision: We will include GB temperature and primary production time series as part of the MS-Keyrun dataset. Modelers may retrieve additional data from <code>ecodata</code>.</p>
-<p>The <code>ecodata</code> R package has up to date information at the Georges Bank EPU scale as listed here: <a href="https://noaa-edab.github.io/ecodata/landing_page" class="external-link uri">https://noaa-edab.github.io/ecodata/landing_page</a>.</p>
+<p>Decision: We will include GB temperature and primary production time
+series as part of the MS-Keyrun dataset. Modelers may retrieve
+additional data from <code>ecodata</code>.</p>
+<p>The <code>ecodata</code> R package has up to date information at the
+Georges Bank EPU scale as listed here: <a href="https://noaa-edab.github.io/ecodata/landing_page" class="external-link uri">https://noaa-edab.github.io/ecodata/landing_page</a>.</p>
 <p>Current time series in ecodata:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#remotes::install_github("noaa-edab/ecodata",build_vignettes=TRUE)</span></span>
@@ -355,13 +384,14 @@
 <span><span class="fu">datatable</span><span class="op">(</span><span class="va">ecodsets</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span>, </span>
 <span>          options <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>pageLength <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div id="htmlwidget-5c593a2d897bab635353" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-5c593a2d897bab635353">{"x":{"filter":"none","vertical":false,"data":[["abc.acl","aggregate_biomass","aquaculture","bennet","blue_runner","bottom_heatwave","bottom_temp","bottom_temp_glorys","calanus_stage","ch_bay_sal","ch_bay_temp","ches_bay_sf","ches_bay_sst","ches_bay_wq","chl_pp","coast","cold_pool","cold_pool_sf","comdat","commercial_div","energy_density","engagement","epu_sf","ESP_gsi","ESP_heatwave","ESP_heatwave_cod","ESP_seasonal_chl","ESP_seasonal_oisst_anom","ESP_seasonal_pp","ESP_sf","exp_n","forage_anomaly","grayseal","gsi","gsi_old","habitat_occupancy","habitat_vulnerability","habs","harborporpoise","heatwave","heatwave_anom_gridded","heatwave_peak_date","heatwave_year","hms_category","hms_cpue","hms_landings","hms_stock_status","hp_density","hudson_river_flow","ichthyo_diversity","long_line_survey","long_term_sst","longlinesurvey_sf","lps_sharks","mab_inshore_survey","mass_inshore_survey","nao","narw","ne_inshore_survey","ne_inshore_survey_species","nefsc_survey","nefsc_survey_disaggregated","observed_sharks","phyto_size","ppr","productivity_anomaly","rec_hms","recdat","sandlance","SAV","seabird_mab (seabird_MAB)","seabird_ne","seal_pups","seasonal_oisst_anom","seasonal_sst_anomaly_gridded","sharks","slopewater","species_dist","species_groupings","stock_status","stom_fullness","survey_shannon","wcr","wea_landings_rev","wind_dev_speed","wind_occupancy","wind_port","wind_revenue","zoo_abund","zoo_diversity","zoo_oi","zoo_sli_anom","zoo_strat_abun"],["MAMFC ABC or ACL for Managed Stocks","NEFSC survey data broken into season and aggregate group biomass","Oyster aquaculture","Bennet indicator","SAFMC managed Blue Runner presence on NES","Bottom heatwaves","Bottom temperature","Bottom temperature - GLORYS","Calanus Stage","Chesapeake Bay salinity with historical trends for comparison","Chesapeake Bay temperature with historical trends for comparison","","Chesapeake Bay Gridded Sea Surface Temperature","Chesapeake Bay Water Quality Attainment","Chlorophyll _a_ and primary production","Coast","Cold pool index","Cold pool sf index","Aggregated commercial fisheries data","Commercial fisheries diversity","Forage fish energy density","Commercial and recreational fishery social-economic indicators","Ecological Production Units","","","","","","","","Expected Number of Species per 1000 Individuals","Forage Anomaly","Gray Seal Bycatch","Gulf Stream Index","","Habitat Occupancy","Habitat Vulnerability","Harmful Algal Blooms - Alexandrium and Paralitic Shellfish Poisoning","Harbor porpoise bycatch","Marine Heatwaves","Maximum heatwave day gridded","Maximum heatwave peak day gridded","Marine heatwaves within most recent year","Highly Migratory Species Category","Highly Migratory Species Catch per Unit Effort","Highly Migratory Species Landings and Revenue","Highly Migratory species stock status","Harbor porpoise density estimates","Hudson River Flow","Ichthyoplankton diversity","Long-line Survey","Long-term SST","Long-Line Survey Strata Shapefile","Large Pelagics Survey - Shark Data","NEAMAP Mid-Atlantic inshore trawl survey","Massachusetts inshore bottom trawl survey","","North Atlantic right whale abundance","New England inshore state survey data","","NEFSC Bottom Trawl Survey (aggregated)","NEFSC Bottom Trawl Survey (species-level)","NE Observer program Shark data","Phytoplankton size class","Ecosystem Overfishing Inidcators","Small fish per large fish biomass anomaly","Recreational shark fishing landings","Recreational fishing indicators","Stellwagen Bank Sandlance","Chesapeake Bay Submerged Aquatic Vegetation","Virginia waterbird productivity","Common tern productivity and diet composition","Seal Pups","Sea-surface temperature anomaly time serries","Sea-surface temperature anomaly","","Northeast Channel slopewater proportions","Species distribution on the NES.","Species groupings","Managed species stock status","Stomach fullness index calculated from NEFSC fall bottom trawl surveys","Shannon Diversity of NEFSC Bottom Trawl Survey","Warm core rings spun off of gulf stream","Fisheries max and min landings and revenue from wind energy areas (WEAs)","Wind energy development speed","Wind lease area and habitat occupancy model overlap","Community Port Landings and Revenue from Wind Energy Areas (WEAs)","Fisheries revenue from wind lease areas","Zooplankton abundance (EcoMon seasonal and interpolated)","Zooplankton diversity","Zooplankton abundance (EcoMon seasonal and interpolated)","Zooplankton small large index","Zooplankton small large absolute values"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Item<\/th>\n      <th>Title<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-ecd5c86f151278bf47a8" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ecd5c86f151278bf47a8">{"x":{"filter":"none","vertical":false,"data":[["abc.acl","aggregate_biomass","aquaculture","bennet","blue_runner","bottom_heatwave","bottom_temp","bottom_temp_glorys","calanus_stage","ch_bay_sal","ch_bay_temp","ches_bay_sf","ches_bay_sst","ches_bay_wq","chl_pp","coast","cold_pool","cold_pool_sf","comdat","commercial_div","condition","energy_density","engagement","epu_sf","ESP_gsi","ESP_heatwave","ESP_heatwave_cod","ESP_seasonal_chl","ESP_seasonal_oisst_anom","ESP_seasonal_pp","ESP_sf","exp_n","forage_anomaly","forage_index","grayseal","gsi","gsi_old","habitat_occupancy","habitat_vulnerability","habs","harborporpoise","heatwave","heatwave_anom_gridded","heatwave_peak_date","heatwave_year","hms_category","hms_cpue","hms_landings","hms_stock_status","hp_density","hudson_river_flow","ichthyo_diversity","long_line_survey","long_term_sst","longlinesurvey_sf","lps_sharks","mab_inshore_survey","mass_inshore_survey","nao","narw","ne_inshore_survey","ne_inshore_survey_species","nefsc_survey","nefsc_survey_disaggregated","observed_sharks","phyto_size","ppr","productivity_anomaly","rec_hms","recdat","sandlance","SAV","seabird_mab (seabird_MAB)","seabird_ne","seal_pups","seasonal_oisst_anom","seasonal_sst_anomaly_gridded","sharks","slopewater","species_dist","species_groupings","stock_status","stom_fullness","survey_shannon","wcr","wea_landings_rev","wind_dev_speed","wind_occupancy","wind_port","wind_revenue","zoo_abund","zoo_diversity","zoo_oi","zoo_regime","zoo_sli_anom","zoo_strat_abun"],["MAMFC ABC or ACL for Managed Stocks","NEFSC survey data broken into season and aggregate group biomass","Oyster aquaculture","Bennet indicator","SAFMC managed Blue Runner presence on NES","Bottom heatwaves","Bottom temperature","Bottom temperature - GLORYS","Calanus Stage","Chesapeake Bay salinity with historical trends for comparison","Chesapeake Bay temperature with historical trends for comparison","","Chesapeake Bay Gridded Sea Surface Temperature","Chesapeake Bay Water Quality Attainment","Chlorophyll _a_ and primary production","Coast","Cold pool index","Cold pool sf index","Aggregated commercial fisheries data","Commercial fisheries diversity","","Forage fish energy density","Commercial and recreational fishery social-economic indicators","Ecological Production Units","","","","","","","","Expected Number of Species per 1000 Individuals","Forage Anomaly","","Gray Seal Bycatch","Gulf Stream Index","","Habitat Occupancy","Habitat Vulnerability","Harmful Algal Blooms - Alexandrium and Paralitic Shellfish Poisoning","Harbor porpoise bycatch","Marine Heatwaves","Maximum heatwave day gridded","Maximum heatwave peak day gridded","Marine heatwaves within most recent year","Highly Migratory Species Category","Highly Migratory Species Catch per Unit Effort","Highly Migratory Species Landings and Revenue","Highly Migratory species stock status","Harbor porpoise density estimates","Hudson River Flow","Ichthyoplankton diversity","Long-line Survey","Long-term SST","Long-Line Survey Strata Shapefile","Large Pelagics Survey - Shark Data","NEAMAP Mid-Atlantic inshore trawl survey","Massachusetts inshore bottom trawl survey","","North Atlantic right whale abundance","New England inshore state survey data","","NEFSC Bottom Trawl Survey (aggregated)","NEFSC Bottom Trawl Survey (species-level)","NE Observer program Shark data","Phytoplankton size class","Ecosystem Overfishing Inidcators","Small fish per large fish biomass anomaly","Recreational shark fishing landings","Recreational fishing indicators","Stellwagen Bank Sandlance","Chesapeake Bay Submerged Aquatic Vegetation","Virginia waterbird productivity","Common tern productivity and diet composition","Seal Pups","Sea-surface temperature anomaly time serries","Sea-surface temperature anomaly","","Northeast Channel slopewater proportions","Species distribution on the NES.","Species groupings","Managed species stock status","Stomach fullness index calculated from NEFSC fall bottom trawl surveys","Shannon Diversity of NEFSC Bottom Trawl Survey","Warm core rings spun off of gulf stream","Fisheries max and min landings and revenue from wind energy areas (WEAs)","Wind energy development speed","Wind lease area and habitat occupancy model overlap","Community Port Landings and Revenue from Wind Energy Areas (WEAs)","Fisheries revenue from wind lease areas","Zooplankton abundance (EcoMon seasonal and interpolated)","Zooplankton diversity","Zooplankton abundance (EcoMon seasonal and interpolated)","","Zooplankton small large index","Zooplankton small large absolute values"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Item<\/th>\n      <th>Title<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":25,"columnDefs":[],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
 <h2 id="programming-frameworks-and-data-formats">Programming frameworks and data formats<a class="anchor" aria-label="anchor" href="#programming-frameworks-and-data-formats"></a>
 </h2>
-<p>Most models are either implemented in R or can work directly with R datasets:</p>
+<p>Most models are either implemented in R or can work directly with R
+datasets:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># these are multiple choice yes/no so just plot</span></span>
 <span></span>
@@ -425,8 +455,11 @@
 </tr>
 </tbody>
 </table>
-<p>Decision: All surveyed agreed that we should maintain datasets within an R data package for the MS-Keyrun project.</p>
-<p>See <a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq" class="external-link">discussion</a> of pros and cons of using R data package for standardizing input datasets and making them available.</p>
+<p>Decision: All surveyed agreed that we should maintain datasets within
+an R data package for the MS-Keyrun project.</p>
+<p>See <a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.kvnvc0pxyvqq" class="external-link">discussion</a>
+of pros and cons of using R data package for standardizing input
+datasets and making them available.</p>
 </div>
 <div class="section level2">
 <h2 id="full-survey-results">Full survey results<a class="anchor" aria-label="anchor" href="#full-survey-results"></a>
@@ -434,7 +467,8 @@
 <div class="section level3">
 <h3 id="survey-conducted-july-13-29-2020">Survey conducted July 13-29 2020<a class="anchor" aria-label="anchor" href="#survey-conducted-july-13-29-2020"></a>
 </h3>
-<p><a href="https://forms.gle/gfA3tKFKRBxf3Mu38" class="external-link">This is the survey form.</a></p>
+<p><a href="https://forms.gle/gfA3tKFKRBxf3Mu38" class="external-link">This is the survey
+form.</a></p>
 <p>We had 6 responses.</p>
 </div>
 <div class="section level3">
@@ -456,22 +490,31 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">10 of these already in Hydra. 3 others (Pollock, white hake, red hake) may be included at some point in future</td>
+<td align="left">10 of these already in Hydra. 3 others (Pollock, white
+hake, red hake) may be included at some point in future</td>
 </tr>
 <tr class="even">
-<td align="left">Major GB predator and prey species; Also included WFl, YFl and Haddock because of their commercial importance but they are not essential because they are not primary prey or predator species,</td>
+<td align="left">Major GB predator and prey species; Also included WFl,
+YFl and Haddock because of their commercial importance but they are not
+essential because they are not primary prey or predator species,</td>
 </tr>
 <tr class="odd">
-<td align="left">We have only tested MSSPM for models with 5 species. This keyrun project will be a further test of the software’s capacity/capabilities. A model that uses a smaller subset of key species should still be useful for multiple model inference.</td>
+<td align="left">We have only tested MSSPM for models with 5 species.
+This keyrun project will be a further test of the software’s
+capacity/capabilities. A model that uses a smaller subset of key species
+should still be useful for multiple model inference.</td>
 </tr>
 <tr class="even">
-<td align="left">Selected species will be focus of research track assessments in 2021-2026. No other reasoning applied.</td>
+<td align="left">Selected species will be focus of research track
+assessments in 2021-2026. No other reasoning applied.</td>
 </tr>
 <tr class="odd">
 <td align="left">GB Rpath is a full foodweb model</td>
 </tr>
 <tr class="even">
-<td align="left">This is probably too many, but species that are commercially important and/or forage fish should be included. Perhaps a subset of this</td>
+<td align="left">This is probably too many, but species that are
+commercially important and/or forage fish should be included. Perhaps a
+subset of this</td>
 </tr>
 </tbody>
 </table>
@@ -495,22 +538,29 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left">already used in used in growth, maturity, recruitment (Hydra)</td>
+<td align="left">already used in used in growth, maturity, recruitment
+(Hydra)</td>
 </tr>
 <tr class="even">
-<td align="left">Environmental data currently is not built into the SCAA model</td>
+<td align="left">Environmental data currently is not built into the SCAA
+model</td>
 </tr>
 <tr class="odd">
-<td align="left">Environmental covariates are not yet implemented in the MSSPM version of Kraken, but we may be able to implement some capability.</td>
+<td align="left">Environmental covariates are not yet implemented in the
+MSSPM version of Kraken, but we may be able to implement some
+capability.</td>
 </tr>
 <tr class="even">
-<td align="left">Not much specifically, just thinking of variables with links to fish recruitment.</td>
+<td align="left">Not much specifically, just thinking of variables with
+links to fish recruitment.</td>
 </tr>
 <tr class="odd">
-<td align="left">The Rpath model can be forced by primary production and potentially temperature.</td>
+<td align="left">The Rpath model can be forced by primary production and
+potentially temperature.</td>
 </tr>
 <tr class="even">
-<td align="left">These seem to be the time series that match best to the temporal scale of the models</td>
+<td align="left">These seem to be the time series that match best to the
+temporal scale of the models</td>
 </tr>
 </tbody>
 </table>
@@ -518,7 +568,9 @@
 <div class="section level3">
 <h3 id="model-programming-frameworks">Model programming frameworks<a class="anchor" aria-label="anchor" href="#model-programming-frameworks"></a>
 </h3>
-<p>Many but not all models interface with R and can use R datasets. Even for those that do not, all agreed on using an R data package for standardizing input datasets and making them available.</p>
+<p>Many but not all models interface with R and can use R datasets. Even
+for those that do not, all agreed on using an R data package for
+standardizing input datasets and making them available.</p>
 <p>Responses:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">useR</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">question</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -527,14 +579,17 @@
 <span>       fill <span class="op">=</span> <span class="st">"Short Answer"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html" class="external-link">scale_x_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">str_wrap</span><span class="op">(</span><span class="va">x</span>, width <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SpeciesEnvDat_files/figure-html/plotdat-1.png" width="700"></p>
-<p>Short answer key: “No but” = No but we should be able to implement some R connections to the MSSPM software.<br>
-“Probably, we” = Probably, we would need to sort out how to exprt from R into Mysql</p>
+<p>Short answer key: “No but” = No but we should be able to implement
+some R connections to the MSSPM software.<br>
+“Probably, we” = Probably, we would need to sort out how to exprt from R
+into Mysql</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="meeting-minutes-5-august-2020">Meeting minutes, 5 August 2020<a class="anchor" aria-label="anchor" href="#meeting-minutes-5-august-2020"></a>
 </h2>
-<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.m573izndd2nh" class="external-link">Click here!</a></p>
+<p><a href="https://docs.google.com/document/d/19FpJ8w2a-ZZ8ZY4ZmsnjlIilLeN1X9_Tz1dM-KsdOOw/edit#heading=h.m573izndd2nh" class="external-link">Click
+here!</a></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
