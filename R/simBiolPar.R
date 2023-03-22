@@ -10,6 +10,19 @@
 #'\item{Name}{Atlantis model common name for functional group}
 #'\item{WLa}{Weight-Length equation parameter a, W = aL^b}
 #'\item{WLb}{Weight-Length equation parameter b, W = aL^b}
+#'\item{AgeperAgecl}{Number of annual ages per Atlantis age class}
+#'\item{NAgecl}{Number of Atlantis age classes}
+#'\item{propMatAgecl1}{Proportion mature in Atlantis age class 1}
+#'\item{propMatAgecl2}{Proportion mature in Atlantis age class 2}
+#'\item{propMatAgecl3}{Proportion mature in Atlantis age class 3}
+#'\item{propMatAgecl4}{Proportion mature in Atlantis age class 4}
+#'\item{propMatAgecl5}{Proportion mature in Atlantis age class 5}
+#'\item{propMatAgecl6}{Proportion mature in Atlantis age class 6}
+#'\item{propMatAgecl7}{Proportion mature in Atlantis age class 7}
+#'\item{propMatAgecl8}{Proportion mature in Atlantis age class 8}
+#'\item{propMatAgecl9}{Proportion mature in Atlantis age class 9}
+#'\item{propMatAgecl10}{Proportion mature in Atlantis age class 10}
+
 #' }
 #'
 #'

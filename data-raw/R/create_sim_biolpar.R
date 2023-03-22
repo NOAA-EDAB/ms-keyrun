@@ -12,6 +12,18 @@
 #'\item{Name}{Atlantis model common name for functional group}
 #'\item{WLa}{Weight-Length equation parameter a, W = aL^b}
 #'\item{WLb}{Weight-Length equation parameter b, W = aL^b}
+#'\item{AgeperAgecl}{Number of annual ages per Atlantis age class}
+#'\item{NAgecl}{Number of Atlantis age classes}
+#'\item{propMatAgecl1}{Proportion mature in Atlantis age class 1}
+#'\item{propMatAgecl2}{Proportion mature in Atlantis age class 2}
+#'\item{propMatAgecl3}{Proportion mature in Atlantis age class 3}
+#'\item{propMatAgecl4}{Proportion mature in Atlantis age class 4}
+#'\item{propMatAgecl5}{Proportion mature in Atlantis age class 5}
+#'\item{propMatAgecl6}{Proportion mature in Atlantis age class 6}
+#'\item{propMatAgecl7}{Proportion mature in Atlantis age class 7}
+#'\item{propMatAgecl8}{Proportion mature in Atlantis age class 8}
+#'\item{propMatAgecl9}{Proportion mature in Atlantis age class 9}
+#'\item{propMatAgecl10}{Proportion mature in Atlantis age class 10}
 #'
 
 library(magrittr)
@@ -27,11 +39,16 @@ create_sim_biolpar <- function(atlmod,saveToData=T) {
   modsim <- stringr::str_split(d.name, "/", simplify = TRUE)
   modsim <- modsim[length(modsim)]
   
+  # March 2023 add age to age class and maturity at age class pars for WGSAM
   simBiolPar <- omlist_ss$funct.group_ss %>% 
     dplyr::left_join(omlist_ss$biol$wl, by=c("Code"="group")) %>%
+    dplyr::left_join(omlist_ss$biol$agespercohort, by=c("Code"="1")) %>%
+    dplyr::left_join(omlist_ss$biol$maturityogive, by=c("Code"="code")) %>%
     dplyr::arrange(Name) %>%
     dplyr::mutate(ModSim = modsim) %>%
-    dplyr::select(ModSim, Code, Name, WLa = a, WLb = b) %>%
+    dplyr::select(ModSim, Code, Name, WLa = a, WLb = b, AgeperAgecl = "2",
+                  NAgecl = nagecl, agecl1:agecl9, agecl10 = " agecl10") %>%
+    dplyr::rename_with(~stringr::str_replace(., 'agecl', 'propMatAgecl')) %>%
     dplyr::arrange(Name)
   
   # do von B here also? no, requires fitting to different eras
