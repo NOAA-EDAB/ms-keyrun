@@ -13,6 +13,7 @@ A data frame
 \item{Name}{Atlantis model common name for functional group}
 \item{WLa}{Weight-Length equation parameter a, W = aL^b}
 \item{WLb}{Weight-Length equation parameter b, W = aL^b}
+\item{SpawnMonth}{Spawning month of year converted from Atlantis time_spawn day of year}
 \item{AgeperAgecl}{Number of annual ages per Atlantis age class}
 \item{NAgecl}{Number of Atlantis age classes}
 \item{propMatAgecl1}{Proportion mature in Atlantis age class 1}
