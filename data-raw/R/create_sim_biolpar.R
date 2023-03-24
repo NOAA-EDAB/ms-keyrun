@@ -50,6 +50,7 @@ create_sim_biolpar <- function(atlmod,saveToData=T) {
     #dplyr::rename(DaySpawn = "time_spawn") %>%
     dplyr::mutate(SpawnMonth = ceiling(DaySpawn/(365/12))) %>% 
     dplyr::left_join(omlist_ss$biol$agespercohort, by=c("Code"="1")) %>%
+    #dplyr::left_join(omlist_ss$biol$agespercohort, by=c("Code"="group")) %>%
     dplyr::left_join(omlist_ss$biol$maturityogive, by=c("Code"="code")) %>%
     dplyr::arrange(Name) %>%
     dplyr::mutate(ModSim = modsim) %>%
