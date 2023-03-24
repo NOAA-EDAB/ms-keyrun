@@ -41,6 +41,7 @@ create_sim_biolpar <- function(atlmod,saveToData=T) {
   modsim <- modsim[length(modsim)]
   
   # March 2023 add age to age class and maturity at age class pars for WGSAM
+  # also change for revamped biol object from atlantisom
   simBiolPar <- omlist_ss$funct.group_ss %>% 
     dplyr::left_join(omlist_ss$biol$wl, by=c("Code"="group")) %>%
     dplyr::left_join(omlist_ss$biol$time_spawn, by=c("Code"="1")) %>%
