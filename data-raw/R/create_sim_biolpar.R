@@ -56,6 +56,7 @@ create_sim_biolpar <- function(atlmod,saveToData=T) {
     dplyr::mutate(ModSim = modsim) %>%
     dplyr::select(ModSim, Code, Name, WLa = a, WLb = b, 
                   SpawnMonth, AgeperAgecl = "2",
+                  #SpawnMonth, AgeperAgecl = "agespercohort",
                   NAgecl = nagecl, agecl1:agecl9, agecl10 = " agecl10") %>%
     dplyr::rename_with(~stringr::str_replace(., 'agecl', 'propMatAgecl')) %>%
     dplyr::arrange(Name)
