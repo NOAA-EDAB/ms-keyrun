@@ -118,9 +118,9 @@ True datasets are generated as follows, using `atlantisom` wrapper functions `om
 
 ```{r, eval=FALSE}
 
-NOBAom <- om_init(here("simulated-data/config/NOBA_sacc38Config.R"))
+NOBAom <- om_init(here("data-raw/simulated-data/config/NOBA_sacc38Config.R"))
 
-NOBAom_ms <- om_species(sppsubset$Name, NOBAom)
+NOBAom_ms <- om_species(spptable$Name, NOBAom)
 
 #need to change internal call to source in atlantisom om_index om_comps and om_diet functions
 #expecting a config folder in same directory as rmd
