@@ -1,6 +1,6 @@
 #' The Atlantis-simulated focal species biological parameters in mskeyrun project
 #'
-#' Model name and scenario, Species code, species name, length weight parameters
+#' Model name and scenario, Species code, species name, length weight, and other biological parameters
 #'
 #' @format A data frame
 #'
@@ -10,7 +10,10 @@
 #'\item{Name}{Atlantis model common name for functional group}
 #'\item{WLa}{Weight-Length equation parameter a, W = aL^b}
 #'\item{WLb}{Weight-Length equation parameter b, W = aL^b}
+#'\item{MinPreyWtProp}{Lower limit of prey/predator weight ratio}
+#'\item{MaxPreyWtProp}{Upper limit of prey/predator weight ratio}
 #'\item{SpawnMonth}{Spawning month of year converted from Atlantis time_spawn day of year}
+#'\item{RecruitMonth}{Recruits month of arrival in model converted from Atlantis time_spawn + recruit_time day of year; if >12 recruitment is following year from SpawnMonth}
 #'\item{AgeperAgecl}{Number of annual ages per Atlantis age class}
 #'\item{NAgecl}{Number of Atlantis age classes}
 #'\item{propMatAgecl1}{Proportion mature in Atlantis age class 1}

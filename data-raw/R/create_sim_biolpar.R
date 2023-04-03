@@ -1,4 +1,4 @@
-#' Pull simulatead biological parameters for focal Species for ms-keyrun project
+#' Pull simulated biological parameters for focal Species for ms-keyrun project
 #' 
 #' Gets Atlantis Code, Name (common name), length-weight and other pars in one table
 #'
@@ -12,7 +12,10 @@
 #'\item{Name}{Atlantis model common name for functional group}
 #'\item{WLa}{Weight-Length equation parameter a, W = aL^b}
 #'\item{WLb}{Weight-Length equation parameter b, W = aL^b}
+#'\item{MinPreyWtProp}{Lower limit of prey/predator weight ratio}
+#'\item{MaxPreyWtProp}{Upper limit of prey/predator weight ratio}
 #'\item{SpawnMonth}{Spawning month of year converted from Atlantis time_spawn day of year}
+#'\item{RecruitMonth}{Recruits month of arrival in model converted from Atlantis time_spawn + recruit_time day of year; if >12 recruitment is following year from SpawnMonth}
 #'\item{AgeperAgecl}{Number of annual ages per Atlantis age class}
 #'\item{NAgecl}{Number of Atlantis age classes}
 #'\item{propMatAgecl1}{Proportion mature in Atlantis age class 1}
@@ -44,19 +47,20 @@ create_sim_biolpar <- function(atlmod,saveToData=T) {
   # also change for revamped biol object from atlantisom
   simBiolPar <- omlist_ss$funct.group_ss %>% 
     dplyr::left_join(omlist_ss$biol$wl, by=c("Code"="group")) %>%
-    dplyr::left_join(omlist_ss$biol$time_spawn, by=c("Code"="1")) %>%
-    #dplyr::left_join(omlist_ss$biol$time_spawn, by=c("Code"="group")) %>%
-    dplyr::rename(DaySpawn = "2") %>%
-    #dplyr::rename(DaySpawn = "time_spawn") %>%
+    dplyr::left_join(omlist_ss$biol$klp, by=c("Code"="group")) %>%
+    dplyr::left_join(omlist_ss$biol$kup, by=c("Code"="group")) %>%
+    dplyr::left_join(omlist_ss$biol$time_spawn, by=c("Code"="group")) %>%
+    dplyr::rename(DaySpawn = "time_spawn") %>%
     dplyr::mutate(SpawnMonth = ceiling(DaySpawn/(365/12))) %>% 
-    dplyr::left_join(omlist_ss$biol$agespercohort, by=c("Code"="1")) %>%
-    #dplyr::left_join(omlist_ss$biol$agespercohort, by=c("Code"="group")) %>%
+    dplyr::left_join(omlist_ss$biol$recruit_time, by=c("Code"="group")) %>%
+    dplyr::mutate(RecruitMonth = ceiling((DaySpawn+recruit_time)/(365/12))) %>%
+    dplyr::left_join(omlist_ss$biol$agespercohort, by=c("Code"="group")) %>%
     dplyr::left_join(omlist_ss$biol$maturityogive, by=c("Code"="code")) %>%
     dplyr::arrange(Name) %>%
     dplyr::mutate(ModSim = modsim) %>%
     dplyr::select(ModSim, Code, Name, WLa = a, WLb = b, 
-                  SpawnMonth, AgeperAgecl = "2",
-                  #SpawnMonth, AgeperAgecl = "agespercohort",
+                  MinPreyWtProp = klp, MaxPreyWtProp = kup,
+                  SpawnMonth, RecruitMonth, AgeperAgecl = "agespercohort",
                   NAgecl = nagecl, agecl1:agecl9, agecl10 = " agecl10") %>%
     dplyr::rename_with(~stringr::str_replace(., 'agecl', 'propMatAgecl')) %>%
     dplyr::arrange(Name)
