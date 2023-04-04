@@ -21,6 +21,8 @@ create_sim_focal_species(atlmod)
 
 create_sim_biolpar(atlmod)
 
+create_sim_survey_info(atlmod)
+
 create_sim_survey_index(atlmod, fitstart=40, fitend=120)
 
 create_sim_fishery_index(atlmod, fitstart=40, fitend=120)
