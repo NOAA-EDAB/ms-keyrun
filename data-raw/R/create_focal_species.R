@@ -21,7 +21,7 @@
 
 library(magrittr)
 
-source(here::here("data-raw/R","capitalize_first_letter.r"))
+source(here::here("data-raw/R","capitalize_first_letter.R"))
 
 create_focal_species <- function(channel,saveToData=F) {
   

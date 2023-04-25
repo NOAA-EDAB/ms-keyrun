@@ -5,7 +5,7 @@
 
 library(magrittr)
 #channel <- dbutils::connect_to_database("sole","abeet")
-source(here::here("data-raw/R/clean_lw_data.r"))
+source(here::here("data-raw/R/clean_lw_data.R"))
 
 
 create_lw_table <- function(overwrite=F){

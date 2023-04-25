@@ -18,7 +18,7 @@
 #' 
 
 library(magrittr)
-source(here::here("R","cluster_gears.r"))
+source(here::here("R","cluster_gears.R"))
 
 cluster_analysis_filter_gears <- function(filterByLandings=.99){
 

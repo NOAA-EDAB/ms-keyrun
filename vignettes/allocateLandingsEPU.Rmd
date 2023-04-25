@@ -94,7 +94,7 @@ The [top ranked species](https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.htm
 
 
 ```{r calcpropsst, eval=T,echo = F, fig.align='center',fig.cap="Proportion of landings in GB relative to statistical area", fig.height=8}
-source(here::here("data-raw/R","plot_landings_proportions.r"))
+source(here::here("data-raw/R","plot_landings_proportions.R"))
 plot_landings_proportions(species="rows")
 
 ```
@@ -102,7 +102,7 @@ plot_landings_proportions(species="rows")
 The total landings of each species by stat area is shown below. This should ideally be compared to landings from [comlandr](https://github.com/NOAA-EDAB/comlandr). We should also determine how landings on the Canadian side of the Hague line should be handled
 
 ```{r calclands,  eval=T, echo = F,fig.align='center',fig.cap="Total landings by statistical area", fig.height=8}
-source(here::here("data-raw/R","plot_landings.r"))
+source(here::here("data-raw/R","plot_landings.R"))
 plot_landings()
 
 ```
