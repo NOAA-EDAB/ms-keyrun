@@ -7,7 +7,7 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-source(here::here("data-raw/R/create_lw_table.r"))
+source(here::here("data-raw/R/create_lw_table.R"))
 ```
 
 ```{r, functions, echo = F}

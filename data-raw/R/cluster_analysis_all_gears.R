@@ -1,7 +1,7 @@
 #' Perform cluster analysis
 #' 
 #' Uses all gear Types and species contributing to x% of landings for each gear type.
-#' Reads in preprocessed data from get_landings_by_gear.r
+#' Reads in preprocessed data from get_landings_by_gear.R
 #' 
 #' @return object of class \code{agnes} representing the clustering. Use \code{plot} top display dendrogram
 #' 
