@@ -1,7 +1,7 @@
 #' Perform cluster analysis
 #' 
 #' Uses all gear Types that catch any amount of the species of interest
-#' Reads in preprocessed data from get_landings_by_gear.r
+#' Reads in preprocessed data from get_landings_by_gear.R
 #' 
 #' @return object of class \code{agnes} representing the clustering. Use \code{plot} top display dendrogram
 #' 
@@ -14,7 +14,7 @@
 #' 
 #' 
 
-source(here::here("data-raw/R","cluster_gears.r"))
+source(here::here("data-raw/R","cluster_gears.R"))
 library(magrittr)
 #focalSpecies <- readRDS(here::here("data","focalspecies.rds"))
 

@@ -26,7 +26,7 @@ The R package [`survdat`](https://noaa-edab.github.io/survdat/) is used to read 
 
 
 ``` {r, echo = T}
-source(here::here("data-raw/R/create_real_survey_lennumcomp.r"))
+source(here::here("data-raw/R/create_real_survey_lennumcomp.R"))
 suppressMessages(out <- create_real_survey_lennumcomp(convertKGtoMT=T))
 
 ```
