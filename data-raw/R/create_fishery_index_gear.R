@@ -25,8 +25,16 @@ discIndex <- discards$comdisc[NESPP3 %in% spp, .(value = sum(DISMT, na.rm = T)),
 discIndex[, variable := 'commercial discards']
 discIndex[, units := 'metric tons']
 
+
 #Combine landings and discards by gear
 catchIndexGear <- data.table::rbindlist(list(landIndex, discIndex))
+
+# TEMPORARY FIX UNTIL ISSUE CAUSING NAs IS RESOLVED
+#Rescale assuming NA proportional to identified proportion
+
+
+
+#Aggregate to 3 gears for hydra: demersal, fixedGear, pelagic  
 
 #Output to package
 usethis::use_data(catchIndexGear, overwrite = TRUE)
