@@ -31,8 +31,27 @@ catchIndexGear <- data.table::rbindlist(list(landIndex, discIndex))
 
 # TEMPORARY FIX UNTIL ISSUE CAUSING NAs IS RESOLVED
 #Rescale assuming NA proportional to identified proportion
+# extract proportion by gear with NA removed by land/disc, spp, year
+propgear <- catchIndexGear %>%
+  dplyr::filter(!is.na(Fleet)) %>%
+  dplyr::group_by(variable, modelName, YEAR, Fleet) %>%
+  dplyr::summarise(hasgear = sum(value)) %>%
+  dplyr::mutate(prop = hasgear/sum(hasgear)) %>%
+  dplyr::ungroup()
 
-
+# apply proportion to NA component and add back in
+fillNAgear <- catchIndexGear %>%
+  dplyr::filter(is.na(Fleet)) %>%
+  dplyr::select(-Fleet) %>%
+  dplyr::left_join(propgear) %>%
+  dplyr::mutate(fillNAvalue = value*prop) %>%
+  dplyr::select(-value) %>%
+  dplyr::mutate(value = hasgear+fillNAvalue)
+  
+catchIndexGearNAfill <- catchIndexGear %>%
+  tidyr::unite("index", c(variable, modelName, YEAR), remove = FALSE) %>%
+  dplyr::group_by(index, Fleet) %>%
+  dplyr::summarise(n = dplyr::n())
 
 #Aggregate to 3 gears for hydra: demersal, fixedGear, pelagic  
 

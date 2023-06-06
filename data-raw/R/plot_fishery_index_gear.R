@@ -24,3 +24,14 @@ catchIndex <- mskeyrun::catchIndex %>%
 ggplot(catchIndex, aes(x=YEAR, y=value, fill=variable)) +
   geom_bar(stat = "identity") +
   facet_wrap(~Name, scales = "free_y")
+
+# test proportion by non NA gear
+ggplot(propgear, aes(x=YEAR, y=prop, fill=Fleet)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(modelName~variable, scales = "free_y")
+
+# see filled values
+ggplot(fillNAgear, aes(x=YEAR, y=value, fill=Fleet)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(modelName~variable, scales = "free_y")
+#facet_wrap(~Name, scales = "free_y")
