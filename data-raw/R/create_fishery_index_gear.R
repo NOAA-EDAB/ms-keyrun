@@ -39,25 +39,25 @@ propgear <- catchIndexGear %>%
   dplyr::mutate(prop = hasgear/sum(hasgear)) %>%
   dplyr::ungroup()
 
-# apply proportion to NA component and add back in
+# apply proportion to NA component
 fillNAgear <- catchIndexGear %>%
   dplyr::filter(is.na(Fleet)) %>%
   dplyr::select(-Fleet) %>%
   dplyr::left_join(propgear) %>%
   dplyr::mutate(value = value*prop) %>%
-  dplyr::select(-c(hasgear, prop)) #%>%
-#  dplyr::mutate(value = hasgear+fillNAvalue)
+  dplyr::select(-c(hasgear, prop)) 
   
+# add NA fill back in with gear catch renaming value
 catchIndexGearNAfill <- catchIndexGear %>%
-  #tidyr::unite("index", c(variable, modelName, YEAR), remove = FALSE) %>%
   dplyr::filter(!is.na(Fleet)) %>%
   dplyr::bind_rows(fillNAgear) %>%
   dplyr::group_by(variable, modelName, YEAR, Fleet) %>%
-  dplyr::mutate(valueNAfill = sum(value)) %>%
-  dplyr::distinct()
+  dplyr::summarise(valueNAfill = sum(value))
   
 
-#Aggregate to 3 gears for hydra: demersal, fixedGear, pelagic  
+#Aggregate to 3 gears for hydra: demersal, fixedGear, pelagic 
+
+
 
 #Output to package
-usethis::use_data(catchIndexGear, overwrite = TRUE)
+usethis::use_data(catchIndexGearNAfill, overwrite = TRUE)
