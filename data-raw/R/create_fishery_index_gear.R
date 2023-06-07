@@ -79,7 +79,13 @@ catchIndexComlandrGearNAfill <- catchIndexGear %>%
 #Aggregate to 3 gears for hydra: demersal, fixedGear, pelagic 
 
 # link up mskeyrun hydraFleets and comlandr fleet
-fleetlook <- merge(mskeyrun::fleets, comlandr::mskeyGears) %>%
+# NOTES: leading 0 in character NEGEAR2 in mskeyrun::fleets
+# can't match double NEGEAR2 in comlandr::mskeygears
+# if that is converted to character
+# so this order and conversion appears to work
+fleetlook <- mskeyrun::fleets %>%
+  dplyr::mutate(NEGEAR2 = as.double(NEGEAR2)) %>%
+  dplyr::left_join(comlandr::mskeyGears) %>%
   dplyr::select(Fleet, hydraFleets) %>%
   dplyr::distinct()
 
