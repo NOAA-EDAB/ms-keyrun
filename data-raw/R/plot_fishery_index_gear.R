@@ -20,10 +20,11 @@ catchIndex <- mskeyrun::catchIndex %>%
   dplyr::left_join(focalspp) %>%
   dplyr::filter(!is.na(Name))
 
-
+# current aggregated catch data
 ggplot(catchIndex, aes(x=YEAR, y=value, fill=variable)) +
   geom_bar(stat = "identity") +
-  facet_wrap(Name~variable, scales = "free_y")
+  #facet_wrap(Name~variable, scales = "free_y")
+  facet_wrap(~Name, scales = "free_y")
 
 # test proportion by non NA gear
 ggplot(propgear, aes(x=YEAR, y=prop, fill=Fleet)) +
@@ -41,4 +42,14 @@ ggplot(catchIndexGearNAfill, aes(x=YEAR, y=valueNAfill, fill=hydraFleets)) +
   geom_bar(stat = "identity") +
   facet_wrap(modelName~variable, scales = "free_y")
 
+# see total aggregated values to hydraFleets
+ggplot(catchIndexGearNAfill, aes(x=YEAR, y=valueNAfill, fill=hydraFleets)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~modelName, scales = "free_y")
+
+
+# see total aggregated values to hydraFleets
+ggplot(catchIndexGearNAfill, aes(x=YEAR, y=valueNAfill, fill=variable)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~modelName, scales = "free_y")
 
