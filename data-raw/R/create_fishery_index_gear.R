@@ -1,3 +1,20 @@
+#' Create fishery index by gear for ms-keyrun project
+#' 
+#' CURRENTLY A TEMPORARY FIX FOR NAs IN CATCH INDEX FOR SIMULATIONS
+#' DO NOT PUT THIS IN MSKEYRUN MAIN BRANCH UNTIL NAs IN SOURCE DATA FIXED
+#' DO NOT USE THIS AS ACTUAL GEORGES BANK DATA
+#'
+#'#'
+#'@return A tibble (Also written to \code{data} folder)
+#'\item{variable}{commercial landings or commercial discards}
+#'\item{modelName}{species modelName as specified in\code{mskeyrun::focalSpecies} }
+#'\item{YEAR}{year of catch}
+#'\item{hydraFleets}{3 fleets for the hydra model as specified in \code{mskeyrun::fleets}}
+#'\item{valueNAfill}{estimated landings or discards with NAs filled according to proportions by non-na gear}
+#'\item{units}{metric tons}
+#'
+
+
 #Create landings index
 # Modified from Sean Lucey's code by Sarah G April 2023
 # landings.RData and discards.RData are local files, not for github
@@ -29,7 +46,10 @@ discIndex[, units := 'metric tons']
 #Combine landings and discards by gear
 catchIndexGear <- data.table::rbindlist(list(landIndex, discIndex))
 
-# TEMPORARY FIX UNTIL ISSUE CAUSING NAs IS RESOLVED
+######## START TEMP FIX ###############
+
+# SKG June 2023 TEMPORARY FIX UNTIL ISSUE CAUSING NAs IS RESOLVED
+
 #Rescale assuming NA proportional to identified proportion
 # extract proportion by gear with NA removed by land/disc, spp, year
 propgear <- catchIndexGear %>%
@@ -48,16 +68,28 @@ fillNAgear <- catchIndexGear %>%
   dplyr::select(-c(hasgear, prop)) 
   
 # add NA fill back in with gear catch renaming value
-catchIndexGearNAfill <- catchIndexGear %>%
+catchIndexComlandrGearNAfill <- catchIndexGear %>%
   dplyr::filter(!is.na(Fleet)) %>%
   dplyr::bind_rows(fillNAgear) %>%
   dplyr::group_by(variable, modelName, YEAR, Fleet) %>%
   dplyr::summarise(valueNAfill = sum(value))
   
+######## END TEMP FIX ###############
 
 #Aggregate to 3 gears for hydra: demersal, fixedGear, pelagic 
 
+# link up mskeyrun hydraFleets and comlandr fleet
+fleetlook <- merge(mskeyrun::fleets, comlandr::mskeyGears) %>%
+  dplyr::select(Fleet, hydraFleets) %>%
+  dplyr::distinct()
 
+# still a temporary data object until NAs fixed
+catchIndexGearNAfill <- catchIndexComlandrGearNAfill %>%
+  dplyr::left_join(fleetlook) %>%
+  dplyr::group_by(variable, modelName, YEAR, hydraFleets) %>%
+  dplyr::summarise(valueNAfill = sum(valueNAfill)) %>%
+  dplyr::mutate(units = "metric tons")
+  
 
 #Output to package
 usethis::use_data(catchIndexGearNAfill, overwrite = TRUE)

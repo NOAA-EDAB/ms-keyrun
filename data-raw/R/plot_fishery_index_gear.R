@@ -30,8 +30,15 @@ ggplot(propgear, aes(x=YEAR, y=prop, fill=Fleet)) +
   geom_bar(stat = "identity") +
   facet_wrap(modelName~variable, scales = "free_y")
 
-# see filled values
-ggplot(catchIndexGearNAfill, aes(x=YEAR, y=valueNAfill, fill=Fleet)) +
+# see filled values (done before aggregating to )
+ggplot(catchIndexComlandrGearNAfill, aes(x=YEAR, y=valueNAfill, fill=Fleet)) +
   geom_bar(stat = "identity") +
   facet_wrap(modelName~variable, scales = "free_y")
 #facet_wrap(~Name, scales = "free_y")
+
+# see aggregated values to hydraFleets
+ggplot(catchIndexGearNAfill, aes(x=YEAR, y=valueNAfill, fill=hydraFleets)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(modelName~variable, scales = "free_y")
+
+
