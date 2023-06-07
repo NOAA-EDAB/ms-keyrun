@@ -49,6 +49,18 @@ catchIndexGear <- data.table::rbindlist(list(landIndex, discIndex))
 ######## START TEMP FIX ###############
 
 # SKG June 2023 TEMPORARY FIX UNTIL ISSUE CAUSING NAs IS RESOLVED
+library(magrittr)
+
+focalspp <- mskeyrun::focalSpecies %>%
+  dplyr::filter(modelName != "Pollock") %>% # not using in these models
+  dplyr::mutate(Name = modelName,
+                NESPP3 = as.integer(NESPP3)) %>%
+  dplyr::distinct()
+
+catchIndexGear <- catchIndexGear %>%
+  dplyr::left_join(focalspp) %>%
+  dplyr::filter(!is.na(Name))
+
 
 #Rescale assuming NA proportional to identified proportion
 # extract proportion by gear with NA removed by land/disc, spp, year
