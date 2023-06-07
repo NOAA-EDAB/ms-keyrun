@@ -44,14 +44,18 @@ fillNAgear <- catchIndexGear %>%
   dplyr::filter(is.na(Fleet)) %>%
   dplyr::select(-Fleet) %>%
   dplyr::left_join(propgear) %>%
-  dplyr::mutate(fillNAvalue = value*prop) %>%
-  dplyr::select(-value) %>%
-  dplyr::mutate(value = hasgear+fillNAvalue)
+  dplyr::mutate(value = value*prop) %>%
+  dplyr::select(-c(hasgear, prop)) #%>%
+#  dplyr::mutate(value = hasgear+fillNAvalue)
   
 catchIndexGearNAfill <- catchIndexGear %>%
-  tidyr::unite("index", c(variable, modelName, YEAR), remove = FALSE) %>%
-  dplyr::group_by(index, Fleet) %>%
-  dplyr::summarise(n = dplyr::n())
+  #tidyr::unite("index", c(variable, modelName, YEAR), remove = FALSE) %>%
+  dplyr::filter(!is.na(Fleet)) %>%
+  dplyr::bind_rows(fillNAgear) %>%
+  dplyr::group_by(variable, modelName, YEAR, Fleet) %>%
+  dplyr::mutate(valueNAfill = sum(value)) %>%
+  dplyr::distinct()
+  
 
 #Aggregate to 3 gears for hydra: demersal, fixedGear, pelagic  
 
