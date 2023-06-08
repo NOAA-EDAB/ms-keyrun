@@ -47,6 +47,18 @@ ggplot(catchIndexGearNAfill, aes(x=YEAR, y=valueNAfill, fill=hydraFleets)) +
   geom_bar(stat = "identity") +
   facet_wrap(~modelName, scales = "free_y")
 
+# scale total aggregated values to hydraFleets in model timeframe
+ggplot(catchIndexGearNAfill |> dplyr::filter(YEAR > 1977), 
+       aes(x=YEAR, y=valueNAfill, fill=hydraFleets)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~modelName, scales = "free_y")
+
+# landings only for target fishery definition
+ggplot(catchIndexGearNAfill |> dplyr::filter(YEAR > 1977, variable == "commercial landings"), 
+       aes(x=YEAR, y=valueNAfill, fill=hydraFleets)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~modelName, scales = "free_y")
+
 
 # see total aggregated values to hydraFleets
 ggplot(catchIndexGearNAfill, aes(x=YEAR, y=valueNAfill, fill=variable)) +
