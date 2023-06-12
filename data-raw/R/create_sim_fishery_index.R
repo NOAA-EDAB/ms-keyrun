@@ -56,9 +56,14 @@ create_sim_fishery_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
   fit_nyears <- fitendyr-fitstartyr
   fit_ntimes <- fit_nyears*stepperyr
   fittimes <- atlantis_full[mod_burnin:(mod_burnin+fit_ntimes-1)]
-  #fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
+  fit_timesteps <- seq(fittimes[stepperyr], max(fittimes), by=stepperyr) #last timestep
   #fit_years <- unique(floor(fittimes/stepperyr)) #from Christine's new sardine_config.R
   fittimes.days <- if(omlist_ss$runpar$outputstepunit=="days") fittimes*omlist_ss$runpar$outputstep
+  
+  # catch files from CATCH.nc are subannual and by fleet
+  # BUT have codes not species names,
+  # and time in model timesteps not days
+  # SO conversion needed
   
   
   # fishery cv lookup from config files
@@ -72,7 +77,8 @@ create_sim_fishery_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
   
   allcatch <- tibble::tibble()
   
-  for(f in names(catchbio_ss)){
+  # limit catchbio_ss to names in fcvlook
+  for(f in names(catchbio_ss)[names(catchbio_ss) %in% fcvlook$fishery]){
     catchbio <- catchbio_ss[[f]][[1]] %>%
       #dplyr::filter(time>0) %>%
       dplyr::filter(time %in% fittimes.days) %>%

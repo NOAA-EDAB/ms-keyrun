@@ -128,18 +128,18 @@ NOBAom_ms <- om_species(spptable$Name, NOBAom)
 
 dir.create(file.path(here("docs/config")))
 
-file.copy(here("simulated-data/config/omdimensions.R"), here("docs/config/omdimensions.R"))
+file.copy(here("data-raw/simulated-data/config/omdimensions.R"), here("docs/config/omdimensions.R"))
 
-NOBAom_ms_ind <- om_index(usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
-                                         here("simulated-data/config/mssurvey_fall.R")), 
-                           userfishery = here("simulated-data/config/msfishery.R"),
+NOBAom_ms_ind <- om_index(usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall.R")), 
+                           userfishery = here("data-raw/simulated-data/config/msfishery.R"),
                            omlist_ss = NOBAom_ms, 
                            n_reps = 1, 
                            save = TRUE)
 
-NOBAom_ms_comp <- om_comps(usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
-                                         here("simulated-data/config/mssurvey_fall.R")), 
-                           userfishery = here("simulated-data/config/msfishery.R"),
+NOBAom_ms_comp <- om_comps(usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall.R")), 
+                           userfishery = here("data-raw/simulated-data/config/msfishery.R"),
                            omlist_ss = NOBAom_ms, 
                            n_reps = 1, 
                            save = TRUE)
