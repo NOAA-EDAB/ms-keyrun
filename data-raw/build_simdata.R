@@ -25,7 +25,7 @@ create_sim_survey_info(atlmod)
 
 create_sim_survey_index(atlmod, fitstart=40, fitend=120)
 
-create_sim_fishery_index(atlmod, fitstart=40, fitend=120)
+create_sim_fishery_index(atlmod, fitstart=40, fitend=120) #creates subannual amd aggregate
 
 create_sim_survey_agecomp(atlmod, fitstart=40, fitend=120)
 
@@ -44,6 +44,8 @@ create_sim_survey_dietcomp(atlmod, fitstart=40, fitend=120)
 create_sim_survey_bottemp(atlmod, fitstart=40, fitend=120)
 
 create_sim_fishery_wtage(atlmod, fitstart=40, fitend=120)
+
+create_sim_fishery_wtage_subannual(atlmod, fitstart=40, fitend=120)
 
 create_sim_survey_wtage(atlmod, fitstart=40, fitend=120)
 
