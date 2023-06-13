@@ -57,3 +57,9 @@ create_sim_percapconsumption(atlmod, fitstart=40, fitend=120)
 
 create_sim_startpars(atlmod, fitstart=40, fitend=120)
 
+# food web model specific datasets add other species
+
+create_sim_survey_index_fw(atlmod, fitstart=40, fitend=120)
+
+create_sim_fishery_index_fw(atlmod, fitstart=40, fitend=120)
+
