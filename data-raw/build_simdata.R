@@ -51,6 +51,8 @@ create_sim_survey_wtage(atlmod, fitstart=40, fitend=120)
 
 create_sim_survey_agelen(atlmod, fitstart=40, fitend=120)
 
+create_sim_fishery_agelen(atlmod, fitstart=40, fitend=120)
+
 create_sim_percapconsumption(atlmod, fitstart=40, fitend=120)
 
 create_sim_startpars(atlmod, fitstart=40, fitend=120)
