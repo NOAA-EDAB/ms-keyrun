@@ -169,6 +169,45 @@ For example, `create_sim_survey_index()` takes the saved `atlantisom` output plu
 
 All functions are in this mskeyrun repository folder: https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R 
 
+### Additional simulated data for food web models
+
+The data generated above focuses on the 11 fully age structured stocks. Here we add information needed for food web modeling on the remaining groups in the simulated system. 
+
+```{r}
+
+# all NOBA species not already in mskeyrun dataset
+fwspp <- atlantisom::load_fgs(here("simulated-data/atlantisoutput/NOBA_sacc_38"), "nordic_groups_v04.csv") %>% 
+  dplyr::filter(IsTurnedOn == 1) %>%
+  dplyr::select(Code, Name, Long.Name, isFished, InvertType) %>%
+  dplyr::filter(!Name %in% spptable$Name)
+
+knitr::kable(fwspp)
+
+```
+
+This consists of survey biomass and diet, and fishery catch information for the non age-structured species.
+
+To generate this, we apply selected functions from the `atlantisom` package with slightly modified config files to ensure the food web "fw" datasets don't overwrite the multispecies datasets: 
+
+```{r, eval=FALSE}
+
+NOBAom <- om_init(here("data-raw/simulated-data/config/NOBA_sacc38Config.R"))
+
+NOBAom_fw <- om_species(fwspp$Name, NOBAom, save = FALSE) #save by hand, don't overwrite 11 species omlist_ss
+
+saveRDS(NOBAom_fw, file.path(d.name, paste0(scenario.name, "omlist_fw.rds")))
+
+NOBAom_fw_ind <- om_index(usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring_fw.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall_fw.R")), 
+                           userfishery = here("data-raw/simulated-data/config/msfishery_fw.R"),
+                           omlist_ss = NOBAom_fw, 
+                           n_reps = 1, 
+                           save = TRUE)
+
+
+```
+
+
 ### Visualize simulated data
 
 #### Plotting functions
