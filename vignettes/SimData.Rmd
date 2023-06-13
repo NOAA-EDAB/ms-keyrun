@@ -197,6 +197,10 @@ NOBAom_fw <- om_species(fwspp$Name, NOBAom, save = FALSE) #save by hand, don't o
 
 saveRDS(NOBAom_fw, file.path(d.name, paste0(scenario.name, "omlist_fw.rds")))
 
+dir.create(file.path(here("vignettes/config")))
+
+file.copy(here("data-raw/simulated-data/config/omdimensions.R"), here("vignettes/config/omdimensions.R"))
+
 NOBAom_fw_ind <- om_index(usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring_fw.R"), 
                                          here("data-raw/simulated-data/config/mssurvey_fall_fw.R")), 
                            userfishery = here("data-raw/simulated-data/config/msfishery_fw.R"),
@@ -204,7 +208,7 @@ NOBAom_fw_ind <- om_index(usersurvey = c(here("data-raw/simulated-data/config/ms
                            n_reps = 1, 
                            save = TRUE)
 
-
+unlink(here("vignettes/config"), recursive = TRUE)
 ```
 
 
