@@ -1,6 +1,11 @@
-#' Read in survey data save as rda
+#' Read in fishery catch data save as rda
 #' 
-#' atlantosom output is accessed and surveys pulled over time
+#' atlantosom output is accessed and fishery data pulled over time
+#' simulated fishery catches are cumulative, not snapshots
+#' fishery total catch for the year is the sum of the months
+#' fishery catch for the month is all catch reported since the last reporting month
+#' 
+#' also makes annual aggregate dataset for backwards compatibility
 #' 
 #'@param atlmod configuration file specifying Atlantis simulation model filenames 
 #'and locations  
@@ -9,6 +14,7 @@
 #'@return A tibble (Also written to \code{data} folder)
 #'\item{ModSim}{Atlantis model name and simulation id}
 #'\item{year}{year simulated fishery conducted}
+#'\item{fishMonth}{month simulated fishery conducted}
 #'\item{Code}{Atlantis model three letter code for functional group}
 #'\item{Name}{Atlantis model common name for functional group}
 #'\item{fishery}{simulated fishery name}
@@ -47,6 +53,9 @@ create_sim_fishery_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
   nyears <- omlist_ss$runpar$nyears
   total_sample <- omlist_ss$runpar$tstop/omlist_ss$runpar$outputstep
   
+  # throw an error if fstepperyr is not equal to stepperyr
+  if(stepperyr != fstepperyr) stop("Error: check Atlantis timestep output for fishery")
+  
   # user specified fit start and times if different from full run
   fitstartyr <- ifelse(!is.null(fitstart), fitstart-1, 0)
   fitendyr <- ifelse(!is.null(fitend), fitend, total_sample)
@@ -65,7 +74,6 @@ create_sim_fishery_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
   # and time in model timesteps not days
   # SO conversion needed
   
-  
   # fishery cv lookup from config files
   fcvlook <- tibble::tibble()
   for(c in 1:length(fishcon)){
@@ -78,36 +86,51 @@ create_sim_fishery_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
   allcatch <- tibble::tibble()
   
   # limit catchbio_ss to names in fcvlook
+  # WARNING this is now written only for output with Code and timestep output
   for(f in names(catchbio_ss)[names(catchbio_ss) %in% fcvlook$fishery]){
     catchbio <- catchbio_ss[[f]][[1]] %>%
       #dplyr::filter(time>0) %>%
-      dplyr::filter(time %in% fittimes.days) %>%
-      dplyr::mutate(year = time/365) %>%
-      dplyr::select(species, year, atoutput) %>%
+      #dplyr::filter(time %in% fittimes.days) %>%
+      #dplyr::mutate(year = time/365) %>%
+      dplyr::filter(time %in% fittimes) %>%
+      dplyr::mutate(year = ceiling(time/stepperyr),
+                    fishMonth = 12 + ceiling(time/stepperyr*12) - year*12) %>%
+      dplyr::select(species, year, fishMonth, atoutput) %>%
       dplyr::rename(catch = atoutput) %>%
-      dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
+      dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Code")) %>%
       dplyr::mutate(ModSim = modsim) %>%
       dplyr::mutate(fishery = f) %>%
       #dplyr::mutate(area = 1) %>%
       dplyr::left_join(fcvlook) %>%
-      dplyr::select(ModSim, year, Code, Name=species, fishery, everything()) %>%
+      dplyr::select(ModSim, year, fishMonth, Code=species, Name, fishery, everything()) %>%
       tidyr::pivot_longer(cols = c("catch", "cv"), 
                           names_to = "variable",
                           values_to = "value") %>%
       dplyr::mutate(units = ifelse(variable=="catch", "tons", "unitless")) %>%
-      dplyr::arrange(Name, fishery, variable, year)
+      dplyr::arrange(Name, fishery, variable, year, fishMonth)
     
     allcatch <- dplyr::bind_rows(allcatch, catchbio)  
   }
   
 
-  simCatchIndex <- catchbio
+  simCatchIndexSubannual <- allcatch
+  
+  #build new annual index from this one
+  simCatchIndex <- mskeyrun::simCatchIndexSubannual %>%
+    dplyr::group_by(ModSim, year, Code, Name, fishery, variable, units) %>%
+    dplyr::summarize(value = sum(value, na.rm = TRUE)) %>%
+    dplyr::mutate(value = ifelse(variable == "cv", value/stepperyr, value)) %>%
+    dplyr::relocate(units, .after = last_col()) %>%
+    dplyr::arrange(Name, fishery, variable, year)  
+  
+  
   
   if (saveToData) {
+    usethis::use_data(simCatchIndexSubannual, overwrite = TRUE)
     usethis::use_data(simCatchIndex, overwrite = TRUE)
   }
   
-  return(simCatchIndex)
+  return(simCatchIndexSubannual)
   
   
 }
