@@ -116,7 +116,7 @@ create_sim_fishery_index <- function(atlmod,fitstart=NULL,fitend=NULL,saveToData
   simCatchIndexSubannual <- allcatch
   
   #build new annual index from this one
-  simCatchIndex <- mskeyrun::simCatchIndexSubannual %>%
+  simCatchIndex <- allcatch %>%
     dplyr::group_by(ModSim, year, Code, Name, fishery, variable, units) %>%
     dplyr::summarize(value = sum(value, na.rm = TRUE)) %>%
     dplyr::mutate(value = ifelse(variable == "cv", value/stepperyr, value)) %>%
