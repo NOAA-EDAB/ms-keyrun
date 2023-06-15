@@ -3,7 +3,7 @@
 \docType{data}
 \name{simStartPars}
 \alias{simStartPars}
-\title{The Atlantis-simulated focal species biological parameters in mskeyrun project}
+\title{The Atlantis-simulated initial age and recruitment in mskeyrun project}
 \format{
 A data frame
 
@@ -22,6 +22,6 @@ A data frame
 simStartPars
 }
 \description{
-Model name and scenario, Species code, species name, length weight parameters
+Model name and scenario, time series average recruitment and start year numbers at age and length.
 }
 \keyword{datasets}
