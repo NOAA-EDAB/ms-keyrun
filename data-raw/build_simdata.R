@@ -63,3 +63,10 @@ create_sim_survey_index_fw(atlmod, fitstart=40, fitend=120)
 
 create_sim_fishery_index_fw(atlmod, fitstart=40, fitend=120)
 
+# below combines already loaded mskeyrun datasets,  
+# outputs of create_sim_survey_agelen and create_sim_survey_dietcomp
+# ensure that these are up to date before running
+
+create_sim_survey_lendietcomp()
+
+

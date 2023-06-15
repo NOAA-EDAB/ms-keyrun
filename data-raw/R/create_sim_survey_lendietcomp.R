@@ -12,7 +12,6 @@
 #'\item{Code}{Atlantis model three letter code for predator group}
 #'\item{Name}{Atlantis model common name for predator group}
 #'\item{survey}{simulated survey name}
-#'\item{agecl}{age class of Atlantis functional group}
 #'\item{pdlencm}{predator length bin (1 cm)}
 #'\item{prey}{Atlantis model common name for prey group}
 #'\item{variable}{proportion of prey in diet at predator length (dietprop)}
@@ -53,7 +52,8 @@ create_sim_survey_lendietcomp <- function(saveToData=T) {
     #dplyr::filter(!is.na(sizebin)) 
     dplyr::mutate(variable = "dietprop",
                   units = "proportion") %>%
-    dplyr::rename(value = dietsize, pdlencm = lenbin)
+    dplyr::rename(value = dietsize, pdlencm = lenbin) %>%
+    dplyr::select(ModSim, year, Code, Name, survey, pdlencm, prey, variable, value, units)
   
   
   
