@@ -83,10 +83,10 @@ create_sim_fishery_lencomp_subannual <- function(atlmod,fitstart=NULL,fitend=NUL
       dplyr::filter(time %in% fittimes) %>%
       dplyr::mutate(year = ceiling(time/stepperyr),
                     fishMonth = 12 + ceiling(time/stepperyr*12) - year*12) %>%
-      dplyr::select(species, year, fishMonth, lower.bins, Natlen = atoutput) %>%
-      #dplyr::group_by(species, year, lower.bins) %>%
-      #dplyr::summarise(Natlen = sum(atoutput)) %>%
-      #dplyr::ungroup() %>%
+      dplyr::select(species, year, fishMonth, lower.bins, atoutput) %>%
+      dplyr::group_by(species, year, fishMonth, lower.bins) %>%
+      dplyr::summarise(Natlen = sum(atoutput)) %>%
+      dplyr::ungroup() %>%
       dplyr::left_join(dplyr::select(omlist_ss$funct.group_ss, Code, Name), by = c("species" = "Name")) %>%
       dplyr::mutate(ModSim = modsim) %>%
       dplyr::mutate(fishery = f) %>%
