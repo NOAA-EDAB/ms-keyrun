@@ -94,6 +94,8 @@ create_sim_survey_index_fw <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDa
     allsvbio <- dplyr::bind_rows(allsvbio, svbio)
   }
   
+  
+  
   simSurveyIndexFW <- allsvbio
   
   if (saveToData) {
