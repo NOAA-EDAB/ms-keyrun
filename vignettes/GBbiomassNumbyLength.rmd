@@ -31,30 +31,30 @@ suppressMessages(out <- create_real_survey_lennumcomp(convertKGtoMT=T))
 
 ```
 
-## Spring Biomass: length-frequency plots {.tabset}
+<!-- ## Spring Biomass: length-frequency plots {.tabset} -->
 
-```{r biomassS, results = "asis", echo = FALSE, fig.height=8}
-for(i in seq_along(out$plistBS)){
-    tmp <- out$plistBS[[i]]
-    # As you want to use tabset level here has to be lower than 
-    # parent level (ie, parent is 2, so here you have to use 3)
-    catHeader(tmp[[2]], 3)
-    lapply(tmp[1], print)
-}
-```
+<!-- ```{r biomassS, results = "asis", echo = FALSE, fig.height=8} -->
+<!-- for(i in seq_along(out$plistBS)){ -->
+<!--     tmp <- out$plistBS[[i]] -->
+<!--     # As you want to use tabset level here has to be lower than  -->
+<!--     # parent level (ie, parent is 2, so here you have to use 3) -->
+<!--     catHeader(tmp[[2]], 3) -->
+<!--     lapply(tmp[1], print) -->
+<!-- } -->
+<!-- ``` -->
 
 
-## Fall Biomass: length-frequency plots {.tabset}
+<!-- ## Fall Biomass: length-frequency plots {.tabset} -->
 
-```{r biomassF, results = "asis", echo = FALSE, fig.height=8}
-for(i in seq_along(out$plistBF)){
-    tmp <- out$plistBF[[i]]
-    # As you want to use tabset level here has to be lower than
-    # parent level (ie, parent is 2, so here you have to use 3)
-    catHeader(tmp[[2]], 3)
-    lapply(tmp[1], print)
-}
-```
+<!-- ```{r biomassF, results = "asis", echo = FALSE, fig.height=8} -->
+<!-- for(i in seq_along(out$plistBF)){ -->
+<!--     tmp <- out$plistBF[[i]] -->
+<!--     # As you want to use tabset level here has to be lower than -->
+<!--     # parent level (ie, parent is 2, so here you have to use 3) -->
+<!--     catHeader(tmp[[2]], 3) -->
+<!--     lapply(tmp[1], print) -->
+<!-- } -->
+<!-- ``` -->
 
 ## Spring Abundance: length-frequency plots {.tabset}
 
