@@ -7,9 +7,11 @@
 #' 
 
 library(magrittr)
+library(sf)
 
-
-create_real_survey_lennumcomp <- function(convertKGtoMT=F, overwrite=F) {
+create_real_survey_lennumcomp <- function(convertKGtoMT=F,
+                                          displayTable=F,
+                                          overwrite=F) {
   
   if (convertKGtoMT) {
     scalar <- 1000
@@ -44,60 +46,149 @@ create_real_survey_lennumcomp <- function(convertKGtoMT=F, overwrite=F) {
   # get survey codes
   svspps <- species$SVSPP
   
+  # IS THIS CORRECT. WHY DID I USE WGTLEN AS ABUNDANCE
+  # newData <- survdatLWpull$survdat %>% 
+  #   dplyr::filter(SVSPP %in% svspps) %>% 
+  #   dplyr::mutate(SVSPPLEN = paste0(SVSPP,"-",LENGTH)) %>% 
+  #   dplyr::select(-BIOMASS,-ABUNDANCE) %>%
+  #   dplyr::mutate(BIOMASS = PREDWT,
+  #                 ABUNDANCE = WGTLEN)
+  # 
+  
+  
+  # I THINK THIS IS BETTER.
+  # filter all GB Strata
   newData <- survdatLWpull$survdat %>% 
-    dplyr::filter(SVSPP %in% svspps) %>% 
-    dplyr::mutate(SVSPPLEN = paste0(SVSPP,"-",LENGTH)) %>% 
-    dplyr::select(-BIOMASS,-ABUNDANCE) %>%
-    dplyr::mutate(BIOMASS = PREDWT,
-                  ABUNDANCE = WGTLEN) 
+    dplyr::filter(STRATUM %in% GBStrata) %>% 
+    dplyr::mutate(SVSPPLEN = paste0(SVSPP,"-",LENGTH))
   
   
-  # fall: calculate the swept area biomass for each species length combination 
-  sweptAreaFall <- survdat::calc_swept_area(newData,
-                                            filterBySeason = "FALL",
-                                            filterByArea = GBStrata,
-                                            groupDescription = "SVSPPLEN") %>%
-    dplyr::select(YEAR,SVSPPLEN,tot.biomass,tot.abundance) %>%
-    tidyr::separate(.,SVSPPLEN,c("SVSPP","LENGTH"),sep = "-") %>% 
-    dplyr::mutate(SEASON = "FALL")
+  realSurveyLennumcomp <- NULL
+  for (season in c("SPRING","FALL")) {
+    # find number of tows in each stratum
+    # table showing number of samples in each stratum
+    longSampling <- newData %>%
+      dplyr::filter(SEASON == season) %>%
+      dplyr::select(YEAR,STRATUM,STATION,TOW) %>%
+      dplyr::distinct() %>%
+      dplyr::group_by(YEAR,STRATUM) %>%
+      dplyr::summarise(ntows = dplyr::n(),.groups = "drop")
 
-  # spring: calculate the swept area biomass for each species length combination 
-  sweptAreaSpring <- survdat::calc_swept_area(newData,
-                                              filterBySeason = "SPRING",
-                                              filterByArea = GBStrata,
-                                              groupDescription = "SVSPPLEN") %>%
-    dplyr::select(YEAR,SVSPPLEN,tot.biomass,tot.abundance) %>%
-    tidyr::separate(.,SVSPPLEN,c("SVSPP","LENGTH"),sep = "-") %>% 
-    dplyr::mutate(SEASON = "SPRING")
-
-  # combine all data
-  allData <- rbind(sweptAreaFall,sweptAreaSpring) %>%
-    dplyr::filter(LENGTH != "NA") %>% 
-    dplyr::mutate(SVSPP = as.integer(SVSPP),
-                  LENGTH = as.double(LENGTH),
-                  YEAR = as.integer(YEAR)) %>% 
-    tibble::as_tibble()
-  
-  realSurveyLennumcomp <- allData %>%
-    dplyr::left_join(.,species,by="SVSPP") %>%
-    dplyr::mutate(ModSim = "Actual",
-                  fishery = "demersal") %>%
-    dplyr::rename(year = YEAR,
-                  season = SEASON,
-                  Code = SPECIES_ITIS,
-                  Name = LongName,
-                  lenbin = LENGTH,
-                  numbers = tot.abundance) %>% 
-    dplyr::mutate(biomass = tot.biomass/scalar) %>% # convert to metric tons)
+      showTable <- longSampling %>%
+        tidyr::pivot_wider(.,id_cols = YEAR,names_from = STRATUM,values_from = ntows) %>% 
+        flextable::flextable() %>%
+        flextable::set_caption(paste("Number of Tows per STRATUM during ",season," Bottom Trawl Survey")) %>%
+        flextable::colformat_double(.,big.mark = "",digits=0)
+      if(displayTable) {
+        print(showTable)
+      }
+    # plot GB strata
+    nc <- NEFSCspatial::BTS_Strata %>%
+      dplyr::filter(STRATA %in% unique(longSampling$STRATUM)) 
+    GBsurveyPlot <- ggplot2::ggplot(data=nc ) +
+      ggplot2::geom_sf() +
+      ggplot2::geom_text(data=nc,ggplot2::aes(x=X,y=Y,label=STRATA),size=2) +
+      ggplot2::ggtitle("Bottom Trawl Survey Strata")
     
-    dplyr::group_by(ModSim,year,season,Code,Name,fishery,lenbin) %>%
-
-    tidyr::pivot_longer(.,cols=c("biomass","numbers"),names_to = "variable",values_to = "value")  %>%
-    dplyr::mutate(units = dplyr::case_when(variable == "biomass" ~ unitsLabel,
-                                           variable == "numbers" ~ "numbers",
-                                           TRUE ~ "NA")) %>%
-    dplyr::select(ModSim,year,season, Code,Name, fishery, lenbin, variable, value, units) %>% 
-    tibble::as_tibble(.)
+    # calculate the area of each stratum in GB footprint
+    strataAreas <- NEFSCspatial::BTS_Strata %>% 
+      dplyr::filter(STRATA %in% unique(longSampling$STRATUM)) %>% 
+      survdat::get_area(.,"STRATA") %>%
+      dplyr::arrange(STRATUM)
+    
+    # aggregate data to calculate the expected number at length per tow
+    # scale this up to stratum area based on area of average tow
+    subsetData <- newData %>%
+      dplyr::filter(SVSPP %in% svspps,
+                    SEASON == season) %>%
+      dplyr::select(YEAR,SVSPP,STRATUM,LENGTH,NUMLEN) %>%
+      dplyr::filter(!STRATUM %in% c(3520,3550)) %>%
+      dplyr::group_by(YEAR,SVSPP,STRATUM,LENGTH) %>% 
+      dplyr::summarise(numlen = sum(NUMLEN),
+                       .groups = "drop") %>% 
+      dplyr::left_join(.,longSampling, by = c("YEAR","STRATUM")) %>%
+      dplyr::left_join(.,strataAreas,by = "STRATUM") %>%
+      dplyr::mutate(expNUMpertow = numlen/ntows,
+                    expNUMperstratum = as.numeric(expNUMpertow*Area/.0384)) 
+    
+    # format aggregated data to format we require
+    out <- subsetData %>%
+      dplyr::group_by(YEAR,SVSPP,LENGTH) %>%
+      dplyr::summarise(value = sum(expNUMperstratum),
+                       .groups = "drop") %>%
+      dplyr::left_join(.,species, by = "SVSPP") %>%
+      dplyr::mutate(year = as.integer(YEAR),
+                    season = season,
+                    lenbin = LENGTH,
+                    Code = SPECIES_ITIS,
+                    Name = LongName,
+                    units = "numbers",
+                    variable = "numbers",
+                    ModSim = "Actual",
+                    fishery="demersal") %>%
+      dplyr::select(ModSim,year,season,Code,Name,fishery,lenbin,variable,value,units)
+  
+    realSurveyLennumcomp <- rbind(realSurveyLennumcomp,out)
+    
+  }
+  
+  realSurveyLennumcomp <- realSurveyLennumcomp %>%
+    dplyr::filter(!is.na(lenbin))
+  
+# 
+#   sweptAreaFall <- survdat::calc_swept_area(newData,
+#                                             filterBySeason = "FALL",
+#                                             filterByArea = GBStrata,
+#                                             groupDescription = "SVSPP") %>%
+#     dplyr::select(YEAR,SVSPP,tot.biomass,tot.abundance) %>%
+#     dplyr::mutate(SEASON = "FALL")
+#   # fall: calculate the swept area biomass for each species length combination 
+#   sweptAreaFall <- survdat::calc_swept_area(newData,
+#                                             filterBySeason = "FALL",
+#                                             filterByArea = GBStrata,
+#                                             groupDescription = "SVSPPLEN") %>%
+#     dplyr::select(YEAR,SVSPPLEN,tot.biomass,tot.abundance) %>%
+#     tidyr::separate(.,SVSPPLEN,c("SVSPP","LENGTH"),sep = "-") %>% 
+#     dplyr::mutate(SEASON = "FALL")
+#   message("FALL")
+# 
+#   # spring: calculate the swept area biomass for each species length combination 
+#   sweptAreaSpring <- survdat::calc_swept_area(newData,
+#                                               filterBySeason = "SPRING",
+#                                               filterByArea = GBStrata,
+#                                               groupDescription = "SVSPPLEN") %>%
+#     dplyr::select(YEAR,SVSPPLEN,tot.biomass,tot.abundance) %>%
+#     tidyr::separate(.,SVSPPLEN,c("SVSPP","LENGTH"),sep = "-") %>% 
+#     dplyr::mutate(SEASON = "SPRING")
+#   message("SPRING")
+#   # combine all data
+#   allData <- rbind(sweptAreaFall,sweptAreaSpring) %>%
+#     dplyr::filter(LENGTH != "NA") %>% 
+#     dplyr::mutate(SVSPP = as.integer(SVSPP),
+#                   LENGTH = as.double(LENGTH),
+#                   YEAR = as.integer(YEAR)) %>% 
+#     tibble::as_tibble()
+#   
+#   realSurveyLennumcomp <- allData %>%
+#     dplyr::left_join(.,species,by="SVSPP") %>%
+#     dplyr::mutate(ModSim = "Actual",
+#                   fishery = "demersal") %>%
+#     dplyr::rename(year = YEAR,
+#                   season = SEASON,
+#                   Code = SPECIES_ITIS,
+#                   Name = LongName,
+#                   lenbin = LENGTH,
+#                   numbers = tot.abundance) %>% 
+#     dplyr::mutate(biomass = tot.biomass/scalar) %>% # convert to metric tons)
+#     
+#     dplyr::group_by(ModSim,year,season,Code,Name,fishery,lenbin) %>%
+# 
+#     tidyr::pivot_longer(.,cols=c("biomass","numbers"),names_to = "variable",values_to = "value")  %>%
+#     dplyr::mutate(units = dplyr::case_when(variable == "biomass" ~ unitsLabel,
+#                                            variable == "numbers" ~ "numbers",
+#                                            TRUE ~ "NA")) %>%
+#     dplyr::select(ModSim,year,season, Code,Name, fishery, lenbin, variable, value, units) %>% 
+#     tibble::as_tibble(.)
 
   plistBiomassSpring <- list()
   plistBiomassFall <- list()
@@ -164,8 +255,8 @@ create_real_survey_lennumcomp <- function(convertKGtoMT=F, overwrite=F) {
   
   
   return(list(data=realSurveyLennumcomp,
-              plistBS=plistBiomassSpring,
-              plistBF=plistBiomassFall,
+              #plistBS=plistBiomassSpring,
+              #plistBF=plistBiomassFall,
               plistAS=plistAbundSpring,
               plistAF=plistAbundFall))
   
