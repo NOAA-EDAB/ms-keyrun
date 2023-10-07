@@ -1,7 +1,7 @@
 #' The Atlantis-simulated survey biomass indices for the mskeyrun project
 #'
 #' Simulated survey index data from Atlantis model as sampled by atlantisom
-#' Includes all structured groups as separate surveys
+#' Includes all structured groups as separate surveys for Rpath
 #'
 #' @format A data frame
 #'

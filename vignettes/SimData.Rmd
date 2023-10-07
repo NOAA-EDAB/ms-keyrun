@@ -144,10 +144,10 @@ NOBAom_ms_comp <- om_comps(usersurvey = c(here("data-raw/simulated-data/config/m
                            n_reps = 1, 
                            save = TRUE)
 
-NOBAom_ms_diet <- om_diet(config = here("simulated-data/config", "NOBA2config.R"),
+NOBAom_ms_diet <- om_diet(config = here("data-raw/simulated-data/config/NOBA_sacc38Config.R"),
                           dietfile = "NOBADetDiet.gz",
-                          usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
-                                         here("simulated-data/config/mssurvey_fall.R")), 
+                          usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall.R")), 
                           omlist_ss = NOBAom_ms, 
                           n_reps = 1, 
                           save = TRUE)
@@ -207,6 +207,14 @@ NOBAom_fw_ind <- om_index(usersurvey = c(here("data-raw/simulated-data/config/ms
                            omlist_ss = NOBAom_fw, 
                            n_reps = 1, 
                            save = TRUE)
+
+NOBAom_fw_diet <- om_diet(config = here("data-raw/simulated-data/config/NOBA_sacc38Config.R"),
+                          dietfile = "NOBADetDiet.gz",
+                          usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring_fw.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall_fw.R")), 
+                          omlist_ss = NOBAom_fw, 
+                          n_reps = 1, 
+                          save = TRUE)
 
 unlink(here("vignettes/config"), recursive = TRUE)
 ```
