@@ -18,7 +18,10 @@ reference:
   - simFisheryAgecomp
   - simFisheryAgecompSubannual
   - simFisheryLencomp
+  - simFisheryLencompSubannual
+  - simFisheryAgeLencomp
   - simFisheryWtatAge
+  - simFisheryWtatAgeSubannual
   - simSurveyIndex
   - simSurveyIndexFW
   - simSurveyInfo
@@ -27,6 +30,7 @@ reference:
   - simSurveyAgeLencomp
   - simSurveyWtatAge
   - simSurveyDietcomp
+  - simSurveyLenDietcomp
   - simSurveyDietcompFW
   - simSurveyBottemp
   - simBiolPar
