@@ -79,18 +79,20 @@ lname <- data.frame(Name= c("Long_rough_dab",
 
 spptable <- lname %>%
    select(Name, Long.Name, Latin)
-
-knitr::kable(spptable, col.names = c("Model name", "Full name", "Latin name"))
-
 ```
 </details>
+
+```{r, echo=F}  
+knitr::kable(spptable, col.names = c("Model name", "Full name", "Latin name"))
+```
+
 
 ## Generating a dataset
 
 ### Configuration files specified once
 
 <details>
-<summary>`NOBA2config.R` specifies location and names of files needed for atlantisom to initialize:</summary>
+<summary>`NOBA_sacc38Config.R` specifies location and names of files needed for atlantisom to initialize:</summary>
 
 ```{r, code = readLines(here("data-raw/simulated-data/config/NOBA_sacc38Config.R")), eval=F}
 ```
@@ -197,11 +199,13 @@ fwspp <- atlantisom::load_fgs(here("simulated-data/atlantisoutput/NOBA_sacc_38")
   dplyr::filter(IsTurnedOn == 1) %>%
   dplyr::select(Code, Name, Long.Name, isFished, InvertType) %>%
   dplyr::filter(!Name %in% spptable$Name)
-
-knitr::kable(fwspp)
-
 ```
 </details>
+
+```{r, echo=F}  
+knitr::kable(fwspp)
+```
+
 
 This consists of survey biomass and diet, and fishery catch information for the non age-structured species.
 
@@ -372,8 +376,7 @@ fish_annage_wtage <- mskeyrun::simFisheryWtatAge #atlantisom::read_savedfisherie
 These plots represent the full `mskeyrun` simulated time series for the survey biomass index and weight at age, and a subset for length and age composition.
 
 #### Survey biomass index
-<details>
-```{r, results="asis"}
+```{r, results="asis", echo=FALSE}
 
 # compare with true output (all timesteps)
 # for(s in names(survObsBiom)){
@@ -391,11 +394,9 @@ These plots represent the full `mskeyrun` simulated time series for the survey b
  }
 
 ```
-</details>
 
-#### Survey length composition
-<details>
-```{r lencomp-1, results="asis", message=FALSE, warning=FALSE}
+#### Survey length composition 
+```{r lencomp-1, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 
 # not the full time series, just 24 yrs after catches start in year 55
 for(s in unique(len_comp_data$survey)){
@@ -411,11 +412,9 @@ for(s in unique(len_comp_data$survey)){
 }
 
 ```
-</details>
 
-#### Survey age composition (annual ages)
-<details>
-```{r plot-annagecomp, results="asis", message=FALSE, warning=FALSE}
+#### Survey age composition (annual ages)  
+```{r plot-annagecomp, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 
 for(s in unique(annage_comp_data$survey)){
   cat("  \n##### ",  s,"  \n")
@@ -431,11 +430,9 @@ for(s in unique(annage_comp_data$survey)){
   cat("  \n")
 }
 ```
-</details>
 
 #### Survey iterpolated weight at age (annual ages) 
-<details>
-```{r plot-annwtage, fig.height=10, results='asis'}
+```{r plot-annwtage, fig.height=10, results='asis', echo=FALSE}
 
 for(s in unique(annage_wtage$survey)){
   cat("  \n##### ",  s,"  \n")
@@ -444,7 +441,6 @@ for(s in unique(annage_wtage$survey)){
   cat("  \n")
 }
 ```
-</details> 
 
 ### {-}
 
@@ -452,17 +448,14 @@ for(s in unique(annage_wtage$survey)){
 
 These plots represent the the full `mskeyrun` simulated time series for fishery catch and weight at age, and a subset for length and age composition. 
 
-#### Fishery catch time series
-<details>
-```{r catchind-1, results="asis", message=FALSE, warning=FALSE}
+#### Fishery catch time series  
+```{r catchind-1, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 # observed catch only
 plotC(catchbio_ss)
 ```
-</details>
 
-#### Fishery length composition
-<details>
-```{r, results="asis", message=FALSE, warning=FALSE}
+#### Fishery length composition  
+```{r, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 
 lcompsub <- catchlen_ss %>% filter(year %in% c(55:78)) %>%
   group_by(Name) %>%
@@ -473,11 +466,9 @@ for(i in 1:length(lcompsub)) {
 }
 
 ```
-</details>
 
-#### Fishery catch at age (annual ages)
-<details>
-```{r plot-catchagecomp, results='asis'}
+#### Fishery catch at age (annual ages) 
+```{r plot-catchagecomp, results='asis', echo=FALSE}
 
 acompsub <- fish_annage_comp %>% filter(year %in% c(55:78)) %>%
   group_by(Name) %>%
@@ -490,16 +481,13 @@ for(i in 1:length(acompsub)) {
 }
 
 ```
-</details>
 
-#### Fishery interpolated weight at age (annual ages)
-<details>
-```{r, fig.height=10}
+#### Fishery interpolated weight at age (annual ages)  
+```{r, fig.height=10, echo=FALSE}
 
 wageplot(fish_annage_wtage)
 
 ```
-</details>
 
 ### {-}
 
