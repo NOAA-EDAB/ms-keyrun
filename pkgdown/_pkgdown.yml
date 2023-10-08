@@ -12,17 +12,22 @@ reference:
 - contents:
   - simFocalSpecies
   - simCatchIndex
+  - simCatchIndexSubannual
+  - simCatchIndexFW
+  - simCatchIndexSubannualFW
   - simFisheryAgecomp
   - simFisheryAgecompSubannual
   - simFisheryLencomp
   - simFisheryWtatAge
   - simSurveyIndex
+  - simSurveyIndexFW
   - simSurveyInfo
   - simSurveyAgecomp
   - simSurveyLencomp
   - simSurveyAgeLencomp
   - simSurveyWtatAge
   - simSurveyDietcomp
+  - simSurveyDietcompFW
   - simSurveyBottemp
   - simBiolPar
   - simPerCapCons
