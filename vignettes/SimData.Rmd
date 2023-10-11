@@ -195,7 +195,7 @@ The data generated above focuses on the 11 fully age structured stocks. Here we 
 ```{r}
 
 # all NOBA species not already in mskeyrun dataset
-fwspp <- atlantisom::load_fgs(here("simulated-data/atlantisoutput/NOBA_sacc_38"), "nordic_groups_v04.csv") %>% 
+fwspp <- atlantisom::load_fgs(here("data-raw/data"), "nordic_groups_v04.csv") %>% 
   dplyr::filter(IsTurnedOn == 1) %>%
   dplyr::select(Code, Name, Long.Name, isFished, InvertType) %>%
   dplyr::filter(!Name %in% spptable$Name)
