@@ -48,6 +48,9 @@ create_sim_fishery_lencomp <- function(atlmod,fitstart=NULL,fitend=NULL,saveToDa
   nyears <- omlist_ss$runpar$nyears
   total_sample <- omlist_ss$runpar$tstop/omlist_ss$runpar$outputstep
   
+  # throw an error if fstepperyr is not equal to stepperyr
+  if(stepperyr != fstepperyr) stop("Error: check Atlantis timestep output for fishery")
+  
   # user specified fit start and times if different from full run
   fitstartyr <- ifelse(!is.null(fitstart), fitstart-1, 0)
   fitendyr <- ifelse(!is.null(fitend), fitend, total_sample)

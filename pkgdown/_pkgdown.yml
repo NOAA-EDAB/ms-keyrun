@@ -12,15 +12,26 @@ reference:
 - contents:
   - simFocalSpecies
   - simCatchIndex
+  - simCatchIndexSubannual
+  - simCatchIndexFW
+  - simCatchIndexSubannualFW
   - simFisheryAgecomp
+  - simFisheryAgecompSubannual
   - simFisheryLencomp
+  - simFisheryLencompSubannual
+  - simFisheryAgeLencomp
   - simFisheryWtatAge
+  - simFisheryWtatAgeSubannual
   - simSurveyIndex
+  - simSurveyIndexFW
+  - simSurveyInfo
   - simSurveyAgecomp
   - simSurveyLencomp
   - simSurveyAgeLencomp
   - simSurveyWtatAge
   - simSurveyDietcomp
+  - simSurveyLenDietcomp
+  - simSurveyDietcompFW
   - simSurveyBottemp
   - simBiolPar
   - simPerCapCons
@@ -106,11 +117,3 @@ navbar:
      href: articles/GBLengthWeight.html
    - text: Survey Biomass and Abundance
      href: articles/GBbiomassNumbyLength.html
-
-
-
-
-
-
-  
-  

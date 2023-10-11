@@ -1,6 +1,9 @@
 #' The Atlantis-simulated fishery catch indices for the mskeyrun project
 #'
-#' Simulated survey index data from Atlanits model as sampled by atlantisom
+#' atlantosom output is accessed and fishery data pulled over time
+#' simulated fishery catches are cumulative, not snapshots
+#' fishery total catch for the year is the sum of the months from 
+#' simCatchIndexSubannual
 #'
 #' @format A data frame
 #'
