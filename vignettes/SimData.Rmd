@@ -31,6 +31,8 @@ The simulated dataset is based on output of the Norwegian and Barents Sea (NOBA)
 
 Our initial species selection includes 11 single species groups from the Atlantis NOBA model. 
 
+<details>
+<summary>Generate the species table</summary>
 ```{r spp-table}
 
 lname <- data.frame(Name= c("Long_rough_dab",
@@ -77,9 +79,11 @@ lname <- data.frame(Name= c("Long_rough_dab",
 
 spptable <- lname %>%
    select(Name, Long.Name, Latin)
+```
+</details>
 
+```{r, echo=F}  
 knitr::kable(spptable, col.names = c("Model name", "Full name", "Latin name"))
-
 ```
 
 
@@ -87,30 +91,38 @@ knitr::kable(spptable, col.names = c("Model name", "Full name", "Latin name"))
 
 ### Configuration files specified once
 
-`NOBA2config.R` specifies location and names of files needed for atlantisom to initialize:
+<details>
+<summary>`NOBA_sacc38Config.R` specifies location and names of files needed for atlantisom to initialize:</summary>
 
 ```{r, code = readLines(here("data-raw/simulated-data/config/NOBA_sacc38Config.R")), eval=F}
 ```
+</details>
 
-`omdimensions.R` standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):
+<details>
+<summary>`omdimensions.R` standardizes timesteps, etc. (this is part of atlantisom and should not need to be changed by the user):</summary>
 
 ```{r, code = readLines(here("data-raw/simulated-data/config/omdimensions.R")), eval=F}
 ```
+</details>
 
 ### Change these survey and fishery config files
 
-`mssurvey_spring.R` and `mssurvey_fall.R` configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):
+<details>
+<summary>`mssurvey_spring.R` and `mssurvey_fall.R` configure the fishery independent surveys (in this census test, surveys sample all model polygons in all years and have efficiency of 1 for all species, with no size selectivity):</summary>
 
 ```{r, code = readLines(here("data-raw/simulated-data/config/mssurvey_spring.R")), eval=F}
 ```
 
 ```{r, code = readLines(here("data-raw/simulated-data/config/mssurvey_fall.R")), eval=F}
 ```
+</details>
 
-`msfishery.R` configures the fishery dependent data:
+<details>
+<summary>`msfishery.R` configures the fishery dependent data:</summary>
 
 ```{r, code = readLines(here("data-raw/simulated-data/config/msfishery.R")), eval=F}
 ```
+</details>
 
 ### Run atlantisom and save outputs
 
@@ -118,9 +130,9 @@ True datasets are generated as follows, using `atlantisom` wrapper functions `om
 
 ```{r, eval=FALSE}
 
-NOBAom <- om_init(here("simulated-data/config/NOBA_sacc38Config.R"))
+NOBAom <- om_init(here("data-raw/simulated-data/config/NOBA_sacc38Config.R"))
 
-NOBAom_ms <- om_species(sppsubset$Name, NOBAom)
+NOBAom_ms <- om_species(spptable$Name, NOBAom)
 
 #need to change internal call to source in atlantisom om_index om_comps and om_diet functions
 #expecting a config folder in same directory as rmd
@@ -128,26 +140,26 @@ NOBAom_ms <- om_species(sppsubset$Name, NOBAom)
 
 dir.create(file.path(here("docs/config")))
 
-file.copy(here("simulated-data/config/omdimensions.R"), here("docs/config/omdimensions.R"))
+file.copy(here("data-raw/simulated-data/config/omdimensions.R"), here("docs/config/omdimensions.R"))
 
-NOBAom_ms_ind <- om_index(usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
-                                         here("simulated-data/config/mssurvey_fall.R")), 
-                           userfishery = here("simulated-data/config/msfishery.R"),
+NOBAom_ms_ind <- om_index(usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall.R")), 
+                           userfishery = here("data-raw/simulated-data/config/msfishery.R"),
                            omlist_ss = NOBAom_ms, 
                            n_reps = 1, 
                            save = TRUE)
 
-NOBAom_ms_comp <- om_comps(usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
-                                         here("simulated-data/config/mssurvey_fall.R")), 
-                           userfishery = here("simulated-data/config/msfishery.R"),
+NOBAom_ms_comp <- om_comps(usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall.R")), 
+                           userfishery = here("data-raw/simulated-data/config/msfishery.R"),
                            omlist_ss = NOBAom_ms, 
                            n_reps = 1, 
                            save = TRUE)
 
-NOBAom_ms_diet <- om_diet(config = here("simulated-data/config", "NOBA2config.R"),
+NOBAom_ms_diet <- om_diet(config = here("data-raw/simulated-data/config/NOBA_sacc38Config.R"),
                           dietfile = "NOBADetDiet.gz",
-                          usersurvey = c(here("simulated-data/config/mssurvey_spring.R"), 
-                                         here("simulated-data/config/mssurvey_fall.R")), 
+                          usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall.R")), 
                           omlist_ss = NOBAom_ms, 
                           n_reps = 1, 
                           save = TRUE)
@@ -159,21 +171,85 @@ unlink(here("docs/config"), recursive = TRUE)
 
 Scripts in `ms-keyrun/data-raw` show the process of making mskeyun datasets from `atlantisom` output generated above. Atlantis outputs and `atlantisom` outputs produced above are local to Sarah's computer for this code to run, as they are too large for github. However, the scripts are linked here to show the process. Overall this script creates all datasets using functions specific to each data type:
 
+<details>
+<summary>Code to build simulated datasets</summary>
 ```{r, code = readLines(here("data-raw/build_simdata.R")), eval=F}
 ```
+</details>
 
-For example, `create_sim_survey_index()` takes the saved `atlantisom` output plus user specifications for fit start and end years to produce the dataset `mskeyrun::simSurveyIndex`:
+<details>
+<summary>For example, `create_sim_survey_index()` takes the saved `atlantisom` output plus user specifications for fit start and end years to produce the dataset `mskeyrun::simSurveyIndex`:</summary>
 
 ```{r, code = readLines(here("data-raw/R/create_sim_survey_index.R")), eval=F}
 ```
+</details>
 
 All functions are in this mskeyrun repository folder: https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R 
+
+### Additional simulated data for food web models
+
+The data generated above focuses on the 11 fully age structured stocks. Here we add information needed for food web modeling on the remaining groups in the simulated system. 
+
+<details>
+<summary>Code for remaining groups</summary>
+```{r}
+
+# all NOBA species not already in mskeyrun dataset
+fwspp <- atlantisom::load_fgs(here("data-raw/data"), "nordic_groups_v04.csv") %>% 
+  dplyr::filter(IsTurnedOn == 1) %>%
+  dplyr::select(Code, Name, Long.Name, isFished, InvertType) %>%
+  dplyr::filter(!Name %in% spptable$Name)
+```
+</details>
+
+```{r, echo=F}  
+knitr::kable(fwspp)
+```
+
+
+This consists of survey biomass and diet, and fishery catch information for the non age-structured species.
+
+To generate this, we apply selected functions from the `atlantisom` package with slightly modified config files to ensure the food web "fw" datasets don't overwrite the multispecies datasets: 
+
+```{r, eval=FALSE}
+
+NOBAom <- om_init(here("data-raw/simulated-data/config/NOBA_sacc38Config.R"))
+
+NOBAom_fw <- om_species(fwspp$Name, NOBAom, save = FALSE) #save by hand, don't overwrite 11 species omlist_ss
+
+saveRDS(NOBAom_fw, file.path(d.name, paste0(scenario.name, "omlist_fw.rds")))
+
+dir.create(file.path(here("vignettes/config")))
+
+file.copy(here("data-raw/simulated-data/config/omdimensions.R"), here("vignettes/config/omdimensions.R"))
+
+NOBAom_fw_ind <- om_index(usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring_fw.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall_fw.R")), 
+                           userfishery = here("data-raw/simulated-data/config/msfishery_fw.R"),
+                           omlist_ss = NOBAom_fw, 
+                           n_reps = 1, 
+                           save = TRUE)
+
+NOBAom_fw_diet <- om_diet(config = here("data-raw/simulated-data/config/NOBA_sacc38Config.R"),
+                          dietfile = "NOBADetDiet.gz",
+                          usersurvey = c(here("data-raw/simulated-data/config/mssurvey_spring_fw.R"), 
+                                         here("data-raw/simulated-data/config/mssurvey_fall_fw.R")), 
+                          omlist_ss = NOBAom_fw, 
+                          n_reps = 1, 
+                          save = TRUE)
+
+unlink(here("vignettes/config"), recursive = TRUE)
+```
+
 
 ### Visualize simulated data
 
 #### Plotting functions
 
 A collection of functions used previously that may be harvested and modified for diagnostics or visualizations in the ms-keyrun and ICES WGSAM skill assessment projects. 
+
+<details>
+<summary>Code for plotting functions</summary>
 
 ```{r plotfuns}
 
@@ -268,10 +344,12 @@ wageplot <- function(dat, truedat=NULL){
 }
   
 ```
+</details>
 
 #### Read in the "data" to check with plots
 
-The `mskeyrun` simulated data objects are all dataframes.
+<details>
+<summary>The `mskeyrun` simulated data objects are all dataframes.</summary>
 
 ```{r}
 
@@ -291,14 +369,14 @@ fish_annage_comp <- mskeyrun::simFisheryAgecomp #atlantisom::read_savedfisheries
 fish_annage_wtage <- mskeyrun::simFisheryWtatAge #atlantisom::read_savedfisheries(d.name, 'catchAnnWtage')
 
 ```
-
+</details>
 
 ### Visualize survey outputs {.tabset}
 
 These plots represent the full `mskeyrun` simulated time series for the survey biomass index and weight at age, and a subset for length and age composition.
 
 #### Survey biomass index
-```{r, results="asis"}
+```{r, results="asis", echo=FALSE}
 
 # compare with true output (all timesteps)
 # for(s in names(survObsBiom)){
@@ -317,8 +395,8 @@ These plots represent the full `mskeyrun` simulated time series for the survey b
 
 ```
 
-#### Survey length composition
-```{r lencomp-1, results="asis", message=FALSE, warning=FALSE}
+#### Survey length composition 
+```{r lencomp-1, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 
 # not the full time series, just 24 yrs after catches start in year 55
 for(s in unique(len_comp_data$survey)){
@@ -335,8 +413,8 @@ for(s in unique(len_comp_data$survey)){
 
 ```
 
-#### Survey age composition (annual ages)
-```{r plot-annagecomp, results="asis", message=FALSE, warning=FALSE}
+#### Survey age composition (annual ages)  
+```{r plot-annagecomp, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 
 for(s in unique(annage_comp_data$survey)){
   cat("  \n##### ",  s,"  \n")
@@ -354,7 +432,7 @@ for(s in unique(annage_comp_data$survey)){
 ```
 
 #### Survey iterpolated weight at age (annual ages) 
-```{r plot-annwtage, fig.height=10, results='asis'}
+```{r plot-annwtage, fig.height=10, results='asis', echo=FALSE}
 
 for(s in unique(annage_wtage$survey)){
   cat("  \n##### ",  s,"  \n")
@@ -364,21 +442,20 @@ for(s in unique(annage_wtage$survey)){
 }
 ```
 
-
 ### {-}
 
 ### Visualize fishery data {.tabset}
 
 These plots represent the the full `mskeyrun` simulated time series for fishery catch and weight at age, and a subset for length and age composition. 
 
-#### Fishery catch time series
-```{r catchind-1, results="asis", message=FALSE, warning=FALSE}
+#### Fishery catch time series  
+```{r catchind-1, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 # observed catch only
 plotC(catchbio_ss)
 ```
 
-#### Fishery length composition
-```{r, results="asis", message=FALSE, warning=FALSE}
+#### Fishery length composition  
+```{r, results="asis", message=FALSE, warning=FALSE, echo=FALSE}
 
 lcompsub <- catchlen_ss %>% filter(year %in% c(55:78)) %>%
   group_by(Name) %>%
@@ -390,8 +467,8 @@ for(i in 1:length(lcompsub)) {
 
 ```
 
-#### Fishery catch at age (annual ages)
-```{r plot-catchagecomp, results='asis'}
+#### Fishery catch at age (annual ages) 
+```{r plot-catchagecomp, results='asis', echo=FALSE}
 
 acompsub <- fish_annage_comp %>% filter(year %in% c(55:78)) %>%
   group_by(Name) %>%
@@ -405,8 +482,8 @@ for(i in 1:length(acompsub)) {
 
 ```
 
-#### Fishery interpolated weight at age (annual ages)
-```{r, fig.height=10}
+#### Fishery interpolated weight at age (annual ages)  
+```{r, fig.height=10, echo=FALSE}
 
 wageplot(fish_annage_wtage)
 
@@ -429,7 +506,9 @@ Hydra input files were developed directly from `mskeyrun` datasets by modifying 
 
 For example, this process creates the simulated dataset with 5 length bins:
 
-The `create_RData_mskeyrun.R` file was sourced, and `create_RData_mskeyrun("sim", nlenbin = 5)` was run to make a new `hydraDataList_msk.rda` file in the package. Then the package is built locally, R is restarted, and the following code block is run to produce input files.
+<details>
+<summary>The `create_RData_mskeyrun.R` file was sourced, and `create_RData_mskeyrun("sim", nlenbin = 5)` was run to make a new `hydraDataList_msk.rda` file in the package. Then the package is built locally, R is restarted, and the following code block is run to produce input files.</summary>
+
 
 ```{r, writedatfile5, eval=FALSE}
 
@@ -452,8 +531,10 @@ hydraDataList_5bin_0comp <- create_datpin_files(inputs,hydraDataList_msk)
 saveRDS(hydraDataList_5bin_0comp, file.path(here("inputRdatalists/hydraDataList_5bin_0comp.rds")))
 
 ```
+</details>
 
-Run `create_RData_mskeyrun("sim", nlenbin = 10)` in `hydradata`, rebuild package, restart R, then...
+<details>
+<summary>Run `create_RData_mskeyrun("sim", nlenbin = 10)` in `hydradata`, rebuild package, restart R, then...</summary>
 
 ```{r, writedatfile10, eval=FALSE}
 
@@ -477,7 +558,7 @@ hydraDataList_10bin_0comp <- create_datpin_files(inputs,hydraDataList_msk)
 saveRDS(hydraDataList_10bin_0comp, file.path(here("inputRdatalists/hydraDataList_10bin_0comp.rds")))
 
 ```
-
+</details>
 
 #### Age structured multispecies statistical catch at age model (MSSCAA)
 

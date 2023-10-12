@@ -1,6 +1,6 @@
-#' The Atlantis-simulated focal species biological parameters in mskeyrun project
+#' The Atlantis-simulated initial age and recruitment in mskeyrun project
 #'
-#' Model name and scenario, Species code, species name, length weight parameters
+#' Model name and scenario, time series average recruitment and start year numbers at age and length.
 #'
 #' @format A data frame
 #'
