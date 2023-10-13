@@ -13,6 +13,7 @@ link-citations: yes
 knitr::opts_chunk$set(echo = TRUE)
 library(magrittr)
 library(mskeyrun)
+library(mscatch)
 source(here::here("data-raw/R/create_species_rules_table.R"))
 options(warn=-1)
 ```
