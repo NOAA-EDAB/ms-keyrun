@@ -125,14 +125,14 @@ knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_GOOSEFISH.
 
 #### Atlantic Cod
 ```{r, echo = F}
-knitr::include_graphics("figures/11_demersal_length_frequency_table2_ATLANTIC COD.png")
-knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_ATLANTIC COD.png")
+knitr::include_graphics("figures/11_demersal_length_frequency_table2_ATLANTIC_COD.png")
+knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_ATLANTIC_COD.png")
 
 ```
 
 #### Winter flounder
 ```{r, echo = F}
-knitr::include_graphics("figures/11_demersal_length_frequency_table2_WINTER FLOUNDER.png")
+knitr::include_graphics("figures/11_demersal_length_frequency_table2_WINTER_FLOUNDER.png")
 
 
 ```
@@ -140,7 +140,7 @@ knitr::include_graphics("figures/11_demersal_length_frequency_table2_WINTER FLOU
 
 #### Yellowtail flounder
 ```{r, echo = F}
-knitr::include_graphics("figures/11_demersal_length_frequency_table2_YELLOWTAIL FLOUNDER.png")
+knitr::include_graphics("figures/11_demersal_length_frequency_table2_YELLOWTAIL_FLOUNDER.png")
 
 
 ```
@@ -157,37 +157,37 @@ knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_HADDOCK.pn
 #### Atlantic herring
 
 ```{r, echo = F}
-knitr::include_graphics("figures/11_pelagic_length_frequency_table2_ATLANTIC HERRING.png")
+knitr::include_graphics("figures/11_pelagic_length_frequency_table2_ATLANTIC_HERRING.png")
 
 ```
 
 #### Atlantic mackerel
 ```{r, echo = F}
-knitr::include_graphics("figures/11_demersal_length_frequency_table2_ATLANTIC MACKEREL.png")
-knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_ATLANTIC MACKEREL.png")
-knitr::include_graphics("figures/11_pelagic_length_frequency_table2_ATLANTIC MACKEREL.png")
+knitr::include_graphics("figures/11_demersal_length_frequency_table2_ATLANTIC_MACKEREL.png")
+knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_ATLANTIC_MACKEREL.png")
+knitr::include_graphics("figures/11_pelagic_length_frequency_table2_ATLANTIC_MACKEREL.png")
 
 ```
 
 
 #### Spiny dogfish
 ```{r, echo = F}
-knitr::include_graphics("figures/11_demersal_length_frequency_table2_SPINY DOGFISH.png")
-knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_SPINY DOGFISH.png")
+knitr::include_graphics("figures/11_demersal_length_frequency_table2_SPINY_DOGFISH.png")
+knitr::include_graphics("figures/11_fixedGear_length_frequency_table2_SPINY_DOGFISH.png")
 
 ```
 
 
 #### Winter skate
 ```{r, echo = F}
-knitr::include_graphics("figures/11_demersal_length_frequency_table2_WINTER SKATE.png")
+knitr::include_graphics("figures/11_demersal_length_frequency_table2_WINTER_SKATE.png")
 
 ```
 
 
 #### Silver Hake
 ```{r, echo = F}
-knitr::include_graphics("figures/11_demersal_length_frequency_table2_SILVER HAKE.png")
+knitr::include_graphics("figures/11_demersal_length_frequency_table2_SILVER_HAKE.png")
 
 
 ```
