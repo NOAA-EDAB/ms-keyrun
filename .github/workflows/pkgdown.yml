@@ -55,6 +55,7 @@ jobs:
 
       - name: Install R packages
         run: |
+          install.packages("remotes")
           install.packages("DBI")
           install.packages("ROracle", type = "source", configure.args = "--with-oci-lib=/usr/lib/oracle/21/client64/lib --with-oci-inc=/usr/include/oracle/21/client64")
         shell: Rscript {0}
