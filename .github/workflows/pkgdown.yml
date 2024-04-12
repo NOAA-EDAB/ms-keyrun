@@ -52,6 +52,11 @@ jobs:
           source /etc/profile.d/oracle.sh
         shell: bash
 
+      - name: Install command line packages
+        run: |
+          sudo apt-get install libudunits2-dev libharfbuzz-dev libfribidi-dev
+#          sudo apt-get install  libgdal-dev libcurl4-gnutls-dev libgit2-dev libudunits2-dev libharfbuzz-dev libfribidi-dev
+        shell: bash
 
       - name: Install R packages
         run: |
@@ -63,14 +68,14 @@ jobs:
         shell: Rscript {0}
 
       - name: Install binary dependencies
-        #if: runner.os != 'Linux'
+        #if: runner.os |= 'Linux'
         run: |
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
       - name: Install pkgdown
         run: |
-          install.packages("pkgdown", type = "binary")
+          install.packages("pkgdown")
         shell: Rscript {0}
 
       - name: Install package
