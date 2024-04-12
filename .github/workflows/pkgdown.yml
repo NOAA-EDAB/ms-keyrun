@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - master
-      - andy_pkgdown_roracle
 
 
 jobs:
