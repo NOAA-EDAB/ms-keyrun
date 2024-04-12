@@ -55,7 +55,6 @@ Suggests:
   dplyr,
   here,
   data.table,
-  rgdal,
   ggthemes,
   FSA,
   ecodata,
