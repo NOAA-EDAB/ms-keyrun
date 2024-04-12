@@ -8,8 +8,8 @@
 <meta name="description" content="mskeyrun">
 <title>Biomass and Abundance by length • mskeyrun</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Biomass and Abundance by length">
 <meta property="og:description" content="mskeyrun">
@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">mskeyrun</a>
 
@@ -121,160 +121,30 @@ that define <a href="https://noaa-edab.github.io/ms-keyrun/articles/GBSurveySet.
 Bank</a> are 1090, 1130:1210, 1230, 1250, 3460, 3480, 3490,
 3520:3550.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/R/create_real_survey_lennumcomp.R"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">create_real_survey_lennumcomp</span><span class="op">(</span>convertKGtoMT<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   [1] 1090 1130 1131 1132 1133 1134 1135 1136 1137 1138 1139 1140 1141 1142 1143</span></span>
-<span><span class="co">##  [16] 1144 1145 1146 1147 1148 1149 1150 1151 1152 1153 1154 1155 1156 1157 1158</span></span>
-<span><span class="co">##  [31] 1159 1160 1161 1162 1163 1164 1165 1166 1167 1168 1169 1170 1171 1172 1173</span></span>
-<span><span class="co">##  [46] 1174 1175 1176 1177 1178 1179 1180 1181 1182 1183 1184 1185 1186 1187 1188</span></span>
-<span><span class="co">##  [61] 1189 1190 1191 1192 1193 1194 1195 1196 1197 1198 1199 1200 1201 1202 1203</span></span>
-<span><span class="co">##  [76] 1204 1205 1206 1207 1208 1209 1210 1230 1250 3460 3480 3490 3520 3521 3522</span></span>
-<span><span class="co">##  [91] 3523 3524 3525 3526 3527 3528 3529 3530 3531 3532 3533 3534 3535 3536 3537</span></span>
-<span><span class="co">## [106] 3538 3539 3540 3541 3542 3543 3544 3545 3546 3547 3548 3549 3550</span></span>
-<span><span class="co">##   [1] 1090 1130 1131 1132 1133 1134 1135 1136 1137 1138 1139 1140 1141 1142 1143</span></span>
-<span><span class="co">##  [16] 1144 1145 1146 1147 1148 1149 1150 1151 1152 1153 1154 1155 1156 1157 1158</span></span>
-<span><span class="co">##  [31] 1159 1160 1161 1162 1163 1164 1165 1166 1167 1168 1169 1170 1171 1172 1173</span></span>
-<span><span class="co">##  [46] 1174 1175 1176 1177 1178 1179 1180 1181 1182 1183 1184 1185 1186 1187 1188</span></span>
-<span><span class="co">##  [61] 1189 1190 1191 1192 1193 1194 1195 1196 1197 1198 1199 1200 1201 1202 1203</span></span>
-<span><span class="co">##  [76] 1204 1205 1206 1207 1208 1209 1210 1230 1250 3460 3480 3490 3520 3521 3522</span></span>
-<span><span class="co">##  [91] 3523 3524 3525 3526 3527 3528 3529 3530 3531 3532 3533 3534 3535 3536 3537</span></span>
-<span><span class="co">## [106] 3538 3539 3540 3541 3542 3543 3544 3545 3546 3547 3548 3549 3550</span></span></code></pre>
-<div class="section level2 tabset">
-<h2 class="tabset" id="spring-biomass-length-frequency-plots">Spring Biomass: length-frequency plots<a class="anchor" aria-label="anchor" href="#spring-biomass-length-frequency-plots"></a>
-</h2>
-
-
-
-
-
-
-
-
-
-
-<ul class="nav nav-tabs" id="spring-biomass-length-frequency-plots" role="tablist">
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#goosefish" id="goosefish-tab" type="button" role="tab" aria-controls="goosefish" aria-selected="true" class="active nav-link">Goosefish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-cod" id="atlantic-cod-tab" type="button" role="tab" aria-controls="atlantic-cod" aria-selected="false" class="nav-link">Atlantic cod</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-flounder" id="winter-flounder-tab" type="button" role="tab" aria-controls="winter-flounder" aria-selected="false" class="nav-link">Winter flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#yellowtail-flounder" id="yellowtail-flounder-tab" type="button" role="tab" aria-controls="yellowtail-flounder" aria-selected="false" class="nav-link">Yellowtail flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#haddock" id="haddock-tab" type="button" role="tab" aria-controls="haddock" aria-selected="false" class="nav-link">Haddock</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-herring" id="atlantic-herring-tab" type="button" role="tab" aria-controls="atlantic-herring" aria-selected="false" class="nav-link">Atlantic herring</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-mackerel" id="atlantic-mackerel-tab" type="button" role="tab" aria-controls="atlantic-mackerel" aria-selected="false" class="nav-link">Atlantic mackerel</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#spiny-dogfish" id="spiny-dogfish-tab" type="button" role="tab" aria-controls="spiny-dogfish" aria-selected="false" class="nav-link">Spiny dogfish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-skate" id="winter-skate-tab" type="button" role="tab" aria-controls="winter-skate" aria-selected="false" class="nav-link">Winter skate</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#silver-hake" id="silver-hake-tab" type="button" role="tab" aria-controls="silver-hake" aria-selected="false" class="nav-link">Silver hake</button></li>
-</ul>
-<div class="tab-content">
-<div class="active  tab-pane" id="goosefish" role="tabpanel" aria-labelledby="goosefish-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-1.png" width="700"></p>
-</div>
-<div class="tab-pane" id="atlantic-cod" role="tabpanel" aria-labelledby="atlantic-cod-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-2.png" width="700"></p>
-</div>
-<div class="tab-pane" id="winter-flounder" role="tabpanel" aria-labelledby="winter-flounder-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-3.png" width="700"></p>
-</div>
-<div class="tab-pane" id="yellowtail-flounder" role="tabpanel" aria-labelledby="yellowtail-flounder-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-4.png" width="700"></p>
-</div>
-<div class="tab-pane" id="haddock" role="tabpanel" aria-labelledby="haddock-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-5.png" width="700"></p>
-</div>
-<div class="tab-pane" id="atlantic-herring" role="tabpanel" aria-labelledby="atlantic-herring-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-6.png" width="700"></p>
-</div>
-<div class="tab-pane" id="atlantic-mackerel" role="tabpanel" aria-labelledby="atlantic-mackerel-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-7.png" width="700"></p>
-</div>
-<div class="tab-pane" id="spiny-dogfish" role="tabpanel" aria-labelledby="spiny-dogfish-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-8.png" width="700"></p>
-</div>
-<div class="tab-pane" id="winter-skate" role="tabpanel" aria-labelledby="winter-skate-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-9.png" width="700"></p>
-</div>
-<div class="tab-pane" id="silver-hake" role="tabpanel" aria-labelledby="silver-hake-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassS-10.png" width="700"></p>
-</div>
-</div>
-</div>
-<div class="section level2 tabset">
-<h2 class="tabset" id="fall-biomass-length-frequency-plots">Fall Biomass: length-frequency plots<a class="anchor" aria-label="anchor" href="#fall-biomass-length-frequency-plots"></a>
-</h2>
-
-
-
-
-
-
-
-
-
-
-<ul class="nav nav-tabs" id="fall-biomass-length-frequency-plots" role="tablist">
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#goosefish-1" id="goosefish-1-tab" type="button" role="tab" aria-controls="goosefish-1" aria-selected="true" class="active nav-link">Goosefish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-cod-1" id="atlantic-cod-1-tab" type="button" role="tab" aria-controls="atlantic-cod-1" aria-selected="false" class="nav-link">Atlantic cod</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-flounder-1" id="winter-flounder-1-tab" type="button" role="tab" aria-controls="winter-flounder-1" aria-selected="false" class="nav-link">Winter flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#yellowtail-flounder-1" id="yellowtail-flounder-1-tab" type="button" role="tab" aria-controls="yellowtail-flounder-1" aria-selected="false" class="nav-link">Yellowtail flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#haddock-1" id="haddock-1-tab" type="button" role="tab" aria-controls="haddock-1" aria-selected="false" class="nav-link">Haddock</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-herring-1" id="atlantic-herring-1-tab" type="button" role="tab" aria-controls="atlantic-herring-1" aria-selected="false" class="nav-link">Atlantic herring</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-mackerel-1" id="atlantic-mackerel-1-tab" type="button" role="tab" aria-controls="atlantic-mackerel-1" aria-selected="false" class="nav-link">Atlantic mackerel</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#spiny-dogfish-1" id="spiny-dogfish-1-tab" type="button" role="tab" aria-controls="spiny-dogfish-1" aria-selected="false" class="nav-link">Spiny dogfish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-skate-1" id="winter-skate-1-tab" type="button" role="tab" aria-controls="winter-skate-1" aria-selected="false" class="nav-link">Winter skate</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#silver-hake-1" id="silver-hake-1-tab" type="button" role="tab" aria-controls="silver-hake-1" aria-selected="false" class="nav-link">Silver hake</button></li>
-</ul>
-<div class="tab-content">
-<div class="active  tab-pane" id="goosefish-1" role="tabpanel" aria-labelledby="goosefish-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-1.png" width="700"></p>
-</div>
-<div class="tab-pane" id="atlantic-cod-1" role="tabpanel" aria-labelledby="atlantic-cod-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-2.png" width="700"></p>
-</div>
-<div class="tab-pane" id="winter-flounder-1" role="tabpanel" aria-labelledby="winter-flounder-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-3.png" width="700"></p>
-</div>
-<div class="tab-pane" id="yellowtail-flounder-1" role="tabpanel" aria-labelledby="yellowtail-flounder-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-4.png" width="700"></p>
-</div>
-<div class="tab-pane" id="haddock-1" role="tabpanel" aria-labelledby="haddock-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-5.png" width="700"></p>
-</div>
-<div class="tab-pane" id="atlantic-herring-1" role="tabpanel" aria-labelledby="atlantic-herring-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-6.png" width="700"></p>
-</div>
-<div class="tab-pane" id="atlantic-mackerel-1" role="tabpanel" aria-labelledby="atlantic-mackerel-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-7.png" width="700"></p>
-</div>
-<div class="tab-pane" id="spiny-dogfish-1" role="tabpanel" aria-labelledby="spiny-dogfish-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-8.png" width="700"></p>
-</div>
-<div class="tab-pane" id="winter-skate-1" role="tabpanel" aria-labelledby="winter-skate-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-9.png" width="700"></p>
-</div>
-<div class="tab-pane" id="silver-hake-1" role="tabpanel" aria-labelledby="silver-hake-1-tab">
-
-<p><img src="GBbiomassNumbyLength_files/figure-html/biomassF-10.png" width="700"></p>
-</div>
-</div>
-</div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/source.html" class="external-link">source</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/R/create_real_survey_lennumcomp.R"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Linking to GEOS 3.10.2, GDAL 3.4.1, PROJ 8.2.1; sf_use_s2() is TRUE</span></span></code></pre>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressMessages</a></span><span class="op">(</span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">create_real_survey_lennumcomp</span><span class="op">(</span>convertKGtoMT<span class="op">=</span><span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<!-- ## Spring Biomass: length-frequency plots {.tabset} -->
+<!-- ```{r biomassS, results = "asis", echo = FALSE, fig.height=8} -->
+<!-- for(i in seq_along(out$plistBS)){ -->
+<!--     tmp <- out$plistBS[[i]] -->
+<!--     # As you want to use tabset level here has to be lower than  -->
+<!--     # parent level (ie, parent is 2, so here you have to use 3) -->
+<!--     catHeader(tmp[[2]], 3) -->
+<!--     lapply(tmp[1], print) -->
+<!-- } -->
+<!-- ``` -->
+<!-- ## Fall Biomass: length-frequency plots {.tabset} -->
+<!-- ```{r biomassF, results = "asis", echo = FALSE, fig.height=8} -->
+<!-- for(i in seq_along(out$plistBF)){ -->
+<!--     tmp <- out$plistBF[[i]] -->
+<!--     # As you want to use tabset level here has to be lower than -->
+<!--     # parent level (ie, parent is 2, so here you have to use 3) -->
+<!--     catHeader(tmp[[2]], 3) -->
+<!--     lapply(tmp[1], print) -->
+<!-- } -->
+<!-- ``` -->
 <div class="section level2 tabset">
 <h2 class="tabset" id="spring-abundance-length-frequency-plots">Spring Abundance: length-frequency plots<a class="anchor" aria-label="anchor" href="#spring-abundance-length-frequency-plots"></a>
 </h2>
@@ -289,55 +159,55 @@ Bank</a> are 1090, 1130:1210, 1230, 1250, 3460, 3480, 3490,
 
 
 <ul class="nav nav-tabs" id="spring-abundance-length-frequency-plots" role="tablist">
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#goosefish-2" id="goosefish-2-tab" type="button" role="tab" aria-controls="goosefish-2" aria-selected="true" class="active nav-link">Goosefish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-cod-2" id="atlantic-cod-2-tab" type="button" role="tab" aria-controls="atlantic-cod-2" aria-selected="false" class="nav-link">Atlantic cod</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-flounder-2" id="winter-flounder-2-tab" type="button" role="tab" aria-controls="winter-flounder-2" aria-selected="false" class="nav-link">Winter flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#yellowtail-flounder-2" id="yellowtail-flounder-2-tab" type="button" role="tab" aria-controls="yellowtail-flounder-2" aria-selected="false" class="nav-link">Yellowtail flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#haddock-2" id="haddock-2-tab" type="button" role="tab" aria-controls="haddock-2" aria-selected="false" class="nav-link">Haddock</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-herring-2" id="atlantic-herring-2-tab" type="button" role="tab" aria-controls="atlantic-herring-2" aria-selected="false" class="nav-link">Atlantic herring</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-mackerel-2" id="atlantic-mackerel-2-tab" type="button" role="tab" aria-controls="atlantic-mackerel-2" aria-selected="false" class="nav-link">Atlantic mackerel</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#spiny-dogfish-2" id="spiny-dogfish-2-tab" type="button" role="tab" aria-controls="spiny-dogfish-2" aria-selected="false" class="nav-link">Spiny dogfish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-skate-2" id="winter-skate-2-tab" type="button" role="tab" aria-controls="winter-skate-2" aria-selected="false" class="nav-link">Winter skate</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#silver-hake-2" id="silver-hake-2-tab" type="button" role="tab" aria-controls="silver-hake-2" aria-selected="false" class="nav-link">Silver hake</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#goosefish" id="goosefish-tab" type="button" role="tab" aria-controls="goosefish" aria-selected="true" class="active nav-link">Goosefish</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-cod" id="atlantic-cod-tab" type="button" role="tab" aria-controls="atlantic-cod" aria-selected="false" class="nav-link">Atlantic cod</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-flounder" id="winter-flounder-tab" type="button" role="tab" aria-controls="winter-flounder" aria-selected="false" class="nav-link">Winter flounder</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#yellowtail-flounder" id="yellowtail-flounder-tab" type="button" role="tab" aria-controls="yellowtail-flounder" aria-selected="false" class="nav-link">Yellowtail flounder</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#haddock" id="haddock-tab" type="button" role="tab" aria-controls="haddock" aria-selected="false" class="nav-link">Haddock</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-herring" id="atlantic-herring-tab" type="button" role="tab" aria-controls="atlantic-herring" aria-selected="false" class="nav-link">Atlantic herring</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-mackerel" id="atlantic-mackerel-tab" type="button" role="tab" aria-controls="atlantic-mackerel" aria-selected="false" class="nav-link">Atlantic mackerel</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#spiny-dogfish" id="spiny-dogfish-tab" type="button" role="tab" aria-controls="spiny-dogfish" aria-selected="false" class="nav-link">Spiny dogfish</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-skate" id="winter-skate-tab" type="button" role="tab" aria-controls="winter-skate" aria-selected="false" class="nav-link">Winter skate</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#silver-hake" id="silver-hake-tab" type="button" role="tab" aria-controls="silver-hake" aria-selected="false" class="nav-link">Silver hake</button></li>
 </ul>
 <div class="tab-content">
-<div class="active  tab-pane" id="goosefish-2" role="tabpanel" aria-labelledby="goosefish-2-tab">
+<div class="active  tab-pane" id="goosefish" role="tabpanel" aria-labelledby="goosefish-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-1.png" width="700"></p>
 </div>
-<div class="tab-pane" id="atlantic-cod-2" role="tabpanel" aria-labelledby="atlantic-cod-2-tab">
+<div class="tab-pane" id="atlantic-cod" role="tabpanel" aria-labelledby="atlantic-cod-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-2.png" width="700"></p>
 </div>
-<div class="tab-pane" id="winter-flounder-2" role="tabpanel" aria-labelledby="winter-flounder-2-tab">
+<div class="tab-pane" id="winter-flounder" role="tabpanel" aria-labelledby="winter-flounder-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-3.png" width="700"></p>
 </div>
-<div class="tab-pane" id="yellowtail-flounder-2" role="tabpanel" aria-labelledby="yellowtail-flounder-2-tab">
+<div class="tab-pane" id="yellowtail-flounder" role="tabpanel" aria-labelledby="yellowtail-flounder-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-4.png" width="700"></p>
 </div>
-<div class="tab-pane" id="haddock-2" role="tabpanel" aria-labelledby="haddock-2-tab">
+<div class="tab-pane" id="haddock" role="tabpanel" aria-labelledby="haddock-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-5.png" width="700"></p>
 </div>
-<div class="tab-pane" id="atlantic-herring-2" role="tabpanel" aria-labelledby="atlantic-herring-2-tab">
+<div class="tab-pane" id="atlantic-herring" role="tabpanel" aria-labelledby="atlantic-herring-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-6.png" width="700"></p>
 </div>
-<div class="tab-pane" id="atlantic-mackerel-2" role="tabpanel" aria-labelledby="atlantic-mackerel-2-tab">
+<div class="tab-pane" id="atlantic-mackerel" role="tabpanel" aria-labelledby="atlantic-mackerel-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-7.png" width="700"></p>
 </div>
-<div class="tab-pane" id="spiny-dogfish-2" role="tabpanel" aria-labelledby="spiny-dogfish-2-tab">
+<div class="tab-pane" id="spiny-dogfish" role="tabpanel" aria-labelledby="spiny-dogfish-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-8.png" width="700"></p>
 </div>
-<div class="tab-pane" id="winter-skate-2" role="tabpanel" aria-labelledby="winter-skate-2-tab">
+<div class="tab-pane" id="winter-skate" role="tabpanel" aria-labelledby="winter-skate-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-9.png" width="700"></p>
 </div>
-<div class="tab-pane" id="silver-hake-2" role="tabpanel" aria-labelledby="silver-hake-2-tab">
+<div class="tab-pane" id="silver-hake" role="tabpanel" aria-labelledby="silver-hake-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundS-10.png" width="700"></p>
 </div>
@@ -357,55 +227,55 @@ Bank</a> are 1090, 1130:1210, 1230, 1250, 3460, 3480, 3490,
 
 
 <ul class="nav nav-tabs" id="fall-abundance-length-frequency-plots" role="tablist">
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#goosefish-3" id="goosefish-3-tab" type="button" role="tab" aria-controls="goosefish-3" aria-selected="true" class="active nav-link">Goosefish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-cod-3" id="atlantic-cod-3-tab" type="button" role="tab" aria-controls="atlantic-cod-3" aria-selected="false" class="nav-link">Atlantic cod</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-flounder-3" id="winter-flounder-3-tab" type="button" role="tab" aria-controls="winter-flounder-3" aria-selected="false" class="nav-link">Winter flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#yellowtail-flounder-3" id="yellowtail-flounder-3-tab" type="button" role="tab" aria-controls="yellowtail-flounder-3" aria-selected="false" class="nav-link">Yellowtail flounder</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#haddock-3" id="haddock-3-tab" type="button" role="tab" aria-controls="haddock-3" aria-selected="false" class="nav-link">Haddock</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-herring-3" id="atlantic-herring-3-tab" type="button" role="tab" aria-controls="atlantic-herring-3" aria-selected="false" class="nav-link">Atlantic herring</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-mackerel-3" id="atlantic-mackerel-3-tab" type="button" role="tab" aria-controls="atlantic-mackerel-3" aria-selected="false" class="nav-link">Atlantic mackerel</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#spiny-dogfish-3" id="spiny-dogfish-3-tab" type="button" role="tab" aria-controls="spiny-dogfish-3" aria-selected="false" class="nav-link">Spiny dogfish</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-skate-3" id="winter-skate-3-tab" type="button" role="tab" aria-controls="winter-skate-3" aria-selected="false" class="nav-link">Winter skate</button></li>
-<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#silver-hake-3" id="silver-hake-3-tab" type="button" role="tab" aria-controls="silver-hake-3" aria-selected="false" class="nav-link">Silver hake</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#goosefish-1" id="goosefish-1-tab" type="button" role="tab" aria-controls="goosefish-1" aria-selected="true" class="active nav-link">Goosefish</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-cod-1" id="atlantic-cod-1-tab" type="button" role="tab" aria-controls="atlantic-cod-1" aria-selected="false" class="nav-link">Atlantic cod</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-flounder-1" id="winter-flounder-1-tab" type="button" role="tab" aria-controls="winter-flounder-1" aria-selected="false" class="nav-link">Winter flounder</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#yellowtail-flounder-1" id="yellowtail-flounder-1-tab" type="button" role="tab" aria-controls="yellowtail-flounder-1" aria-selected="false" class="nav-link">Yellowtail flounder</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#haddock-1" id="haddock-1-tab" type="button" role="tab" aria-controls="haddock-1" aria-selected="false" class="nav-link">Haddock</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-herring-1" id="atlantic-herring-1-tab" type="button" role="tab" aria-controls="atlantic-herring-1" aria-selected="false" class="nav-link">Atlantic herring</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#atlantic-mackerel-1" id="atlantic-mackerel-1-tab" type="button" role="tab" aria-controls="atlantic-mackerel-1" aria-selected="false" class="nav-link">Atlantic mackerel</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#spiny-dogfish-1" id="spiny-dogfish-1-tab" type="button" role="tab" aria-controls="spiny-dogfish-1" aria-selected="false" class="nav-link">Spiny dogfish</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#winter-skate-1" id="winter-skate-1-tab" type="button" role="tab" aria-controls="winter-skate-1" aria-selected="false" class="nav-link">Winter skate</button></li>
+<li role="presentation" class="nav-item"><button data-bs-toggle="tab" data-bs-target="#silver-hake-1" id="silver-hake-1-tab" type="button" role="tab" aria-controls="silver-hake-1" aria-selected="false" class="nav-link">Silver hake</button></li>
 </ul>
 <div class="tab-content">
-<div class="active  tab-pane" id="goosefish-3" role="tabpanel" aria-labelledby="goosefish-3-tab">
+<div class="active  tab-pane" id="goosefish-1" role="tabpanel" aria-labelledby="goosefish-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-1.png" width="700"></p>
 </div>
-<div class="tab-pane" id="atlantic-cod-3" role="tabpanel" aria-labelledby="atlantic-cod-3-tab">
+<div class="tab-pane" id="atlantic-cod-1" role="tabpanel" aria-labelledby="atlantic-cod-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-2.png" width="700"></p>
 </div>
-<div class="tab-pane" id="winter-flounder-3" role="tabpanel" aria-labelledby="winter-flounder-3-tab">
+<div class="tab-pane" id="winter-flounder-1" role="tabpanel" aria-labelledby="winter-flounder-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-3.png" width="700"></p>
 </div>
-<div class="tab-pane" id="yellowtail-flounder-3" role="tabpanel" aria-labelledby="yellowtail-flounder-3-tab">
+<div class="tab-pane" id="yellowtail-flounder-1" role="tabpanel" aria-labelledby="yellowtail-flounder-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-4.png" width="700"></p>
 </div>
-<div class="tab-pane" id="haddock-3" role="tabpanel" aria-labelledby="haddock-3-tab">
+<div class="tab-pane" id="haddock-1" role="tabpanel" aria-labelledby="haddock-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-5.png" width="700"></p>
 </div>
-<div class="tab-pane" id="atlantic-herring-3" role="tabpanel" aria-labelledby="atlantic-herring-3-tab">
+<div class="tab-pane" id="atlantic-herring-1" role="tabpanel" aria-labelledby="atlantic-herring-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-6.png" width="700"></p>
 </div>
-<div class="tab-pane" id="atlantic-mackerel-3" role="tabpanel" aria-labelledby="atlantic-mackerel-3-tab">
+<div class="tab-pane" id="atlantic-mackerel-1" role="tabpanel" aria-labelledby="atlantic-mackerel-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-7.png" width="700"></p>
 </div>
-<div class="tab-pane" id="spiny-dogfish-3" role="tabpanel" aria-labelledby="spiny-dogfish-3-tab">
+<div class="tab-pane" id="spiny-dogfish-1" role="tabpanel" aria-labelledby="spiny-dogfish-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-8.png" width="700"></p>
 </div>
-<div class="tab-pane" id="winter-skate-3" role="tabpanel" aria-labelledby="winter-skate-3-tab">
+<div class="tab-pane" id="winter-skate-1" role="tabpanel" aria-labelledby="winter-skate-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-9.png" width="700"></p>
 </div>
-<div class="tab-pane" id="silver-hake-3" role="tabpanel" aria-labelledby="silver-hake-3-tab">
+<div class="tab-pane" id="silver-hake-1" role="tabpanel" aria-labelledby="silver-hake-1-tab">
 
 <p><img src="GBbiomassNumbyLength_files/figure-html/abundF-10.png" width="700"></p>
 </div>
@@ -424,7 +294,7 @@ Bank</a> are 1090, 1130:1210, 1230, 1250, 3460, 3480, 3490,
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>

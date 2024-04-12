@@ -8,8 +8,8 @@
 <meta name="description" content="mskeyrun">
 <title>Generating Simulated Data • mskeyrun</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Generating Simulated Data">
 <meta property="og:description" content="mskeyrun">
@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">mskeyrun</a>
 
@@ -100,7 +100,7 @@
                         <h4 data-toc-skip class="author">Sarah
 Gaichas</h4>
             
-            <h4 data-toc-skip class="date">25 April, 2023</h4>
+            <h4 data-toc-skip class="date">12 April, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/SimData.Rmd" class="external-link"><code>vignettes/SimData.Rmd</code></a></small>
       <div class="d-none name"><code>SimData.Rmd</code></div>
@@ -132,8 +132,8 @@ and ecosystem datasets with known observation error characteristics are
 testing, comparing performance of alternative models, and performance
 testing of model ensembles against “true” Atlantis outputs.</p>
 <p>The simulated dataset is based on output of the Norwegian and Barents
-Sea (NOBA) Atlantis model <span class="citation">(Hansen et al., 2019,
-2016)</span>. The simulated dataset contains comparable survey, fishery,
+Sea (NOBA) Atlantis model <span class="citation">(Hansen et al., 2016,
+2019)</span>. The simulated dataset contains comparable survey, fishery,
 and composition data as the Georges Bank dataset, but the time series
 span 80 simulation years and include 11 species. This dataset was used
 for initial model development, code quality testing, and model skill
@@ -145,7 +145,9 @@ construction and basic attributes are below.</p>
 </h2>
 <p>Our initial species selection includes 11 single species groups from
 the Atlantis NOBA model.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<details><summary>
+Generate the species table
+</summary><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">lname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Name<span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Long_rough_dab"</span>,</span>
 <span>                                 <span class="st">"Green_halibut"</span>,</span>
 <span>                                 <span class="st">"Mackerel"</span>,</span>
@@ -189,10 +191,8 @@ the Atlantis NOBA model.</p>
 <span><span class="co">#   select(Name, Long.Name, Latin)</span></span>
 <span></span>
 <span><span class="va">spptable</span> <span class="op">&lt;-</span> <span class="va">lname</span> <span class="op">%&gt;%</span></span>
-<span>   <span class="fu">select</span><span class="op">(</span><span class="va">Name</span>, <span class="va">Long.Name</span>, <span class="va">Latin</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="va">spptable</span>, col.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Model name"</span>, <span class="st">"Full name"</span>, <span class="st">"Latin name"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<table class="table">
+<span>   <span class="fu">select</span><span class="op">(</span><span class="va">Name</span>, <span class="va">Long.Name</span>, <span class="va">Latin</span><span class="op">)</span></span></code></pre></div>
+</details><table class="table">
 <colgroup>
 <col width="18%">
 <col width="42%">
@@ -268,10 +268,10 @@ the Atlantis NOBA model.</p>
 <div class="section level3">
 <h3 id="configuration-files-specified-once">Configuration files specified once<a class="anchor" aria-label="anchor" href="#configuration-files-specified-once"></a>
 </h3>
-<p><code>NOBA2config.R</code> specifies location and names of files
-needed for atlantisom to initialize:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">d.name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/atlantisoutput"</span>,<span class="st">"NOBA_sacc_38"</span><span class="op">)</span></span>
+<details><summary><code>NOBA_sacc38Config.R</code> specifies location and names of files
+needed for atlantisom to initialize:
+</summary><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d.name</span> <span class="op">&lt;-</span> <span class="fu">here</span><span class="op">(</span><span class="st">"simulated-data/atlantisoutput"</span>,<span class="st">"NOBA_sacc_38"</span><span class="op">)</span></span>
 <span><span class="va">functional.groups.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_groups_v04.csv"</span></span>
 <span><span class="va">biomass.pools.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_biol_v23.nc"</span></span>
 <span><span class="va">biol.prm.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_biol_incl_harv_v_011_1skg.prm"</span></span>
@@ -283,9 +283,9 @@ needed for atlantisom to initialize:</p>
 <span><span class="va">catch.file</span> <span class="op">&lt;-</span> <span class="st">"nordic_runresults_01Catch.txt"</span></span>
 <span><span class="va">annage</span> <span class="op">&lt;-</span> <span class="cn">TRUE</span></span>
 <span><span class="va">fisheries.file</span> <span class="op">&lt;-</span> <span class="st">"NoBAFisheries.csv"</span></span></code></pre></div>
-<p><code>omdimensions.R</code> standardizes timesteps, etc. (this is
-part of atlantisom and should not need to be changed by the user):</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+</details><details><summary><code>omdimensions.R</code> standardizes timesteps, etc. (this is part
+of atlantisom and should not need to be changed by the user):
+</summary><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#survey species inherited from omlist_ss</span></span>
 <span><span class="va">survspp</span> <span class="op">&lt;-</span> <span class="va">omlist_ss</span><span class="op">$</span><span class="va">species_ss</span></span>
 <span><span class="co"># survey season and other time dimensioning parameters</span></span>
@@ -315,15 +315,16 @@ part of atlantisom and should not need to be changed by the user):</p>
 <span><span class="co"># changed below for multiple species</span></span>
 <span><span class="va">annages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">n_annages</span>, <span class="va">seq</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">annages</span><span class="op">)</span><span class="op">&lt;-</span><span class="va">sp_age</span><span class="op">$</span><span class="va">Name</span></span></code></pre></div>
+</details>
 </div>
 <div class="section level3">
 <h3 id="change-these-survey-and-fishery-config-files">Change these survey and fishery config files<a class="anchor" aria-label="anchor" href="#change-these-survey-and-fishery-config-files"></a>
 </h3>
-<p><code>mssurvey_spring.R</code> and <code>mssurvey_fall.R</code>
+<details><summary><code>mssurvey_spring.R</code> and <code>mssurvey_fall.R</code>
 configure the fishery independent surveys (in this census test, surveys
 sample all model polygons in all years and have efficiency of 1 for all
-species, with no size selectivity):</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+species, with no size selectivity):
+</summary><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Default survey configuration here has a range of efficiencies and selectivities</span></span>
 <span><span class="co"># To emulate a range of species in a single multispecies survey</span></span>
 <span><span class="co"># Also now happens in "spring" and "fall"</span></span>
@@ -481,36 +482,47 @@ species, with no size selectivity):</p>
 <span><span class="co"># diet sampling parameters</span></span>
 <span><span class="va">alphamult</span> <span class="op">&lt;-</span> <span class="fl">10000000</span></span>
 <span><span class="va">unidprey</span> <span class="op">&lt;-</span> <span class="fl">0</span></span></code></pre></div>
-<p><code>msfishery.R</code> configures the fishery dependent data:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+</details><details><summary><code>msfishery.R</code> configures the fishery dependent data:
+</summary><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Default fishery configuration here is a census</span></span>
-<span><span class="va">fishery.name</span><span class="op">=</span><span class="st">"census"</span></span>
+<span><span class="co"># June 2023 now aggregating over fleets in input</span></span>
+<span><span class="co"># change name to identify fleet specific config files</span></span>
+<span><span class="co"># output will be stored with this name</span></span>
+<span></span>
+<span><span class="va">fishery.name</span><span class="op">=</span><span class="st">"allfleet"</span></span>
+<span></span>
+<span><span class="co"># select fleets by number from fisheries.csv Index column</span></span>
+<span><span class="co"># NULL is all fleets</span></span>
+<span><span class="va">fishfleets</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span></span>
 <span><span class="co"># Inherits species from input omlist_ss</span></span>
-<span><span class="va">fishspp</span> <span class="op">&lt;-</span> <span class="va">omlist_ss</span><span class="op">$</span><span class="va">species_ss</span> </span>
-<span></span>
-<span><span class="co">#Number of years of data to pull</span></span>
-<span><span class="va">nyears</span> <span class="op">&lt;-</span> <span class="fl">50</span></span>
-<span></span>
-<span><span class="co">#Atlantis initialization period in years</span></span>
-<span><span class="va">burnin</span> <span class="op">&lt;-</span> <span class="fl">30</span></span>
+<span><span class="va">fishspp</span> <span class="op">&lt;-</span> <span class="va">omlist_ss</span><span class="op">$</span><span class="va">code_ss</span> </span>
 <span></span>
 <span><span class="co"># fishery output: learned the hard way this can be different from ecosystem outputs</span></span>
 <span><span class="va">fstepperyr</span> <span class="op">&lt;-</span> <span class="kw">if</span><span class="op">(</span><span class="va">omlist_ss</span><span class="op">$</span><span class="va">runpar</span><span class="op">$</span><span class="va">outputstepunit</span><span class="op">==</span><span class="st">"days"</span><span class="op">)</span> <span class="fl">365</span><span class="op">/</span><span class="va">omlist_ss</span><span class="op">$</span><span class="va">runpar</span><span class="op">$</span><span class="va">toutfinc</span></span>
 <span></span>
+<span><span class="co">#The last timestep to sample</span></span>
+<span><span class="va">total_sample</span> <span class="op">&lt;-</span> <span class="va">noutsteps</span><span class="op">-</span><span class="fl">1</span> <span class="co">#495</span></span>
+<span></span>
+<span><span class="co"># leave out model burn in period? define how long</span></span>
+<span><span class="va">burnin</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span></span>
+<span><span class="co"># take only some years? for mskeyrun we do this later, here take all</span></span>
+<span><span class="va">nyears</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
 <span></span>
 <span><span class="co"># same time dimensioning parameters as in surveycensus.R</span></span>
 <span><span class="co">#Vector of indices of catch in numbers to pull (by timestep to sum)</span></span>
-<span><span class="va">fish_sample_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="va">total_sample</span><span class="op">)</span>  <span class="co">#total_sample defined in sardinesurvey.R</span></span>
-<span><span class="va">fish_burnin</span> <span class="op">&lt;-</span> <span class="va">burnin</span><span class="op">*</span><span class="va">fstepperyr</span><span class="op">+</span><span class="fl">1</span></span>
-<span><span class="va">fish_nyears</span> <span class="op">&lt;-</span> <span class="va">nyears</span><span class="op">*</span><span class="va">fstepperyr</span></span>
-<span><span class="va">fish_times</span> <span class="op">&lt;-</span> <span class="va">fish_sample_full</span><span class="op">[</span><span class="va">fish_burnin</span><span class="op">:</span><span class="op">(</span><span class="va">fish_burnin</span><span class="op">+</span><span class="va">fish_nyears</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">]</span></span>
-<span><span class="va">fish_timesteps</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="va">fish_times</span><span class="op">[</span><span class="va">fstepperyr</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="va">fish_times</span><span class="op">)</span>, by<span class="op">=</span><span class="va">fstepperyr</span><span class="op">)</span> <span class="co">#last timestep</span></span>
+<span><span class="va">fish_sample_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="va">total_sample</span><span class="op">)</span>  <span class="co">#total_sample</span></span>
+<span><span class="co">#fish_burnin &lt;- burnin*fstepperyr+1</span></span>
+<span><span class="co">#fish_nyears &lt;- nyears*fstepperyr</span></span>
+<span><span class="co">#fish_times &lt;- fish_sample_full[fish_burnin:(fish_burnin+fish_nyears-1)]</span></span>
+<span><span class="co">#fish_timesteps &lt;- seq(fish_times[fstepperyr], max(fish_times), by=fstepperyr) #last timestep</span></span>
 <span><span class="co">#fish_years &lt;- unique(floor(fish_times/fstepperyr)+1) # my original</span></span>
-<span><span class="va">fish_years</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">floor</a></span><span class="op">(</span><span class="va">fish_times</span><span class="op">/</span><span class="va">fstepperyr</span><span class="op">)</span><span class="op">)</span> <span class="co">#from Christine's new sardine_config.R</span></span>
+<span><span class="co">#fish_years &lt;- unique(floor(fish_times/fstepperyr)) #from Christine's new sardine_config.R</span></span>
 <span></span>
-<span><span class="va">fishtime</span> <span class="op">&lt;-</span> <span class="va">fish_times</span></span>
+<span><span class="co">#fishtime &lt;- fish_times</span></span>
 <span></span>
+<span><span class="va">fishtime</span> <span class="op">&lt;-</span> <span class="va">fish_sample_full</span></span>
 <span></span>
 <span><span class="co"># fishery sampling area</span></span>
 <span><span class="co"># should return all model areas, this assumes you see everything that it caught</span></span>
@@ -526,7 +538,8 @@ species, with no size selectivity):</p>
 <span></span>
 <span><span class="co"># fishery catch cv can be used in sample_survey_biomass</span></span>
 <span><span class="co"># perfect observation</span></span>
-<span><span class="va">fish_cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species<span class="op">=</span><span class="va">survspp</span>, cv<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">survspp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">fish_cv</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>species<span class="op">=</span><span class="va">fishspp</span>, cv<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.01</span>,<span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">fishspp</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <div class="section level3">
 <h3 id="run-atlantisom-and-save-outputs">Run atlantisom and save outputs<a class="anchor" aria-label="anchor" href="#run-atlantisom-and-save-outputs"></a>
@@ -541,41 +554,41 @@ and average weight at age from surveys and fisheries, and
 the <code>atlantisoutput</code> folder (not kept on github due to
 size):</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">NOBAom</span> <span class="op">&lt;-</span> <span class="fu">om_init</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/NOBA_sacc38Config.R"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">NOBAom</span> <span class="op">&lt;-</span> <span class="fu">om_init</span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/NOBA_sacc38Config.R"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">NOBAom_ms</span> <span class="op">&lt;-</span> <span class="fu">om_species</span><span class="op">(</span><span class="va">sppsubset</span><span class="op">$</span><span class="va">Name</span>, <span class="va">NOBAom</span><span class="op">)</span></span>
+<span><span class="va">NOBAom_ms</span> <span class="op">&lt;-</span> <span class="fu">om_species</span><span class="op">(</span><span class="va">spptable</span><span class="op">$</span><span class="va">Name</span>, <span class="va">NOBAom</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">#need to change internal call to source in atlantisom om_index om_comps and om_diet functions</span></span>
 <span><span class="co">#expecting a config folder in same directory as rmd</span></span>
 <span><span class="co">#this is a workaround</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/config"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"docs/config"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/omdimensions.R"</span><span class="op">)</span>, <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/config/omdimensions.R"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/omdimensions.R"</span><span class="op">)</span>, <span class="fu">here</span><span class="op">(</span><span class="st">"docs/config/omdimensions.R"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">NOBAom_ms_ind</span> <span class="op">&lt;-</span> <span class="fu">om_index</span><span class="op">(</span>usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/mssurvey_spring.R"</span><span class="op">)</span>, </span>
-<span>                                         <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/mssurvey_fall.R"</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                           userfishery <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/msfishery.R"</span><span class="op">)</span>,</span>
+<span><span class="va">NOBAom_ms_ind</span> <span class="op">&lt;-</span> <span class="fu">om_index</span><span class="op">(</span>usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_spring.R"</span><span class="op">)</span>, </span>
+<span>                                         <span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_fall.R"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                           userfishery <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/msfishery.R"</span><span class="op">)</span>,</span>
 <span>                           omlist_ss <span class="op">=</span> <span class="va">NOBAom_ms</span>, </span>
 <span>                           n_reps <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>                           save <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">NOBAom_ms_comp</span> <span class="op">&lt;-</span> <span class="fu">om_comps</span><span class="op">(</span>usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/mssurvey_spring.R"</span><span class="op">)</span>, </span>
-<span>                                         <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/mssurvey_fall.R"</span><span class="op">)</span><span class="op">)</span>, </span>
-<span>                           userfishery <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/msfishery.R"</span><span class="op">)</span>,</span>
+<span><span class="va">NOBAom_ms_comp</span> <span class="op">&lt;-</span> <span class="fu">om_comps</span><span class="op">(</span>usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_spring.R"</span><span class="op">)</span>, </span>
+<span>                                         <span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_fall.R"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                           userfishery <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/msfishery.R"</span><span class="op">)</span>,</span>
 <span>                           omlist_ss <span class="op">=</span> <span class="va">NOBAom_ms</span>, </span>
 <span>                           n_reps <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>                           save <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">NOBAom_ms_diet</span> <span class="op">&lt;-</span> <span class="fu">om_diet</span><span class="op">(</span>config <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config"</span>, <span class="st">"NOBA2config.R"</span><span class="op">)</span>,</span>
+<span><span class="va">NOBAom_ms_diet</span> <span class="op">&lt;-</span> <span class="fu">om_diet</span><span class="op">(</span>config <span class="op">=</span> <span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/NOBA_sacc38Config.R"</span><span class="op">)</span>,</span>
 <span>                          dietfile <span class="op">=</span> <span class="st">"NOBADetDiet.gz"</span>,</span>
-<span>                          usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/mssurvey_spring.R"</span><span class="op">)</span>, </span>
-<span>                                         <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"simulated-data/config/mssurvey_fall.R"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                          usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_spring.R"</span><span class="op">)</span>, </span>
+<span>                                         <span class="fu">here</span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_fall.R"</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>                          omlist_ss <span class="op">=</span> <span class="va">NOBAom_ms</span>, </span>
 <span>                          n_reps <span class="op">=</span> <span class="fl">1</span>, </span>
 <span>                          save <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"docs/config"</span><span class="op">)</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu">here</span><span class="op">(</span><span class="st">"docs/config"</span><span class="op">)</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="create-mskeyrun-simulated-data">Create mskeyrun simulated data<a class="anchor" aria-label="anchor" href="#create-mskeyrun-simulated-data"></a>
@@ -587,7 +600,9 @@ local to Sarah’s computer for this code to run, as they are too large
 for github. However, the scripts are linked here to show the process.
 Overall this script creates all datasets using functions specific to
 each data type:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<details><summary>
+Code to build simulated datasets
+</summary><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Sarah's notes for building simulated dataset</span></span>
 <span><span class="co">#' </span></span>
 <span><span class="co">#' all atlantis files are local on my computer in folder</span></span>
@@ -611,17 +626,23 @@ each data type:</p>
 <span></span>
 <span><span class="fu">create_sim_biolpar</span><span class="op">(</span><span class="va">atlmod</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">create_sim_survey_info</span><span class="op">(</span><span class="va">atlmod</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">create_sim_survey_index</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">create_sim_fishery_index</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span><span class="fu">create_sim_fishery_index</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span> <span class="co">#creates subannual amd aggregate</span></span>
 <span></span>
 <span><span class="fu">create_sim_survey_agecomp</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">create_sim_fishery_agecomp</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">create_sim_fishery_agecomp_subannual</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">create_sim_survey_lencomp</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">create_sim_fishery_lencomp</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">create_sim_fishery_lencomp_subannual</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">create_sim_survey_dietcomp</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
@@ -629,18 +650,37 @@ each data type:</p>
 <span></span>
 <span><span class="fu">create_sim_fishery_wtage</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">create_sim_fishery_wtage_subannual</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">create_sim_survey_wtage</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">create_sim_survey_agelen</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
+<span><span class="fu">create_sim_fishery_agelen</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
 <span><span class="fu">create_sim_percapconsumption</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">create_sim_startpars</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span></code></pre></div>
-<p>For example, <code>create_sim_survey_index()</code> takes the saved
+<span><span class="fu">create_sim_startpars</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># food web model specific datasets add other species</span></span>
+<span></span>
+<span><span class="fu">create_sim_survey_index_fw</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">create_sim_fishery_index_fw</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">create_sim_survey_dietcomp_fw</span><span class="op">(</span><span class="va">atlmod</span>, fitstart<span class="op">=</span><span class="fl">40</span>, fitend<span class="op">=</span><span class="fl">120</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># below combines already loaded mskeyrun datasets,  </span></span>
+<span><span class="co"># outputs of create_sim_survey_agelen and create_sim_survey_dietcomp</span></span>
+<span><span class="co"># ensure that these are up to date before running</span></span>
+<span></span>
+<span><span class="fu">create_sim_survey_lendietcomp</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+</details><details><summary>
+For example, <code>create_sim_survey_index()</code> takes the saved
 <code>atlantisom</code> output plus user specifications for fit start
 and end years to produce the dataset
-<code><a href="../reference/simSurveyIndex.html">mskeyrun::simSurveyIndex</a></code>:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code>mskeyrun::simSurveyIndex</code>:
+</summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#' Read in survey data save as rda</span></span>
 <span><span class="co">#' </span></span>
 <span><span class="co">#' atlantosom output is accessed and surveys pulled over time</span></span>
@@ -748,7 +788,367 @@ and end years to produce the dataset
 <span>  </span>
 <span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
-<p>All functions are in this mskeyrun repository folder: <a href="https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R" class="external-link uri">https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R</a></p>
+</details><p>All functions are in this mskeyrun repository folder: <a href="https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R" class="external-link uri">https://github.com/NOAA-EDAB/ms-keyrun/tree/master/data-raw/R</a></p>
+</div>
+<div class="section level3">
+<h3 id="additional-simulated-data-for-food-web-models">Additional simulated data for food web models<a class="anchor" aria-label="anchor" href="#additional-simulated-data-for-food-web-models"></a>
+</h3>
+<p>The data generated above focuses on the 11 fully age structured
+stocks. Here we add information needed for food web modeling on the
+remaining groups in the simulated system.</p>
+<details><summary>
+Code for remaining groups
+</summary><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># all NOBA species not already in mskeyrun dataset</span></span>
+<span><span class="va">fwspp</span> <span class="op">&lt;-</span> <span class="fu">atlantisom</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/atlantisom/man/load_fgs.html" class="external-link">load_fgs</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/data"</span><span class="op">)</span>, <span class="st">"nordic_groups_v04.csv"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">IsTurnedOn</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">Code</span>, <span class="va">Name</span>, <span class="va">Long.Name</span>, <span class="va">isFished</span>, <span class="va">InvertType</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">Name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">spptable</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span></span></code></pre></div>
+</details><table class="table">
+<colgroup>
+<col width="7%">
+<col width="28%">
+<col width="34%">
+<col width="13%">
+<col width="16%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">Code</th>
+<th align="left">Name</th>
+<th align="left">Long.Name</th>
+<th align="right">isFished</th>
+<th align="left">InvertType</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">POB</td>
+<td align="left">Polar_bear</td>
+<td align="left">Polar Bear</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="even">
+<td align="left">KWH</td>
+<td align="left">Killer_whale</td>
+<td align="left">Killer whale</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="odd">
+<td align="left">SWH</td>
+<td align="left">Sperm_whale</td>
+<td align="left">Sperm whale</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="even">
+<td align="left">HWH</td>
+<td align="left">Humpb_whale</td>
+<td align="left">Humpback whale</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="odd">
+<td align="left">MWH</td>
+<td align="left">Minke_whale</td>
+<td align="left">Minke whale</td>
+<td align="right">1</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="even">
+<td align="left">FWH</td>
+<td align="left">Fin_whale</td>
+<td align="left">Fin whale</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="odd">
+<td align="left">BES</td>
+<td align="left">Beard_seal</td>
+<td align="left">Bearded Seal</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="even">
+<td align="left">HAS</td>
+<td align="left">Harp_seal</td>
+<td align="left">Harp Seal</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="odd">
+<td align="left">HOS</td>
+<td align="left">Hood_seal</td>
+<td align="left">Hooded Seal</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="even">
+<td align="left">RIS</td>
+<td align="left">Ring_seal</td>
+<td align="left">Ringed Seal</td>
+<td align="right">0</td>
+<td align="left">MAMMAL</td>
+</tr>
+<tr class="odd">
+<td align="left">SBA</td>
+<td align="left">Sea_b_arct</td>
+<td align="left">Arctic seabirds</td>
+<td align="right">0</td>
+<td align="left">BIRD</td>
+</tr>
+<tr class="even">
+<td align="left">SBB</td>
+<td align="left">Sea_b_bor</td>
+<td align="left">Boreal seabirds</td>
+<td align="right">0</td>
+<td align="left">BIRD</td>
+</tr>
+<tr class="odd">
+<td align="left">SHO</td>
+<td align="left">Sharks_other</td>
+<td align="left">Other sharks</td>
+<td align="right">0</td>
+<td align="left">SHARK</td>
+</tr>
+<tr class="even">
+<td align="left">DEO</td>
+<td align="left">Demersals_other</td>
+<td align="left">Other demersals</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="odd">
+<td align="left">PEL</td>
+<td align="left">Pelagic_large</td>
+<td align="left">Large pelagic fish</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="even">
+<td align="left">PES</td>
+<td align="left">Pelagic_small</td>
+<td align="left">Small pelagic fish</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="odd">
+<td align="left">REO</td>
+<td align="left">Redfish_other</td>
+<td align="left">Other redfish</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="even">
+<td align="left">DEL</td>
+<td align="left">Demersal_large</td>
+<td align="left">Large demersals</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="odd">
+<td align="left">FLA</td>
+<td align="left">Flatfish_other</td>
+<td align="left">Other flatfish</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="even">
+<td align="left">SSK</td>
+<td align="left">Skates_rays</td>
+<td align="left">Skates and rays</td>
+<td align="right">0</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="odd">
+<td align="left">MES</td>
+<td align="left">Mesop_fish</td>
+<td align="left">Mesopelagic fish</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="even">
+<td align="left">PWN</td>
+<td align="left">Prawns</td>
+<td align="left">Prawns</td>
+<td align="right">1</td>
+<td align="left">PWN</td>
+</tr>
+<tr class="odd">
+<td align="left">CEP</td>
+<td align="left">Squid</td>
+<td align="left">Squid</td>
+<td align="right">0</td>
+<td align="left">CEP</td>
+</tr>
+<tr class="even">
+<td align="left">KCR</td>
+<td align="left">King_crab</td>
+<td align="left">Red king crab</td>
+<td align="right">1</td>
+<td align="left">LG_INF</td>
+</tr>
+<tr class="odd">
+<td align="left">SCR</td>
+<td align="left">Snow_crab</td>
+<td align="left">Snow crab</td>
+<td align="right">1</td>
+<td align="left">FISH</td>
+</tr>
+<tr class="even">
+<td align="left">ZG</td>
+<td align="left">Gel_zooplankton</td>
+<td align="left">Gelatinous zooplankton</td>
+<td align="right">0</td>
+<td align="left">LG_ZOO</td>
+</tr>
+<tr class="odd">
+<td align="left">ZL</td>
+<td align="left">Large_zooplankton</td>
+<td align="left">Large zooplankton</td>
+<td align="right">0</td>
+<td align="left">LG_ZOO</td>
+</tr>
+<tr class="even">
+<td align="left">ZM</td>
+<td align="left">Medium_zooplankton</td>
+<td align="left">Medium zooplankton</td>
+<td align="right">0</td>
+<td align="left">MED_ZOO</td>
+</tr>
+<tr class="odd">
+<td align="left">ZS</td>
+<td align="left">Small_zooplankton</td>
+<td align="left">Small zooplankton</td>
+<td align="right">0</td>
+<td align="left">SM_ZOO</td>
+</tr>
+<tr class="even">
+<td align="left">DF</td>
+<td align="left">Dinoflag</td>
+<td align="left">Dinoflagellates</td>
+<td align="right">0</td>
+<td align="left">DINOFLAG</td>
+</tr>
+<tr class="odd">
+<td align="left">PS</td>
+<td align="left">Small_phytop</td>
+<td align="left">Small phytoplankton</td>
+<td align="right">0</td>
+<td align="left">SM_PHY</td>
+</tr>
+<tr class="even">
+<td align="left">PL</td>
+<td align="left">Large_phytop</td>
+<td align="left">Large phytoplankton</td>
+<td align="right">0</td>
+<td align="left">LG_PHY</td>
+</tr>
+<tr class="odd">
+<td align="left">BC</td>
+<td align="left">Predatory_ben</td>
+<td align="left">Predatory benthos</td>
+<td align="right">0</td>
+<td align="left">LG_INF</td>
+</tr>
+<tr class="even">
+<td align="left">BD</td>
+<td align="left">Detrivore_ben</td>
+<td align="left">Detrivore benthos</td>
+<td align="right">0</td>
+<td align="left">LG_INF</td>
+</tr>
+<tr class="odd">
+<td align="left">BFF</td>
+<td align="left">Benthic_filterf</td>
+<td align="left">Benthic filter feeders</td>
+<td align="right">0</td>
+<td align="left">SED_EP_FF</td>
+</tr>
+<tr class="even">
+<td align="left">SPO</td>
+<td align="left">Sponges</td>
+<td align="left">Sponges</td>
+<td align="right">0</td>
+<td align="left">SED_EP_FF</td>
+</tr>
+<tr class="odd">
+<td align="left">COR</td>
+<td align="left">Corals</td>
+<td align="left">Corals</td>
+<td align="right">0</td>
+<td align="left">SED_EP_FF</td>
+</tr>
+<tr class="even">
+<td align="left">PB</td>
+<td align="left">Pel_bact</td>
+<td align="left">Pelagic bacteria</td>
+<td align="right">0</td>
+<td align="left">PL_BACT</td>
+</tr>
+<tr class="odd">
+<td align="left">BB</td>
+<td align="left">Ben_bact</td>
+<td align="left">Sediment bacteria</td>
+<td align="right">0</td>
+<td align="left">SED_BACT</td>
+</tr>
+<tr class="even">
+<td align="left">DR</td>
+<td align="left">Ref_det</td>
+<td align="left">Refractory detritus</td>
+<td align="right">0</td>
+<td align="left">REF_DET</td>
+</tr>
+<tr class="odd">
+<td align="left">DL</td>
+<td align="left">Lab_det</td>
+<td align="left">Labile detritus</td>
+<td align="right">0</td>
+<td align="left">LAB_DET</td>
+</tr>
+<tr class="even">
+<td align="left">DC</td>
+<td align="left">Carrion</td>
+<td align="left">Carrion</td>
+<td align="right">0</td>
+<td align="left">CARRION</td>
+</tr>
+</tbody>
+</table>
+<p>This consists of survey biomass and diet, and fishery catch
+information for the non age-structured species.</p>
+<p>To generate this, we apply selected functions from the
+<code>atlantisom</code> package with slightly modified config files to
+ensure the food web “fw” datasets don’t overwrite the multispecies
+datasets:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">NOBAom</span> <span class="op">&lt;-</span> <span class="fu">om_init</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/NOBA_sacc38Config.R"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">NOBAom_fw</span> <span class="op">&lt;-</span> <span class="fu">om_species</span><span class="op">(</span><span class="va">fwspp</span><span class="op">$</span><span class="va">Name</span>, <span class="va">NOBAom</span>, save <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co">#save by hand, don't overwrite 11 species omlist_ss</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">NOBAom_fw</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">d.name</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">scenario.name</span>, <span class="st">"omlist_fw.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files2.html" class="external-link">dir.create</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"vignettes/config"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.copy</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/omdimensions.R"</span><span class="op">)</span>, <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"vignettes/config/omdimensions.R"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">NOBAom_fw_ind</span> <span class="op">&lt;-</span> <span class="fu">om_index</span><span class="op">(</span>usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_spring_fw.R"</span><span class="op">)</span>, </span>
+<span>                                         <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_fall_fw.R"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                           userfishery <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/msfishery_fw.R"</span><span class="op">)</span>,</span>
+<span>                           omlist_ss <span class="op">=</span> <span class="va">NOBAom_fw</span>, </span>
+<span>                           n_reps <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                           save <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">NOBAom_fw_diet</span> <span class="op">&lt;-</span> <span class="fu">om_diet</span><span class="op">(</span>config <span class="op">=</span> <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/NOBA_sacc38Config.R"</span><span class="op">)</span>,</span>
+<span>                          dietfile <span class="op">=</span> <span class="st">"NOBADetDiet.gz"</span>,</span>
+<span>                          usersurvey <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_spring_fw.R"</span><span class="op">)</span>, </span>
+<span>                                         <span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/simulated-data/config/mssurvey_fall_fw.R"</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>                          omlist_ss <span class="op">=</span> <span class="va">NOBAom_fw</span>, </span>
+<span>                          n_reps <span class="op">=</span> <span class="fl">1</span>, </span>
+<span>                          save <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"vignettes/config"</span><span class="op">)</span>, recursive <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="visualize-simulated-data">Visualize simulated data<a class="anchor" aria-label="anchor" href="#visualize-simulated-data"></a>
@@ -759,23 +1159,25 @@ and end years to produce the dataset
 <p>A collection of functions used previously that may be harvested and
 modified for diagnostics or visualizations in the ms-keyrun and ICES
 WGSAM skill assessment projects.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<details><summary>
+Code for plotting functions
+</summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># plot biomass time series facet wrapped by species</span></span>
 <span><span class="va">plotB</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">truedat</span><span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">{</span></span>
 <span>  </span>
 <span>    <span class="va">svbio</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span><span class="op">==</span><span class="st">"biomass"</span><span class="op">)</span></span>
 <span>    <span class="va">svcv</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span><span class="op">==</span><span class="st">"cv"</span><span class="op">)</span></span>
 <span>  </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">svbio</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>,y<span class="op">=</span><span class="va">value</span>, color<span class="op">=</span><span class="st">"Survey Biomass"</span><span class="op">)</span>, </span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span>data<span class="op">=</span><span class="va">svbio</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>,y<span class="op">=</span><span class="va">value</span>, color<span class="op">=</span><span class="st">"Survey Biomass"</span><span class="op">)</span>, </span>
 <span>              alpha <span class="op">=</span> <span class="fl">10</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">truedat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">atoutput</span>, color<span class="op">=</span><span class="st">"True B"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span> </span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">geom_line</span><span class="op">(</span>data<span class="op">=</span><span class="va">truedat</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">atoutput</span>, color<span class="op">=</span><span class="st">"True B"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span> </span>
 <span>    <span class="fu">theme_tufte</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"model year"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"tons"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>colour<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Name</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> </span>
+<span>    <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"model year"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ylab</span><span class="op">(</span><span class="st">"tons"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>colour<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Name</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> </span>
 <span>  </span>
 <span><span class="op">}</span></span>
 <span></span>
@@ -786,16 +1188,16 @@ WGSAM skill assessment projects.</p>
 <span>    <span class="va">ctbio</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span><span class="op">==</span><span class="st">"catch"</span><span class="op">)</span></span>
 <span>    <span class="va">ctcv</span> <span class="op">&lt;-</span> <span class="va">dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable</span><span class="op">==</span><span class="st">"cv"</span><span class="op">)</span></span>
 <span>  </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">ctbio</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>,y<span class="op">=</span><span class="va">value</span>, color<span class="op">=</span><span class="st">"Catch biomass"</span><span class="op">)</span>, </span>
+<span>    <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span>data<span class="op">=</span><span class="va">ctbio</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>,y<span class="op">=</span><span class="va">value</span>, color<span class="op">=</span><span class="st">"Catch biomass"</span><span class="op">)</span>, </span>
 <span>              alpha <span class="op">=</span> <span class="fl">10</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">truedat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">atoutput</span>, color<span class="op">=</span><span class="st">"True Catch"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span> </span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">geom_line</span><span class="op">(</span>data<span class="op">=</span><span class="va">truedat</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">time</span><span class="op">/</span><span class="fl">365</span>,y<span class="op">=</span><span class="va">atoutput</span>, color<span class="op">=</span><span class="st">"True Catch"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">3</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span> </span>
 <span>    <span class="fu">theme_tufte</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"model year"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"tons"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>colour<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Name</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> </span>
+<span>    <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"model year"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ylab</span><span class="op">(</span><span class="st">"tons"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>colour<span class="op">=</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Name</span>, scales<span class="op">=</span><span class="st">"free"</span><span class="op">)</span> </span>
 <span>  </span>
 <span><span class="op">}</span></span>
 <span></span>
@@ -807,55 +1209,56 @@ WGSAM skill assessment projects.</p>
 <span><span class="va">plotlen</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">effN</span><span class="op">=</span><span class="fl">1</span>, <span class="va">truedat</span><span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">{</span></span>
 <span>  </span>
 <span>  <span class="va">cols</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Census Lcomp"</span><span class="op">=</span><span class="st">"#00BFC4"</span>,<span class="st">"Sample Lcomp"</span><span class="op">=</span><span class="st">"#F8766D"</span><span class="op">)</span>  </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>mapping<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">lenbin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="va">value</span><span class="op">/</span><span class="va">effN</span><span class="op">)</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="va">censuslen</span><span class="op">/</span><span class="va">totlen</span>, fill<span class="op">=</span><span class="st">"Census Lcomp"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">5</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="va">atoutput</span><span class="op">/</span><span class="va">effN</span>, fill<span class="op">=</span><span class="st">"Sample Lcomp"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">5</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span>mapping<span class="op">=</span><span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">lenbin</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">geom_bar</span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu">aes</span><span class="op">(</span>weight <span class="op">=</span> <span class="va">value</span><span class="op">/</span><span class="va">effN</span><span class="op">)</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">geom_bar</span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu">aes</span><span class="op">(</span>weight <span class="op">=</span> <span class="va">censuslen</span><span class="op">/</span><span class="va">totlen</span>, fill<span class="op">=</span><span class="st">"Census Lcomp"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">5</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">geom_bar</span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu">aes</span><span class="op">(</span>weight <span class="op">=</span> <span class="va">atoutput</span><span class="op">/</span><span class="va">effN</span>, fill<span class="op">=</span><span class="st">"Sample Lcomp"</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">5</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
 <span>    <span class="fu">theme_tufte</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"length (cm)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"number"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"proportion"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_colour_manual</a></span><span class="op">(</span>name<span class="op">=</span><span class="st">""</span>, values<span class="op">=</span><span class="va">cols</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span>,</span>
+<span>    <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"length (cm)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"number"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"proportion"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
+<span>    <span class="fu">scale_colour_manual</span><span class="op">(</span>name<span class="op">=</span><span class="st">""</span>, values<span class="op">=</span><span class="va">cols</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span>,</span>
 <span>                          <span class="va">dat</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">year</span>, ncol<span class="op">=</span><span class="fl">6</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span></span>
+<span>    <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">year</span>, ncol<span class="op">=</span><span class="fl">6</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># plot numbers at age by timestep (one species)</span></span>
 <span><span class="va">Natageplot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">effN</span><span class="op">=</span><span class="fl">1</span>, <span class="va">truedat</span><span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">age</span>, y<span class="op">=</span><span class="va">value</span><span class="op">/</span><span class="va">effN</span>, color<span class="op">=</span><span class="st">"Est Comp"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">agecl</span>, y<span class="op">=</span><span class="va">numAtAge</span><span class="op">/</span><span class="va">totN</span>, color<span class="op">=</span><span class="st">"True Comp"</span><span class="op">)</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_point</span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">age</span>, y<span class="op">=</span><span class="va">value</span><span class="op">/</span><span class="va">effN</span>, color<span class="op">=</span><span class="st">"Est Comp"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">geom_line</span><span class="op">(</span>data<span class="op">=</span><span class="va">dat</span>, <span class="fu">aes</span><span class="op">(</span>x<span class="op">=</span><span class="va">agecl</span>, y<span class="op">=</span><span class="va">numAtAge</span><span class="op">/</span><span class="va">totN</span>, color<span class="op">=</span><span class="st">"True Comp"</span><span class="op">)</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span> </span>
 <span>    <span class="fu">theme_tufte</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>    </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"number"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
-<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"proportion"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span>,</span>
+<span>    <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span>    </span>
+<span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"age"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"number"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
+<span>    <span class="op">{</span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">truedat</span><span class="op">)</span><span class="op">)</span> <span class="fu">ylab</span><span class="op">(</span><span class="st">"proportion"</span><span class="op">)</span><span class="op">}</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span>,</span>
 <span>                          <span class="va">dat</span><span class="op">$</span><span class="va">Name</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">year</span>, ncol<span class="op">=</span><span class="fl">6</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span></span>
+<span>    <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">year</span>, ncol<span class="op">=</span><span class="fl">6</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># plot weight at age time series facet wrapped by species</span></span>
 <span><span class="va">wageplot</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">dat</span>, <span class="va">truedat</span><span class="op">=</span><span class="cn">NULL</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="va">dat</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">year</span>, <span class="va">value</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">geom_line</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>colour <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">theme_tufte</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">xlab</a></span><span class="op">(</span><span class="st">"model year"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ylab</a></span><span class="op">(</span><span class="st">"average individual weight (g)"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Name"</span><span class="op">)</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span></span>
+<span>    <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">xlab</span><span class="op">(</span><span class="st">"model year"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ylab</span><span class="op">(</span><span class="st">"average individual weight (g)"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>subtitle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">dat</span><span class="op">$</span><span class="va">ModSim</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">facet_wrap</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Name"</span><span class="op">)</span>, scales<span class="op">=</span><span class="st">"free_y"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
+</details>
 </div>
 <div class="section level4">
 <h4 id="read-in-the-data-to-check-with-plots">Read in the “data” to check with plots<a class="anchor" aria-label="anchor" href="#read-in-the-data-to-check-with-plots"></a>
 </h4>
-<p>The <code>mskeyrun</code> simulated data objects are all
-dataframes.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<details><summary>
+The <code>mskeyrun</code> simulated data objects are all dataframes.
+</summary><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">survObsBiom</span> <span class="op">&lt;-</span> <span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/simSurveyIndex.html">simSurveyIndex</a></span> <span class="co">#atlantisom::read_savedsurvs(d.name, 'survB')</span></span>
 <span><span class="co">#age_comp_data &lt;- mskeyrun::simSurveyAgeLencomp #atlantisom::read_savedsurvs(d.name, 'survAge') #not using in assessment</span></span>
 <span><span class="va">len_comp_data</span> <span class="op">&lt;-</span> <span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/simSurveyLencomp.html">simSurveyLencomp</a></span> <span class="co">#atlantisom::read_savedsurvs(d.name, 'survLen')</span></span>
@@ -870,6 +1273,7 @@ dataframes.</p>
 <span><span class="co">#fish_age_comp &lt;- #atlantisom::read_savedfisheries(d.name, "catchAge")</span></span>
 <span><span class="va">fish_annage_comp</span> <span class="op">&lt;-</span> <span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/simFisheryAgecomp.html">simFisheryAgecomp</a></span> <span class="co">#atlantisom::read_savedfisheries(d.name, 'catchAnnAge')</span></span>
 <span><span class="va">fish_annage_wtage</span> <span class="op">&lt;-</span> <span class="fu">mskeyrun</span><span class="fu">::</span><span class="va"><a href="../reference/simFisheryWtatAge.html">simFisheryWtatAge</a></span> <span class="co">#atlantisom::read_savedfisheries(d.name, 'catchAnnWtage')</span></span></code></pre></div>
+</details>
 </div>
 </div>
 <div class="section level3 tabset">
@@ -891,47 +1295,19 @@ length and age composition.</p>
 <div class="tab-content">
 <div class="active  tab-pane" id="survey-biomass-index" role="tabpanel" aria-labelledby="survey-biomass-index-tab">
 
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># compare with true output (all timesteps)</span></span>
-<span><span class="co"># for(s in names(survObsBiom)){</span></span>
-<span><span class="co">#   cat("  \n##### ",  s,"  \n")</span></span>
-<span><span class="co">#   print(plotB(survObsBiom[[s]][[1]], omlist_ss$truetotbio_ss))</span></span>
-<span><span class="co">#   cat("  \n")</span></span>
-<span><span class="co"># }</span></span>
-<span></span>
-<span><span class="co"># plots survey only</span></span>
-<span> <span class="kw">for</span><span class="op">(</span><span class="va">s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">survObsBiom</span><span class="op">$</span><span class="va">survey</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>   <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n##### "</span>,  <span class="va">s</span>,<span class="st">"  \n"</span><span class="op">)</span></span>
-<span>   <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">plotB</span><span class="op">(</span><span class="va">survObsBiom</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>                 <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">survey</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">s</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>   <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n"</span><span class="op">)</span></span>
-<span> <span class="op">}</span></span></code></pre></div>
 <div class="section level5">
 <h5 id="bts_fall_allbox_effic1">BTS_fall_allbox_effic1<a class="anchor" aria-label="anchor" href="#bts_fall_allbox_effic1"></a>
 </h5>
-<p><img src="SimData_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p><img src="SimData_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
 </div>
 <div class="section level5">
 <h5 id="bts_spring_allbox_effic1">BTS_spring_allbox_effic1<a class="anchor" aria-label="anchor" href="#bts_spring_allbox_effic1"></a>
 </h5>
-<p><img src="SimData_files/figure-html/unnamed-chunk-10-2.png" width="700"></p>
+<p><img src="SimData_files/figure-html/unnamed-chunk-14-2.png" width="700"></p>
 </div>
 </div>
 <div class="tab-pane" id="survey-length-composition" role="tabpanel" aria-labelledby="survey-length-composition-tab">
 
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># not the full time series, just 24 yrs after catches start in year 55</span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">len_comp_data</span><span class="op">$</span><span class="va">survey</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n##### "</span>,  <span class="va">s</span>,<span class="st">"  \n"</span><span class="op">)</span></span>
-<span>  <span class="va">lcompsub</span> <span class="op">&lt;-</span> <span class="va">len_comp_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">survey</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">s</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span><span class="op">:</span><span class="fl">78</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">Name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu">group_map</span><span class="op">(</span><span class="op">~</span> <span class="fu">plotlen</span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, keep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lcompsub</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">lcompsub</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
 <div class="section level5">
 <h5 id="bts_fall_allbox_effic1-1">BTS_fall_allbox_effic1<a class="anchor" aria-label="anchor" href="#bts_fall_allbox_effic1-1"></a>
 </h5>
@@ -945,20 +1321,6 @@ length and age composition.</p>
 </div>
 <div class="tab-pane" id="survey-age-composition-annual-ages" role="tabpanel" aria-labelledby="survey-age-composition-annual-ages-tab">
 
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">annage_comp_data</span><span class="op">$</span><span class="va">survey</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n##### "</span>,  <span class="va">s</span>,<span class="st">"  \n"</span><span class="op">)</span></span>
-<span>  <span class="va">acompsub</span> <span class="op">&lt;-</span> <span class="va">annage_comp_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">survey</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">s</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span><span class="op">:</span><span class="fl">78</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="fu">group_by</span><span class="op">(</span><span class="va">Name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>    <span class="co">#left_join(., trueNage) %&gt;%</span></span>
-<span>    <span class="fu">group_map</span><span class="op">(</span><span class="op">~</span> <span class="fu">Natageplot</span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, keep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plots only sampled age comp</span></span>
-<span>    <span class="co">#group_map(~ Natageplot(.x, effN = 100000, truedat = 1), keep = TRUE) # plots merged true age comp</span></span>
-<span>  </span>
-<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">acompsub</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">acompsub</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
 <div class="section level5">
 <h5 id="bts_fall_allbox_effic1-2">BTS_fall_allbox_effic1<a class="anchor" aria-label="anchor" href="#bts_fall_allbox_effic1-2"></a>
 </h5>
@@ -972,13 +1334,6 @@ length and age composition.</p>
 </div>
 <div class="tab-pane" id="survey-iterpolated-weight-at-age-annual-ages" role="tabpanel" aria-labelledby="survey-iterpolated-weight-at-age-annual-ages-tab">
 
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw">for</span><span class="op">(</span><span class="va">s</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">annage_wtage</span><span class="op">$</span><span class="va">survey</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n##### "</span>,  <span class="va">s</span>,<span class="st">"  \n"</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu">wageplot</span><span class="op">(</span><span class="va">annage_wtage</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>                 <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">(</span><span class="va">survey</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">s</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="st">"  \n"</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
 <div class="section level5">
 <h5 id="bts_fall_allbox_effic1-3">BTS_fall_allbox_effic1<a class="anchor" aria-label="anchor" href="#bts_fall_allbox_effic1-3"></a>
 </h5>
@@ -1014,42 +1369,19 @@ and age composition.</p>
 <div class="tab-content">
 <div class="active  tab-pane" id="fishery-catch-time-series" role="tabpanel" aria-labelledby="fishery-catch-time-series-tab">
 
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># observed catch only</span></span>
-<span><span class="fu">plotC</span><span class="op">(</span><span class="va">catchbio_ss</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SimData_files/figure-html/catchind-1-1.png" width="700"></p>
 </div>
 <div class="tab-pane" id="fishery-length-composition" role="tabpanel" aria-labelledby="fishery-length-composition-tab">
 
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lcompsub</span> <span class="op">&lt;-</span> <span class="va">catchlen_ss</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span><span class="op">:</span><span class="fl">78</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">Name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">group_map</span><span class="op">(</span><span class="op">~</span> <span class="fu">plotlen</span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, keep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">lcompsub</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">lcompsub</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p><img src="SimData_files/figure-html/unnamed-chunk-11-1.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-2.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-3.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-4.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-5.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-6.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-7.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-8.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-11-9.png" width="700"></p>
+<p><img src="SimData_files/figure-html/unnamed-chunk-15-1.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-2.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-3.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-4.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-5.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-6.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-7.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-8.png" width="700"><img src="SimData_files/figure-html/unnamed-chunk-15-9.png" width="700"></p>
 </div>
 <div class="tab-pane" id="fishery-catch-at-age-annual-ages" role="tabpanel" aria-labelledby="fishery-catch-at-age-annual-ages-tab">
 
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">acompsub</span> <span class="op">&lt;-</span> <span class="va">fish_annage_comp</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">55</span><span class="op">:</span><span class="fl">78</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">Name</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="co">#left_join(., trueCAA) %&gt;%</span></span>
-<span>  <span class="fu">group_map</span><span class="op">(</span><span class="op">~</span> <span class="fu">Natageplot</span><span class="op">(</span><span class="va">.x</span><span class="op">)</span>, keep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="co"># plots only sampled age comp</span></span>
-<span>  <span class="co">#group_map(~ Natageplot(.x, effN = 200, truedat = 1), keep = TRUE) # plots merged true age comp</span></span>
-<span></span>
-<span><span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">acompsub</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">acompsub</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
 <p><img src="SimData_files/figure-html/plot-catchagecomp-1.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-2.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-3.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-4.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-5.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-6.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-7.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-8.png" width="700"><img src="SimData_files/figure-html/plot-catchagecomp-9.png" width="700"></p>
 </div>
 <div class="tab-pane" id="fishery-interpolated-weight-at-age-annual-ages" role="tabpanel" aria-labelledby="fishery-interpolated-weight-at-age-annual-ages-tab">
 
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">wageplot</span><span class="op">(</span><span class="va">fish_annage_wtage</span><span class="op">)</span></span></code></pre></div>
-<p><img src="SimData_files/figure-html/unnamed-chunk-12-1.png" width="700"></p>
+<p><img src="SimData_files/figure-html/unnamed-chunk-16-1.png" width="700"></p>
 </div>
 </div>
 </div>
@@ -1081,12 +1413,13 @@ data object is then used to create data and parameter input files using
 the function <code><a href="https://rdrr.io/pkg/hydradata/man/create_datpin_files.html" class="external-link">hydradata::create_datpin_files()</a></code>.</p>
 <p>For example, this process creates the simulated dataset with 5 length
 bins:</p>
-<p>The <code>create_RData_mskeyrun.R</code> file was sourced, and
+<details><summary>
+The <code>create_RData_mskeyrun.R</code> file was sourced, and
 <code>create_RData_mskeyrun("sim", nlenbin = 5)</code> was run to make a
 new <code>hydraDataList_msk.rda</code> file in the package. Then the
 package is built locally, R is restarted, and the following code block
-is run to produce input files.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+is run to produce input files.
+</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">hydradata</span><span class="op">)</span></span>
 <span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/hydradata/man/setup_default_inputs.html" class="external-link">setup_default_inputs</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -1104,9 +1437,10 @@ is run to produce input files.</p>
 <span><span class="co"># this saves the specific hydralist object, so we could saveRDS it to a diagnostics folder?</span></span>
 <span><span class="co"># advantage of rds format is we can assign it when reading it in to diagnostics scripts</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">hydraDataList_5bin_0comp</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inputRdatalists/hydraDataList_5bin_0comp.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Run <code>create_RData_mskeyrun("sim", nlenbin = 10)</code> in
-<code>hydradata</code>, rebuild package, restart R, then…</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+</details><details><summary>
+Run <code>create_RData_mskeyrun("sim", nlenbin = 10)</code> in
+<code>hydradata</code>, rebuild package, restart R, then…
+</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">hydradata</span><span class="op">)</span></span>
 <span><span class="va">inputs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/hydradata/man/setup_default_inputs.html" class="external-link">setup_default_inputs</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -1125,6 +1459,7 @@ is run to produce input files.</p>
 <span><span class="co"># this saves the specific hydralist object, so we could saveRDS it to a diagnostics folder?</span></span>
 <span><span class="co"># advantage of rds format is we can assign it when reading it in to diagnostics scripts</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">hydraDataList_10bin_0comp</span>, <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"inputRdatalists/hydraDataList_10bin_0comp.rds"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <div class="section level4">
 <h4 id="age-structured-multispecies-statistical-catch-at-age-model-msscaa">Age structured multispecies statistical catch at age model
@@ -1138,7 +1473,7 @@ but not finished for October 2022 review.</p>
 <div class="section level2 unnumbered">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-audzijonyte_atlantis_2019" class="csl-entry">
 Audzijonyte, A., Pethybridge, H., Porobic, J., Gorton, R., Kaplan, I.,
 &amp; Fulton, E. A. (2019). Atlantis: <span>A</span> spatially explicit
@@ -1176,7 +1511,7 @@ Drinkwater, K. F. (2016). <em>Set-up of the <span>Nordic</span> and
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>

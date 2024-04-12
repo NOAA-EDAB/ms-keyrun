@@ -8,8 +8,8 @@
 <meta name="description" content="mskeyrun">
 <title>Allocate landings to Georges Bank EPU • mskeyrun</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Allocate landings to Georges Bank EPU">
 <meta property="og:description" content="mskeyrun">
@@ -22,7 +22,7 @@
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
     
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
     
     <a class="navbar-brand me-2" href="../index.html">mskeyrun</a>
 
@@ -92,14 +92,10 @@
 </nav><div class="container template-article">
 
 
-
-
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Allocate landings to Georges Bank EPU</h1>
-                        <h4 data-toc-skip class="author">Andy Beet</h4>
             
-            <h4 data-toc-skip class="date">25 April, 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/NOAA-EDAB/ms-keyrun/blob/HEAD/vignettes/allocateLandingsEPU.Rmd" class="external-link"><code>vignettes/allocateLandingsEPU.Rmd</code></a></small>
       <div class="d-none name"><code>allocateLandingsEPU.Rmd</code></div>
@@ -108,88 +104,59 @@
     
     
 <div class="section level2">
-<h2 id="spatial-approaches-for-georges-bank-option-1">Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option
-1</a><a class="anchor" aria-label="anchor" href="#spatial-approaches-for-georges-bank-option-1"></a>
+<h2 id="spatial-approaches-for-georges-bank-option-1">Spatial: Approaches for Georges Bank <a href="https://noaa-edab.github.io/ms-keyrun/GBSurveySet.html#opt1">Option 1</a><a class="anchor" aria-label="anchor" href="#spatial-approaches-for-georges-bank-option-1"></a>
 </h2>
-<p>The spatial footprint for the Georges Bank EPU (Ecological Production
-Unit) is defined as the set of survey strata that are at 50% within the
-10 min square definition of the EPU.</p>
+<p>The spatial footprint for the Georges Bank EPU (Ecological Production Unit) is defined as the set of survey strata that are at 50% within the 10 min square definition of the EPU.</p>
 <div class="figure" style="text-align: center">
-<img src="allocateLandingsEPU_files/figure-html/GBfoot-1.png" alt="Georges Bank EPU" width="700"><p class="caption">
-Georges Bank EPU
+<span style="display:block;" id="fig:GBfoot"></span>
+<img src="allocateLandingsEPU_files/figure-html/GBfoot-1.png" alt="Georges Bank EPU" width="672"><p class="caption">
+Figure 1: Georges Bank EPU
 </p>
 </div>
 <p>Overlay the surrounding statistical areas:</p>
 <div class="figure" style="text-align: center">
-<img src="allocateLandingsEPU_files/figure-html/GBfootstat-1.png" alt="Statistical areas intersected by Georges Bank EPU" width="700"><p class="caption">
-Statistical areas intersected by Georges Bank EPU
+<span style="display:block;" id="fig:GBfootstat"></span>
+<img src="allocateLandingsEPU_files/figure-html/GBfootstat-1.png" alt="Statistical areas intersected by Georges Bank EPU" width="672"><p class="caption">
+Figure 2: Statistical areas intersected by Georges Bank EPU
 </p>
 </div>
-<p>Fishing data are available by statistical area. The statistical areas
-surrounding Georges Bank EPU (521, 522, 525, 526, 537, 538, 551, 552,
-561, 562) contain catch from Georges Bank and its neighboring EPUs. This
-data needs to be partitioned and catch allocated to the Georges Bank
-EPU.</p>
+<p>Fishing data are available by statistical area. The statistical areas surrounding Georges Bank EPU (521, 522, 525, 526, 537, 538, 551, 552, 561, 562) contain catch from Georges Bank and its neighboring EPUs. This data needs to be partitioned and catch allocated to the Georges Bank EPU.</p>
 </div>
 <div class="section level2">
 <h2 id="method-for-partitioning-catch-data">Method for partitioning catch data<a class="anchor" aria-label="anchor" href="#method-for-partitioning-catch-data"></a>
 </h2>
-<p>Methods found in <span class="citation">(<a href="#ref-benjamins2018" role="doc-biblioref">Benjamin, S et al., 2018</a>; <a href="#ref-depiper2014" role="doc-biblioref">DePiper, 2014</a>)</span>
-and the <a href="https://github.com/dcorvi/offshoreWind" class="external-link"><code>offshoreWind</code></a>
-package are briefly summarized below. It is necessary to run the package
-from the <code>mars</code> server.</p>
+<p>Methods found in <span class="citation">(<a href="#ref-benjamins2018">Benjamin, S et al., 2018</a>; <a href="#ref-depiper2014">DePiper, 2014</a>)</span> and the <a href="https://github.com/dcorvi/offshoreWind" class="external-link"><code>offshoreWind</code></a> package are briefly summarized below. It is necessary to run the package from the <code>mars</code> server.</p>
 <ul>
-<li><p>VTR data are joined with observer data (since observer data is
-considered reliable). A duration model is fitted to characterize a
-spatial footprint (rather than a single point location) associated with
-a trip (<span class="citation">DePiper (<a href="#ref-depiper2014" role="doc-biblioref">2014</a>)</span>). Gear type and trip length (which
-includes multiple hauls) influence the spatial precision.</p></li>
-<li><p>The duration model is then broadly applied to all VTR data. The
-result being a set of maps (or rasters). Each map/raster depicts the
-spatial probability of fishing for a trip.</p></li>
-<li><p>The <code>offshoreWind</code> package then uses these rasters
-combined to determine the landings assigned to any spatial footprint
-supplied. This is achieved by calculating the overlap of the rasters
-with the user supplied spatial footprint.</p></li>
+<li><p>VTR data are joined with observer data (since observer data is considered reliable). A duration model is fitted to characterize a spatial footprint (rather than a single point location) associated with a trip (<span class="citation">DePiper (<a href="#ref-depiper2014">2014</a>)</span>). Gear type and trip length (which includes multiple hauls) influence the spatial precision.</p></li>
+<li><p>The duration model is then broadly applied to all VTR data. The result being a set of maps (or rasters). Each map/raster depicts the spatial probability of fishing for a trip.</p></li>
+<li><p>The <code>offshoreWind</code> package then uses these rasters combined to determine the landings assigned to any spatial footprint supplied. This is achieved by calculating the overlap of the rasters with the user supplied spatial footprint.</p></li>
 </ul>
-<p>The shape file shown in Figure @ref(fig:GBfootstat) is supplied to
-the <code>offshoreWind</code> package and the landings with each
-statistical area (for each year) are then allocated to each portion of a
-statistical area (within Georges Bank and outside Georges Bank). The
-proportion of landings attributed to Georges Bank are then calculated
-and displayed below.</p>
-<p>The <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies">top
-ranked species</a> of interest are shown below. Each panel depicts the
-proportion of landings (for each species) in Georges Bank relative to
-the statistical area.</p>
+<p>The shape file shown in Figure <a href="#fig:GBfootstat">2</a> is supplied to the <code>offshoreWind</code> package and the landings with each statistical area (for each year) are then allocated to each portion of a statistical area (within Georges Bank and outside Georges Bank). The proportion of landings attributed to Georges Bank are then calculated and displayed below.</p>
+<p>The <a href="https://noaa-edab.github.io/ms-keyrun/SpeciesEnvDat.html#focalSpecies">top ranked species</a> of interest are shown below. Each panel depicts the proportion of landings (for each species) in Georges Bank relative to the statistical area.</p>
 <div class="figure" style="text-align: center">
-<img src="allocateLandingsEPU_files/figure-html/calcpropsst-1.png" alt="Proportion of landings in GB relative to statistical area" width="700"><p class="caption">
-Proportion of landings in GB relative to statistical area
+<span style="display:block;" id="fig:calcpropsst"></span>
+<img src="allocateLandingsEPU_files/figure-html/calcpropsst-1.png" alt="Proportion of landings in GB relative to statistical area" width="672"><p class="caption">
+Figure 3: Proportion of landings in GB relative to statistical area
 </p>
 </div>
-<p>The total landings of each species by stat area is shown below. This
-should ideally be compared to landings from <a href="https://github.com/NOAA-EDAB/comlandr" class="external-link">comlandr</a>. We should
-also determine how landings on the Canadian side of the Hague line
-should be handled</p>
+<p>The total landings of each species by stat area is shown below. This should ideally be compared to landings from <a href="https://github.com/NOAA-EDAB/comlandr" class="external-link">comlandr</a>. We should also determine how landings on the Canadian side of the Hague line should be handled</p>
 <div class="figure" style="text-align: center">
-<img src="allocateLandingsEPU_files/figure-html/calclands-1.png" alt="Total landings by statistical area" width="700"><p class="caption">
-Total landings by statistical area
+<span style="display:block;" id="fig:calclands"></span>
+<img src="allocateLandingsEPU_files/figure-html/calclands-1.png" alt="Total landings by statistical area" width="672"><p class="caption">
+Figure 4: Total landings by statistical area
 </p>
 </div>
-<p>The majority of landings (for a species) occurs in statistical areas
-where the proportion allocated to Georges Bank is fairly constant.</p>
+<p>The majority of landings (for a species) occurs in statistical areas where the proportion allocated to Georges Bank is fairly constant.</p>
 </div>
 <div class="section level2 unnumbered">
-<h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" line-spacing="2">
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0" line-spacing="2">
 <div id="ref-benjamins2018" class="csl-entry">
-Benjamin, S, Lee, Min-Yang, &amp; DePiper, G. (2018). <em>Visualizing
-fishing data as rasters</em>.
+Benjamin, S, Lee, Min-Yang, &amp; DePiper, G. (2018). <em>Visualizing fishing data as rasters</em>.
 </div>
 <div id="ref-depiper2014" class="csl-entry">
-DePiper, G. S. (2014). <em>Statistically Assessing the Precision of
-Self-reported VTR Fishing Locations</em>. 22.
+DePiper, G. S. (2014). <em>Statistically Assessing the Precision of Self-reported VTR Fishing Locations</em>. 22.
 </div>
 </div>
 </div>
@@ -206,7 +173,7 @@ Self-reported VTR Fishing Locations</em>. 22.
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.8.</p>
 </div>
 
     </footer>

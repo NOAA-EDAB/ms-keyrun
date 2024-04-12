@@ -118,13 +118,34 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simCatchIndex.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simCatchIndexFW.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simCatchIndexSubannual.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simCatchIndexSubannualFW.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryAgeLencomp.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryAgecomp.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryAgecompSubannual.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryLencomp.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryLencompSubannual.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryWtatAge.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFisheryWtatAgeSubannual.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simFocalSpecies.html</loc>
@@ -148,7 +169,19 @@
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyDietcomp.html</loc>
   </url>
   <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyDietcompFW.html</loc>
+  </url>
+  <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyIndex.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyIndexFW.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyInfo.html</loc>
+  </url>
+  <url>
+    <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyLenDietcomp.html</loc>
   </url>
   <url>
     <loc>https://noaa-edab.github.io/ms-keyrun/reference/simSurveyLencomp.html</loc>

@@ -1,27 +1,27 @@
-pandoc: 2.19.2
-pkgdown: 2.0.7
+pandoc: 3.1.11
+pkgdown: 2.0.8
 pkgdown_sha: ~
 articles:
+  allocateLandingsEPU: allocateLandingsEPU.html
   CompsDat: CompsDat.html
   DataNeeds: DataNeeds.html
   DatasetDimensions: DatasetDimensions.html
+  GBbiomassNumbyLength: GBbiomassNumbyLength.html
+  GBdietcomp: GBdietcomp.html
   GBFleetDecisions: GBFleetDecisions.html
   GBFleetDefinitions: GBFleetDefinitions.html
   GBLandingLengthDataSources: GBLandingLengthDataSources.html
   GBLandingsByAge: GBLandingsByAge.html
   GBLandingsByLength: GBLandingsByLength.html
   GBLengthWeight: GBLengthWeight.html
-  GBSurveySet: GBSurveySet.html
-  GBbiomassNumbyLength: GBbiomassNumbyLength.html
-  GBdietcomp: GBdietcomp.html
   GBsurveycatchviz: GBsurveycatchviz.html
-  SimData: SimData.html
-  SimData_archive: SimData_archive.html
-  SpeciesEnvDat: SpeciesEnvDat.html
-  allocateLandingsEPU: allocateLandingsEPU.html
+  GBSurveySet: GBSurveySet.html
   mskeyrun: mskeyrun.html
+  SimData_archive: SimData_archive.html
+  SimData: SimData.html
+  SpeciesEnvDat: SpeciesEnvDat.html
   stockAreas: stockAreas.html
-last_built: 2023-04-25T13:51Z
+last_built: 2024-04-12T22:39Z
 urls:
   reference: https://noaa-edab.github.io/ms-keyrun/reference
   article: https://noaa-edab.github.io/ms-keyrun/articles
