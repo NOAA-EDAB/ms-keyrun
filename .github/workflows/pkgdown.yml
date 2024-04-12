@@ -52,9 +52,9 @@ jobs:
           source /etc/profile.d/oracle.sh
         shell: bash
 
-      - name: Install command line packages
+      - name: Install system dependencies
         run: |
-          sudo apt-get install libudunits2-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev 
+          sudo apt-get install libudunits2-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev libgdal-dev 
 #          sudo apt-get install  libgdal-dev libcurl4-gnutls-dev libgit2-dev 
         shell: bash
 
@@ -67,7 +67,7 @@ jobs:
           writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor), ".github/R-version")
         shell: Rscript {0}
 
-      - name: Install binary dependencies
+      - name: Install package dependencies
         #if: runner.os |= 'Linux'
         run: |
           remotes::install_deps(dependencies = TRUE)
