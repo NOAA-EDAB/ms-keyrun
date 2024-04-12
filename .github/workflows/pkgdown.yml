@@ -54,8 +54,8 @@ jobs:
 
       - name: Install command line packages
         run: |
-          sudo apt-get install libudunits2-dev libharfbuzz-dev libfribidi-dev
-#          sudo apt-get install  libgdal-dev libcurl4-gnutls-dev libgit2-dev libudunits2-dev libharfbuzz-dev libfribidi-dev
+          sudo apt-get install libudunits2-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev 
+#          sudo apt-get install  libgdal-dev libcurl4-gnutls-dev libgit2-dev 
         shell: bash
 
       - name: Install R packages
