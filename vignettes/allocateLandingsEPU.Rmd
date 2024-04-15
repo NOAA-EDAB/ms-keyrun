@@ -1,13 +1,13 @@
 ---
 title: "Allocate landings to Georges Bank EPU"
-author: Andy Beet
-date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   bookdown::html_document2:
     number_sections: false
 csl: apa-annotated-bibliography.csl
 bibliography: references.bib
 link-citations: yes
+pkgdown:
+  as_is: true
 ---
 
 ```{r setup, include=FALSE}
